@@ -1,0 +1,123 @@
+/* --------------- reset.css --------------- */
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    vertical-align: baseline;
+    background: transparent;
+    font-size: 100%;
+}
+
+a {
+    margin: 0;
+    padding: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
+    text-decoration: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+td, td img {
+    vertical-align: top;
+}
+
+input, select, button, textarea {
+    margin: 0;
+    font-size: 100%;
+}
+
+input[type="text"], input[type="password"], textarea {
+    padding: 0;
+}
+
+input[type="checkbox"] {
+    vertical-align: bottom;
+}
+
+input[type="radio"] {
+    vertical-align: text-bottom;
+}
+
+sub {
+    vertical-align: sub;
+    font-size: smaller;
+}
+
+sup {
+    vertical-align: super;
+    font-size: smaller;
+}
+
+ins {
+    text-decoration: none;
+}
+
+del {
+    text-decoration: line-through;
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+
+ul {
+    list-style: none;
+}
+
+/* --------------- /reset.css --------------- */
+
+/* --------------- базовые настройки ---------*/
+html {
+    overflow-y: scroll;
+}
+
+body {
+    line-height: 1;
+    background: #fff;
+    color: #000;
+    text-align: left;
+    font: 14px Arial, "Helvetica CY", "Nimbus Sans L", sans-serif;
+}
+
+input, select, button, textarea {
+    font-family: Arial, "Helvetica CY", "Nimbus Sans L", sans-serif;
+}
+
+label, input[type="button"], input[type="submit"], button {
+    cursor: pointer;
+}
+
+a, a:visited {
+    color: #287fc3;
+}
+
+a:hover {
+    color: #287fc3;
+    text-decoration: underline;
+}
+
+a:focus, a:active {
+    color: #287fc3;
+}
+
+blockquote, q {
+    quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+
+.clear {
+    clear: both;
+}
+
+/* --------------- /базовые настройки ---------*/
