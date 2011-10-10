@@ -24,3 +24,11 @@
 	margin-right: 10px;
 	margin-top: 5px;
 }
+
+input:focus{
+	border: 1px solid red;
+}
+
+#date-wr label{
+	float: left;
+}

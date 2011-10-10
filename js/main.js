@@ -57,16 +57,18 @@ $(document).ready(function() {
      */
 
     $('#personen').keypress(function(event) {
-        if (!event.which == 13) return true;
-        if ($('#personen').val() < $('.person').size()) return true;
-
+        if (event.which != 13) return true;
+        if ($('#personen').val() < $('.person').size()) {
+	        $($('.person')[1]).find('[name=sex]').focus();
+	        return true;
+	    }
         for (var i = $('.person').size(); i <= $('#personen').val(); i++) {
             var div = $($('.person')[0]).clone().show();
             $(div).find('span').html(i);
             div.appendTo($('#persons'));
         }
-        $('.person input, .person select').unbind('keypress');
         $($('.person')[1]).find('[name=sex]').focus();
+        $('.person input, .person select').unbind('keypress');
         $('.person [name=sex]').keypress(function(event) {
             if (event.which == 13)
                 $(this).parent().parent().find('[name=person_name]').focus();
@@ -95,6 +97,7 @@ $(document).ready(function() {
     $('#hotel-button').click(function() {
         $('#page3').hide();
         $('#page4').show();
+        $('#hotelcode').focus();
     });
 
 
@@ -180,8 +183,8 @@ $(document).ready(function() {
                     data = jQuery.parseJSON(data);
                     for (var i = 0; i < data.length; i++)
                         $('<option value="' + data[i] + '">' + data[i] + '</option>').appendTo("#datestart");
-                    $('#datestart-wr').show();
-                    $('#datestart').focus();
+                    $('#date-wr').show();
+                    $('#datestart-wr').show().find('#datestart').focus();
                 }
             });
         }
@@ -198,8 +201,7 @@ $(document).ready(function() {
                     data = jQuery.parseJSON(data);
                     for (var i = 0; i < data.length; i++)
                         $('<option value="' + data[i] + '">' + data[i] + '</option>').appendTo("#dateend");
-                    $('#dateend-wr').show();
-                    $('#dateend').focus();
+                    $('#dateend-wr').show().find('#dateend').focus();
                     UpdateDaysCount();
                 }
             });

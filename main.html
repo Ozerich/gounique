@@ -65,7 +65,7 @@
 		<button id="rundreise-button" disabled>Rundreise</button>
 		<button id="flug-button" disabled>Flug</button>
 	</div>
-	<div class="page" id="page4" style="display:block">
+	<div class="page" id="page4" style="display:none">
         <div class="input">
             <label for="hotelcode">Hotel Code</label>
             <input type="text" name="hotelcode" size="8" id="hotelcode" />
@@ -83,18 +83,23 @@
             <label for="service">Service</label>
             <select name="service" id="service"></select>
         </div>
-        <div class="input" id="datestart-wr" style="display:none;">
-            <label for="datestart">Date start</label>
-            <select name="datestart" id="datestart"></select>
+        <div class="input" id="date-wr" style="display:none;">
+            <span>Date</span>
+            <div id="datestart-wr">
+            	<label for="datestart">Von</label>
+            	<select name="datestart" id="datestart"></select>
+            	<br class="clear" />
+            </div>
+            <div id="dateend-wr">
+            	<label for="dateend">Bis</label>
+            	<select name="dateend" id="dateend"></select>
+            	<br class="clear" />
+            </div>
+            <div>
+            	= <span id="dayscount" name="dayscount"></span> Nachte
+          	</div>
         </div>
-        <div class="input" id="dateend-wr" style="display:none;">
-            <label for="dateend">Date finish</label>
-            <select name="dateend" id="dateend"></select>
-        </div>
-        <div class="input" id="dayscount-wr" style="display:none">
-            <label for="dayscount">Day count</label>
-            <span id="dayscount" name="dayscount"></span>
-        </div>
+        <br class="clear" />
         <div class="input" id="price-wr" style="display:none">
             <label for="price">Price</label>
             <span id="price" name="price"></span>
@@ -102,7 +107,7 @@
         <br class="clear" />
         <div class="input" id="remark-wr" style="display:none">
             <label for="remark">Remark</label>
-            <input size="150" id="remark" name="remark"/>
+            <input size="100" id="remark" name="remark"/>
         </div>
         <br class="clear" />
         <div class="input" id="result-wr" style="display:none">
