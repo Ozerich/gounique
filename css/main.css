@@ -32,3 +32,15 @@ input:focus{
 #date-wr label{
 	float: left;
 }
+
+#page5{width: 400px;}
+#page5 #flightplan-wr{
+	float:left;
+}
+#page5 #print{
+	float: right;
+}
+
+#page5 #price-wr{
+	float: right;
+}

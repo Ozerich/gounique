@@ -17,7 +17,7 @@
             <input type="text" name="aktion" id="aktion" size="2" maxlength="2"/>
         </div>
         <div class="input">
-            <label for="agent_kunden">???</label>
+            <label for="agent_kunden">K/A</label>
             <select name="agent_kunden" id="agent_kunden">
                 <option value="kundennummer">K</option>
                 <option value="agentur">A</option>
@@ -113,15 +113,57 @@
             <button id="addhotel">Noch ein Hotel hunzufügen</button>
             <button id="viewremark">Fertig</button>
         </div>
-        <div class="input" id="remark-wr" style="display:none">
-            <label for="remark">Remark</label>
-            <input size="100" id="remark" name="remark"/>
+        <div id="addinfo-wr" style="display:none">
+            <div class="input" id="summary-wr">
+                <div class="summary" style="display:none"></div>
+            </div>
+            <div class="input" id="remark-wr">
+                <label for="remark">Remark</label>
+                <input size="100" id="remark" name="remark"/>
+            </div>
+            <br class="clear"/>
+            <div class="input" id="flightplan-wr">
+                <label for="flightplan">Flight plan</label>
+                <textarea id="flightplan" name="flightplan"></textarea>
+            </div>
+            <div class="input" id="flightprice-wr">
+                <label for="flightprice">Preis of flight</label>
+                <input type="text" id="flightprice" size="5" name="flightprice" />
+            </div>
+            <br class="clear" />
+            <button id="viewresult">View result</button>
         </div>
-        <br class="clear"/>
-
         <div class="input" id="result-wr" style="display:none">
             <span name="result" id="result"></span>
         </div>
+    </div>
+    <div class="page" id="page5" style="display:none">
+        <div id="results"></div>
+        <div id="flightplan-wr">
+            <span>Flightplan</span>
+            <span class="flightplan"></span>
+        </div>
+        <button id="print">Print</button>
+        <div id="price-wr">
+            <span class="price_title">Preis p.P brutto:</span><span id="oneprice"></span><br/>
+            <span class="price_title">Gesamtpreis brutto:</span><span id="gesamtpreis"></span><br/>
+            <span class="price_title">Provision:</span><span id="provision"></span><br/>
+            <span class="price_title">19 % Mwst:</span><span id="percent"></span><br/>
+            <span class="price_title">Gesamtpreis netto:</span><spand id="netto"></span><br/>
+        </div>
+        <br class="clear" />
+        <div class="mail-wr">
+            <div class="mail" style="display:none">
+                <span>Mail</span>
+                <input type="text" size="30" class="email"/>
+            </div>
+        </div>            
+        <div class="mail-buttons">
+            <button id="addmail">Add mail</button>
+            <button id="sendmail">Druck</button>
+        </div>
+    </div>
+
     </div>
 </div>
 </body>
