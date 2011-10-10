@@ -4,116 +4,125 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
     <title></title>
-    <link rel="stylesheet" href="css/reset.css" />
-    <link rel="stylesheet" href="css/main.css" />
-	<script src="js/jquery-1.6.4.min.js"></script>
-	<script src="js/main.js"></script>
+    <link rel="stylesheet" href="css/reset.css"/>
+    <link rel="stylesheet" href="css/main.css"/>
+    <script src="js/jquery-1.6.4.min.js"></script>
+    <script src="js/main.js"></script>
 </head>
 <body>
 <div class="content">
-	<div class="page" id="page1">
-		<div class="input">
-			<label for="aktion">Aktion:</label>
-			<input type="text" name="aktion" id="aktion" size="2" maxlength="2" />
-		</div>
-		<div class="input">
-			<label for="agent_kunden">???</label>
-			<select name="agent_kunden" id="agent_kunden">
-				<option value="kundennummer">K</option>
-				<option value="agentur">A</option>
-			</select>
-		</div>
-		<div class="input">
-			<label for="kundennummer">Kundennumer:</label>
-			<input type="text" id="kundennummer" name="kundennummer" size="10" />
-		</div>		
-		<div class="input">
-			<label for="vorgangsnummer">Vorgansnummer:</label>
-			<input type="text" id="vorgangsnummer" name="vorgangsnummer" size="10" />
-		</div>
-		<div class="input">
-			<label for="rechnungsnummber">Rechnungsnummber:<label>
-			<input type="text" id="rechnungsnummber" name="rechnungsnummber" size="10" />
-		</div>
-		<br class="clear" />
-	</div>
-	<div class="page" id="page2" style="display:none">
-		<div class="input personen">
-			<label for="personen">Personen</label>
-			<input type="text" id="personen" name="personen" size="2" />
-		</div>
-		<div id="persons">
-			<div class="person" style="display:none">
-				<span class="num"></span>
-				<div class="input">
-					<label for="sex">Herr/Frau</label>
-					<select name="sex" id="sex">
-						<option value="herr">Herr</option>
-						<option value="frau">Frau</option>
-					</select>
-				</div>
-				<div class="input">
-					<label>Nachname/Vorname</label>
-					<input type="text" name="person_name" size="20" />
-				</div>
-				<br class="clear" />
-			</div>
-		</div>
-	</div>
-	<div class="page" id="page3" style="display:none">
-		<button id="hotel-button">Hotel</button>
-		<button id="rundreise-button" disabled>Rundreise</button>
-		<button id="flug-button" disabled>Flug</button>
-	</div>
-	<div class="page" id="page4" style="display:none">
+    <div class="page" id="page1">
         <div class="input">
-            <label for="hotelcode">Hotel Code</label>
-            <input type="text" name="hotelcode" size="8" id="hotelcode" />
-            <span id="hotelname"></span>
+            <label for="aktion">Aktion:</label>
+            <input type="text" name="aktion" id="aktion" size="2" maxlength="2"/>
         </div>
-        <div class="input" id="roomcapacity-wr" style="display:none;">
-            <label for="roomcapacity">Capacity</label>
-            <select name="roomcapacity" id="roomcapacity"></select>
+        <div class="input">
+            <label for="agent_kunden">???</label>
+            <select name="agent_kunden" id="agent_kunden">
+                <option value="kundennummer">K</option>
+                <option value="agentur">A</option>
+            </select>
         </div>
-        <div class="input" id="roomtype-wr" style="display:none;">
-            <label for="roomtype">Room type</label>
-            <select name="roomtype" id="roomtype"></select>
+        <div class="input">
+            <label for="kundennummer">Kundennumer:</label>
+            <input type="text" id="kundennummer" name="kundennummer" size="10"/>
         </div>
-        <div class="input" id="service-wr" style="display:none;">
-            <label for="service">Service</label>
-            <select name="service" id="service"></select>
+        <div class="input">
+            <label for="vorgangsnummer">Vorgansnummer:</label>
+            <input type="text" id="vorgangsnummer" name="vorgangsnummer" size="10"/>
         </div>
-        <div class="input" id="date-wr" style="display:none;">
-            <span>Date</span>
-            <div id="datestart-wr">
-            	<label for="datestart">Von</label>
-            	<select name="datestart" id="datestart"></select>
-            	<br class="clear" />
+        <div class="input">
+            <label for="rechnungsnummber">Rechnungsnummber:<label>
+                <input type="text" id="rechnungsnummber" name="rechnungsnummber" size="10"/>
+        </div>
+        <br class="clear"/>
+    </div>
+    <div class="page" id="page2" style="display:none">
+        <div class="input personen">
+            <label for="personen">Personen</label>
+            <input type="text" id="personen" name="personen" size="2"/>
+        </div>
+        <div id="persons">
+            <div class="person" style="display:none">
+                <span class="num"></span>
+
+                <div class="input">
+                    <label for="sex">Herr/Frau</label>
+                    <select name="sex" id="sex">
+                        <option value="herr">Herr</option>
+                        <option value="frau">Frau</option>
+                    </select>
+                </div>
+                <div class="input">
+                    <label>Nachname/Vorname</label>
+                    <input type="text" name="person_name" size="20"/>
+                </div>
+                <br class="clear"/>
             </div>
-            <div id="dateend-wr">
-            	<label for="dateend">Bis</label>
-            	<select name="dateend" id="dateend"></select>
-            	<br class="clear" />
+        </div>
+    </div>
+    <div class="page" id="page3" style="display:none">
+        <button id="hotel-button">Hotel</button>
+        <button id="rundreise-button" disabled>Rundreise</button>
+        <button id="flug-button" disabled>Flug</button>
+    </div>
+    <div class="page" id="page4" style="display:none">
+        <div class="hotels">
+            <div class="hotel-wr" style="display:none">
+                <div class="input">
+                    <label for="hotelcode">Hotel Code</label>
+                    <input type="text" name="hotelcode" size="8" id="hotelcode"/>
+                    <span id="hotelname"></span>
+                </div>
+                <div class="input" id="roomcapacity-wr" style="display:none;">
+                    <label for="roomcapacity">Capacity</label>
+                    <select name="roomcapacity" id="roomcapacity"></select>
+                </div>
+                <div class="input" id="roomtype-wr" style="display:none;">
+                    <label for="roomtype">Room type</label>
+                    <select name="roomtype" id="roomtype"></select>
+                </div>
+                <div class="input" id="service-wr" style="display:none;">
+                    <label for="service">Service</label>
+                    <select name="service" id="service"></select>
+                </div>
+                <div class="input" id="date-wr" style="display:none;">
+                    <span>Date</span>
+                    <div id="datestart-wr">
+                        <label for="datestart">Von</label>
+                        <select name="datestart" id="datestart"></select>
+                        <br class="clear"/>
+                    </div>
+                    <div id="dateend-wr">
+                        <label for="dateend">Bis</label>
+                        <select name="dateend" id="dateend"></select>
+                        <br class="clear"/>
+                    </div>
+                    <div id="dayscount-wr" style="display:none;">
+                        = <span id="dayscount" name="dayscount"></span> Nachte
+                    </div>
+                </div>
+                <div class="input" id="price-wr" style="display:none">
+                    <label for="price">Price</label>
+                    <span id="price" name="price"></span>
+                </div>
+                <br class="clear" />
             </div>
-            <div>
-            	= <span id="dayscount" name="dayscount"></span> Nachte
-          	</div>
         </div>
-        <br class="clear" />
-        <div class="input" id="price-wr" style="display:none">
-            <label for="price">Price</label>
-            <span id="price" name="price"></span>
+        <div id="buttons" style="display:none;">
+            <button id="addhotel">Noch ein Hotel hunzufügen</button>
+            <button id="viewremark">Fertig</button>
         </div>
-        <br class="clear" />
         <div class="input" id="remark-wr" style="display:none">
             <label for="remark">Remark</label>
             <input size="100" id="remark" name="remark"/>
         </div>
-        <br class="clear" />
+        <br class="clear"/>
+
         <div class="input" id="result-wr" style="display:none">
             <span name="result" id="result"></span>
         </div>
-	</div>
+    </div>
 </div>
-</body>	
+</body>
 </html>
