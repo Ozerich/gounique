@@ -85,6 +85,9 @@ switch ($mode)
         $result += @mysql_result($sql, 0);
         break;
 
+    case "sendmail":
+        mail($_POST['email'], $_POST['subject'], $_POST['text']);
+        $result = "OK";
 }
 
 echo $result;

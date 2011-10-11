@@ -3,7 +3,7 @@ session_start();
 
 define("DB_HOST", "localhost");
 define("DB_USER", "root");
-define("DB_PASSWORD", "admin");
+define("DB_PASSWORD", "");
 define("DB_DATABASE", "hotel");
 
 mysql_connect(DB_HOST, DB_USER, DB_PASSWORD) or die(mysql_error());

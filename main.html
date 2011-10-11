@@ -114,7 +114,7 @@
                     <label for="price">Price</label>
                     <span id="price" name="price"></span>
                 </div>
-                <br class="clear" />
+                <br class="clear"/>
             </div>
         </div>
         <div id="buttons" style="display:none;">
@@ -122,23 +122,24 @@
             <button id="viewremark">Fertig</button>
         </div>
         <div class="input" id="remark-wr" style="display:none">
-                <label for="remark">Remark</label>
-                <input size="100" id="remark" name="remark"/>
-            </div>
+            <label for="remark">Remark</label>
+            <input size="100" id="remark" name="remark"/>
+        </div>
         <div id="addinfo-wr" style="display:none">
             <div class="input" id="summary-wr">
-                <div class="summary" style="display:none"></div>
+                <div class="summary" id="summary" style="display:none"></div>
             </div>
             <br class="clear"/>
+
             <div class="input" id="flightplan-wr">
                 <label for="flightplan">Flight plan</label>
                 <textarea id="flightplan" name="flightplan"></textarea>
             </div>
             <div class="input" id="flightprice-wr">
                 <label for="flightprice">Preis of flight</label>
-                <input type="text" id="flightprice" size="5" name="flightprice" />
+                <input type="text" id="flightprice" size="5" name="flightprice"/>
             </div>
-            <br class="clear" />
+            <br class="clear"/>
             <button id="viewresult">View result</button>
         </div>
         <div class="input" id="result-wr" style="display:none">
@@ -146,32 +147,35 @@
         </div>
     </div>
     <div class="page" id="page5" style="display:none">
-        <div id="results"></div>
-        <div id="flightplan-wr">
-            <span>Flightplan</span>
-            <span class="flightplan"></span>
-        </div>
-        <button id="print">Print</button>
-        <div id="price-wr">
-            <span class="price_title">Preis p.P brutto:</span><span id="oneprice"></span><br/>
-            <span class="price_title">Gesamtpreis brutto:</span><span id="gesamtpreis"></span><br/>
-            <span class="price_title">Provision:</span><span id="provision"></span><br/>
-            <span class="price_title">19 % Mwst:</span><span id="percent"></span><br/>
-            <span class="price_title">Gesamtpreis netto:</span><spand id="netto"></span><br/>
-        </div>
-        <br class="clear" />
-        <div class="mail-wr">
-            <div class="mail" style="display:none">
-                <span>Mail</span>
-                <input type="text" size="30" class="email"/>
+        <div id="resultcontent">
+            <div id="results"></div>
+            <div id="flightplan-wr">
+                <span>Flightplan</span>
+                <span class="flightplan"></span>
             </div>
-        </div>            
+            <div id="priceresult">
+                <span class="price_title">Preis p.P brutto:</span><span id="oneprice"></span> &euro;<br/>
+                <span class="price_title">Gesamtpreis brutto:</span><span id="gesamtpreis"></span> &euro;<br/>
+                <span class="price_title">Provision:</span><span id="provision"></span> &euro;<br/>
+                <span class="price_title">19 % Mwst:</span><span id="percent"></span> &euro;<br/>
+                <span class="price_title">Gesamtpreis netto:</span><span id="netto"></span> &euro;<br/>
+            </div>
+            <br class="clear"/>
+
+            <div class="mail-wr">
+                <div class="mail" style="display:none">
+                    <span>Mail</span>
+                    <input type="text" size="30" class="email"/>
+                </div>
+            </div>
+        </div>
         <div class="mail-buttons">
             <button id="addmail">Add mail</button>
-            <button id="sendmail">Druck</button>
+            <button id="sendmail">Send mail</button>
+            <button id="druck">Druck</button>
         </div>
     </div>
-    </div>
+</div>
 </div>
 </body>
 </html>

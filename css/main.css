@@ -38,14 +38,27 @@ input:focus{
 	height: 120px;
 }
 
-#page5{width: 400px;}
+#page5{
+    width: 650px;
+    margin-top: 20px;
+}
 #page5 #flightplan-wr{
 	float:left;
+    width: 50%;
 }
-#page5 #print{
-	float: right;
+#page5 #results{
+    margin-bottom: 10px;
 }
 
-#page5 #price-wr{
+#page5 .mail-wr{
+    margin-top: 50px;
+}
+
+#page5 .price_title{
+    display: inline-block;
+    width: 140px;
+}
+
+#page5 #priceresult{
 	float: right;
 }
