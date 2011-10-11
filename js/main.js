@@ -1,7 +1,7 @@
 function GenerateResult(div) {
     var result = $(div + '#datestart').val() + " - " + $(div + '#dateend').val() + "  " + $(div + "#dayscount").html() + " N HOTEL: " +
-        $(div + "#hotelname").html() + " / " + $(div + "#roomcapacity").val() + " - " + $(div + "#roomtype").val() + " / " + $(div + "#service").val() +
-        " / " + $(div + "#remark").val();
+        $(div + "#hotelname").html() + " / " + $(div + "#roomcapacity option:selected").text() + " - " + $(div + "#roomtype").val() + " / " + $(div + "#service").val() +
+        " / " + $(div + "#transfer option:selected").text();
     return result;
 }
 
@@ -115,10 +115,19 @@ $(document).ready(function() {
 
 
     $('#buttons #viewremark').click(function(event) {
-        $('#addinfo-wr').show().find('#remark').focus();
-        for(var i = 1; i < $('.hotel-wr').size(); i++)
-            $('.summary:first').clone().appendTo('#summary-wr').html(GenerateResult("#hotel_" + i + " ")).show();
+        $('#remark-wr').show().find('#remark').focus();   
     });
+    
+    $('#remark').keypress(function(event) {
+        if(event.which == 13)
+        {
+            $('#addinfo-wr').show().find('#flightplan').focus();
+            for(var i = 1; i < $('.hotel-wr').size(); i++)
+                $('.summary:first').clone().appendTo('#summary-wr').html(GenerateResult("#hotel_" + i + " ")).show();
+        }    
+    });
+
+
 
     $('#buttons #addhotel').click(function() {
         $('.hotel-wr:first').clone().appendTo(".hotels").attr('id', "hotel_" + ($('.hotel-wr').size() - 1)).show();
@@ -242,10 +251,24 @@ $(document).ready(function() {
                     type: "post",
                     data: "mode=price&dateend=" + $(this).val(),
                     success: function(data) {
+                        $(hotel_div + '#transfer-wr').show().find('#transfer').focus();
+                        UpdateDaysCount(hotel_div);
+                    }
+                });
+            }
+        });
+
+
+        $('.hotel-wr:last #transfer').keypress(function(event) {
+            if (event.which == 13) {
+                $.ajax({
+                    url: "php/ajax.php",
+                    type: "post",
+                    data: "mode=price&transfer=" + $(this).val(),
+                    success: function(data) {
                         $(hotel_div + '#price').html(data + " EUR");
                         $(hotel_div + '#price-wr').show();
                         $('#buttons').show().find("#addhotel").focus();
-                        UpdateDaysCount(hotel_div);
                     }
                 });
             }
@@ -253,6 +276,7 @@ $(document).ready(function() {
 
     });
 
+    
     $('button').keypress(function(event) {
         if (event.which == 13) {
             $(this).click();

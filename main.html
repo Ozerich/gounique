@@ -102,6 +102,14 @@
                         = <span id="dayscount" name="dayscount"></span> Nachte
                     </div>
                 </div>
+                <div class="input" id="transfer-wr" style="display:none">
+                    <label for="transfer">Transfer</label>
+                    <select id="transfer" name="transfer">
+                        <option value="in">TRANSFER IN</option>
+                        <option value="out">TRANSFER OUT</option>
+                        <option value="rt">TRANSFER RT</option>
+                    </select>
+                </div>
                 <div class="input" id="price-wr" style="display:none">
                     <label for="price">Price</label>
                     <span id="price" name="price"></span>
@@ -113,13 +121,13 @@
             <button id="addhotel">Noch ein Hotel hunzufügen</button>
             <button id="viewremark">Fertig</button>
         </div>
+        <div class="input" id="remark-wr" style="display:none">
+                <label for="remark">Remark</label>
+                <input size="100" id="remark" name="remark"/>
+            </div>
         <div id="addinfo-wr" style="display:none">
             <div class="input" id="summary-wr">
                 <div class="summary" style="display:none"></div>
-            </div>
-            <div class="input" id="remark-wr">
-                <label for="remark">Remark</label>
-                <input size="100" id="remark" name="remark"/>
             </div>
             <br class="clear"/>
             <div class="input" id="flightplan-wr">
@@ -163,7 +171,6 @@
             <button id="sendmail">Druck</button>
         </div>
     </div>
-
     </div>
 </div>
 </body>

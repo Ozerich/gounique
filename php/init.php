@@ -26,5 +26,15 @@ function create_tables()
       `price` INT NOT NULL,
       PRIMARY KEY  (`id`)
     ) ENGINE=MyISAM DEFAULT CHARSET=utf8") or die(mysql_error());
+
+    mysql_query("CREATE TABLE IF NOT EXISTS transfers (
+      `id` INT(7) NOT NULL AUTO_INCREMENT,
+      `hotelcode` VARCHAR(8) NOT NULL,
+      `cost_in` INT NOT NULL,
+      `cost_out` INT NOT NULL,
+      `cost_rt` INT NOT NULL,
+      PRIMARY KEY (`id`)
+    )ENGINE MyISAM DEFAULT CHARSET=utf8") or die(mysql_error());
+
 }
 ?>

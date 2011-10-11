@@ -33,6 +33,11 @@ input:focus{
 	float: left;
 }
 
+#flightplan{
+	width: 415px;
+	height: 120px;
+}
+
 #page5{width: 400px;}
 #page5 #flightplan-wr{
 	float:left;

@@ -9,8 +9,10 @@ switch ($mode)
 {
     case "hotelname":
         $_SESSION['hotelcode'] = $_POST['hotelcode'];
-        $sql = mysql_query("SELECT hotelname FROM hotels WHERE hotelcode = '".$_SESSION['hotelcode']."'") or die(mysql_error());
-        $result = @mysql_result($sql, 0);
+        $sql = mysql_query("SELECT hotelname, hotelstars FROM hotels WHERE hotelcode = '".$_SESSION['hotelcode']."'") or die(mysql_error());
+        $data = mysql_fetch_assoc($sql);
+        if($data)
+            $result = $data['hotelname']." ".$data['hotelstars']."*";
         break;
 
     case "roomcapacity":
@@ -69,11 +71,18 @@ switch ($mode)
         break;
 
     case "price":
-        $_SESSION['dateend'] = $_POST['dateend'];
+        if(isset($_POST['dateend'])){
+            $_SESSION['dateend'] = $_POST['dateend'];
+            $result = "";
+            break;
+        }
+        $_SESSION['transfer'] = $_POST['transfer'];
         $sql = mysql_query("SELECT DISTINCT price FROM hotels WHERE hotelcode = '".$_SESSION['hotelcode']."' AND roomcapacity = '".
                            $_SESSION['roomcapacity']."' AND roomtype = '".$_SESSION['roomtype']."' AND service = '".$_SESSION['service'].
                            "' AND datestart = '".$_SESSION['datestart']."' AND dateend = '".$_SESSION['dateend']."'") or die(mysql_error());
         $result = @mysql_result($sql, 0);
+        $sql = mysql_query("SELECT cost_".$_SESSION['transfer']." FROM transfers WHERE hotelcode = '".$_SESSION['hotelcode']."'");
+        $result += @mysql_result($sql, 0);
         break;
 
 }
