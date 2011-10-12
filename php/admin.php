@@ -5,7 +5,7 @@ require_once "init.php";
 function FixDate($date)
 {
     $date = explode("-", $date);
-    return $date[2].".".$date[1].".".$date[0];
+    return $date[2].$date[1].$date[0];
 }
 
 function FileGetExtension($filename)
@@ -15,7 +15,7 @@ function FileGetExtension($filename)
 
 function FixService($input)
 {
-    if($input == "F")return "UF";
+    if($input == "F")return "ÜF";
     else if($input == "A") return "UAI";
     else if($input == "H") return "HP";
     else if($input == "V") return "VP";

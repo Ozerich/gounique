@@ -1,0 +1,8 @@
+.mail-wr, .mail-buttons{
+    display: none;
+}
+
+#page1 input, #page1 select{
+    border: 0;
+    background: #fff;
+}

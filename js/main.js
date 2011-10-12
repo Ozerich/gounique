@@ -1,7 +1,11 @@
+function FixDate(input) {
+    return input.substr(0, 2) + "." + input.substr(2, 2) + "." + input.substr(4);
+}
+
 function GenerateResult(div) {
-    var result = $(div + '#datestart').val() + " - " + $(div + '#dateend').val() + "  " + $(div + "#dayscount").html() + " N HOTEL: " +
+    var result = FixDate($(div + '#datestart').val()) + " - " + FixDate($(div + '#dateend').val()) + "  " + $(div + "#dayscount").html() + " N HOTEL: " +
         $(div + "#hotelname").html() + " / " + $(div + "#roomcapacity option:selected").text() + " - " + $(div + "#roomtype").val() + " / " + $(div + "#service").val() +
-        " / " + $(div + "#transfer option:selected").text();
+        " / " + $(div + "#transfer option:selected").text() + " / " + $(div + "#remark").val();
     return result;
 }
 
@@ -11,43 +15,64 @@ function UpdateDaysCount(div) {
     if (start == "" || end == "")
         $(div + '#dayscount').html('').hide();
     else {
-        start = start.split('.');
-        end = end.split('.');
-        start = new Date(start[2], start[1], start[0]);
-        end = new Date(end[2], end[1], end[0]);
-        var result = end - start;
-        $(div + "#dayscount-wr").show().find('#dayscount').html(result / 1000 / 3600 / 24);
+        start = new Date(start.substr(4), start.substr(2, 2), start.substr(0, 2));
+        end = new Date(end.substr(4), end.substr(2, 2), end.substr(0, 2));
+        var result = (end - start) / 1000 / 3600 / 24;
+        if (result < 0)
+            result = "ERROR";
+        else
+            result = result == 1 ? "1 Nacht" : result + " Nächte";
+        $(div + "#dayscount-wr").show().find('#dayscount').html(result);
     }
 }
 
 $(document).ready(function() {
+
     /*
      * PAGE 1
      */
 
     $('#aktion').keypress(function(event) {
         if (event.which == 13) {
-            if ($('#aktion').val() != "")
+            if ($('#aktion').val() != "") {
                 $('#agent_kunden').focus();
+                if ($(this).val().toUpperCase() == "B")
+                    $('#rechnungsnummber-wr').show();
+                else
+                    $('#rechnungsnummber-wr').hide();
+                return false;
+            }
         }
     });
 
     $('#agent_kunden').keypress(function(event) {
-        if (event.which == 13)
+        if (event.which == 13) {
             $('#kundennummer').focus();
+            return false;
+        }
     });
 
     $('#kundennummer').keypress(function(event) {
         if (event.which == 13) {
-            if ($('#kundennummer').val() != "")
+            if ($('#kundennummer').val() != "") {
                 $('#vorgangsnummer').focus();
+                return false;
+            }
         }
     });
 
     $('#vorgangsnummer').keypress(function(event) {
         if (event.which == 13) {
-            if ($('#vorgangsnummer').val() != "")
-                $('#rechnungsnummber').focus();
+            if ($('#vorgangsnummer').val() != "") {
+                if ($('#aktion').val().toUpperCase() == 'B')
+                    $('#rechnungsnummber').focus();
+                else {
+                    $('#page2').show();
+                    $('#page1 input, #page1 select').attr('disabled', 'disabled');
+                    $('#personen').focus();
+                }
+            }
+            return false;
         }
     });
 
@@ -55,8 +80,10 @@ $(document).ready(function() {
         if (event.which == 13) {
             if ($('#rechnungsnummber').val() != "") {
                 $('#page2').show();
+                $('#page1 input, #page1 select').attr('disabled', 'disabled');
                 $('#personen').focus();
             }
+            return false;
         }
     });
 
@@ -66,35 +93,44 @@ $(document).ready(function() {
 
     $('#personen').keypress(function(event) {
         if (event.which != 13 || $("#personen").val() == "") return true;
-        if ($('#personen').val() < $('.person').size()) {
-            $($('.person')[1]).find('[name=sex]').focus();
+        if ($('#personen').val() < $('#page2 .person').size()) {
+            while ($('#page2 .person:visible').size() > $('#personen').val())
+                $('#page2 .person:last').remove();
+            $($('#page2 .person')[1]).find('[name=sex]').focus();
             return true;
         }
-        for (var i = $('.person').size(); i <= $('#personen').val(); i++) {
-            var div = $($('.person')[0]).clone().show();
+        for (var i = $('#page2 .person').size(); i <= $('#personen').val(); i++) {
+            var div = $($('#page2 .person')[0]).clone().show();
             $(div).find('span').html(i);
             div.appendTo($('#persons'));
         }
         $($('.person')[1]).find('[name=sex]').focus();
-        $('.person input, .person select').unbind('keypress');
-        $('.person [name=sex]').keypress(function(event) {
-            if (event.which == 13)
+        $('#page2 .person input, #page2 .person select').unbind('keypress');
+        $('#page2 .person [name=sex]').keypress(function(event) {
+            if (event.which == 13) {
                 $(this).parent().parent().find('[name=person_name]').focus();
-        });
-
-        $('.person [name=person_name]').keypress(function(event) {
-            if (event.which == 13 && $(this).val() != "") {
-                $(this).parent().parent().next('.person').find('[name=sex]').focus();
-            }
-        });
-        $('.person:last').find('[name=person_name]').keypress(function(event) {
-            if (event.which == 13 && $(this).val() != "") {
-                $('#page2').hide();
-                $('#page3').show();
-                $('#page3 #hotel-button').focus();
+                return false;
             }
         });
 
+        $('#page2 .person [name=person_name]').keypress(function(event) {
+            if (event.which == 13) {
+                if ($(this).val() != "")
+                    $(this).parent().parent().next('#page2 .person').find('[name=sex]').focus();
+                return false;
+            }
+        });
+        $('#page2 .person:last').find('[name=person_name]').keypress(function(event) {
+            if (event.which == 13) {
+                if ($(this).val() != "") {
+                    $('#page2').hide();
+                    $('#page3').show();
+                    $('#page3 #hotel-button').focus();
+                }
+                return false;
+            }
+        });
+    return false;
     });
 
 
@@ -106,6 +142,7 @@ $(document).ready(function() {
         $('#page3').hide();
         $('#page4').show();
         $('#addhotel').click();
+        return false;
     });
 
 
@@ -115,16 +152,12 @@ $(document).ready(function() {
 
 
     $('#buttons #viewremark').click(function(event) {
-        $('#remark-wr').show().find('#remark').focus();
+        $('.hotels').hide();
+        $('#addinfo-wr').show().find('#flightplan').focus();
         $('#buttons').hide();
-    });
-
-    $('#remark').keypress(function(event) {
-        if (event.which == 13) {
-            $('#addinfo-wr').show().find('#flightplan').focus();
-            for (var i = 1; i < $('.hotel-wr').size(); i++)
-                $('.summary:first').clone().appendTo('#summary-wr').html(GenerateResult("#hotel_" + i + " ")).show();
-        }
+        for (var i = 1; i < $('.hotel-wr').size(); i++)
+            $('.summary:first').clone().appendTo('#summary-wr').html(GenerateResult("#hotel_" + i + " ")).show();
+        return false;
     });
 
 
@@ -166,7 +199,8 @@ $(document).ready(function() {
                         else
                             $(hotel_div + '#hotelname').html('NO FOUND');
                     }
-                })
+                });
+                return false;
             }
         });
 
@@ -187,6 +221,7 @@ $(document).ready(function() {
                             + hotel_div + "#price-wr," + hotel_div + "#dayscount-wr" + ",#page4 #buttons").hide();
                     }
                 });
+                return false;
             }
         });
 
@@ -207,6 +242,7 @@ $(document).ready(function() {
                             hotel_div + "#price-wr," + hotel_div + "#dayscount-wr" + ",#page4 #buttons").hide();
                     }
                 });
+                return false;
             }
         });
 
@@ -217,7 +253,6 @@ $(document).ready(function() {
                     type: "post",
                     data: "mode=datestart&service=" + $(this).val(),
                     success: function(data) {
-                        $(hotel_div + '#datestart').empty();
                         data = jQuery.parseJSON(data);
                         for (var i = 0; i < data.length; i++)
                             $('<option value="' + data[i] + '">' + data[i] + '</option>').appendTo(hotel_div + "#datestart");
@@ -227,43 +262,39 @@ $(document).ready(function() {
                             + "#dayscount-wr" + ",#page4 #buttons").hide();
                     }
                 });
+                return false;
             }
         });
 
         $('.hotel-wr:last #datestart').keypress(function(event) {
             if (event.which == 13) {
-                $.ajax({
-                    url: "php/ajax.php",
-                    type: "post",
-                    data: "mode=dateend&datestart=" + $(this).val(),
-                    success: function(data) {
-                        $(hotel_div + '#dateend').empty();
-                        data = jQuery.parseJSON(data);
-                        for (var i = 0; i < data.length; i++)
-                            $('<option value="' + data[i] + '">' + data[i] + '</option>').appendTo(hotel_div + "#dateend");
-                        $(hotel_div + '#dateend-wr').show().find('#dateend').focus();
-                        UpdateDaysCount(hotel_div);
-                         $(hotel_div + "#transfer-wr," + hotel_div + "#price-wr" + ",#page4 #buttons").hide();
-                    }
-                });
+                if ($(this).val() != "")
+                    $(hotel_div + '#dateend-wr').show().find('#dateend').focus();
+                return false;
             }
         });
-        $('.hotel-wr:last #datestart').change(function() {
-            $(hotel_div + '#datestart').keypress();
-        });
+
 
         $('.hotel-wr:last #dateend').keypress(function(event) {
             if (event.which == 13) {
+                UpdateDaysCount(hotel_div);
                 $.ajax({
                     url: "php/ajax.php",
                     type: "post",
-                    data: "mode=price&dateend=" + $(this).val(),
+                    data: "mode=price&datestart=" + $(this).parent().parent().find('#datestart').val() + "&dateend=" + $(this).val(),
                     success: function(data) {
-                        $(hotel_div + '#transfer-wr').show().find('#transfer').focus();
-                        UpdateDaysCount(hotel_div);
-                        $(hotel_div + "#price-wr" + ",#page4 #buttons").hide();
+                        if (data != 0) {
+                            $(hotel_div + '#transfer-wr').show().find('#transfer').focus();
+                            $(hotel_div + "#price-wr" + ",#page4 #buttons").hide();
+                            $(hotel_div + "#nohotel").hide();
+                        }
+                        else {
+                            $(hotel_div + '#transfer-wr').hide();
+                            $(hotel_div + "#nohotel").show();
+                        }
                     }
                 });
+                return false;
             }
         });
 
@@ -277,12 +308,20 @@ $(document).ready(function() {
                     success: function(data) {
                         $(hotel_div + '#price').html(data + " EUR");
                         $(hotel_div + '#price-wr').show();
-                        $('#buttons').show().find("#addhotel").focus();
+                        $(hotel_div + '#remark-wr').show().find("#remark").focus();
                     }
                 });
+                return false;
             }
         });
 
+        $('.hotel-wr:last #remark').keypress(function(event) {
+            if (event.which == 13) {
+                $('#buttons').show().find("#addhotel").focus();
+                return false;
+            }
+        });
+        return false;
     });
 
 
@@ -306,18 +345,24 @@ $(document).ready(function() {
     });
 
     $('#remark').keypress(function(event) {
-        if (event.which == 13)
+        if (event.which == 13) {
             $('#flightplan').focus();
+            return false;
+        }
     });
 
     $('#flightplan').keypress(function(event) {
-        if (event.which == 13)
+        if (event.which == 13) {
             $('#flightprice').focus();
+            return false;
+        }
     });
 
     $('#flightprice').keypress(function(event) {
-        if (event.which == 13 && $(this).val() != "") {
-            $('#viewresult').focus();
+        if (event.which == 13) {
+            if ($(this).val() != "")
+                $('#viewresult').focus();
+            return false;
         }
     });
 
@@ -331,12 +376,14 @@ $(document).ready(function() {
         for (var i = 1; i < price_elems.length; i++)
             hotel_price += parseInt($(price_elems[i]).html());
         price += hotel_price;
-        var gesamtpreis = price * parseInt($('#personen').val());
+        var persons = parseInt($('#personen').val());
+        var oneprice = (price / persons).toFixed(2);
+        var gesamtpreis = price.toFixed(2);
         var netto = (gesamtpreis / 1.19).toFixed(2);
         var provision = (hotel_price * 0.2).toFixed(2);
         var percent = (gesamtpreis / 1.19 * 0.19).toFixed(2);
 
-        $('#priceresult #oneprice').html(price);
+        $('#priceresult #oneprice').html(oneprice);
         $('#priceresult #gesamtpreis').html(gesamtpreis);
         $('#priceresult #provision').html(provision);
         $('#priceresult #percent').html(percent);
@@ -344,9 +391,16 @@ $(document).ready(function() {
 
         $('#summary-wr *').clone().appendTo('#results');
 
+        $('.flightplan').html($('#flightplan').val());
+
+        $('#page2 .person').each(function(index) {
+            if (index > 0)
+                $('#page5 .person:first').clone().html($(this).find('input[name=person_name]').val() + " ("
+                    + $(this).find('select option:selected').text() + ")").show().appendTo('#personresult');
+        });
+
         $('#addmail').click();
-
-
+        return false;
     });
 
 
@@ -381,25 +435,33 @@ $(document).ready(function() {
             if (event.which == 13)
                 $('#addmail').focus();
         });
+        return false;
     });
 
     $('#sendmail').click(function(event) {
+        alert($('form').serialize());
         var subject = $('#aktion').val() + " / " + $('#agent_kunden').val() + " / " + $('#kundennummer').val() + " / "
             + $('#vorgangsnummer').val() + " / " + $('#rechnungsnummber').val();
         subject = encodeURI(subject);
         var text = $('#resultcontent').html();
         text = encodeURI(text);
-        $('.mail:visible input').each(function() {
+        $('.mail:visible').each(function() {
             var input = this;
             $.ajax({
                 url: "php/ajax.php",
                 type: "post",
-                data: "mode=sendmail&email=" + $(this).val() + "&subject=" + subject + "&text=" + text,
+                data: "mode=sendmail&email=" + $(this).find('input').val() + "&subject=" + subject + "&text=" + text,
                 success: function(data) {
-                    $(input).replaceWith("<span>" + data + "</span>");
+                    $(this).find('.good').show();
                 }
             });
         });
+        return false;
+    });
+
+    $('#druck').click(function() {
+        window.print();
+        return false;
     });
 
 });

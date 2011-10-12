@@ -38,16 +38,29 @@ input:focus{
 	height: 120px;
 }
 
+#page5 .number{
+    margin:0 8px 0 -20px;
+}
 #page5{
-    width: 650px;
+    width: 800px;
     margin-top: 20px;
 }
 #page5 #flightplan-wr{
 	float:left;
-    width: 50%;
+    border: 1px solid black;
+    width: 350px;
+    padding-left: 20px;
+}
+
+#page5 #results-wr{
+    padding-left: 20px;
+    border: 1px solid black;
+    width: 780px;
+    margin-bottom: 10px;
 }
 #page5 #results{
     margin-bottom: 10px;
+    margin-top: -14px;
 }
 
 #page5 .mail-wr{
@@ -61,4 +74,10 @@ input:focus{
 
 #page5 #priceresult{
 	float: right;
+      border: 1px solid black;
+    width: 350px
+}
+
+#page5 .personresult-wr{
+    margin-bottom: 10px;
 }

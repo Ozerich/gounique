@@ -4,12 +4,14 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
     <title></title>
-    <link rel="stylesheet" href="css/reset.css"/>
-    <link rel="stylesheet" href="css/main.css"/>
+    <link rel="stylesheet" href="css/reset.css" type="text/css"/>
+    <link rel="stylesheet" href="css/main.css" type="text/css"/>
+    <link rel="stylesheet" href="css/print.css" type="text/css" media="print"/>
     <script src="js/jquery-1.6.4.min.js"></script>
     <script src="js/main.js"></script>
 </head>
 <body>
+<form>
 <div class="content">
     <div class="page" id="page1">
         <div class="input">
@@ -19,8 +21,8 @@
         <div class="input">
             <label for="agent_kunden">K/A</label>
             <select name="agent_kunden" id="agent_kunden">
-                <option value="kundennummer">K</option>
                 <option value="agentur">A</option>
+                <option value="kundennummer">K</option>
             </select>
         </div>
         <div class="input">
@@ -31,7 +33,7 @@
             <label for="vorgangsnummer">Vorgansnummer:</label>
             <input type="text" id="vorgangsnummer" name="vorgangsnummer" size="10"/>
         </div>
-        <div class="input">
+        <div class="input" id="rechnungsnummber-wr" style="display:none;">
             <label for="rechnungsnummber">Rechnungsnummber:<label>
                 <input type="text" id="rechnungsnummber" name="rechnungsnummber" size="10"/>
         </div>
@@ -90,24 +92,27 @@
                     <span>Date</span>
                     <div id="datestart-wr">
                         <label for="datestart">Von</label>
-                        <select name="datestart" id="datestart"></select>
+                        <input type="text" name="datestart" id="datestart" size="8"/>
                         <br class="clear"/>
                     </div>
+                    <br/>
                     <div id="dateend-wr">
-                        <label for="dateend">Bis</label>
-                        <select name="dateend" id="dateend"></select>
+                        <label for="dateend">Bis&nbsp;</label>
+                        <input type="text" name="dateend" id="dateend" size="8"/>
                         <br class="clear"/>
                     </div>
                     <div id="dayscount-wr" style="display:none;">
-                        = <span id="dayscount" name="dayscount"></span> Nachte
+                        = <span id="dayscount" name="dayscount"></span>
                     </div>
                 </div>
+                <div class="input" id="nohotel" style="display:none;">NO FOUND</div>
                 <div class="input" id="transfer-wr" style="display:none">
                     <label for="transfer">Transfer</label>
                     <select id="transfer" name="transfer">
                         <option value="in">TRANSFER IN</option>
                         <option value="out">TRANSFER OUT</option>
                         <option value="rt">TRANSFER RT</option>
+                        <option value="no">TRANSFER KEIN</option>
                     </select>
                 </div>
                 <div class="input" id="price-wr" style="display:none">
@@ -115,15 +120,17 @@
                     <span id="price" name="price"></span>
                 </div>
                 <br class="clear"/>
+
+                <div class="input" id="remark-wr" style="display:none">
+                    <label for="remark">Remark</label>
+                    <input type="text" name="remark" id="remark" size="100"/>
+                </div>
+                <br class="clear"/>
             </div>
         </div>
         <div id="buttons" style="display:none;">
             <button id="addhotel">Noch ein Hotel hunzufügen</button>
             <button id="viewremark">Fertig</button>
-        </div>
-        <div class="input" id="remark-wr" style="display:none">
-            <label for="remark">Remark</label>
-            <input size="100" id="remark" name="remark"/>
         </div>
         <div id="addinfo-wr" style="display:none">
             <div class="input" id="summary-wr">
@@ -148,16 +155,27 @@
     </div>
     <div class="page" id="page5" style="display:none">
         <div id="resultcontent">
-            <div id="results"></div>
+            <div class="personresult-wr">
+                <span>Persons:</span><br/>
+
+                <div id="personresult">
+                    <div class="person"></div>
+                </div>
+            </div>
+            <div id="results-wr">
+                <span class="number">1</span>
+                <div id="results"></div>
+            </div>
             <div id="flightplan-wr">
-                <span>Flightplan</span>
-                <span class="flightplan"></span>
+                <span class="number">2</span>
+                <span>Flightplan</span><br/><br/>
+                <pre class="flightplan"></pre>
             </div>
             <div id="priceresult">
                 <span class="price_title">Preis p.P brutto:</span><span id="oneprice"></span> &euro;<br/>
                 <span class="price_title">Gesamtpreis brutto:</span><span id="gesamtpreis"></span> &euro;<br/>
                 <span class="price_title">Provision:</span><span id="provision"></span> &euro;<br/>
-                <span class="price_title">19 % Mwst:</span><span id="percent"></span> &euro;<br/>
+                <span class="price_title">19 % Mwst:</span><span id="percent"></span> &euro;<br/><br/>
                 <span class="price_title">Gesamtpreis netto:</span><span id="netto"></span> &euro;<br/>
             </div>
             <br class="clear"/>
@@ -166,6 +184,7 @@
                 <div class="mail" style="display:none">
                     <span>Mail</span>
                     <input type="text" size="30" class="email"/>
+                    <span class="good" style="display:none;">OK</span>
                 </div>
             </div>
         </div>
@@ -177,5 +196,6 @@
     </div>
 </div>
 </div>
+    </form>
 </body>
 </html>
