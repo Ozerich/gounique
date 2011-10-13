@@ -101,6 +101,8 @@ $(document).ready(function() {
         }
         for (var i = $('#page2 .person').size(); i <= $('#personen').val(); i++) {
             var div = $($('#page2 .person')[0]).clone().show();
+            div.find('#sex').attr('name', 'sex[' + $('#page2 .person').size() + ']');
+            div.find('#person_name').attr('person_name', 'person_name[' + $('#page2 .person').size() + ']');
             $(div).find('span').html(i);
             div.appendTo($('#persons'));
         }
@@ -166,6 +168,13 @@ $(document).ready(function() {
         $('#buttons').hide();
         $('.hotel-wr:last #hotelcode').focus();
         var hotel_div = "#hotel_" + ($('.hotel-wr').size() - 1) + " ";
+        $(hotel_div + '#hotelcode').attr('name', "hotelcode[" + ($('.hotel-wr').size() - 1) + "]");
+        $(hotel_div + '#roomcapacity').attr('name', "roomcapacity[" + ($('.hotel-wr').size() - 1) + "]");
+        $(hotel_div + '#roomtype').attr('name', "roomtype[" + ($('.hotel-wr').size() - 1) + "]");
+        $(hotel_div + '#service').attr('name', "service[" + ($('.hotel-wr').size() - 1) + "]");
+        $(hotel_div + '#datestart').attr('name', "datestart[" + ($('.hotel-wr').size() - 1) + "]");
+        $(hotel_div + '#dateend').attr('name', "dateend[" + ($('.hotel-wr').size() - 1) + "]");
+        $(hotel_div + '#transfer').attr('name', "transfer[" + ($('.hotel-wr').size() - 1) + "]");
         $('.hotel-wr:last #hotelcode').keypress(function(event) {
             if (event.keyCode == 27) {
                 $(hotel_div).remove();
