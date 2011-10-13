@@ -100,7 +100,7 @@ $(document).ready(function() {
         if ($('#personen').val() < $('#page2 .person').size()) {
             while ($('#page2 .person:visible').size() > $('#personen').val())
                 $('#page2 .person:last').remove();
-            $($('#page2 .person')[1]).find('[name=sex]').focus();
+            $($('#page2 .person')[1]).find('#sex').focus();
             return true;
         }
         for (var i = $('#page2 .person').size(); i <= $('#personen').val(); i++) {
@@ -110,23 +110,23 @@ $(document).ready(function() {
             $(div).find('span').html(i);
             div.appendTo($('#persons'));
         }
-        $($('.person')[1]).find('[name=sex]').focus();
+        $($('.person')[1]).find('#sex').focus();
         $('#page2 .person input, #page2 .person select').unbind('keypress');
-        $('#page2 .person [name=sex]').keypress(function(event) {
+        $('#page2 .person #sex').keypress(function(event) {
             if (event.which == 13) {
-                $(this).parent().parent().find('[name=person_name]').focus();
+                $(this).parent().parent().find('#person_name').focus();
                 return false;
             }
         });
 
-        $('#page2 .person [name=person_name]').keypress(function(event) {
+        $('#page2 .person #person_name').keypress(function(event) {
             if (event.which == 13) {
                 if ($(this).val() != "")
-                    $(this).parent().parent().next('#page2 .person').find('[name=sex]').focus();
+                    $(this).parent().parent().next('#page2 .person').find('#sex').focus();
                 return false;
             }
         });
-        $('#page2 .person:last').find('[name=person_name]').keypress(function(event) {
+        $('#page2 .person:last').find('#person_name').keypress(function(event) {
             if (event.which == 13) {
                 if ($(this).val() != "") {
                     $('#page2').hide();
