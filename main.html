@@ -11,8 +11,9 @@
     <script src="js/main.js"></script>
 </head>
 <body>
-<form>
+
 <div class="content">
+    <form>
     <div class="page" id="page1">
         <div class="input">
             <label for="aktion">Aktion:</label>
@@ -126,6 +127,9 @@
                     <input type="text" name="remark" id="remark" size="100"/>
                 </div>
                 <br class="clear"/>
+                <input type="hidden" name="hoteldate" id="hoteldate"/>
+                <input type="hidden" name="hotelcontent" id="hotelcontent"/>
+
             </div>
         </div>
         <div id="buttons" style="display:none;">
@@ -172,6 +176,7 @@
                 <pre class="flightplan"></pre>
             </div>
             <div id="priceresult">
+                <input type="hidden" name="priceperson"/>
                 <span class="price_title">Preis p.P brutto:</span><span id="oneprice"></span> &euro;<br/>
                 <span class="price_title">Gesamtpreis brutto:</span><span id="gesamtpreis"></span> &euro;<br/>
                 <span class="price_title">Provision:</span><span id="provision"></span> &euro;<br/>

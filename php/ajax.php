@@ -1,6 +1,8 @@
 <?php
 error_reporting(E_ALL);
 require_once "init.php";
+require_once "pdf.php";
+require_once "Mailer.php";
 
 $mode = $_POST['mode'];
 $result = "";
@@ -92,7 +94,22 @@ switch ($mode)
         break;
 
     case "sendmail":
-        mail($_POST['email'], $_POST['subject'], $_POST['text']);
+        $persons = array();
+        foreach ($_POST['sex'] as $ind => $sex)
+            $persons[] = array("sex" => $sex, "name" => $_POST['person_name'][$ind]);
+        $tours = array();
+        foreach ($_POST['hoteldate'] as $ind => $hoteldate)
+            $tours[] = array("date" => $hoteldate, "content" => $_POST['hotelcontent'][$ind]);
+        WriteToPdf($_POST['vorgansnummer'], $persons, $tours, $_POST['flightplan'], $_POST['priceperson']);
+        $Message = new Mailer();
+        foreach ($_POST['email'] as $email)
+        {
+            $Message->from = 'Ot Menya <ot@menya.com>';
+            $Message->to = $email;
+            $Message->subject = $_POST['subject'];
+            $Message->Attach('result.pdf', 'text/pdf');
+            $Message->Send();
+        }
         $result = "OK";
 }
 

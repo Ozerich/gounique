@@ -1,10 +1,7 @@
 <?php
-session_start();
+require_once "config.php";
 
-define("DB_HOST", "localhost");
-define("DB_USER", "root");
-define("DB_PASSWORD", "admin");
-define("DB_DATABASE", "hotel");
+session_start();
 
 mysql_connect(DB_HOST, DB_USER, DB_PASSWORD) or die(mysql_error());
 mysql_select_db(DB_DATABASE) or die(mysql_error());

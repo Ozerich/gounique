@@ -1,13 +1,13 @@
 #header{
     width: 792px;
     height: 285px;
-    background: url('img/pdf-header.jpg') no-repeat;
+    background: url('../img/pdf-header.jpg') no-repeat;
 }
 
 #footer{
     width: 792px;
     height: 117px;
-    background: url('img/pdf-footer.jpg') no-repeat;
+    background: url('../img/pdf-footer.jpg') no-repeat;
 }
 
 #content{
@@ -70,7 +70,7 @@ h1{
     margin-top: 10px;
 }
 .mainblock .tours h2{margin-bottom: 3px;}
-.mainblock .tour .date{width: 130px;}
+.mainblock .tour .date{width: 140px;}
 .mainblock .tour div{float: left;}
 
 .mainblock .flugplan{

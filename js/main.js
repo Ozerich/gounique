@@ -6,6 +6,10 @@ function GenerateResult(div) {
     var result = FixDate($(div + '#datestart').val()) + " - " + FixDate($(div + '#dateend').val()) + "  " + $(div + "#dayscount").html() + " N HOTEL: " +
         $(div + "#hotelname").html() + " / " + $(div + "#roomcapacity option:selected").text() + " - " + $(div + "#roomtype").val() + " / " + $(div + "#service").val() +
         " / " + $(div + "#transfer option:selected").text() + " / " + $(div + "#remark").val();
+    $(div + "#hoteldate").val(FixDate($(div + '#datestart').val()) + " - " + FixDate($(div + '#dateend').val()));
+    $(div + "#hotelcontent").val($(div + "#dayscount").html() + " N HOTEL: " +
+        $(div + "#hotelname").html() + " / " + $(div + "#roomcapacity option:selected").text() + " - " + $(div + "#roomtype").val() + " / " + $(div + "#service").val() +
+        " / " + $(div + "#transfer option:selected").text() + " / " + $(div + "#remark").val());
     return result;
 }
 
@@ -102,7 +106,7 @@ $(document).ready(function() {
         for (var i = $('#page2 .person').size(); i <= $('#personen').val(); i++) {
             var div = $($('#page2 .person')[0]).clone().show();
             div.find('#sex').attr('name', 'sex[' + $('#page2 .person').size() + ']');
-            div.find('#person_name').attr('person_name', 'person_name[' + $('#page2 .person').size() + ']');
+            div.find('#person_name').attr('name', 'person_name[' + $('#page2 .person').size() + ']');
             $(div).find('span').html(i);
             div.appendTo($('#persons'));
         }
@@ -175,6 +179,8 @@ $(document).ready(function() {
         $(hotel_div + '#datestart').attr('name', "datestart[" + ($('.hotel-wr').size() - 1) + "]");
         $(hotel_div + '#dateend').attr('name', "dateend[" + ($('.hotel-wr').size() - 1) + "]");
         $(hotel_div + '#transfer').attr('name', "transfer[" + ($('.hotel-wr').size() - 1) + "]");
+        $(hotel_div + '#hoteldate').attr('name', "hoteldate[" + ($('.hotel-wr').size() - 1) + "]");
+        $(hotel_div + '#hotelcontent').attr('name', "hotelcontent[" + ($('.hotel-wr').size() - 1) + "]");
         $('.hotel-wr:last #hotelcode').keypress(function(event) {
             if (event.keyCode == 27) {
                 $(hotel_div).remove();
@@ -387,6 +393,7 @@ $(document).ready(function() {
         price += hotel_price;
         var persons = parseInt($('#personen').val());
         var oneprice = (price / persons).toFixed(2);
+        $('input[name=priceperson]').val(oneprice);
         var gesamtpreis = price.toFixed(2);
         var netto = (gesamtpreis / 1.19).toFixed(2);
         var provision = (hotel_price * 0.2).toFixed(2);
@@ -429,6 +436,7 @@ $(document).ready(function() {
     $('#addmail').click(function(event) {
         $('.mail:first').clone().appendTo('.mail-wr').show();
         $('.mail:last span').html("Mail " + ($('.mail').size() - 1));
+        $('.mail:last input').attr("name", "email[" + ($('.mail').size() - 1) + "]");
         $('.mail:last input').focus();
 
         $('.mail input').keypress(function(event) {
@@ -448,18 +456,15 @@ $(document).ready(function() {
     });
 
     $('#sendmail').click(function(event) {
-        alert($('form').serialize());
         var subject = $('#aktion').val() + " / " + $('#agent_kunden').val() + " / " + $('#kundennummer').val() + " / "
             + $('#vorgangsnummer').val() + " / " + $('#rechnungsnummber').val();
         subject = encodeURI(subject);
-        var text = $('#resultcontent').html();
-        text = encodeURI(text);
         $('.mail:visible').each(function() {
             var input = this;
             $.ajax({
                 url: "php/ajax.php",
                 type: "post",
-                data: "mode=sendmail&email=" + $(this).find('input').val() + "&subject=" + subject + "&text=" + text,
+                data: "mode=sendmail&vorgangsnummer=" + $('#vorgangsnummer').val() + "&subject=" + subject + $('form').serialize(),
                 success: function(data) {
                     $(this).find('.good').show();
                 }

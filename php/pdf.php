@@ -7,7 +7,6 @@ require_once dirname(__FILE__) . "/MPDF/mpdf.php";
 
 function WriteToPdf($vorgansnummer, $persons, $tours, $flugplan, $priceperson)
 {
-
     $pdf = new mPDF('utf-8', 'A4', '8', '', 4, 4, 5, 0, 0, 0);
 
     $html = '<div id="page">
@@ -39,7 +38,9 @@ function WriteToPdf($vorgansnummer, $persons, $tours, $flugplan, $priceperson)
                 <span class="header">Leistung:</span>
                 ';
     foreach ($tours as $ind => $tour)
-        $html .= '<div class="tour"><div class="date">' . $tour['date'] . '</div><div class="content">' . $tour['date'] . '</div></div>';
+        $html .= '<div class="tour"><div class="date">' . $tour['date'] . '</div><div class="content">' . $tour['content'] . '</div></div>';
+
+
     $html .= '
             </div>
             <div class="flugplan">
@@ -71,12 +72,12 @@ function WriteToPdf($vorgansnummer, $persons, $tours, $flugplan, $priceperson)
 </div>';
 
 
-    $stylesheet = file_get_contents(dirname(__FILE__) . '../css/pdf.css');
+    $stylesheet = file_get_contents(dirname(__FILE__) . '/../css/pdf.css');
 
     $pdf->WriteHTML($stylesheet, 1);
     $pdf->list_indent_first_level = 0;
     $pdf->WriteHTML($html, 2);
-    $pdf->Output('result.pdf', 'I');
+    $pdf->Output('result.pdf', 'F');
 }
 
 ?>
