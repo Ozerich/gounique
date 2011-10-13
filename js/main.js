@@ -411,7 +411,7 @@ $(document).ready(function() {
 
         $('#page2 .person').each(function(index) {
             if (index > 0)
-                $('#page5 .person:first').clone().html($(this).find('input[name=person_name]').val() + " ("
+                $('#page5 .person:first').clone().html($(this).find('#person_name').val() + " ("
                     + $(this).find('select option:selected').text() + ")").show().appendTo('#personresult');
         });
 
@@ -435,7 +435,7 @@ $(document).ready(function() {
 
     $('#addmail').click(function(event) {
         $('.mail:first').clone().appendTo('.mail-wr').show();
-        $('.mail:last span').html("Mail " + ($('.mail').size() - 1));
+        $('.mail:last span:first').html("Mail " + ($('.mail').size() - 1));
         $('.mail:last input').attr("name", "email[" + ($('.mail').size() - 1) + "]");
         $('.mail:last input').focus();
 
@@ -464,9 +464,10 @@ $(document).ready(function() {
             $.ajax({
                 url: "php/ajax.php",
                 type: "post",
-                data: "mode=sendmail&vorgangsnummer=" + $('#vorgangsnummer').val() + "&subject=" + subject + $('form').serialize(),
+                data: "mode=pdf&sendmail&vorgangsnummer=" + $('#vorgangsnummer').val() + "&subject=" + subject + $('form').serialize(),
                 success: function(data) {
-                    $(this).find('.good').show();
+                    $('.mail:visible .good').show();
+                    $('.mail:visible input').attr('disabled', 'disabled');
                 }
             });
         });
@@ -474,7 +475,14 @@ $(document).ready(function() {
     });
 
     $('#druck').click(function() {
-        window.print();
+        $.ajax({
+                url: "php/ajax.php",
+                type: "post",
+                data: "mode=pdf&vorgangsnummer=" + $('#vorgangsnummer').val() + $('form').serialize(),
+                success: function(data) {
+                    window.location = "php/result.pdf";
+                }
+            });
         return false;
     });
 

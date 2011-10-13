@@ -93,7 +93,7 @@ switch ($mode)
         }
         break;
 
-    case "sendmail":
+    case "pdf":
         $persons = array();
         foreach ($_POST['sex'] as $ind => $sex)
             $persons[] = array("sex" => $sex, "name" => $_POST['person_name'][$ind]);
@@ -101,14 +101,16 @@ switch ($mode)
         foreach ($_POST['hoteldate'] as $ind => $hoteldate)
             $tours[] = array("date" => $hoteldate, "content" => $_POST['hotelcontent'][$ind]);
         WriteToPdf($_POST['vorgansnummer'], $persons, $tours, $_POST['flightplan'], $_POST['priceperson']);
-        $Message = new Mailer();
-        foreach ($_POST['email'] as $email)
-        {
-            $Message->from = 'Ot Menya <ot@menya.com>';
-            $Message->to = $email;
-            $Message->subject = $_POST['subject'];
-            $Message->Attach('result.pdf', 'text/pdf');
-            $Message->Send();
+        if (isset($_POST['sendmail'])) {
+            $Message = new Mailer();
+            foreach ($_POST['email'] as $email)
+            {
+                $Message->from = 'Ot Menya <ot@menya.com>';
+                $Message->to = $email;
+                $Message->subject = $_POST['subject'];
+                $Message->Attach('result.pdf', 'text/pdf');
+                $Message->Send();
+            }
         }
         $result = "OK";
 }
