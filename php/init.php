@@ -35,4 +35,3 @@ function create_tables()
     )ENGINE MyISAM DEFAULT CHARSET=utf8") or die(mysql_error());
 
 }
-?>

@@ -7,7 +7,20 @@ require_once dirname(__FILE__) . "/MPDF/mpdf.php";
 
 function WriteToPdf($vorgansnummer, $persons, $tours, $flugplan, $priceperson)
 {
-    $pdf = new mPDF('utf-8', 'A4', '8', '', 4, 4, 5, 0, 0, 0);
+    $pdf = new mPDF('utf-8', 'A4', '8', '', 4, 4, 25, 25, 0, 0);
+
+
+$pdf->SetImportUse(); 
+
+
+// Add First page
+$pdf->AddPage();
+
+$pagecount = $pdf->SetSourceFile('UNI_Briefpapier.pdf');
+$tplId = $pdf->ImportPage($pagecount);
+
+$actualsize = $pdf->UseTemplate($tplId);
+
 
     $html = '<div id="page">
     <div id="header"></div>

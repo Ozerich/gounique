@@ -1,13 +1,13 @@
 #header{
     width: 792px;
     height: 285px;
-    background: url('../img/pdf-header.jpg') no-repeat;
+  //  background: url('../img/pdf-header.jpg') no-repeat;
 }
 
 #footer{
     width: 792px;
     height: 117px;
-    background: url('../img/pdf-footer.jpg') no-repeat;
+  //  background: url('../img/pdf-footer.jpg') no-repeat;
 }
 
 #content{

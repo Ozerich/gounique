@@ -464,7 +464,7 @@ $(document).ready(function() {
             $.ajax({
                 url: "php/ajax.php",
                 type: "post",
-                data: "mode=pdf&sendmail&vorgangsnummer=" + $('#vorgangsnummer').val() + "&subject=" + subject + $('form').serialize(),
+                data: "mode=pdf&sendmail=1&vorgangsnummer=" + $('#vorgangsnummer').val() + "&subject=" + subject + $('form').serialize(),
                 success: function(data) {
                     $('.mail:visible .good').show();
                     $('.mail:visible input').attr('disabled', 'disabled');

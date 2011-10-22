@@ -1,6 +1,9 @@
 .content{
-	width: 1000px;
+	width: 900px;
 	margin: 0 auto;
+	padding: 10px;
+	padding-bottom: 30px;
+	border: 1px dotted gray;
 }
 
 .input{
@@ -37,7 +40,8 @@ input:focus{
 	width: 415px;
 	height: 120px;
 }
-
+#hotelname {font-size:15px;}
+#page2,#page3 {margin-top: 10px;}
 #page5 .number{
     margin:0 8px 0 -20px;
 }

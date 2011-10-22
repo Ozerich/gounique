@@ -24,9 +24,9 @@ switch ($mode)
         {
             $data = $data[0];
             if ($data == 1)
-                $result[] = array("value" => "1", "name" => "1 EZ");
+                $result[] = array("value" => "1", "name" => "EZ");
             else if ($data == 2)
-                $result[] = array("value" => "2", "name" => "2 DZ");
+                $result[] = array("value" => "2", "name" => "DZ");
         }
         $result = json_encode($result);
         break;
