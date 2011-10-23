@@ -1,3 +1,4 @@
+html, body{height: 100%;}
 body
 {
 	background: #FFF;
@@ -7,6 +8,10 @@ body
 #wrapper
 {
 	width: 100%;
+    min-height:100%;
+    height:auto !important;
+    height:100%;
+    margin:0 auto -34px;
 }
 
 /* -------------------------------------------------------------- 
@@ -47,7 +52,6 @@ body
 	width: 100%;
 	height: 120px;
 	position: relative;
-	z-index: 500;
 }
 
 	#header h1
@@ -329,9 +333,9 @@ html[xmlns] .content_pad {
 {
 	background: #333;
 	border-top: 3px solid #111;
-	position: relative;
-	margin-top: 4em;
+	margin-top: 40px;
 	clear: both;
+    width: 100%;
 }
 
 	*+html #footer { float: left; }

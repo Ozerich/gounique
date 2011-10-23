@@ -85,3 +85,12 @@ input:focus{
 #page5 .personresult-wr{
     margin-bottom: 10px;
 }
+
+
+#buttons,#hotel-buttons{
+    margin-top: 10px;
+}
+
+#buttons button:focus, #hotel-buttons button:focus{
+    background-color: #3C84A1;
+}

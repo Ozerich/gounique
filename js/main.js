@@ -1,12 +1,17 @@
+var KEY_ENTER = 13;
+var KEY_ESC = 27;
+var KEY_RIGHT = 39;
+var KEY_LEFT = 37;
+
 function FixDate(input) {
     return input.substr(0, 2) + "." + input.substr(2, 2) + "." + input.substr(4);
 }
 
 function GenerateResult(div) {
-    var result = FixDate($(div + '#datestart').val()) + " - " + FixDate($(div + '#dateend').val()) + "  " + $(div + "#dayscount").html() + " N HOTEL: " +
+    var result = FixDate($(div + '.datestart').val()) + " - " + FixDate($(div + '.dateend').val()) + "  " + $(div + "#dayscount").html() + " N HOTEL: " +
         $(div + "#hotelname").html() + " / " + $(div + "#roomcapacity option:selected").text() + " - " + $(div + "#roomtype").val() + " / " + $(div + "#service").val() +
         " / " + $(div + "#transfer option:selected").text() + " / " + $(div + "#remark").val();
-    $(div + "#hoteldate").val(FixDate($(div + '#datestart').val()) + " - " + FixDate($(div + '#dateend').val()));
+    $(div + "#hoteldate").val(FixDate($(div + '.datestart').val()) + " - " + FixDate($(div + '.dateend').val()));
     $(div + "#hotelcontent").val($(div + "#dayscount").html() + " N HOTEL: " +
         $(div + "#hotelname").html() + " / " + $(div + "#roomcapacity option:selected").text() + " - " + $(div + "#roomtype").val() + " / " + $(div + "#service").val() +
         " / " + $(div + "#transfer option:selected").text() + " / " + $(div + "#remark").val());
@@ -14,8 +19,8 @@ function GenerateResult(div) {
 }
 
 function UpdateDaysCount(div) {
-    var start = $(div + "#datestart").val();
-    var end = $(div + "#dateend").val();
+    var start = $(div + ".datestart").val();
+    var end = $(div + ".dateend").val();
     if (start == "" || end == "")
         $(div + '#dayscount').html('').hide();
     else {
@@ -30,144 +35,251 @@ function UpdateDaysCount(div) {
     }
 }
 
+function isInt(x) {
+    var y = parseInt(x);
+    if (isNaN(y)) return false;
+    return x == y && x.toString() == y.toString();
+}
+
 $(document).ready(function() {
+
+
+    $('button').keypress(function(event) {
+        if (event.keyCode == KEY_ENTER) {
+            $(this).click();
+            return false;
+        }
+        return true;
+    });
 
     /*
      * PAGE 1
      */
 
-    $('#aktion').keypress(function(event) {
-        if (event.which == 13) {
-            if ($('#aktion').val() != "") {
-                $('#agent_kunden').focus();
-                if ($(this).val().toUpperCase() == "B")
-                    $('#rechnungsnummber-wr').show();
-                else
-                    $('#rechnungsnummber-wr').hide();
-                return false;
-            }
+    $('#action').change(function(event) {
+        if ($(this).val() == 'b') {
+            $('#rechnungsnummber-wr').show();
+            $('#anzahling-wr').show();
+            $('#vorgangsnummer-wr').hide();
+        }
+        else {
+            $('#vorgangsnummer-wr').show();
+            $('#anzahling-wr').hide();
+            $('#rechnungsnummber-wr').hide();
+        }
+    });
+    $('#action').change();
+    $('#action').keypress(function(event) {
+        $('#action').change();
+        if (event.keyCode == KEY_ENTER) {
+            $('#agent_kunden').focus();
+            return false;
         }
     });
 
     $('#agent_kunden').keypress(function(event) {
-        if (event.which == 13) {
+        if (event.keyCode == KEY_ENTER) {
             $('#kundennummer').focus();
+            return false;
+        }
+        if (event.keyCode == KEY_ESC) {
+            $('#action').focus();
             return false;
         }
     });
 
     $('#kundennummer').keypress(function(event) {
-        if (event.which == 13) {
+        if (event.keyCode == KEY_ENTER) {
             if ($('#kundennummer').val() != "") {
-                $('#vorgangsnummer').focus();
+                if ($('#vorgangsnummer').is(':visible'))
+                    $('#vorgangsnummer').focus();
+                else
+                    $('#rechnungsnummber').focus();
                 return false;
             }
+            return false;
         }
-    });
-
-    $('#vorgangsnummer').keypress(function(event) {
-        if (event.which == 13) {
-            if ($('#vorgangsnummer').val() != "") {
-                if ($('#aktion').val().toUpperCase() == 'B')
-                    $('#rechnungsnummber').focus();
-                else {
-                    $('#page2').show();
-                    $('#page1 input, #page1 select').attr('disabled', 'disabled');
-                    $('#personen').focus();
-                }
-            }
+        if (event.keyCode == KEY_ESC) {
+            $('#agent_kunden').focus();
             return false;
         }
     });
 
-    $('#rechnungsnummber').keypress(function(event) {
-        if (event.which == 13) {
-            if ($('#rechnungsnummber').val() != "") {
-                $('#page2').show();
+    $('#vorgangsnummer, #rechnungsnummber').keypress(function(event) {
+        if (event.keyCode == KEY_ENTER) {
+            $('#abresedatum').focus();
+            return false;
+        }
+        if (event.keyCode == KEY_ESC) {
+            $('#kundennummer').focus();
+            return false;
+        }
+    });
+
+    $('#abresedatum').keypress(
+        function(event) {
+            if (event.keyCode == KEY_ENTER) {
+                if ($(this).val() != "") {
+                    if ($('#anzahling-wr').is(':visible'))
+                        $('#anzahling').focus();
+                    else {
+                        $('#buttons').show().find('#hotel-button').focus();
+                        $('#page1 input, #page1 select').attr('disabled', 'disabled');
+                        $('#personen').focus();
+                    }
+                }
+                return false;
+            }
+            if (event.keyCode == KEY_ESC) {
+                if ($('#vorgangsnummer').is(':visible'))
+                    $('#vorgangsnummer').focus();
+                else
+                    $('#rechnungsnummber').focus();
+                return false;
+            }
+        }).datepicker({
+            onClose: function(date, inst) {
+                $("#" + inst.id).focus();
+            }
+        }).datepicker("option", "showAnim", "blind");
+
+    $('#anzahling').keypress(function(event) {
+        if (event.keyCode == KEY_ENTER) {
+            if (isInt($(this).val())) {
+                $('#buttons').show().find('#hotel-button').focus();
                 $('#page1 input, #page1 select').attr('disabled', 'disabled');
                 $('#personen').focus();
             }
             return false;
         }
+        if (event.keyCode == KEY_ESC) {
+            $('#abresedatum').focus();
+            return false;
+        }
     });
 
+
     /*
-     * PAGE 2
+     * PAGE 2 PERSONS
      */
 
     $('#personen').keypress(function(event) {
-        if (event.which != 13 || $("#personen").val() == "") return true;
-        if ($('#personen').val() < $('#page2 .person').size()) {
-            while ($('#page2 .person:visible').size() > $('#personen').val())
-                $('#page2 .person:last').remove();
-            $($('#page2 .person')[1]).find('#sex').focus();
-            return true;
+        if (event.keyCode == KEY_ESC) {
+            $('#persons-page').hide();
+            $('#page1 input, #page1 select').attr('disabled', '');
+            $('#vorgangsnummer').focus();
+            return false;
         }
-        for (var i = $('#page2 .person').size(); i <= $('#personen').val(); i++) {
-            var div = $($('#page2 .person')[0]).clone().show();
-            div.find('#sex').attr('name', 'sex[' + $('#page2 .person').size() + ']');
-            div.find('#person_name').attr('name', 'person_name[' + $('#page2 .person').size() + ']');
-            $(div).find('span').html(i);
-            div.appendTo($('#persons'));
-        }
-        $($('.person')[1]).find('#sex').focus();
-        $('#page2 .person input, #page2 .person select').unbind('keypress');
-        $('#page2 .person #sex').keypress(function(event) {
-            if (event.which == 13) {
-                $(this).parent().parent().find('#person_name').focus();
+        if (event.keyCode == KEY_ENTER) {
+            if (!isInt($(this).val()))
                 return false;
+            if ($(this).val() < $('#persons-page .person').size()) {
+                while ($('#persons-page .person:visible').size() > $('#personen').val())
+                    $('#persons-page .person:last').remove();
+                $($('#persons-page .person')[1]).find('#sex').focus();
             }
-        });
-
-        $('#page2 .person #person_name').keypress(function(event) {
-            if (event.which == 13) {
-                if ($(this).val() != "")
-                    $(this).parent().parent().next('#page2 .person').find('#sex').focus();
-                return false;
+            for (var i = $('#persons-page .person').size(); i <= $('#personen').val(); i++) {
+                var div = $($('#persons-page .person')[0]).clone().show();
+                div.find('#sex').attr('name', 'sex[' + $('#persons-page .person').size() + ']');
+                div.find('#person_name').attr('name', 'person_name[' + $('#persons-page .person').size() + ']');
+                $(div).find('span').html(i);
+                div.appendTo($('#persons'));
             }
-        });
-        $('#page2 .person:last').find('#person_name').keypress(function(event) {
-            if (event.which == 13) {
-                if ($(this).val() != "") {
-                    $('#page2').hide();
-                    $('#page3').show();
-                    $('#page3 #hotel-button').focus();
+            $($('.person')[1]).find('#sex').focus();
+            $('#persons-page .person input, #persons-page .person select').unbind('keypress');
+            $('#persons-page .person #sex').keypress(function(event) {
+                if (event.keyCode == KEY_ENTER) {
+                    $(this).parent().parent().find('#person_name').focus();
+                    return false;
                 }
-                return false;
-            }
-        });
-    return false;
+                if (event.keyCode == KEY_ESC) {
+                    if ($(this).parent().parent().index('.person') == 1)
+                        $('#personen').focus();
+                    else
+                        $(this).parent().parent().prev().find('#person_name').focus();
+                    return false;
+                }
+            });
+
+            $('#persons-page .person #person_name').keypress(function(event) {
+                if (event.keyCode == KEY_ENTER) {
+                    if ($(this).val() != "")
+                        $(this).parent().parent().next('#persons-page .person').find('#sex').focus();
+                    return false;
+                }
+                if (event.keyCode == KEY_ESC) {
+                    $(this).parent().parent().find('#sex').focus();
+                    return false;
+                }
+            });
+
+            $('#persons-page .person:last').find('#person_name').keypress(function(event) {
+                if (event.keyCode == KEY_ENTER) {
+                    if ($(this).val() != "") {
+                        $('#persons-page').hide();
+                        $('#buttons').show();
+                        $('#buttons #hotel-button').focus();
+                    }
+                    return false;
+                }
+            });
+            return false;
+        }
     });
 
 
     /*
-     * PAGE 3
+     * PAGE 3 BUTTONS
      */
+
+    $('#buttons button').keypress(function(event) {
+        if (event.keyCode == KEY_LEFT) {
+            if ($(this).index('button:visible') == 0)
+                $('#buttons button:visible:last').focus();
+            else
+                $(this).prev().focus();
+        }
+        else if (event.keyCode == KEY_RIGHT)
+            if ($(this).index('button:visible') == $('#buttons button:visible').size() - 1)
+                $('#buttons button:visible:first').focus();
+            else
+                $(this).next().focus();
+    });
 
     $('#hotel-button').click(function() {
-        $('#page3').hide();
-        $('#page4').show();
-        $('#addhotel').click();
+        $('#buttons').hide();
+        $('#hotels-page').show();
+        $('#hotel-buttons #addhotel').click();
         return false;
     });
 
+    $('#persons-button').click(function() {
+        $('#persons-page').show().find('#personen').focus();
+        $('#buttons').hide();
+        return false;
+    });
+
+    
 
     /*
-     * PAGE 4
+     * PAGE 4 HOTELS
      */
 
-
-    $('#buttons #viewremark').click(function(event) {
-        $('.hotels').hide();
-        $('#addinfo-wr').show().find('#flightplan').focus();
-        $('#buttons').hide();
-        for (var i = 1; i < $('.hotel-wr').size(); i++)
-            $('.summary:first').clone().appendTo('#summary-wr').html(GenerateResult("#hotel_" + i + " ")).show();
-        return false;
+    $('#hotel-buttons button').keypress(function(event) {
+        if (event.keyCode == KEY_LEFT) {
+            if ($(this).index('button:visible') == 0)
+                $('#hotel-buttons button:visible:last').focus();
+            else
+                $(this).prev().focus();
+        }
+        else if (event.keyCode == KEY_RIGHT)
+            if ($(this).index('button:visible') == $('#hotel-buttons button:visible').size() - 1)
+                $('#hotel-buttons button:visible:first').focus();
+            else
+                $(this).next().focus();
     });
 
-
-    $('#buttons #addhotel').click(function() {
+    $('#hotel-buttons #addhotel').click(function() {
         $('.hotel-wr:first').clone().appendTo(".hotels").attr('id', "hotel_" + ($('.hotel-wr').size() - 1)).show();
         $('#buttons').hide();
         $('.hotel-wr:last #hotelcode').focus();
@@ -176,17 +288,20 @@ $(document).ready(function() {
         $(hotel_div + '#roomcapacity').attr('name', "roomcapacity[" + ($('.hotel-wr').size() - 1) + "]");
         $(hotel_div + '#roomtype').attr('name', "roomtype[" + ($('.hotel-wr').size() - 1) + "]");
         $(hotel_div + '#service').attr('name', "service[" + ($('.hotel-wr').size() - 1) + "]");
-        $(hotel_div + '#datestart').attr('name', "datestart[" + ($('.hotel-wr').size() - 1) + "]");
-        $(hotel_div + '#dateend').attr('name', "dateend[" + ($('.hotel-wr').size() - 1) + "]");
+        $(hotel_div + '.datestart').attr('name', "datestart[" + ($('.hotel-wr').size() - 1) + "]");
+        $(hotel_div + '.dateend').attr('name', "dateend[" + ($('.hotel-wr').size() - 1) + "]");
         $(hotel_div + '#transfer').attr('name', "transfer[" + ($('.hotel-wr').size() - 1) + "]");
         $(hotel_div + '#hoteldate').attr('name', "hoteldate[" + ($('.hotel-wr').size() - 1) + "]");
         $(hotel_div + '#hotelcontent').attr('name', "hotelcontent[" + ($('.hotel-wr').size() - 1) + "]");
+
+
         $('.hotel-wr:last #hotelcode').keypress(function(event) {
-            if (event.keyCode == 27) {
+            if (event.keyCode == KEY_ESC) {
                 $(hotel_div).remove();
-                $('#buttons').show().find("#addhotel").focus();
+                $('#hotel-buttons').show().find("#addhotel").focus();
+                return false;
             }
-            if (event.which == 13) {
+            if (event.keyCode == KEY_ENTER) {
                 $.ajax({
                     url: "php/ajax.php",
                     type: "post",
@@ -207,7 +322,7 @@ $(document).ready(function() {
                                     $(hotel_div + '#roomcapacity-wr').show();
                                     $(hotel_div + '#roomcapacity').focus();
                                     $(hotel_div + "#roomtype-wr," + hotel_div + "#service-wr," + hotel_div + "#date-wr,"
-                                        + hotel_div + "#transfer-wr," + hotel_div + "#price-wr," + hotel_div + "#dayscount-wr" + ",#page4 #buttons").hide();
+                                        + hotel_div + "#transfer-wr," + hotel_div + "#price-wr," + hotel_div + "#dayscount-wr" + ",#hotels-page #buttons").hide();
                                 }
                             });
                         }
@@ -220,7 +335,7 @@ $(document).ready(function() {
         });
 
         $('.hotel-wr:last #roomcapacity').keypress(function(event) {
-            if (event.which == 13) {
+            if (event.keyCode == KEY_ENTER) {
                 $.ajax({
                     url: "php/ajax.php",
                     type: "post",
@@ -230,18 +345,22 @@ $(document).ready(function() {
                         data = jQuery.parseJSON(data);
                         for (var i = 0; i < data.length; i++)
                             $('<option value="' + data[i] + '">' + data[i] + '</option>').appendTo(hotel_div + "#roomtype");
-                        $(hotel_div + '#roomtype-wr').show();
-                        $(hotel_div + '#roomtype').focus();
+                        $(hotel_div + '#roomtype-wr').show().find('#roomtype').focus();
                         $(hotel_div + "#service-wr," + hotel_div + "#date-wr," + hotel_div + "#transfer-wr,"
-                            + hotel_div + "#price-wr," + hotel_div + "#dayscount-wr" + ",#page4 #buttons").hide();
+                            + hotel_div + "#price-wr," + hotel_div + "#dayscount-wr" + ",#hotels-page #buttons").hide();
                     }
                 });
+                return false;
+            }
+            else if (event.keyCode == KEY_ESC) {
+                $(this).parent().hide();
+                $(hotel_div + '#hotelcode').focus();
                 return false;
             }
         });
 
         $('.hotel-wr:last #roomtype').keypress(function(event) {
-            if (event.which == 13) {
+            if (event.keyCode == KEY_ENTER) {
                 $.ajax({
                     url: "php/ajax.php",
                     type: "post",
@@ -251,18 +370,22 @@ $(document).ready(function() {
                         data = jQuery.parseJSON(data);
                         for (var i = 0; i < data.length; i++)
                             $('<option value="' + data[i] + '">' + data[i] + '</option>').appendTo(hotel_div + "#service");
-                        $(hotel_div + '#service-wr').show();
-                        $(hotel_div + '#service').focus();
+                        $(hotel_div + '#service-wr').show().find('#service').focus();
                         $(hotel_div + "#date-wr," + hotel_div + "#transfer-wr," +
-                            hotel_div + "#price-wr," + hotel_div + "#dayscount-wr" + ",#page4 #buttons").hide();
+                            hotel_div + "#price-wr," + hotel_div + "#dayscount-wr" + ",#hotels-page #buttons").hide();
                     }
                 });
+                return false;
+            }
+            else if (event.keyCode == KEY_ESC) {
+                $(this).parent().hide();
+                $(hotel_div + '#roomcapacity').focus();
                 return false;
             }
         });
 
         $('.hotel-wr:last #service').keypress(function(event) {
-            if (event.which == 13) {
+            if (event.keyCode == KEY_ENTER) {
                 $.ajax({
                     url: "php/ajax.php",
                     type: "post",
@@ -270,37 +393,87 @@ $(document).ready(function() {
                     success: function(data) {
                         data = jQuery.parseJSON(data);
                         for (var i = 0; i < data.length; i++)
-                            $('<option value="' + data[i] + '">' + data[i] + '</option>').appendTo(hotel_div + "#datestart");
-                        $(hotel_div + '#date-wr').show();
-                        $(hotel_div + '#datestart-wr').show().find('#datestart').focus();
-                        $(hotel_div + "#dateend-wr," + hotel_div + "#transfer-wr," + hotel_div + "#price-wr," + hotel_div
-                            + "#dayscount-wr" + ",#page4 #buttons").hide();
+                            $('<option value="' + data[i] + '">' + data[i] + '</option>').appendTo(hotel_div + ".datestart");
+                        $(hotel_div + '#date-wr').show().find('.datestart').focus();
+                        $(hotel_div + "#transfer-wr," + hotel_div + "#price-wr," + hotel_div
+                            + "#dayscount-wr" + ",#hotels-page #buttons").hide();
                     }
                 });
                 return false;
             }
-        });
-
-        $('.hotel-wr:last #datestart').keypress(function(event) {
-            if (event.which == 13) {
-                if ($(this).val() != "")
-                    $(hotel_div + '#dateend-wr').show().find('#dateend').focus();
+            else if (event.keyCode == KEY_ESC) {
+                $(this).parent().hide();
+                $(hotel_div + '#roomtype').focus();
                 return false;
             }
         });
 
+        $(hotel_div + ".datestart").change(function() {
+            if ($(hotel_div + ".datend").val() != "")
+                $(hotel_div + ".datend").change();
+        });
 
-        $('.hotel-wr:last #dateend').keypress(function(event) {
-            if (event.which == 13) {
-                UpdateDaysCount(hotel_div);
+        $(hotel_div + ".datestart").datepicker({
+            onClose: function(date, inst) {
+                $(hotel_div + ".datestart").focus();
+            },
+            onSelect: function(date, inst) {
+                $(hotel_div + ".dateend").removeAttr("disabled").datepicker("option", "minDate", $(hotel_div + '.datestart').val());
+                $(hotel_div + ".dayscount").removeAttr("disabled");
+            }
+        }).keypress(function(event) {
+                if (event.keyCode == KEY_ENTER) {
+                    $(hotel_div + '.dateend').focus();
+                    return false;
+                }
+                else if (event.keyCode == KEY_ESC) {
+                    $(hotel_div + '#service').focus();
+                    $(hotel_div + '#date-wr').hide();
+                }
+            });
+
+        $(hotel_div + ".dateend").change(function(event) {
+            var a = new Date($(hotel_div + '.datestart').val());
+            var b = new Date($(hotel_div + '.dateend').val());
+            $(hotel_div + '.dayscount').val(Math.round((b - a) / 1000 / 3600 / 24 + 1));
+        });
+
+        $(hotel_div + ".dateend").datepicker({
+            onSelect: function(date, inst) {
+                $(hotel_div + ".dateend").change();
+            }
+        }).keypress(function(event) {
+                if (event.keyCode == KEY_ENTER) {
+                    $(hotel_div + '.dayscount').focus();
+                    return false;
+                }
+                else if (event.keyCode == KEY_ESC) {
+                    $(hotel_div + '.datebegin').focus();
+                    return false;
+                }
+            });
+
+        $(hotel_div + ".datestart, " + hotel_div + ".dateend").datepicker("option", "showAnim", "blind");
+
+        $(hotel_div + '.dayscount').change(function() {
+            if (isInt($(this).val()) && parseInt($(this).val()) > 0) {
+                var a = new Date($(hotel_div + '.datestart').val());
+                a.setDate(a.getDate() + parseInt($(this).val()) - 1);
+                $(hotel_div + '.dateend').val((a.getMonth() + 1) + "/" + a.getDate() + "/" + a.getFullYear());
+            }
+        });
+
+
+        $('.hotel-wr:last .dayscount').keypress(function(event) {
+            if (event.keyCode == KEY_ENTER) {
                 $.ajax({
                     url: "php/ajax.php",
                     type: "post",
-                    data: "mode=price&datestart=" + $(this).parent().parent().find('#datestart').val() + "&dateend=" + $(this).val(),
+                    data: "mode=price&datestart=" + $(hotel_div + '.datestart').val() + "&dateend=" + $(hotel_div + '.dateend').val(),
                     success: function(data) {
                         if (data != 0) {
                             $(hotel_div + '#transfer-wr').show().find('#transfer').focus();
-                            $(hotel_div + "#price-wr" + ",#page4 #buttons").hide();
+                            $(hotel_div + "#price-wr" + ",#hotels-page #buttons").hide();
                             $(hotel_div + "#nohotel").hide();
                         }
                         else {
@@ -313,9 +486,8 @@ $(document).ready(function() {
             }
         });
 
-
         $('.hotel-wr:last #transfer').keypress(function(event) {
-            if (event.which == 13) {
+            if (event.keyCode == KEY_ENTER) {
                 $.ajax({
                     url: "php/ajax.php",
                     type: "post",
@@ -331,7 +503,7 @@ $(document).ready(function() {
         });
 
         $('.hotel-wr:last #remark').keypress(function(event) {
-            if (event.which == 13) {
+            if (event.keyCode == KEY_ENTER) {
                 $('#buttons').show().find("#addhotel").focus();
                 return false;
             }
@@ -339,50 +511,19 @@ $(document).ready(function() {
         return false;
     });
 
-
-    $('button').keypress(function(event) {
-        if (event.which == 13) {
-            $(this).click();
-            return false;
-        }
-        return true;
-    });
-
-    $('#addhotel').keypress(function(event) {
-        if (event.keyCode == 39 || event.keyCode == 37)
-            $('#viewremark').focus();
+    $('#hotel-buttons #menu').click(function() {
+        $('#buttons').show();
+        $('#hotels-page').hide();
+        return false;
     });
 
 
-    $('#viewremark').keypress(function(event) {
-        if (event.keyCode == 39 || event.keyCode == 37)
-            $('#addhotel').focus();
-    });
-
-    $('#remark').keypress(function(event) {
-        if (event.which == 13) {
-            $('#flightplan').focus();
-            return false;
-        }
-    });
-
-    $('#flightplan').keypress(function(event) {
-        if (event.which == 13) {
-            $('#flightprice').focus();
-            return false;
-        }
-    });
-
-    $('#flightprice').keypress(function(event) {
-        if (event.which == 13) {
-            if ($(this).val() != "")
-                $('#viewresult').focus();
-            return false;
-        }
-    });
+    /*
+    *
+     */
 
     $('#viewresult').click(function(event) {
-        $('#page4').hide();
+        $('#hotels-page').hide();
         $('#page5').show();
 
         var price = $('#flightprice').val() != "" ? parseInt($('#flightprice').val()) : 0;
@@ -409,7 +550,7 @@ $(document).ready(function() {
 
         $('.flightplan').html($('#flightplan').val());
 
-        $('#page2 .person').each(function(index) {
+        $('#persons-page .person').each(function(index) {
             if (index > 0)
                 $('#page5 .person:first').clone().html($(this).find('#person_name').val() + " ("
                     + $(this).find('select option:selected').text() + ")").show().appendTo('#personresult');
@@ -440,16 +581,16 @@ $(document).ready(function() {
         $('.mail:last input').focus();
 
         $('.mail input').keypress(function(event) {
-            if (event.which == 13 && $(this).val != "")
+            if (event.keyCode == KEY_ENTER && $(this).val != "")
                 $(this).parent().next().find('input').focus();
-            else if (event.keyCode == 27) {
+            else if (event.keyCode == KEY_ESC) {
                 $(this).parent().remove();
                 $('.mail:last span').html("Mail " + ($('.mail').size() - 1));
                 $('#addmail').focus();
             }
         });
         $('.mail:last input').keypress(function(event) {
-            if (event.which == 13)
+            if (event.keyCode == KEY_ENTER)
                 $('#addmail').focus();
         });
         return false;
@@ -476,13 +617,13 @@ $(document).ready(function() {
 
     $('#druck').click(function() {
         $.ajax({
-                url: "php/ajax.php",
-                type: "post",
-                data: "mode=pdf&vorgangsnummer=" + $('#vorgangsnummer').val() + $('form').serialize(),
-                success: function(data) {
-                    window.location = "php/result.pdf";
-                }
-            });
+            url: "php/ajax.php",
+            type: "post",
+            data: "mode=pdf&vorgangsnummer=" + $('#vorgangsnummer').val() + $('form').serialize(),
+            success: function(data) {
+                window.location = "php/result.pdf";
+            }
+        });
         return false;
     });
 
