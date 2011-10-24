@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+    <title>Dashboard | Dashboard Admin</title>
+
+    <link rel="stylesheet" href="css/reset.css" type="text/css" media="screen" title="no title"/>
+    <link rel="stylesheet" href="css/text.css" type="text/css" media="screen" title="no title"/>
+    <link rel="stylesheet" href="css/form.css" type="text/css" media="screen" title="no title"/>
+    <link rel="stylesheet" href="css/buttons.css" type="text/css" media="screen" title="no title"/>
+    <link rel="stylesheet" href="css/grid.css" type="text/css" media="screen" title="no title"/>
+    <link rel="stylesheet" href="css/layout.css" type="text/css" media="screen" title="no title"/>
+
+    <link rel="stylesheet" href="css/main.css" type="text/css"/>
+    <link rel="stylesheet" href="css/print.css" type="text/css" media="print"/>
+    <script src="js/jquery/jquery-1.6.4.min.js"></script>
+    <script src="js/jquery/jquery-ui-1.8.16.custom.min.js"></script>
+    <script src="js/global.js"></script>
+    <script src="js/result.js"></script>
+    <script src="js/misc/excanvas.min.js"></script>
+    <script src="js/jquery/facebox.js"></script>
+    <script src="js/jquery/jquery.visualize.js"></script>
+    <script src="js/jquery/jquery.dataTables.min.js"></script>
+    <script src="js/jquery/jquery.tablesorter.min.js"></script>
+    <script src="js/jquery/jquery.uniform.min.js"></script>
+    <script src="js/jquery/jquery.placeholder.min.js"></script>
+    <script src="js/widgets.js"></script>
+
+    <link rel="stylesheet" href="css/cupertino/jquery-ui-1.8.16.custom.css" type="text/css" media="screen"
+          title="no title"/>
+    <link rel="stylesheet" href="css/plugin/jquery.visualize.css" type="text/css" media="screen" title="no title"/>
+    <link rel="stylesheet" href="css/plugin/facebox.css" type="text/css" media="screen" title="no title"/>
+    <link rel="stylesheet" href="css/plugin/uniform.default.css" type="text/css" media="screen" title="no title"/>
+    <link rel="stylesheet" href="css/plugin/dataTables.css" type="text/css" media="screen" title="no title"/>
+
+    <link rel="stylesheet" href="css/custom.css" type="text/css" media="screen" title="no title">
+
+</head>
+
+<body>
+
+<div id="wrapper">
+
+    <div id="top">
+        <div class="content_pad">
+            <ul class="right">
+                <li><a href="javascript:;" class="top_icon"><span class="ui-icon ui-icon-person"></span>Eingeloggt als
+                    Paul
+                    Rawluschko</a></li>
+                <!--	<li><a href="javascript:;" class="new_messages top_alert">1 New Message</a></li>-->
+                <li><a href="./pages/settings.html">Settings</a></li>
+                <li><a href="login.php">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+
+
+    <div id="header">
+        <div class="content_pad">
+            <h1><a href="index.php">Dashboard Admin</a></h1>
+            <ul id="nav">
+                <li class="nav_current nav_icon"><a href="./dashboard.html">Angebot</a></li>
+                <li class="nav_icon"><a href="#">Eingangsmitteilungen</a></li>
+                <li class="nav_icon"><a href="#">Rechnungen</a></li>
+            </ul>
+        </div>
+    </div>
+
+
+    <div id="masthead">
+        <div class="content_pad">
+            <h1 class="no_breadcrumbs">Reisengebot Formular</h1>
+        </div>
+    </div>
+
+    <div class="page" id="resultpage">
+        <div id="resultcontent">
+            <div id="results-wr">
+                <span class="number">1</span>
+
+                <div id="results">
+                    {foreach $hotels as $hotel}
+                    {$hotel.datestart} - {$hotel.dateend} {$hotel.dayscount}N HOTEL: {$hotel.hotelname} /
+                    {$hotel.roomcapacity} / {$hotel.roomtype} / {$hotel.service} / {$hotel.transfer} / {$hotel.remark}
+                    <br/>
+                    {/foreach}
+                    {foreach $manuels as $manuel}
+                    {$manuel.datestart} - {$manuel.dateend} {$manuel.text}
+                    <br/>
+                    {/foreach}
+                </div>
+            </div>
+            <div id="flightplan-wr">
+                <span class="number">2</span>
+                <span>Flightplan</span>&nbsp;<b>{$flightplan.price}&euro;</b><br/><br/>
+                <pre class="flightplan">{$flightplan.content}</pre>
+
+            </div>
+            <div id="priceresult">
+                <input type="hidden" name="priceperson"/>
+                <span class="price_title">Preis p.P brutto:</span><span id="oneprice">{$price.person}</span> &euro;<br/>
+                <span class="price_title">Gesamtpreis brutto:</span><span id="gesamtpreis">{$price.brutto}</span> &euro;<br/>
+                <span class="price_title">Provision:</span><span id="provision">{$price.provision}</span> &euro;<br/>
+                <span class="price_title">19 % Mwst:</span><span id="percent">{$price.percent}</span> &euro;<br/><br/>
+                <span class="price_title">Gesamtpreis netto:</span><span id="netto">{$price.netto}</span> &euro;<br/>
+            </div>
+            <br class="clear"/>
+
+            <div class="mail-wr">
+                <div class="mail" style="display:none">
+                    <span>Mail</span>
+                    <input type="text" size="30" class="email"/>
+                    <span class="good" style="display:none;">OK</span>
+                </div>
+            </div>
+        </div>
+        <div id="result-buttons">
+            <button class="btn btn-small btn-blue" id="edit-button">Edit formular</button>
+            <button class="btn btn-small btn-blue" id="next-button">Next</button>
+        </div>
+    </div>
+
+
+    <div id="footer">
+        <div class="content_pad">
+            <p>&copy; 2010-11 Copyright <a href="#">goUnique</a>. Powered by <a href="#">UniqueWorld.de</a>.</p>
+        </div>
+    </div>
+</body>
+
+</html>

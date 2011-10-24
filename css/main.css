@@ -42,47 +42,47 @@ input:focus{
 }
 #hotelname {font-size:15px;}
 #page2,#page3 {margin-top: 10px;}
-#page5 .number{
+#resultpage .number{
     margin:0 8px 0 -20px;
 }
-#page5{
+#resultpage{
     width: 800px;
-    margin-top: 20px;
+    margin: 0 auto;
 }
-#page5 #flightplan-wr{
+#resultpage #flightplan-wr{
 	float:left;
     border: 1px solid black;
     width: 350px;
     padding-left: 20px;
 }
 
-#page5 #results-wr{
+#resultpage #results-wr{
     padding-left: 20px;
     border: 1px solid black;
     width: 780px;
     margin-bottom: 10px;
 }
-#page5 #results{
+#resultpage #results{
     margin-bottom: 10px;
     margin-top: -14px;
 }
 
-#page5 .mail-wr{
+#resultpage .mail-wr{
     margin-top: 50px;
 }
 
-#page5 .price_title{
+#resultpage .price_title{
     display: inline-block;
     width: 140px;
 }
 
-#page5 #priceresult{
+#resultpage #priceresult{
 	float: right;
       border: 1px solid black;
     width: 350px
 }
 
-#page5 .personresult-wr{
+#resultpage .personresult-wr{
     margin-bottom: 10px;
 }
 
@@ -91,6 +91,8 @@ input:focus{
     margin-top: 10px;
 }
 
-#buttons button:focus, #hotel-buttons button:focus{
+#buttons button:focus, #hotel-buttons button:focus, #result-buttons button:focus{
     background-color: #3C84A1;
 }
+
+.hiddentext{display: none;}
