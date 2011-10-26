@@ -46,9 +46,7 @@
     <div id="top">
         <div class="content_pad">
             <ul class="right">
-                <li><a href="javascript:;" class="top_icon"><span class="ui-icon ui-icon-person"></span>Eingeloggt als
-                    Paul
-                    Rawluschko</a></li>
+                <li><a href="javascript:;" class="top_icon"><span class="ui-icon ui-icon-person"></span>Eingeloggt als {$user.fullname}</a></li>
                 <!--	<li><a href="javascript:;" class="new_messages top_alert">1 New Message</a></li>-->
                 <li><a href="./pages/settings.html">Settings</a></li>
                 <li><a href="logout.php">Logout</a></li>
@@ -61,9 +59,8 @@
         <div class="content_pad">
             <h1><a href="index.php">Dashboard Admin</a></h1>
             <ul id="nav">
-                <li class="nav_current nav_icon"><a href="./dashboard.html">Angebot</a></li>
-                <li class="nav_icon"><a href="#">Eingangsmitteilungen</a></li>
-                <li class="nav_icon"><a href="#">Rechnungen</a></li>
+            <li class="nav_icon nav_current"><a href="#">New formular</a></li>
+            <li class="nav_icon"><a href="./open.php">Open formular</a></li>
             </ul>
         </div>
     </div>
@@ -147,9 +144,9 @@
                 <div id="stage-wr">
                     <label for="stage">Stage</label>
                     <div id="stage">
-                        <input type="radio" id="radio1" name="radio" value="1" {if $stage eq 1}checked="checked"{/if}/><label for="radio1">Angebot</label>
-                        <input type="radio" id="radio2" name="radio" value="2" {if $stage eq 2}checked="checked"{/if}/><label for="radio2">Eingangsmitteilungen</label>
-                        <input type="radio" id="radio3" name="radio" value="3" {if $stage eq 3}checked="checked"{/if}/><label for="radio3">Rechnungen</label>
+                        <input type="radio" id="radio1" name="stage" value="1" {if $stage eq 1}checked="checked"{/if}/><label for="radio1">Angebot</label>
+                        <input type="radio" id="radio2" name="stage" value="2" {if $stage eq 2}checked="checked"{/if}/><label for="radio2">Eingangsmitteilungen</label>
+                        <input type="radio" id="radio3" name="stage" value="3" {if $stage eq 3}checked="checked"{/if}/><label for="radio3">Rechnungen</label>
                     </div>
                 </div>
 

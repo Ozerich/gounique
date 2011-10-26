@@ -102,7 +102,7 @@ else if (isset($_GET['step']) && $_GET['step'] == "finish") {
         header("Location: index.php?step=finish&vorgan=" . $_POST['vorgan']);
     }
     else
-        $smarty->display("finish.html");
+        header("Location: index.php");
 }
 else
     $smarty->display("dashboard.html");
