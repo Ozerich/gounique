@@ -36,7 +36,7 @@
                 <div class="tour">
                     <div class="date"> {$hotel.datestart} - {$hotel.dateend}</div>
                     <div class="content"> {$hotel.dayscount}N HOTEL: {$hotel.hotelname} /
-                        {$hotel.roomcapacity} / {$hotel.roomtype} / {$hotel.service} / {$hotel.transfer} /
+                        {$hotel.roomcapacity} / {$hotel.roomtype} / {$hotel.service} / TRANSFER {$hotel.transfer} /
                         {$hotel.remark}
                     </div>
                 </div>
@@ -48,7 +48,7 @@
                 </div>
                 {/foreach}
             </div>
-            {if $flightplan neq ''}
+            {if $flightplan.content neq ''}
             <div class="flugplan">
                 <span class="header">Flugplan:</span>
                 <div class="content">
@@ -63,6 +63,11 @@
             {$zahlungsdatum} ({$price.netto - $price.anzahlung_value}&euro;)
         </div>
         {/if}
+        <div class="commentblock">
+            <pre>
+                {$bigcomment}
+            </pre>
+        </div>
         <div class="priceblock">
             <div class="price-item">Preis p.P. brutto: {$price.person} &euro;</div>
             <div class="price-item">Gesamtpreis brutto: {$price.brutto} &euro;</div>

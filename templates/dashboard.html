@@ -103,7 +103,7 @@
     <div class="input" id="provision-wr">
         <label for="provision">Provision %:</label>
         <input type="text" noempty numerical id="provision" name="provision"
-               value="{if $provision neq ''}$provision{else}11{/if}" size="3"/>
+               value="{if $provision neq ''}{$provision}{else}11{/if}" size="3"/>
         <span class="hiddentext" id="provision_hid">11</span>
     </div>
     <div class="input" id="personcount-wr">
@@ -149,10 +149,10 @@
             <div class="input" id="transfer-wr" style="display:none">
                 <label for="transfer">Transfer</label>
                 <select id="transfer" name="transfer">
-                    <option value="no">KEIN TRANSFER</option>
-                    <option value="in">TRANSFER IN</option>
-                    <option value="out">TRANSFER OUT</option>
-                    <option value="rt">TRANSFER RT</option>
+                    <option value="NO">KEIN TRANSFER</option>
+                    <option value="IN">TRANSFER IN</option>
+                    <option value="OUT">TRANSFER OUT</option>
+                    <option value="RT">TRANSFER RT</option>
                 </select>
             </div>
             <div class="input" id="price-wr" style="display:none">
@@ -217,14 +217,14 @@
             <div class="input" id="transfer-wr">
                 <label for="transfer">Transfer</label>
                 <select id="transfer" name="transfer[{$ind + 1}]">
-                    <option value="no"
-                    {if $hotel.transfer eq 'no'}selected{/if}>KEIN TRANSFER</option>
-                    <option value="in"
-                    {if $hotel.transfer eq 'in'}selected{/if}>TRANSFER IN</option>
-                    <option value="out"
-                    {if $hotel.transfer eq 'out'}selected{/if}>TRANSFER OUT</option>
-                    <option value="rt"
-                    {if $hotel.transfer eq 'rt'}selected{/if}>TRANSFER RT</option>
+                    <option value="NO"
+                    {if $hotel.transfer eq 'NO'}selected{/if}>KEIN TRANSFER</option>
+                    <option value="IN"
+                    {if $hotel.transfer eq 'IN'}selected{/if}>TRANSFER IN</option>
+                    <option value="OUT"
+                    {if $hotel.transfer eq 'OUT'}selected{/if}>TRANSFER OUT</option>
+                    <option value="RT"
+                    {if $hotel.transfer eq 'RT'}selected{/if}>TRANSFER RT</option>
                 </select>
             </div>
             <div class="input" id="price-wr">
