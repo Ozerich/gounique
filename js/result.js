@@ -102,20 +102,27 @@ $(document).ready(function() {
                 $('#anzahlung').focus();
                 return false;
             }
+        }).change(function() {
+            var a = $(this).val();
+            a = new Date(a.substr(4, 4), parseInt(a.substr(2, 2)) - 1, a.substr(0, 2));
+            a.setMonth(a.getMonth() - 1);
+            $('#zahlungsdatum').val((a.getDate() < 10 ? "0" + a.getDate() : a.getDate()) + "" + (a.getMonth() < 9 ? "0" + (a.getMonth() + 1) : (a.getMonth() + 1)) + "" + a.getFullYear());
+            return true;
         }).datepicker({
             onClose: function() {
                 $("abreisedatum").focus();
             },
             onSelect: function() {
                 $('#next-button').focus();
+                $(this).change();
             }
         }).
         datepicker("option", "showAnim", "blind").
         datepicker("option", "dateFormat", 'ddmmyy');
     $('#abreisedatum').val(old_val);
 
-    $('#back-button').click(function(event){
-       document.location = "index.php?step=start&vorgan=" + $('#vorgan').val();
+    $('#back-button').click(function(event) {
+        document.location = "index.php?step=start&vorgan=" + $('#vorgan').val();
         return false;
     });
 

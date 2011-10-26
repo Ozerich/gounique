@@ -1,12 +1,17 @@
 <div id="page">
-    <div id="header"></div>
+    <div id="header">
+        <br/><br/><br/><br/><br/><br/><br/><br/><br/>
+        <pre>{$address}</pre>
+
+    </div>
     <div id="content">
         <h1>REISEANGEBOT</h1>
 
         <div class="vorgansnummer-wr">
             <div class="left">
-                <div class="header">Vorgansnummer {$vorgansnummer}</div><br/>
-                <div class="nummer">Rechnungsnummer {$rechnungsnummber} </div>
+                <div class="header">Vorgangsnummer {$vorgansnummer}</div>
+                <br/>
+                <div class="nummer"><strong>Abreisedatum: {$abreisedatum}</strong></div>
             </div>
             <div class="right">
                 <div>Datum: {$today}</div>
@@ -43,21 +48,27 @@
                 </div>
                 {/foreach}
             </div>
-            {if $flugplan neq ''}
+            {if $flightplan neq ''}
             <div class="flugplan">
                 <span class="header">Flugplan:</span>
                 <div class="content">
-                    <pre>{$flugplan}</pre>
+                    <pre>{$flightplan.content}</pre>
                 </div>
             </div>
             {/if}
-            <div class="price-wr">
-                Preis p.P:
-                <span class="price">{$price.person}-&euro;</span>
-            </div>
         </div>
+        {if $print_under}
+        <div class="undertable">
+            {$price.anzahlung}% Anzahlung ({$price.anzahlung_value} &euro;) nach Erhalt der Rechnung. Restzahlung bis
+            {$zahlungsdatum} ({$price.netto - $price.anzahlung_value}&euro;)
+        </div>
+        {/if}
         <div class="priceblock">
-            Gesamptreis: <span class="price">{$price.netto} &euro;</span>
+            <div class="price-item">Preis p.P. brutto: {$price.person} &euro;</div>
+            <div class="price-item">Gesamtpreis brutto: {$price.brutto} &euro;</div>
+            <div class="price-item">{$provision} % Provision: {$price.provision} &euro;</div>
+            <div class="price-item">19 % Mwst: {$price.percent} &euro;</div>
+            <div class="price-item"><b>Gesamtpreis netto: {$price.netto} &euro;</b></div>
         </div>
         <div class="bottomblock">
             <div class="signature">
@@ -65,8 +76,7 @@
                 <div class="line"></div>
             </div>
             <p>Mit freundlichen Grüßen</p>
-
-            <span>Paul Rawluschko<br/>Unique World GmbH</span>
+            <span>{$user.fullname} <br/>Unique World GmbH</span>
         </div>
     </div>
     <div id="footer"></div>

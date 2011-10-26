@@ -30,11 +30,11 @@ switch ($mode)
         break;
 
     case "roomcapacity":
-        $result = json_encode(GetCapacity($_POST['hotelcode']));
+        $result = json_encode(GetCapacity($_POST['hotelcode'], $_POST['roomtype']));
         break;
 
     case "roomtype":
-        $result = json_encode(GetRoomtype($_POST['hotelcode'], $_POST['roomcapacity']));
+        $result = json_encode(GetRoomtype($_POST['hotelcode']));
         break;
 
     case "service":

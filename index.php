@@ -27,7 +27,6 @@ if (isset($_GET['step']) && $_GET['step'] == 'result') {
                     "price" => $_POST['price'][$ind],
                 );
             }
-
         if ($_POST['manueltext'])
             foreach ($_POST['manueltext'] as $ind => $manuel)
             {
@@ -43,7 +42,7 @@ if (isset($_GET['step']) && $_GET['step'] == 'result') {
         $sql_set = "type='" . $_POST['agent_kunden'] . "', k_num='" . $_POST['kundennummer'] . "', r_num='" . $_POST['rechnungsnummber'] .
                    "', provision='" . $_POST['provision'] . "', hotels='" . serialize($hotels) . "', manuels='" . serialize($manuels) .
                    "', flightplan='" . $_POST['flightplan'] . "', flightprice='" . $_POST['flightprice'] . "', personcount='" .
-                   $_POST['personcount'] . "'";
+                   $_POST['personcount']."'";
         mysql_query("INSERT INTO formulars SET " . $sql_set . ", v_num='" . $vorgangsnummer . "' ON DUPLICATE KEY UPDATE " .
                     $sql_set) or die(mysql_error());
 
@@ -68,7 +67,7 @@ else if (isset($_GET['step']) && $_GET['step'] == 'final') {
                 );
             }
         mysql_query("UPDATE formulars SET comment='" . $_POST['bigcomment'] . "', persons='" . serialize($persons) . "', anzahlung='" . $_POST['anzahlung'] . "', abreisedatum='" .
-                    $_POST['abreisedatum'] . "', address='" . $_POST['address'] . "' WHERE v_num='" . $id . "'") or die(mysql_error());
+                    $_POST['abreisedatum'] . "', address='" . $_POST['address'] .  "', zahlungsdatum = '".$_POST['zahlungsdatum']."' WHERE v_num='" . $id . "'") or die(mysql_error());
         WriteToPdf($id, 1);
         WriteToPdf($id, 2);
         WriteToPdf($id, 3);

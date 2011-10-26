@@ -1,18 +1,17 @@
 <?php
 
-function GetCapacity($hotel_code)
+function GetCapacity($hotel_code, $roomtype)
 {
-    $sql = mysql_query("SELECT DISTINCT roomcapacity FROM hotels WHERE hotelcode = '" . $hotel_code . "'") or die(mysql_error());
+    $sql = mysql_query("SELECT DISTINCT roomcapacity FROM hotels WHERE hotelcode = '" . $hotel_code . "' AND roomtype='" . $roomtype . "'") or die(mysql_error());
     $result = array();
     while ($data = mysql_fetch_row($sql))
         $result[] = array("value" => $data[0], "name" => $data[0]);
     return $result;
 }
 
-function GetRoomtype($hotel_code, $capacity)
+function GetRoomtype($hotel_code)
 {
-    $sql = mysql_query("SELECT DISTINCT roomtype FROM hotels WHERE hotelcode = '" . $hotel_code . "' AND roomcapacity = '" .
-                       $capacity . "'") or die(mysql_error());
+    $sql = mysql_query("SELECT DISTINCT roomtype FROM hotels WHERE hotelcode = '" . $hotel_code . "'") or die(mysql_error());
     $result = array();
     while ($data = mysql_fetch_row($sql))
         $result[] = array("value" => $data[0], "name" => $data[0]);
@@ -44,10 +43,10 @@ function FillSmarty($id)
 
     foreach ($hotels as &$hotel)
     {
-        $hotel['allcapacity'] = GetCapacity($hotel['hotelcode']);
+        $hotel['allcapacity'] = GetCapacity($hotel['hotelcode'], $hotel['roomtype']);
         foreach ($hotel['allcapacity'] as &$item)
             $item['current'] = $item['value'] == $hotel['roomcapacity'] ? 1 : 0;
-        $hotel['allroomtype'] = GetRoomtype($hotel['hotelcode'], $hotel['roomcapacity']);
+        $hotel['allroomtype'] = GetRoomtype($hotel['hotelcode']);
         foreach ($hotel['allroomtype'] as &$item)
             $item['current'] = $item['value'] == $hotel['roomtype'] ? 1 : 0;
         $hotel['allservice'] = GetService($hotel['hotelcode'], $hotel['roomcapacity'], $hotel['roomtype']);
@@ -57,10 +56,12 @@ function FillSmarty($id)
 
     $smarty->assign("hotels", $hotels);
 
+    $manuel_price = 0;
+
     $manuels = unserialize($data['manuels']);
     if (!empty($manuels))
         foreach ($manuels as $manuel)
-            $price += $manuel['price'];
+            $manuel_price += $manuel['price'];
 
     $smarty->assign("manuels", $manuels);
 
@@ -69,10 +70,12 @@ function FillSmarty($id)
 
     $pricetpl = array();
     $pricetpl['person'] = $price / $data['personcount'];
-    $pricetpl['brutto'] = $price;
-    $pricetpl['netto'] = round($price / 1.19, 2);
+    $pricetpl['brutto'] = $price + $manuel_price;
+    $pricetpl['netto'] = round($pricetpl['brutto'] / 1.19, 2);
     $pricetpl['provision'] = round($hotel_price * $data['provision'] / 100, 2);
-    $pricetpl['percent'] = round($price / 1.19 * 0.19, 2);
+    $pricetpl['percent'] = round($pricetpl['provision'] / 1.19 * 0.19, 2);
+    $pricetpl['anzahlung'] = $data['anzahlung'];
+    $pricetpl['anzahlung_value'] = round($pricetpl['brutto'] / 100 * $data['anzahlung']);
     $smarty->assign("price", $pricetpl);
 
     $smarty->assign("type", $data['type']);
@@ -88,8 +91,14 @@ function FillSmarty($id)
     $smarty->assign("rechnungsnummber", $data['r_num']);
     $smarty->assign("vorgansnummer", $id);
 
-    $smarty->assign("anzahlung", $data['anzahlung']);
+    $smarty->assign("provision", $data['provision']);
+
     $smarty->assign("abreisedatum", $data['abreisedatum']);
+    $smarty->assign("zahlungsdatum", $data['zahlungsdatum']);
+
+    $date_a = mktime(0, 0, 0, substr($data['abreisedatum'], 2, 2), substr($data['abreisedatum'], 0, 2), substr($data['abreisedatum'], 4));
+    $date_z = mktime(0, 0, 0, substr($data['zahlungsdatum'], 2, 2), substr($data['zahlungsdatum'], 0, 2), substr($data['zahlungsdatum'], 4));
+    $smarty->assign("print_under", (($date_a - $date_z) >= 432000) ? 1 : 0);
 
     $smarty->assign("persons", unserialize($data['persons']));
 

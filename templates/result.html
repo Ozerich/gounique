@@ -130,9 +130,9 @@
                         <div class="input">
                             <label for="sex">Herr/Frau</label>
                             <select name="sex[{$smarty.section.foo.index}]" id="sex">
-                                <option value="herr">Herr</option>
-                                <option value="frau">Frau</option>
-                                <option value="kein">Kein</option>
+                                <option value="herr" {if $persons[{$smarty.section.foo.index} - 1].sex eq 'herr'}selected{/if}>Herr</option>
+                                <option value="frau" {if $persons[{$smarty.section.foo.index} - 1].sex eq 'frau'}selected{/if}>Frau</option>
+                                <option value="kein" {if $persons[{$smarty.section.foo.index} - 1].sex eq 'kein'}selected{/if}>Kein</option>
                             </select>
                         </div>
                         <div class="input">
@@ -152,7 +152,7 @@
                 </div>
                 <div id="anzahlung-wr">
                     <label for="anzahlung">Anzahlung</label>
-                    <input type="text" name="anzahlung" size="3" maxlength="3" value="{$anzahlung}"
+                    <input type="text" name="anzahlung" size="3" maxlength="3" value="{$price.anzahlung}"
                            id="anzahlung"/>% - <span
                         id="anzahlungsum">0</span> &euro;
                 </div>
@@ -160,6 +160,7 @@
                     <label for="abreisedatum">Abreisedatum</label>
                     <input type="text" name="abreisedatum" size="8" maxlength="8" value="{$abreisedatum}"
                            id="abreisedatum"/>
+                    <input type="hidden" name="zahlungsdatum" id="zahlungsdatum" value="{$zahlungsdatum}" />
                 </div>
                 
             </div>

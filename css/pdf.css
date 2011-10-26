@@ -87,13 +87,17 @@ h1{
 
 .priceblock{
     width: 100%;
-    margin-top: 32px;
+    margin-top: 5px;
     text-align: right;
     text-decoration: underline;
 }
 .priceblock .price{
     font-weight: bold;
     margin-left: 4px;
+}
+.priceblock .price-item{
+    display: block;
+    padding-top: 6px;
 }
 
 .bottomblock{

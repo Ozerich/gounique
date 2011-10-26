@@ -46,7 +46,8 @@
 <div id="top">
     <div class="content_pad">
         <ul class="right">
-            <li><a href="javascript:;" class="top_icon"><span class="ui-icon ui-icon-person"></span>Eingeloggt als {$user.fullname}</a></li>
+            <li><a href="javascript:;" class="top_icon"><span class="ui-icon ui-icon-person"></span>Eingeloggt als
+                {$user.fullname}</a></li>
             <!--	<li><a href="javascript:;" class="new_messages top_alert">1 New Message</a></li>-->
             <li><a href="./pages/settings.html">Settings</a></li>
             <li><a href="logout.php">Logout</a></li>
@@ -122,13 +123,13 @@
                 <span id="hotelname"></span>
                 <input type="hidden" id="hotelname_hid"/>
             </div>
-            <div class="input" id="roomcapacity-wr" style="display:none;">
-                <label for="roomcapacity">Capacity</label>
-                <select name="roomcapacity" id="roomcapacity"></select>
-            </div>
             <div class="input" id="roomtype-wr" style="display:none;">
                 <label for="roomtype">Room type</label>
                 <select name="roomtype" id="roomtype"></select>
+            </div>
+            <div class="input" id="roomcapacity-wr" style="display:none;">
+                <label for="roomcapacity">Capacity</label>
+                <select name="roomcapacity" id="roomcapacity"></select>
             </div>
             <div class="input" id="service-wr" style="display:none;">
                 <label for="service">Service</label>
@@ -174,19 +175,21 @@
                 <span id="hotelname">{$hotel.hotelname}</span>
                 <input type="hidden" id="hotelname_hid" name="hotelname[{$ind + 1}]" value="{$hotel.hotelname}"/>
             </div>
-            <div class="input" id="roomcapacity-wr">
-                <label for="roomcapacity">Capacity</label>
-                <select name="roomcapacity[{$ind + 1}]" id="roomcapacity">
-                    {foreach $hotel.allcapacity as $capacity}
-                    <option value="{$capacity.value}" {if $capacity.current eq 1}selected{/if}>{$capacity.name}</option>
-                    {/foreach}
-                </select>
-            </div>
             <div class="input" id="roomtype-wr">
                 <label for="roomtype">Room type</label>
                 <select name="roomtype[{$ind + 1}]" id="roomtype">
                     {foreach $hotel.allroomtype as $roomtype}
-                    <option value="{$roomtype.value}" {if $roomtype.current eq 1}selected{/if}>{$roomtype.name}</option>
+                    <option value="{$roomtype.value}"
+                    {if $roomtype.current eq 1}selected{/if}>{$roomtype.name}</option>
+                    {/foreach}
+                </select>
+            </div>
+            <div class="input" id="roomcapacity-wr">
+                <label for="roomcapacity">Capacity</label>
+                <select name="roomcapacity[{$ind + 1}]" id="roomcapacity">
+                    {foreach $hotel.allcapacity as $capacity}
+                    <option value="{$capacity.value}"
+                    {if $capacity.current eq 1}selected{/if}>{$capacity.name}</option>
                     {/foreach}
                 </select>
             </div>
@@ -194,7 +197,8 @@
                 <label for="service">Service</label>
                 <select name="service[{$ind + 1}]" id="service">
                     {foreach $hotel.allservice as $service}
-                    <option value="{$service.value}" {if $service.current eq 1}selected{/if}>{$service.name}</option>
+                    <option value="{$service.value}"
+                    {if $service.current eq 1}selected{/if}>{$service.name}</option>
                     {/foreach}
                 </select>
             </div>
@@ -213,10 +217,14 @@
             <div class="input" id="transfer-wr">
                 <label for="transfer">Transfer</label>
                 <select id="transfer" name="transfer[{$ind + 1}]">
-                    <option value="no">KEIN TRANSFER</option>
-                    <option value="in">TRANSFER IN</option>
-                    <option value="out">TRANSFER OUT</option>
-                    <option value="rt">TRANSFER RT</option>
+                    <option value="no"
+                    {if $hotel.transfer eq 'no'}selected{/if}>KEIN TRANSFER</option>
+                    <option value="in"
+                    {if $hotel.transfer eq 'in'}selected{/if}>TRANSFER IN</option>
+                    <option value="out"
+                    {if $hotel.transfer eq 'out'}selected{/if}>TRANSFER OUT</option>
+                    <option value="rt"
+                    {if $hotel.transfer eq 'rt'}selected{/if}>TRANSFER RT</option>
                 </select>
             </div>
             <div class="input" id="price-wr">

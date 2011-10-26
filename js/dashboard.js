@@ -36,16 +36,15 @@ function BindHotelEvents() {
                 if (data.length > 0) {
                     $(hotel_block).find('#hotelname').html(data);
                     $(hotel_block).find('#hotelname_hid').val(data);
-                    data = update("roomcapacity", hotel_block);
+                    data = update("roomtype", hotel_block);
 
-                    $(hotel_block).find('#roomcapacity').empty();
+                    $(hotel_block).find('#roomtype').empty();
                     data = jQuery.parseJSON(data);
                     if (data.length == 0)return;
                     for (var i = 0; i < data.length; i++)
-                        $('<option value="' + data[i].value + '">' + data[i].name + '</option>').appendTo($(hotel_block).find("#roomcapacity"));
-                    $(hotel_block).find('#roomcapacity-wr').show();
-                    $(hotel_block).find('#roomcapacity').focus();
-                    $(hotel_block).find("#roomtype-wr,#service-wr,#date-wr,#transfer-wr,#price-wr,#dayscount-wr,#remark-wr,#hotels-page #buttons").hide();
+                        $('<option value="' + data[i].value + '">' + data[i].name + '</option>').appendTo($(hotel_block).find("#roomtype"));
+                    $(hotel_block).find('#roomtype-wr').show().find("#roomtype").focus();
+                    $(hotel_block).find("#roomcapacity-wr,#service-wr,#date-wr,#transfer-wr,#price-wr,#dayscount-wr,#remark-wr,#hotels-page #buttons").hide();
                 }
                 else
                     $(hotel_block).find('#hotelname').html('NO FOUND');
@@ -53,16 +52,16 @@ function BindHotelEvents() {
             }
         });
 
-        $(this).find('#roomcapacity').keypress(function(event) {
+        $(this).find('#roomtype').keypress(function(event) {
             hotel_block = $(this).parents('.hotel-wr');
             if (event.keyCode == KEY_ENTER || event.keyCode == KEY_TAB) {
-                data = update("roomtype", hotel_block);
-                $(hotel_block).find('#roomtype').empty();
+                data = update("roomcapacity", hotel_block);
+                $(hotel_block).find('#roomcapacity').empty();
                 data = jQuery.parseJSON(data);
                 for (var i = 0; i < data.length; i++)
-                    $('<option value="' + data[i].value + '">' + data[i].name + '</option>').appendTo($(hotel_block).find("#roomtype"));
-                $(hotel_block).find('#roomtype-wr').show().find('#roomtype').focus();
-                $(hotel_block).find("#service-wr,#date-wr,#transfer-wr,#price-wr,#remark-wr#dayscount-wr,#hotels-page #buttons").hide();
+                    $('<option value="' + data[i].value + '">' + data[i].name + '</option>').appendTo($(hotel_block).find("#roomcapacity"));
+                $(hotel_block).find('#roomcapacity-wr').show().find('#roomcapacity').focus();
+                $(hotel_block).find("#service-wr,#date-wr,#transfer-wr,#price-wr,#remark-wr,#dayscount-wr,#hotels-page #buttons").hide();
                 return false;
             }
             else if (event.keyCode == KEY_ESC) {
@@ -71,7 +70,7 @@ function BindHotelEvents() {
             }
         });
 
-        $(this).find('#roomtype').keypress(function(event) {
+        $(this).find('#roomcapacity').keypress(function(event) {
             hotel_block = $(this).parents('.hotel-wr');
             if (event.keyCode == KEY_ENTER || event.keyCode == KEY_TAB) {
                 data = update("service", hotel_block);
@@ -80,14 +79,15 @@ function BindHotelEvents() {
                 for (var i = 0; i < data.length; i++)
                     $('<option value="' + data[i].value + '">' + data[i].name + '</option>').appendTo($(hotel_block).find("#service"));
                 $(hotel_block).find('#service-wr').show().find('#service').focus();
-                $(hotel_block).find("#date-wr,#transfer-wr,#price-wr,#remark-wr,#dayscount-wr,#hotels-page #buttons").hide();
+                $(hotel_block).find("#date-wr,#transfer-wr,#price-wr,#remark-wr#dayscount-wr,#hotels-page #buttons").hide();
                 return false;
             }
             else if (event.keyCode == KEY_ESC) {
-                $(hotel_block).find('#roomcapacity').focus();
+                $(hotel_block).find('#roomtype').focus();
                 return false;
             }
         });
+
 
         $(this).find('#service').keypress(function(event) {
             hotel_block = $(this).parents('.hotel-wr');
@@ -195,7 +195,7 @@ function BindHotelEvents() {
                 }
                 else {
                     $(hotel_block).find('#transfer-wr').hide();
-                    $(hotel_block).find("#nohotel").show();
+                    $(hotel_block).find("#price-wr").show().find("#price").focus();
                 }
                 return false;
             }
@@ -574,9 +574,6 @@ $(document).ready(function() {
     });
 
 
-
-
-
     /*
      * PAGE FLUG
      */
@@ -611,7 +608,6 @@ $(document).ready(function() {
     /*
      * PAGE 5
      */
-
 
 
 });
