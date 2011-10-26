@@ -51,7 +51,7 @@
                     Rawluschko</a></li>
                 <!--	<li><a href="javascript:;" class="new_messages top_alert">1 New Message</a></li>-->
                 <li><a href="./pages/settings.html">Settings</a></li>
-                <li><a href="login.php">Logout</a></li>
+                <li><a href="logout.php">Logout</a></li>
             </ul>
         </div>
     </div>
@@ -75,52 +75,103 @@
         </div>
     </div>
 
-    <div class="page" id="resultpage">
-        <div id="resultcontent">
-            <div id="results-wr">
-                <span class="number">1</span>
+    <form action="index.php?step=final&vorgan={$id}" method="POST">
+        <div class="page" id="resultpage">
+            <div id="resultcontent">
+                <div id="results-wr">
+                    <span class="number">1</span>
 
-                <div id="results">
-                    {foreach $hotels as $hotel}
-                    {$hotel.datestart} - {$hotel.dateend} {$hotel.dayscount}N HOTEL: {$hotel.hotelname} /
-                    {$hotel.roomcapacity} / {$hotel.roomtype} / {$hotel.service} / {$hotel.transfer} / {$hotel.remark}
-                    <br/>
-                    {/foreach}
-                    {foreach $manuels as $manuel}
-                    {$manuel.datestart} - {$manuel.dateend} {$manuel.text}
-                    <br/>
-                    {/foreach}
+                    <div id="results">
+                        {foreach from=$hotels item=hotel}
+                        {$hotel.datestart} - {$hotel.dateend} {$hotel.dayscount}N HOTEL: {$hotel.hotelname} /
+                        {$hotel.roomcapacity} / {$hotel.roomtype} / {$hotel.service} / {$hotel.transfer} /
+                        {$hotel.remark}
+                        <br/>
+                        {/foreach}
+                        {if $manuels}
+
+                        {foreach $manuels as $manuel}
+                        {$manuel.datestart} - {$manuel.dateend} {$manuel.text}
+                        <br/>
+                        {/foreach}
+                        {/if}
+                    </div>
                 </div>
-            </div>
-            <div id="flightplan-wr">
-                <span class="number">2</span>
-                <span>Flightplan</span>&nbsp;<b>{$flightplan.price}&euro;</b><br/><br/>
-                <pre class="flightplan">{$flightplan.content}</pre>
-
-            </div>
-            <div id="priceresult">
-                <input type="hidden" name="priceperson"/>
-                <span class="price_title">Preis p.P brutto:</span><span id="oneprice">{$price.person}</span> &euro;<br/>
-                <span class="price_title">Gesamtpreis brutto:</span><span id="gesamtpreis">{$price.brutto}</span> &euro;<br/>
-                <span class="price_title">Provision:</span><span id="provision">{$price.provision}</span> &euro;<br/>
-                <span class="price_title">19 % Mwst:</span><span id="percent">{$price.percent}</span> &euro;<br/><br/>
-                <span class="price_title">Gesamtpreis netto:</span><span id="netto">{$price.netto}</span> &euro;<br/>
-            </div>
-            <br class="clear"/>
-
-            <div class="mail-wr">
-                <div class="mail" style="display:none">
-                    <span>Mail</span>
-                    <input type="text" size="30" class="email"/>
-                    <span class="good" style="display:none;">OK</span>
+                {if $flightplan.content neq ''}
+                <div id="flightplan-wr">
+                    <span class="number">2</span>
+                    <span>Flightplan</span>&nbsp;<b>{$flightplan.price}&euro;</b><br/><br/>
+                    <pre class="flightplan">{$flightplan.content}</pre>
                 </div>
+                {/if}
+                <div id="priceresult">
+                    <input type="hidden" name="priceperson"/>
+                    <span class="price_title">Preis p.P brutto:</span><span
+                        id="oneprice">{$price.person}</span> &euro;<br/>
+                    <span class="price_title">Gesamtpreis brutto:</span><span
+                        id="gesamtpreis">{$price.brutto}</span> &euro;<br/>
+                    <span class="price_title">Provision:</span><span
+                        id="provision">{$price.provision}</span> &euro;<br/>
+                    <span class="price_title">19 % Mwst:</span><span
+                        id="percent">{$price.percent}</span> &euro;<br/><br/>
+                    <span class="price_title">Gesamtpreis netto:</span><span
+                        id="netto">{$price.netto}</span> &euro;<br/>
+                </div>
+                <br class="clear"/>
+
+                <div class="comment-wr">
+                    <label for="comment">Comment</label>
+                    <textarea id="comment" name="bigcomment" style="width:100%">{$bigcomment}</textarea>
+                </div>
+                <div id="persons-wr">
+                    {section name=foo start=1 loop={$personcount} + 1 step=1}
+                    <div class="person">
+                        <span class="num">{$smarty.section.foo.index}</span>
+
+                        <div class="input">
+                            <label for="sex">Herr/Frau</label>
+                            <select name="sex[{$smarty.section.foo.index}]" id="sex">
+                                <option value="herr">Herr</option>
+                                <option value="frau">Frau</option>
+                                <option value="kein">Kein</option>
+                            </select>
+                        </div>
+                        <div class="input">
+                            <label>Nachname/Vorname</label>
+                            <input type="text" name="person_name[{$smarty.section.foo.index}]" id="person_name"
+                                   value="{$persons[{$smarty.section.foo.index} - 1].name}"
+                                   size="20"/>
+                        </div>
+                        <br class="clear"/>
+                    </div>
+                    {/section}
+                </div>
+
+                <div id="address-wr">
+                    <label for="address">{if $type eq 'K'}Kundenadresse{else}Agenturadresse{/if}</label>
+                    <textarea name="address" id="address" style="width:100%">{$address}</textarea>
+                </div>
+                <div id="anzahlung-wr">
+                    <label for="anzahlung">Anzahlung</label>
+                    <input type="text" name="anzahlung" size="3" maxlength="3" value="{$anzahlung}"
+                           id="anzahlung"/>% - <span
+                        id="anzahlungsum">0</span> &euro;
+                </div>
+                <div id="abreisedatum-wr">
+                    <label for="abreisedatum">Abreisedatum</label>
+                    <input type="text" name="abreisedatum" size="8" maxlength="8" value="{$abreisedatum}"
+                           id="abreisedatum"/>
+                </div>
+                
+            </div>
+            <input type="hidden" id="vorgan" name="vorgan" value="{$id}"/>
+
+            <div id="result-buttons">
+                <button class="btn btn-small btn-blue" id="back-button">Back</button>
+                <button class="btn btn-small btn-blue" id="next-button" name="submit">Save</button>
             </div>
         </div>
-        <div id="result-buttons">
-            <button class="btn btn-small btn-blue" id="edit-button">Edit formular</button>
-            <button class="btn btn-small btn-blue" id="next-button">Next</button>
-        </div>
-    </div>
+    </form>
 
 
     <div id="footer">

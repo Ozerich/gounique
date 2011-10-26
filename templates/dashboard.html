@@ -50,7 +50,7 @@
                 Rawluschko</a></li>
             <!--	<li><a href="javascript:;" class="new_messages top_alert">1 New Message</a></li>-->
             <li><a href="./pages/settings.html">Settings</a></li>
-            <li><a href="login.php">Logout</a></li>
+            <li><a href="logout.php">Logout</a></li>
         </ul>
     </div>
 </div>
@@ -76,80 +76,53 @@
 
 
 <div class="content xgrid">
-<form action="index.php" method="POST">
+<form action="index.php?step=result" method="POST">
 <div class="page" id="page1">
-    <div class="input">
-        <label for="action">Aktion:</label>
-        <select name="action" id="action">
-            <option value="o">O</option>
-            <option value="a">A</option>
-            <option value="b">B</option>
-        </select>
-        <span class="hiddentext" id="action_hid"></span>
-    </div>
     <div class="input">
         <label for="agent_kunden">K/A</label>
         <select name="agent_kunden" id="agent_kunden">
-            <option value="agentur">A</option>
-            <option value="kundennummer">K</option>
+            <option value="A">A</option>
+            <option value="K">K</option>
         </select>
         <span class="hiddentext" id="agent_kunden_hid">agentur</span>
     </div>
-    <div class="input">
+    <div class="input" id="kundennummer-wr">
         <label for="kundennummer">Kundennumer:</label>
-        <input type="text" id="kundennummer" name="kundennummer" size="10"/>
+        <input type="text" noempty id="kundennummer" value="{$kundennummer}" name="kundennummer" size="10"/>
         <span class="hiddentext" id="kundennummer_hid"></span>
     </div>
-    <div class="input" id="vorgangsnummer-wr" style="display: none">
-        <label for="vorgangsnummer">Vorgansnummer:</label>
-        <input type="text" id="vorgangsnummer" name="vorgangsnummer" size="10"/>
+    <div class="input" id="vorgangsnummer-wr">
+        <label for="vorgangsnummer">Vorgangsnummer:</label>
+        <input type="text" noempty id="vorgangsnummer" value="{$id}" name="vorgangsnummer" size="10"/>
         <span class="hiddentext" id="vorgangsnummer_hid"></span>
     </div>
-    <div class="input" id="rechnungsnummber-wr" style="display:none;">
-        <label for="rechnungsnummber">Rechnungsnummber:</label>
-        <input type="text" id="rechnungsnummber" name="rechnungsnummber" size="10"/>
+    <div class="input" id="rechnungsnummber-wr">
+        <label for="rechnungsnummber">Rechnungsnummer:</label>
+        <input type="text" id="rechnungsnummber" value="{$rechnungsnummber}" name="rechnungsnummber" size="10"/>
         <span class="hiddentext" id="rechnungsnummber_hid"></span>
+    </div>
+    <div class="input" id="provision-wr">
+        <label for="provision">Provision %:</label>
+        <input type="text" noempty numerical id="provision" name="provision"
+               value="{if $provision neq ''}$provision{else}11{/if}" size="3"/>
+        <span class="hiddentext" id="provision_hid">11</span>
     </div>
     <div class="input" id="personcount-wr">
         <label for="personcount">Personen:</label>
-        <input type="text" id="personcount" name="personcount" size="2"/>
+        <input type="text" noempty numerical id="personcount" value="{$personcount}" name="personcount"
+               size="2"/>
         <span class="hiddentext" id="personcount_hid"></span>
     </div>
     <br class="clear"/>
 </div>
-<div class="page" id="persons-page" style="display:none">
-    <div class="input personen">
-        <label for="personen">Personen</label>
-        <input type="text" id="personen" name="personen" size="2"/>
-    </div>
-    <div id="persons">
-        <div class="person" style="display:none">
-            <span class="num"></span>
-
-            <div class="input">
-                <label for="sex">Herr/Frau</label>
-                <select name="sex" id="sex">
-                    <option value="herr">Herr</option>
-                    <option value="frau">Frau</option>
-                    <option value="kein">Kein</option>
-                </select>
-            </div>
-            <div class="input">
-                <label>Nachname/Vorname</label>
-                <input type="text" name="person_name" id="person_name" size="20"/>
-            </div>
-            <br class="clear"/>
-        </div>
-    </div>
-</div>
-<div class="page" id="hotels-page" style="display:none">
+<div class="page" id="hotels-page">
     <div class="hotels">
         <div class="hotel-wr" style="display:none">
             <div class="input">
                 <label for="hotelcode">Hotel Code</label>
                 <input type="text" name="hotelcode" size="8" id="hotelcode"/>
                 <span id="hotelname"></span>
-                <input type="hidden" id="hotelname_hid" />
+                <input type="hidden" id="hotelname_hid"/>
             </div>
             <div class="input" id="roomcapacity-wr" style="display:none;">
                 <label for="roomcapacity">Capacity</label>
@@ -166,10 +139,10 @@
             <div class="input" id="date-wr" style="display:none;">
                 <span>Date</span><br/>
                 <label for="datestart">Von</label>
-                <input type="text" name="datestart" class="datestart" value="29122011" size="10"/>
+                <input type="text" name="datestart" class="datestart" value="" size="10"/>
                 <br class="clear"/>
                 <label for="dateend">Bis&nbsp;</label>
-                <input type="text" name="dateend" class="dateend" value="05012011" disabled size="10"/>
+                <input type="text" name="dateend" class="dateend" value="" disabled size="10"/>
                 <br class="clear"/>
                 Days Count <input type="text" name="dayscount" class="dayscount" disabled value="0" size="3"/>
             </div>
@@ -195,6 +168,72 @@
             </div>
             <br class="clear"/>
         </div>
+        {foreach $hotels as $ind=>$hotel}
+        <div class="hotel-wr" id="hotel_{$ind + 1}">
+            <div class="input" id="hotelcode-wr">
+                <label for="hotelcode">Hotel Code</label>
+                <input type="text" name="hotelcode[{$ind + 1}]" size="8" value="{$hotel.hotelcode}" id="hotelcode"/>
+                <span id="hotelname">{$hotel.hotelname}</span>
+                <input type="hidden" id="hotelname_hid" name="hotelname[{$ind + 1}]" value="{$hotel.hotelname}"/>
+            </div>
+            <div class="input" id="roomcapacity-wr">
+                <label for="roomcapacity">Capacity</label>
+                <select name="roomcapacity[{$ind + 1}]" id="roomcapacity">
+                    {foreach $hotel.allcapacity as $capacity}
+                    <option value="{$capacity.value}" {if $capacity.current eq 1}selected{/if}>{$capacity.name}</option>
+                    {/foreach}
+                </select>
+            </div>
+            <div class="input" id="roomtype-wr">
+                <label for="roomtype">Room type</label>
+                <select name="roomtype[{$ind + 1}]" id="roomtype">
+                    {foreach $hotel.allroomtype as $roomtype}
+                    <option value="{$roomtype.value}" {if $roomtype.current eq 1}selected{/if}>{$roomtype.name}</option>
+                    {/foreach}
+                </select>
+            </div>
+            <div class="input" id="service-wr">
+                <label for="service">Service</label>
+                <select name="service[{$ind + 1}]" id="service">
+                    {foreach $hotel.allservice as $service}
+                    <option value="{$service.value}" {if $service.current eq 1}selected{/if}>{$service.name}</option>
+                    {/foreach}
+                </select>
+            </div>
+            <div class="input" id="date-wr">
+                <span>Date</span><br/>
+                <label for="datestart">Von</label>
+                <input type="text" name="datestart[{$ind + 1}]" class="datestart" value="{$hotel.datestart}" size="10"/>
+                <br class="clear"/>
+                <label for="dateend">Bis&nbsp;</label>
+                <input type="text" name="dateend[{$ind + 1}]" class="dateend" value="{$hotel.dateend}" size="10"/>
+                <br class="clear"/>
+                Days Count <input type="text" name="dayscount[{$ind + 1}]" class="dayscount" value="{$hotel.dayscount}"
+                                  size="3"/>
+            </div>
+            <div class="input" id="nohotel" style="display:none">NOT FOUND</div>
+            <div class="input" id="transfer-wr">
+                <label for="transfer">Transfer</label>
+                <select id="transfer" name="transfer[{$ind + 1}]">
+                    <option value="no">KEIN TRANSFER</option>
+                    <option value="in">TRANSFER IN</option>
+                    <option value="out">TRANSFER OUT</option>
+                    <option value="rt">TRANSFER RT</option>
+                </select>
+            </div>
+            <div class="input" id="price-wr">
+                <label for="price">Price</label>
+                <input id="price" size="4" name="price[{$ind + 1}]" value="{$hotel.price}"/>&nbsp;EUR
+            </div>
+            <br class="clear"/>
+
+            <div class="input" id="remark-wr">
+                <label for="remark">Remark</label>
+                <input type="text" name="remark[{$ind + 1}]" id="remark" value="{$hotel.remark}" size="100"/>
+            </div>
+            <br class="clear"/>
+        </div>
+        {/foreach}
         <div class="manuel-wr" style="display:none">
             <div class="input" id="text-wr">
                 <input type="text" size="100" name="text" id="text"/>
@@ -207,7 +246,8 @@
                 <label for="dateend">Bis&nbsp;</label>
                 <input type="text" name="manueldateend" class="dateend" value="" disabled size="10"/>
                 <br class="clear"/>
-                Days Count <input type="text" name="manueldayscount" class="dayscount" disabled value="0" size="3"/>
+                Days Count <input type="text" name="manueldayscount" class="dayscount" disabled value="0"
+                                  size="3"/>
             </div>
             <div class="input" id="price-wr">
                 <label for="price">Price</label>
@@ -215,33 +255,53 @@
             </div>
             <br class="clear"/>
         </div>
-    </div>
-    <div id="hotel-buttons" style="display:none">
-        <button class="btn btn-blue btn-small" id="addhotel">Add hotel</button>
-        <button class="btn btn-blue btn-small" id="addmanuel">Add manuel</button>
-        <button class="btn btn-blue btn-small" id="showmenu">Menu</button>
-    </div>
-    <div class="input" id="result-wr" style="display:none">
-        <span name="result" id="result"></span>
+        {foreach $manuels as $ind=>$manuel}
+        <div class="manuel-wr" id="manuel_{$ind+1}">
+            <div class="input" id="text-wr">
+                <input type="text" size="100" value="{$manuel.text}" name="manueltext[{$ind + 1}]" id="text"/>
+            </div>
+            <div class="input" id="date-wr">
+                <span>Date</span><br/>
+                <label for="datestart">Von</label>
+                <input type="text" name="manueldatestart[{$ind + 1}]" class="datestart" value="{$manuel.datestart}"
+                       size="10"/>
+                <br class="clear"/>
+                <label for="dateend">Bis&nbsp;</label>
+                <input type="text" name="manueldateend[{$ind + 1}]" class="dateend" value="{$manuel.dateend}"
+                       size="10"/>
+                <br class="clear"/>
+                Days Count <input type="text" name="manueldayscount[{$ind + 1}]" class="dayscount"
+                                  value="{$manuel.dayscount}"
+                                  size="3"/>
+            </div>
+            <div class="input" id="price-wr">
+                <label for="price">Price</label>
+                <input id="price" size="4" name="manuelprice[{$ind + 1}]" value="{$manuel.price}"/>&nbsp;EUR
+            </div>
+            <br class="clear"/>
+        </div>
+        {/foreach}
     </div>
 </div>
 
 <div class="page" id="flugpage" style="display:none">
     <div class="input" id="flightplan-wr">
         <label for="flightplan">Flight plan</label>
-        <textarea id="flightplan" name="flightplan"></textarea>
+        <textarea id="flightplan" name="flightplan">{$flightplan.content}</textarea>
     </div>
     <div class="input" id="flightprice-wr">
         <label for="flightprice">Preis of flight</label>
-        <input type="text" id="flightprice" size="5" name="flightprice"/>
+        <input type="text" id="flightprice" size="5" value="{$flightplan.price}" name="flightprice"/>
     </div>
-    <br class="clear" />
+    <br class="clear"/>
 </div>
 
-<div class="page" id="buttons" style="display:none">
-    <button class="btn btn-small btn-blue" id="hotel-button">Hotels</button>
-    <button class="btn btn-small btn-blue" id="flug-button">Flug</button>
-    <button class="btn btn-small btn-blue" id="fertig-button" name="fertig">Fertig</button>
+<div class="page" id="buttons"
+{if $mode neq 'edit'}style="display:none"{/if}>
+<button class="btn btn-small btn-blue" id="addhotel-button">Add hotel</button>
+<button class="btn btn-small btn-blue" id="addmanuel-button">Add manuel</button>
+<button class="btn btn-small btn-blue" id="flug-button">Flug</button>
+<button class="btn btn-small btn-blue" id="fertig-button" name="submit">Fertig</button>
 </div>
 </form>
 </div>

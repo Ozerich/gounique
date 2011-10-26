@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.7, created on 2011-10-24 13:14:23
+<?php /* Smarty version Smarty-3.0.7, created on 2011-10-24 18:30:35
          compiled from "Z:\home\localhost\www\hotel\templates/dashboard.html" */ ?>
-<?php /*%%SmartyHeaderCode:99054ea53a7f39f463-35653564%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:211334ea5849ba625d0-51752851%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '68959585cc6de472a977ff35cbf8ae0f26b68fc3' => 
     array (
       0 => 'Z:\\home\\localhost\\www\\hotel\\templates/dashboard.html',
-      1 => 1319449906,
+      1 => 1319470170,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '99054ea53a7f39f463-35653564',
+  'nocache_hash' => '211334ea5849ba625d0-51752851',
   'function' => 
   array (
   ),
@@ -98,68 +98,39 @@ $_smarty_tpl->decodeProperties(array (
 <form action="index.php" method="POST">
 <div class="page" id="page1">
     <div class="input">
-        <label for="action">Aktion:</label>
-        <select name="action" id="action">
-            <option value="o">O</option>
-            <option value="a">A</option>
-            <option value="b">B</option>
-        </select>
-        <span class="hiddentext" id="action_hid"></span>
-    </div>
-    <div class="input">
         <label for="agent_kunden">K/A</label>
         <select name="agent_kunden" id="agent_kunden">
-            <option value="agentur">A</option>
-            <option value="kundennummer">K</option>
+            <option value="A">A</option>
+            <option value="K">K</option>
         </select>
         <span class="hiddentext" id="agent_kunden_hid">agentur</span>
     </div>
-    <div class="input">
+    <div class="input" id="kundennummer-wr">
         <label for="kundennummer">Kundennumer:</label>
-        <input type="text" id="kundennummer" name="kundennummer" size="10"/>
+        <input type="text" noempty id="kundennummer" name="kundennummer" size="10"/>
         <span class="hiddentext" id="kundennummer_hid"></span>
     </div>
-    <div class="input" id="vorgangsnummer-wr" style="display: none">
-        <label for="vorgangsnummer">Vorgansnummer:</label>
-        <input type="text" id="vorgangsnummer" name="vorgangsnummer" size="10"/>
+    <div class="input" id="vorgangsnummer-wr">
+        <label for="vorgangsnummer">Vorgangsnummer:</label>
+        <input type="text" noempty id="vorgangsnummer" name="vorgangsnummer" size="10"/>
         <span class="hiddentext" id="vorgangsnummer_hid"></span>
     </div>
-    <div class="input" id="rechnungsnummber-wr" style="display:none;">
-        <label for="rechnungsnummber">Rechnungsnummber:</label>
+    <div class="input" id="rechnungsnummber-wr">
+        <label for="rechnungsnummber">Rechnungsnummer:</label>
         <input type="text" id="rechnungsnummber" name="rechnungsnummber" size="10"/>
         <span class="hiddentext" id="rechnungsnummber_hid"></span>
     </div>
+    <div class="input" id="provision-wr">
+        <label for="provision">Provision %:</label>
+        <input type="text" noempty numerical id="provision" name="provision" value="11" size="3" />
+        <span class="hiddentext" id="provision_hid">11</span>
+    </div>
     <div class="input" id="personcount-wr">
         <label for="personcount">Personen:</label>
-        <input type="text" id="personcount" name="personcount" size="2"/>
+        <input type="text" noempty numerical id="personcount" name="personcount" size="2"/>
         <span class="hiddentext" id="personcount_hid"></span>
     </div>
     <br class="clear"/>
-</div>
-<div class="page" id="persons-page" style="display:none">
-    <div class="input personen">
-        <label for="personen">Personen</label>
-        <input type="text" id="personen" name="personen" size="2"/>
-    </div>
-    <div id="persons">
-        <div class="person" style="display:none">
-            <span class="num"></span>
-
-            <div class="input">
-                <label for="sex">Herr/Frau</label>
-                <select name="sex" id="sex">
-                    <option value="herr">Herr</option>
-                    <option value="frau">Frau</option>
-                    <option value="kein">Kein</option>
-                </select>
-            </div>
-            <div class="input">
-                <label>Nachname/Vorname</label>
-                <input type="text" name="person_name" id="person_name" size="20"/>
-            </div>
-            <br class="clear"/>
-        </div>
-    </div>
 </div>
 <div class="page" id="hotels-page" style="display:none">
     <div class="hotels">
@@ -235,11 +206,6 @@ $_smarty_tpl->decodeProperties(array (
             <br class="clear"/>
         </div>
     </div>
-    <div id="hotel-buttons" style="display:none">
-        <button class="btn btn-blue btn-small" id="addhotel">Add hotel</button>
-        <button class="btn btn-blue btn-small" id="addmanuel">Add manuel</button>
-        <button class="btn btn-blue btn-small" id="showmenu">Menu</button>
-    </div>
     <div class="input" id="result-wr" style="display:none">
         <span name="result" id="result"></span>
     </div>
@@ -258,7 +224,8 @@ $_smarty_tpl->decodeProperties(array (
 </div>
 
 <div class="page" id="buttons" style="display:none">
-    <button class="btn btn-small btn-blue" id="hotel-button">Hotels</button>
+    <button class="btn btn-small btn-blue" id="addhotel-button">Add hotel</button>
+    <button class="btn btn-small btn-blue" id="addmanuel-button">Add manuel</button>
     <button class="btn btn-small btn-blue" id="flug-button">Flug</button>
     <button class="btn btn-small btn-blue" id="fertig-button" name="fertig">Fertig</button>
 </div>

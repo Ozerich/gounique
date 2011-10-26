@@ -1,96 +1,38 @@
 <?php
 
-define("BLANK_FILE", "blank.pdf");
+define("BLANK_FILE", "UNI_Briefpapier.pdf");
 
 require_once dirname(__FILE__) . "/MPDF/mpdf.php";
+require_once LIB_DIR."search.php";
 
-
-function WriteToPdf($vorgansnummer, $persons, $tours, $flugplan, $priceperson)
+function WriteToPdf($vorgangnummer, $type)
 {
+    global $smarty;
     $pdf = new mPDF('utf-8', 'A4', '8', '', 4, 4, 25, 25, 0, 0);
+    $pdf->SetImportUse();
+    $pdf->AddPage();
+    $pagecount = $pdf->SetSourceFile(BLANK_FILE);
+    $tplId = $pdf->ImportPage($pagecount);
+    $actualsize = $pdf->UseTemplate($tplId);
 
+    FIllSmarty($vorgangnummer);
 
-$pdf->SetImportUse(); 
+    $template = "";
+    if($type == 1)
+        $template = "angebot.html";
+    elseif($type == 2)
+        $template = "eingangsmitteilungen.html";
+    elseif($type == 3)
+        $template = "rechnungen.html";
 
-
-// Add First page
-$pdf->AddPage();
-
-$pagecount = $pdf->SetSourceFile('UNI_Briefpapier.pdf');
-$tplId = $pdf->ImportPage($pagecount);
-
-$actualsize = $pdf->UseTemplate($tplId);
-
-
-    $html = '<div id="page">
-    <div id="header"></div>
-    <div id="content">
-        <h1>REISEANGEBOT</h1>
-
-        <div class="vorgansnummer-wr">
-            <div class="left">
-                <div class="header">Vorgansnummer</div>
-                <div class="nummer">' . $vorgansnummer . '</div>
-            </div>
-            <div class="right">
-                <div>Datum: ' . date('d.m.Y') . '</div>
-                <div>Sachbearbeiter: Paul Rawluschko</div>
-            </div>
-
-        </div>
-        <div class="mainblock">
-            <div class="persons">
-                <span class="header">Reiseteilnehmer:</span>
-                ';
-    foreach ($persons as $ind => $person)
-        $html .= '<div class="person"><div class="num">' . ($ind + 1) . '</div><div class="sex">' . $person['sex'] . '</div><div class="name">' . $person['name'] . '</div></div>';
-    $html .= '
-                <br class="clear"/>
-            </div>
-            <div class="tours">
-                <span class="header">Leistung:</span>
-                ';
-    foreach ($tours as $ind => $tour)
-        $html .= '<div class="tour"><div class="date">' . $tour['date'] . '</div><div class="content">' . $tour['content'] . '</div></div>';
-
-
-    $html .= '
-            </div>
-            <div class="flugplan">
-                <span class="header">Flugplan:</span>
-
-                <div class="content"><pre>'.$flugplan.'</pre>
-                </div>
-            </div>
-            <div class="price-wr">
-                Preis p.P:
-                <span class="price">'.$priceperson.',-&euro;</span>
-            </div>
-        </div>
-        <div class="priceblock">
-            Gesamptreis: <span class="price">'.($priceperson * count($persons)).'&euro;</span>
-        </div>
-        <div class="bottomblock">
-            <div class="signature">
-                <span>Bei Buchungswunsch bitte unterschrieben zurückfaxen:</span>
-
-                <div class="line"></div>
-            </div>
-            <p>Mit freundlichen Grüßen</p>
-
-            <span>Paul Rawluschko<br/>Unique World GmbH</span>
-        </div>
-    </div>
-    <div id="footer"></div>
-</div>';
-
+    $html = $smarty->fetch("email/".$template);
 
     $stylesheet = file_get_contents(dirname(__FILE__) . '/../css/pdf.css');
-
     $pdf->WriteHTML($stylesheet, 1);
     $pdf->list_indent_first_level = 0;
     $pdf->WriteHTML($html, 2);
-    $pdf->Output('result.pdf', 'F');
+
+    $pdf->Output("pdf/".$vorgangnummer."_".$type.'.pdf', 'F');
 }
 
 ?>

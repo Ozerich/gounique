@@ -47,7 +47,7 @@ if (isset($_POST['submit'])) {
     while(($data = fgetcsv($f, 1000, ";")) !== false)
     {
         mysql_query("INSERT INTO hotels(hotelcode, hotelname, hotelstars, roomcapacity, roomtype, service, date, price)
-            VALUES ('".$data[3]."','".$data[7]."','".$data[8]."','".$data[14]."','".$data[10]."','".FixService($data[11])."','".FixDate($data[0])."','".$data[5]."')")
+            VALUES ('".$data[3]."','".$data[7]."','".$data[8]."','".$data[9]."','".$data[10]."','".FixService($data[11])."','".FixDate($data[0])."','".$data[5]."')")
                 or die(mysql_error());
     }
 

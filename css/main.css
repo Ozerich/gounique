@@ -1,98 +1,117 @@
-.content{
-	width: 900px;
-	margin: 0 auto;
-	padding: 10px;
-	padding-bottom: 30px;
-	border: 1px dotted gray;
+.content {
+    width: 900px;
+    margin: 0 auto;
+    padding: 10px;
+    padding-bottom: 30px;
+    border: 1px dotted gray;
 }
 
-.input{
-	float: left;
-	margin-right: 20px;
+.input {
+    float: left;
+    margin-right: 20px;
 }
 
-.input label{
-	display: block;
-	font-weight: bold;
+.input label {
+    display: block;
+    font-weight: bold;
 }
 
-.input.personen{
-	display: block;
-	float: none;
+.input.personen {
+    display: block;
+    float: none;
 }
 
-.person span{
-	display: block;
-	float: left;
-	margin-right: 10px;
-	margin-top: 5px;
+.person span {
+    display: block;
+    float: left;
+    margin-right: 10px;
+    margin-top: 5px;
 }
 
-input:focus{
-	border: 1px solid red;
+input:focus {
+    border: 1px solid red;
 }
 
-#date-wr label{
-	float: left;
+#date-wr label {
+    float: left;
 }
 
-#flightplan{
-	width: 415px;
-	height: 120px;
+#flightplan {
+    width: 415px;
+    height: 120px;
 }
-#hotelname {font-size:15px;}
-#page2,#page3 {margin-top: 10px;}
-#resultpage .number{
-    margin:0 8px 0 -20px;
+
+#hotelname {
+    font-size: 15px;
 }
-#resultpage{
+
+#page2, #page3 {
+    margin-top: 10px;
+}
+
+#resultpage .number {
+    margin: 0 8px 0 -20px;
+}
+
+#resultpage {
     width: 800px;
     margin: 0 auto;
 }
-#resultpage #flightplan-wr{
-	float:left;
+
+#resultpage #flightplan-wr {
+    float: left;
     border: 1px solid black;
     width: 350px;
     padding-left: 20px;
 }
 
-#resultpage #results-wr{
+#resultpage #results-wr {
     padding-left: 20px;
     border: 1px solid black;
     width: 780px;
     margin-bottom: 10px;
 }
-#resultpage #results{
+
+#resultpage #results {
     margin-bottom: 10px;
     margin-top: -14px;
 }
 
-#resultpage .mail-wr{
-    margin-top: 50px;
+#resultpage .mail-wr {
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
-#resultpage .price_title{
+#resultpage .price_title {
     display: inline-block;
     width: 140px;
 }
 
-#resultpage #priceresult{
-	float: right;
-      border: 1px solid black;
+#resultpage #priceresult {
+    float: right;
+    border: 1px solid black;
     width: 350px
 }
 
-#resultpage .personresult-wr{
+#resultpage .personresult-wr {
     margin-bottom: 10px;
 }
+#stage-wr{margin-top: 10px;}
 
+.manuel-wr, .hotel-wr {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid black;
+}
 
-#buttons,#hotel-buttons{
+#buttons, #hotel-buttons, #result-buttons {
     margin-top: 10px;
 }
 
-#buttons button:focus, #hotel-buttons button:focus, #result-buttons button:focus{
+#buttons button:focus, #hotel-buttons button:focus, #result-buttons button:focus, #final-buttons button:focus {
     background-color: #3C84A1;
 }
 
-.hiddentext{display: none;}
+.hiddentext {
+    display: none;
+}

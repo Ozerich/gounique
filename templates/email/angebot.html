@@ -1,0 +1,73 @@
+<div id="page">
+    <div id="header"></div>
+    <div id="content">
+        <h1>REISEANGEBOT</h1>
+
+        <div class="vorgansnummer-wr">
+            <div class="left">
+                <div class="header">Vorgansnummer {$vorgansnummer}</div><br/>
+                <div class="nummer">Rechnungsnummer {$rechnungsnummber} </div>
+            </div>
+            <div class="right">
+                <div>Datum: {$today}</div>
+                <div>Sachbearbeiter: {$user.fullname}</div>
+            </div>
+        </div>
+        <div class="mainblock">
+            <div class="persons">
+                <span class="header">Reiseteilnehmer:</span>
+                {foreach $persons as $ind => $person}
+                <div class="person">
+                    <div class="num">{$ind + 1}</div>
+                    <div class="sex">{$person.sex}</div>
+                    <div class="name">{$person.name}</div>
+                </div>
+                {/foreach}
+                <br class="clear"/>
+            </div>
+            <div class="tours">
+                <span class="header">Leistung:</span>
+                {foreach $hotels as $ind => $hotel}
+                <div class="tour">
+                    <div class="date"> {$hotel.datestart} - {$hotel.dateend}</div>
+                    <div class="content"> {$hotel.dayscount}N HOTEL: {$hotel.hotelname} /
+                        {$hotel.roomcapacity} / {$hotel.roomtype} / {$hotel.service} / {$hotel.transfer} /
+                        {$hotel.remark}
+                    </div>
+                </div>
+                {/foreach}
+                {foreach $manuels as $ind => $manuel}
+                <div class="tour">
+                    <div class="date"> {$manuel.datestart} - {$manuel.dateend}</div>
+                    <div class="content"> {$manuel.text}</div>
+                </div>
+                {/foreach}
+            </div>
+            {if $flugplan neq ''}
+            <div class="flugplan">
+                <span class="header">Flugplan:</span>
+                <div class="content">
+                    <pre>{$flugplan}</pre>
+                </div>
+            </div>
+            {/if}
+            <div class="price-wr">
+                Preis p.P:
+                <span class="price">{$price.person}-&euro;</span>
+            </div>
+        </div>
+        <div class="priceblock">
+            Gesamptreis: <span class="price">{$price.netto} &euro;</span>
+        </div>
+        <div class="bottomblock">
+            <div class="signature">
+                <span>Bei Buchungswunsch bitte unterschrieben zurückfaxen:</span>
+                <div class="line"></div>
+            </div>
+            <p>Mit freundlichen Grüßen</p>
+
+            <span>Paul Rawluschko<br/>Unique World GmbH</span>
+        </div>
+    </div>
+    <div id="footer"></div>
+</div>
