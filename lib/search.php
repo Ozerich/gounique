@@ -44,6 +44,8 @@ function FillSmarty($id)
     foreach ($hotels as &$hotel)
     {
         $hotel['allcapacity'] = GetCapacity($hotel['hotelcode'], $hotel['roomtype']);
+        $hotel['datestartformatted']=substr($hotel['datestart'], 0, 2).'.'. substr($hotel['datestart'], 2, 2).'.'. substr($hotel['datestart'], 4);
+        $hotel['dateendformatted']=substr($hotel['dateend'], 0, 2).'.'. substr($hotel['dateend'], 2, 2).'.'. substr($hotel['dateend'], 4);
         foreach ($hotel['allcapacity'] as &$item)
             $item['current'] = $item['value'] == $hotel['roomcapacity'] ? 1 : 0;
         $hotel['allroomtype'] = GetRoomtype($hotel['hotelcode']);
@@ -59,20 +61,24 @@ function FillSmarty($id)
     $manuel_price = 0;
 
     $manuels = unserialize($data['manuels']);
-    if (!empty($manuels))
-        foreach ($manuels as $manuel)
+    if (!empty($manuels)) {
+        foreach ($manuels as &$manuel) {
             $manuel_price += $manuel['price'];
-
+            $manuel['dateendformatted']=substr($manuel['dateend'], 0, 2).'.'. substr($manuel['dateend'], 2, 2).'.'. substr($manuel['dateend'], 4);
+            $manuel['datestartformatted']=substr($manuel['datestart'], 0, 2).'.'. substr($manuel['datestart'], 2, 2).'.'. substr($manuel['datestart'], 4);
+        }
+    }
     $smarty->assign("manuels", $manuels);
 
     $hotel_price = $price;
     $price += $data['flightprice'];
-
+$price = $price*$data['personcount'];
     $pricetpl = array();
-    $pricetpl['person'] = $price / $data['personcount'];
+   
     $pricetpl['brutto'] = $price + $manuel_price;
+     $pricetpl['person'] =$pricetpl['brutto']  / $data['personcount'];
     $pricetpl['netto'] = round($pricetpl['brutto'] / 1.19, 2);
-    $pricetpl['provision'] = round($hotel_price * $data['provision'] / 100, 2);
+    $pricetpl['provision'] = round($pricetpl['brutto']  * $data['provision'] / 100, 2);
     $pricetpl['percent'] = round($pricetpl['provision'] / 1.19 * 0.19, 2);
     $pricetpl['anzahlung'] = $data['anzahlung'];
     $pricetpl['anzahlung_value'] = round($pricetpl['brutto'] / 100 * $data['anzahlung']);

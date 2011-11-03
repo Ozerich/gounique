@@ -47,8 +47,8 @@
         <div class="content_pad">
             <ul class="right">
                 <li><a href="javascript:;" class="top_icon"><span class="ui-icon ui-icon-person"></span>Eingeloggt als {$user.fullname}</a></li>
-                <!--	<li><a href="javascript:;" class="new_messages top_alert">1 New Message</a></li>-->
-                <li><a href="./pages/settings.html">Settings</a></li>
+                <!--	<li><a href="javascript:;" class="new_messages top_alert">1 New Message</a></li>
+                <li><a href="./pages/settings.html">Settings</a></li>-->
                 <li><a href="logout.php">Logout</a></li>
             </ul>
         </div>
@@ -59,7 +59,7 @@
         <div class="content_pad">
             <h1><a href="index.php">Dashboard Admin</a></h1>
             <ul id="nav">
-            <li class="nav_icon nav_current"><a href="#">New formular</a></li>
+            <li class="nav_icon nav_current"><a href="/">New formular</a></li>
             <li class="nav_icon"><a href="./open.php">Open formular</a></li>
             </ul>
         </div>
@@ -68,7 +68,7 @@
 
     <div id="masthead">
         <div class="content_pad">
-            <h1 class="no_breadcrumbs">Reisengebot Formular</h1>
+            <h1 class="no_breadcrumbs">Reiseangebot Formular</h1>
         </div>
     </div>
 
@@ -80,7 +80,7 @@
 
                     <div id="results">
                         {foreach from=$hotels item=hotel}
-                        {$hotel.datestart} - {$hotel.dateend} {$hotel.dayscount}N HOTEL: {$hotel.hotelname} /
+                        {$hotel.datestartformatted} - {$hotel.dateendformatted} {$hotel.dayscount}N HOTEL: {$hotel.hotelname} /
                         {$hotel.roomcapacity} / {$hotel.roomtype} / {$hotel.service} / TRANSFER {$hotel.transfer} /
                         {$hotel.remark}
                         <br/>
@@ -88,7 +88,7 @@
                         {if $manuels}
 
                         {foreach $manuels as $manuel}
-                        {$manuel.datestart} - {$manuel.dateend} {$manuel.text}
+                        {$manuel.datestartformatted} - {$manuel.dateendformatted} {$manuel.text}
                         <br/>
                         {/foreach}
                         {/if}
@@ -97,7 +97,7 @@
                 {if $flightplan.content neq ''}
                 <div id="flightplan-wr">
                     <span class="number">2</span>
-                    <span>Flightplan</span>&nbsp;<b>{$flightplan.price}&euro;</b><br/><br/>
+                    <span>Flightplan</span>&nbsp;<br/><br/>
                     <pre class="flightplan">{$flightplan.content}</pre>
                 </div>
                 {/if}
@@ -132,7 +132,7 @@
                 <div id="address-wr">
                     <h3>{if $type eq 'K'}Kundenadresse{else}Agenturadresse{/if}</h3>
 
-                    <p>{$address}</p>
+                    <p><pre>{$address}</pre></p>
                 </div>
                 <div id="anzahlung-wr">
                     <span>Anzahlung: {$price.anzahlung} %</span>
@@ -145,8 +145,9 @@
                     <label for="stage">Stage</label>
                     <div id="stage">
                         <input type="radio" id="radio1" name="stage" value="1" {if $stage eq 1}checked="checked"{/if}/><label for="radio1">Angebot</label>
-                        <input type="radio" id="radio2" name="stage" value="2" {if $stage eq 2}checked="checked"{/if}/><label for="radio2">Eingangsmitteilungen</label>
-                        <input type="radio" id="radio3" name="stage" value="3" {if $stage eq 3}checked="checked"{/if}/><label for="radio3">Rechnungen</label>
+                        <input type="radio" id="radio2" name="stage" value="2" {if $stage eq 2}checked="checked"{/if}/><label for="radio2">Angebot (Kundenkopie)</label>
+                        <input type="radio" id="radio3" name="stage" value="3" {if $stage eq 3}checked="checked"{/if}/><label for="radio3">Rechnung</label>
+                        <input type="radio" id="radio4" name="stage" value="4" {if $stage eq 4}checked="checked"{/if}/><label for="radio4">Rechnung (Kundenkopie)</label>
                     </div>
                 </div>
 

@@ -1,12 +1,14 @@
 #header{
-    width: 792px;
+    width: 712px;
     height: 285px;
+    padding: 0 30px;
+
   //  background: url('../img/pdf-header.jpg') no-repeat;
 }
 
 #footer{
     width: 792px;
-    height: 117px;
+
   //  background: url('../img/pdf-footer.jpg') no-repeat;
 }
 
@@ -31,7 +33,7 @@ h1{
     width: 704px;
 }
 .vorgansnummer-wr .left{float: left;width: 300px;}
-.vorgansnummer-wr .left .header{float: left; width: 120px;}
+.vorgansnummer-wr .left .header{float: left; width: 200px;}
 .vorgansnummer-wr .right{float:right;width: 220px;}
 .vorgansnummer-wr .right div{
     text-align: right;

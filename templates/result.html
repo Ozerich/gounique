@@ -47,10 +47,9 @@
         <div class="content_pad">
             <ul class="right">
                 <li><a href="javascript:;" class="top_icon"><span class="ui-icon ui-icon-person"></span>Eingeloggt als
-                    Paul
-                    Rawluschko</a></li>
-                <!--	<li><a href="javascript:;" class="new_messages top_alert">1 New Message</a></li>-->
-                <li><a href="./pages/settings.html">Settings</a></li>
+                    {$user.fullname}</a></li>
+                <!--	<li><a href="javascript:;" class="new_messages top_alert">1 New Message</a></li>                <li><a href="./pages/settings.html">Settings</a></li>-->
+
                 <li><a href="logout.php">Logout</a></li>
             </ul>
         </div>
@@ -61,7 +60,7 @@
         <div class="content_pad">
             <h1><a href="index.php">Dashboard Admin</a></h1>
             <ul id="nav">
-            <li class="nav_icon nav_current"><a href="#">New formular</a></li>
+            <li class="nav_icon nav_current"><a href="/">New formular</a></li>
             <li class="nav_icon"><a href="./open.php">Open formular</a></li>
             </ul>
         </div>
@@ -70,7 +69,7 @@
 
     <div id="masthead">
         <div class="content_pad">
-            <h1 class="no_breadcrumbs">Reisengebot Formular</h1>
+            <h1 class="no_breadcrumbs">Reiseangebot Formular</h1>
         </div>
     </div>
 
@@ -84,13 +83,13 @@
                         {foreach from=$hotels item=hotel}
                         {$hotel.datestart} - {$hotel.dateend} {$hotel.dayscount}N HOTEL: {$hotel.hotelname} /
                         {$hotel.roomcapacity} / {$hotel.roomtype} / {$hotel.service} / TRANSFER {$hotel.transfer} /
-                        {$hotel.remark}
+                        {$hotel.remark} - &nbsp;<b>{$hotel.price}&euro;</b>
                         <br/>
                         {/foreach}
                         {if $manuels}
 
                         {foreach $manuels as $manuel}
-                        {$manuel.datestart} - {$manuel.dateend} {$manuel.text}
+                        {$manuel.datestart} - {$manuel.dateend} {$manuel.text}  - &nbsp;<b>{$manuel.price}&euro;
                         <br/>
                         {/foreach}
                         {/if}
@@ -130,9 +129,9 @@
                         <div class="input">
                             <label for="sex">Herr/Frau</label>
                             <select name="sex[{$smarty.section.foo.index}]" id="sex">
-                                <option value="herr" {if $persons[{$smarty.section.foo.index} - 1].sex eq 'herr'}selected{/if}>Herr</option>
-                                <option value="frau" {if $persons[{$smarty.section.foo.index} - 1].sex eq 'frau'}selected{/if}>Frau</option>
-                                <option value="kein" {if $persons[{$smarty.section.foo.index} - 1].sex eq 'kein'}selected{/if}>Kein</option>
+                                <option value="Herr" {if $persons[{$smarty.section.foo.index} - 1].sex eq 'Herr'}selected{/if}>Herr</option>
+                                <option value="Frau" {if $persons[{$smarty.section.foo.index} - 1].sex eq 'Frau'}selected{/if}>Frau</option>
+                                <option value="Kind" {if $persons[{$smarty.section.foo.index} - 1].sex eq 'Kind'}selected{/if}>Kind</option>
                             </select>
                         </div>
                         <div class="input">

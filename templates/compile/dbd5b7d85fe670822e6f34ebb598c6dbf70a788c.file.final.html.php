@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty 3.1.4, created on 2011-10-26 01:33:26
+<?php /* Smarty version Smarty 3.1.4, created on 2011-10-26 18:23:18
          compiled from "Z:\home\localhost\www\hotel\templates\final.html" */ ?>
 <?php /*%%SmartyHeaderCode:173794ea6be678956c2-71508434%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'dbd5b7d85fe670822e6f34ebb598c6dbf70a788c' => 
     array (
       0 => 'Z:\\home\\localhost\\www\\hotel\\templates\\final.html',
-      1 => 1319559821,
+      1 => 1319642587,
       2 => 'file',
     ),
   ),
@@ -19,6 +19,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   'unifunc' => 'content_4ea6be67a1941',
   'variables' => 
   array (
+    'user' => 0,
     'id' => 0,
     'hotels' => 0,
     'hotel' => 0,
@@ -32,7 +33,6 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'person' => 0,
     'type' => 0,
     'address' => 0,
-    'anzahlung' => 0,
     'abreisedatum' => 0,
     'stage' => 0,
   ),
@@ -86,9 +86,8 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     <div id="top">
         <div class="content_pad">
             <ul class="right">
-                <li><a href="javascript:;" class="top_icon"><span class="ui-icon ui-icon-person"></span>Eingeloggt als
-                    Paul
-                    Rawluschko</a></li>
+                <li><a href="javascript:;" class="top_icon"><span class="ui-icon ui-icon-person"></span>Eingeloggt als <?php echo $_smarty_tpl->tpl_vars['user']->value['fullname'];?>
+</a></li>
                 <!--	<li><a href="javascript:;" class="new_messages top_alert">1 New Message</a></li>-->
                 <li><a href="./pages/settings.html">Settings</a></li>
                 <li><a href="logout.php">Logout</a></li>
@@ -101,9 +100,8 @@ $_valid = $_smarty_tpl->decodeProperties(array (
         <div class="content_pad">
             <h1><a href="index.php">Dashboard Admin</a></h1>
             <ul id="nav">
-                <li class="nav_current nav_icon"><a href="./dashboard.html">Angebot</a></li>
-                <li class="nav_icon"><a href="#">Eingangsmitteilungen</a></li>
-                <li class="nav_icon"><a href="#">Rechnungen</a></li>
+            <li class="nav_icon nav_current"><a href="#">New formular</a></li>
+            <li class="nav_icon"><a href="./open.php">Open formular</a></li>
             </ul>
         </div>
     </div>
@@ -217,7 +215,7 @@ $_smarty_tpl->tpl_vars['person']->_loop = true;
 </p>
                 </div>
                 <div id="anzahlung-wr">
-                    <span>Anzahlung: <?php echo $_smarty_tpl->tpl_vars['anzahlung']->value;?>
+                    <span>Anzahlung: <?php echo $_smarty_tpl->tpl_vars['price']->value['anzahlung'];?>
  %</span>
                 </div>
                 <div id="abreisedatum-wr">
@@ -228,9 +226,9 @@ $_smarty_tpl->tpl_vars['person']->_loop = true;
                 <div id="stage-wr">
                     <label for="stage">Stage</label>
                     <div id="stage">
-                        <input type="radio" id="radio1" name="radio" value="1" <?php if ($_smarty_tpl->tpl_vars['stage']->value==1){?>checked="checked"<?php }?>/><label for="radio1">Angebot</label>
-                        <input type="radio" id="radio2" name="radio" value="2" <?php if ($_smarty_tpl->tpl_vars['stage']->value==2){?>checked="checked"<?php }?>/><label for="radio2">Eingangsmitteilungen</label>
-                        <input type="radio" id="radio3" name="radio" value="3" <?php if ($_smarty_tpl->tpl_vars['stage']->value==3){?>checked="checked"<?php }?>/><label for="radio3">Rechnungen</label>
+                        <input type="radio" id="radio1" name="stage" value="1" <?php if ($_smarty_tpl->tpl_vars['stage']->value==1){?>checked="checked"<?php }?>/><label for="radio1">Angebot</label>
+                        <input type="radio" id="radio2" name="stage" value="2" <?php if ($_smarty_tpl->tpl_vars['stage']->value==2){?>checked="checked"<?php }?>/><label for="radio2">Eingangsmitteilungen</label>
+                        <input type="radio" id="radio3" name="stage" value="3" <?php if ($_smarty_tpl->tpl_vars['stage']->value==3){?>checked="checked"<?php }?>/><label for="radio3">Rechnungen</label>
                     </div>
                 </div>
 

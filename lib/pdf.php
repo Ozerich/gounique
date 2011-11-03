@@ -23,9 +23,11 @@ function WriteToPdf($vorgangnummer, $type)
     if($type == 1)
         $template = "angebot.html";
     elseif($type == 2)
-        $template = "eingangsmitteilungen.html";
+        $template = "angebotK.html";
     elseif($type == 3)
-        $template = "rechnungen.html";
+        $template = "rechnung.html";
+    elseif($type == 4)
+        $template = "rechnungK.html";
 
     $html = $smarty->fetch("email/".$template);
 

@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty 3.1.4, created on 2011-10-25 19:30:21
+<?php /* Smarty version Smarty 3.1.4, created on 2011-10-26 22:47:01
          compiled from "Z:\home\localhost\www\hotel\templates\dashboard.html" */ ?>
 <?php /*%%SmartyHeaderCode:319244ea58e02182954-73017327%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'ae8c00db44d8dc04885060d2e1b3eacee3a7c782' => 
     array (
       0 => 'Z:\\home\\localhost\\www\\hotel\\templates\\dashboard.html',
-      1 => 1319560219,
+      1 => 1319658406,
       2 => 'file',
     ),
   ),
@@ -19,6 +19,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   'unifunc' => 'content_4ea58e02355da',
   'variables' => 
   array (
+    'user' => 0,
     'kundennummer' => 0,
     'id' => 0,
     'rechnungsnummber' => 0,
@@ -27,8 +28,8 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'hotels' => 0,
     'ind' => 0,
     'hotel' => 0,
-    'capacity' => 0,
     'roomtype' => 0,
+    'capacity' => 0,
     'service' => 0,
     'manuels' => 0,
     'manuel' => 0,
@@ -85,8 +86,9 @@ $_valid = $_smarty_tpl->decodeProperties(array (
 <div id="top">
     <div class="content_pad">
         <ul class="right">
-            <li><a href="javascript:;" class="top_icon"><span class="ui-icon ui-icon-person"></span>Eingeloggt als Paul
-                Rawluschko</a></li>
+            <li><a href="javascript:;" class="top_icon"><span class="ui-icon ui-icon-person"></span>Eingeloggt als
+                <?php echo $_smarty_tpl->tpl_vars['user']->value['fullname'];?>
+</a></li>
             <!--	<li><a href="javascript:;" class="new_messages top_alert">1 New Message</a></li>-->
             <li><a href="./pages/settings.html">Settings</a></li>
             <li><a href="logout.php">Logout</a></li>
@@ -99,9 +101,8 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     <div class="content_pad">
         <h1><a href="index.php">Dashboard Admin</a></h1>
         <ul id="nav">
-            <li class="nav_current nav_icon"><a href="./dashboard.html">Angebot</a></li>
-            <li class="nav_icon"><a href="#">Eingangsmitteilungen</a></li>
-            <li class="nav_icon"><a href="#">Rechnungen</a></li>
+            <li class="nav_icon nav_current"><a href="#">New formular</a></li>
+            <li class="nav_icon"><a href="./open.php">Open formular</a></li>
         </ul>
     </div>
 </div>
@@ -146,7 +147,8 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     <div class="input" id="provision-wr">
         <label for="provision">Provision %:</label>
         <input type="text" noempty numerical id="provision" name="provision"
-               value="<?php if ($_smarty_tpl->tpl_vars['provision']->value!=''){?>$provision<?php }else{ ?>11<?php }?>" size="3"/>
+               value="<?php if ($_smarty_tpl->tpl_vars['provision']->value!=''){?><?php echo $_smarty_tpl->tpl_vars['provision']->value;?>
+<?php }else{ ?>11<?php }?>" size="3"/>
         <span class="hiddentext" id="provision_hid">11</span>
     </div>
     <div class="input" id="personcount-wr">
@@ -167,13 +169,13 @@ $_valid = $_smarty_tpl->decodeProperties(array (
                 <span id="hotelname"></span>
                 <input type="hidden" id="hotelname_hid"/>
             </div>
-            <div class="input" id="roomcapacity-wr" style="display:none;">
-                <label for="roomcapacity">Capacity</label>
-                <select name="roomcapacity" id="roomcapacity"></select>
-            </div>
             <div class="input" id="roomtype-wr" style="display:none;">
                 <label for="roomtype">Room type</label>
                 <select name="roomtype" id="roomtype"></select>
+            </div>
+            <div class="input" id="roomcapacity-wr" style="display:none;">
+                <label for="roomcapacity">Capacity</label>
+                <select name="roomcapacity" id="roomcapacity"></select>
             </div>
             <div class="input" id="service-wr" style="display:none;">
                 <label for="service">Service</label>
@@ -193,10 +195,10 @@ $_valid = $_smarty_tpl->decodeProperties(array (
             <div class="input" id="transfer-wr" style="display:none">
                 <label for="transfer">Transfer</label>
                 <select id="transfer" name="transfer">
-                    <option value="no">KEIN TRANSFER</option>
-                    <option value="in">TRANSFER IN</option>
-                    <option value="out">TRANSFER OUT</option>
-                    <option value="rt">TRANSFER RT</option>
+                    <option value="NO">KEIN TRANSFER</option>
+                    <option value="IN">TRANSFER IN</option>
+                    <option value="OUT">TRANSFER OUT</option>
+                    <option value="RT">TRANSFER RT</option>
                 </select>
             </div>
             <div class="input" id="price-wr" style="display:none">
@@ -231,21 +233,6 @@ $_smarty_tpl->tpl_vars['hotel']->_loop = true;
 ]" value="<?php echo $_smarty_tpl->tpl_vars['hotel']->value['hotelname'];?>
 "/>
             </div>
-            <div class="input" id="roomcapacity-wr">
-                <label for="roomcapacity">Capacity</label>
-                <select name="roomcapacity[<?php echo $_smarty_tpl->tpl_vars['ind']->value+1;?>
-]" id="roomcapacity">
-                    <?php  $_smarty_tpl->tpl_vars['capacity'] = new Smarty_Variable; $_smarty_tpl->tpl_vars['capacity']->_loop = false;
- $_from = $_smarty_tpl->tpl_vars['hotel']->value['allcapacity']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array');}
-foreach ($_from as $_smarty_tpl->tpl_vars['capacity']->key => $_smarty_tpl->tpl_vars['capacity']->value){
-$_smarty_tpl->tpl_vars['capacity']->_loop = true;
-?>
-                    <option value="<?php echo $_smarty_tpl->tpl_vars['capacity']->value['value'];?>
-" <?php if ($_smarty_tpl->tpl_vars['capacity']->value['current']==1){?>selected<?php }?>><?php echo $_smarty_tpl->tpl_vars['capacity']->value['name'];?>
-</option>
-                    <?php } ?>
-                </select>
-            </div>
             <div class="input" id="roomtype-wr">
                 <label for="roomtype">Room type</label>
                 <select name="roomtype[<?php echo $_smarty_tpl->tpl_vars['ind']->value+1;?>
@@ -256,7 +243,24 @@ foreach ($_from as $_smarty_tpl->tpl_vars['roomtype']->key => $_smarty_tpl->tpl_
 $_smarty_tpl->tpl_vars['roomtype']->_loop = true;
 ?>
                     <option value="<?php echo $_smarty_tpl->tpl_vars['roomtype']->value['value'];?>
-" <?php if ($_smarty_tpl->tpl_vars['roomtype']->value['current']==1){?>selected<?php }?>><?php echo $_smarty_tpl->tpl_vars['roomtype']->value['name'];?>
+"
+                    <?php if ($_smarty_tpl->tpl_vars['roomtype']->value['current']==1){?>selected<?php }?>><?php echo $_smarty_tpl->tpl_vars['roomtype']->value['name'];?>
+</option>
+                    <?php } ?>
+                </select>
+            </div>
+            <div class="input" id="roomcapacity-wr">
+                <label for="roomcapacity">Capacity</label>
+                <select name="roomcapacity[<?php echo $_smarty_tpl->tpl_vars['ind']->value+1;?>
+]" id="roomcapacity">
+                    <?php  $_smarty_tpl->tpl_vars['capacity'] = new Smarty_Variable; $_smarty_tpl->tpl_vars['capacity']->_loop = false;
+ $_from = $_smarty_tpl->tpl_vars['hotel']->value['allcapacity']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array');}
+foreach ($_from as $_smarty_tpl->tpl_vars['capacity']->key => $_smarty_tpl->tpl_vars['capacity']->value){
+$_smarty_tpl->tpl_vars['capacity']->_loop = true;
+?>
+                    <option value="<?php echo $_smarty_tpl->tpl_vars['capacity']->value['value'];?>
+"
+                    <?php if ($_smarty_tpl->tpl_vars['capacity']->value['current']==1){?>selected<?php }?>><?php echo $_smarty_tpl->tpl_vars['capacity']->value['name'];?>
 </option>
                     <?php } ?>
                 </select>
@@ -271,7 +275,8 @@ foreach ($_from as $_smarty_tpl->tpl_vars['service']->key => $_smarty_tpl->tpl_v
 $_smarty_tpl->tpl_vars['service']->_loop = true;
 ?>
                     <option value="<?php echo $_smarty_tpl->tpl_vars['service']->value['value'];?>
-" <?php if ($_smarty_tpl->tpl_vars['service']->value['current']==1){?>selected<?php }?>><?php echo $_smarty_tpl->tpl_vars['service']->value['name'];?>
+"
+                    <?php if ($_smarty_tpl->tpl_vars['service']->value['current']==1){?>selected<?php }?>><?php echo $_smarty_tpl->tpl_vars['service']->value['name'];?>
 </option>
                     <?php } ?>
                 </select>
@@ -298,10 +303,14 @@ $_smarty_tpl->tpl_vars['service']->_loop = true;
                 <label for="transfer">Transfer</label>
                 <select id="transfer" name="transfer[<?php echo $_smarty_tpl->tpl_vars['ind']->value+1;?>
 ]">
-                    <option value="no">KEIN TRANSFER</option>
-                    <option value="in">TRANSFER IN</option>
-                    <option value="out">TRANSFER OUT</option>
-                    <option value="rt">TRANSFER RT</option>
+                    <option value="NO"
+                    <?php if ($_smarty_tpl->tpl_vars['hotel']->value['transfer']=='NO'){?>selected<?php }?>>KEIN TRANSFER</option>
+                    <option value="IN"
+                    <?php if ($_smarty_tpl->tpl_vars['hotel']->value['transfer']=='IN'){?>selected<?php }?>>TRANSFER IN</option>
+                    <option value="OUT"
+                    <?php if ($_smarty_tpl->tpl_vars['hotel']->value['transfer']=='OUT'){?>selected<?php }?>>TRANSFER OUT</option>
+                    <option value="RT"
+                    <?php if ($_smarty_tpl->tpl_vars['hotel']->value['transfer']=='RT'){?>selected<?php }?>>TRANSFER RT</option>
                 </select>
             </div>
             <div class="input" id="price-wr">

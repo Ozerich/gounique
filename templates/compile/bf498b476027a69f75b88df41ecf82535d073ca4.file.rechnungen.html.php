@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty 3.1.4, created on 2011-10-26 01:35:51
+<?php /* Smarty version Smarty 3.1.4, created on 2011-10-26 22:42:26
          compiled from "Z:\home\localhost\www\hotel\templates\email\rechnungen.html" */ ?>
 <?php /*%%SmartyHeaderCode:247574ea739c769c455-58765265%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'bf498b476027a69f75b88df41ecf82535d073ca4' => 
     array (
       0 => 'Z:\\home\\localhost\\www\\hotel\\templates\\email\\rechnungen.html',
-      1 => 1319580439,
+      1 => 1319652892,
       2 => 'file',
     ),
   ),
@@ -15,9 +15,13 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   'function' => 
   array (
   ),
+  'version' => 'Smarty 3.1.4',
+  'unifunc' => 'content_4ea739c77595e',
   'variables' => 
   array (
+    'address' => 0,
     'vorgansnummer' => 0,
+    'abreisedatum' => 0,
     'today' => 0,
     'user' => 0,
     'persons' => 0,
@@ -27,23 +31,31 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'hotel' => 0,
     'manuels' => 0,
     'manuel' => 0,
-    'flugplan' => 0,
+    'flightplan' => 0,
+    'print_under' => 0,
     'price' => 0,
+    'zahlungsdatum' => 0,
+    'provision' => 0,
   ),
   'has_nocache_code' => false,
-  'version' => 'Smarty 3.1.4',
-  'unifunc' => 'content_4ea739c77595e',
 ),false); /*/%%SmartyHeaderCode%%*/?>
 <?php if ($_valid && !is_callable('content_4ea739c77595e')) {function content_4ea739c77595e($_smarty_tpl) {?><div id="page">
-    <div id="header"></div>
+    <div id="header">
+        <br/><br/><br/><br/><br/><br/><br/><br/><br/>
+        <pre><?php echo $_smarty_tpl->tpl_vars['address']->value;?>
+</pre>
+
+    </div>
     <div id="content">
         <h1>REISEANGEBOT</h1>
 
         <div class="vorgansnummer-wr">
             <div class="left">
-                <div class="header">Vorgansnummer</div>
-                <div class="nummer"><?php echo $_smarty_tpl->tpl_vars['vorgansnummer']->value;?>
+                <div class="header">Vorgangsnummer <?php echo $_smarty_tpl->tpl_vars['vorgansnummer']->value;?>
 </div>
+                <br/>
+                <div class="nummer"><strong>Abreisedatum: <?php echo $_smarty_tpl->tpl_vars['abreisedatum']->value;?>
+</strong></div>
             </div>
             <div class="right">
                 <div>Datum: <?php echo $_smarty_tpl->tpl_vars['today']->value;?>
@@ -115,24 +127,38 @@ $_smarty_tpl->tpl_vars['manuel']->_loop = true;
                 </div>
                 <?php } ?>
             </div>
-            <?php if ($_smarty_tpl->tpl_vars['flugplan']->value!=''){?>
+            <?php if ($_smarty_tpl->tpl_vars['flightplan']->value!=''){?>
             <div class="flugplan">
                 <span class="header">Flugplan:</span>
                 <div class="content">
-                    <pre><?php echo $_smarty_tpl->tpl_vars['flugplan']->value;?>
+                    <pre><?php echo $_smarty_tpl->tpl_vars['flightplan']->value['content'];?>
 </pre>
                 </div>
             </div>
             <?php }?>
-            <div class="price-wr">
-                Preis p.P:
-                <span class="price"><?php echo $_smarty_tpl->tpl_vars['price']->value['person'];?>
--&euro;</span>
-            </div>
         </div>
+        <?php if ($_smarty_tpl->tpl_vars['print_under']->value){?>
+        <div class="undertable">
+            <?php echo $_smarty_tpl->tpl_vars['price']->value['anzahlung'];?>
+% Anzahlung (<?php echo $_smarty_tpl->tpl_vars['price']->value['anzahlung_value'];?>
+ &euro;) nach Erhalt der Rechnung. Restzahlung bis
+            <?php echo $_smarty_tpl->tpl_vars['zahlungsdatum']->value;?>
+ (<?php echo $_smarty_tpl->tpl_vars['price']->value['netto']-$_smarty_tpl->tpl_vars['price']->value['anzahlung_value'];?>
+&euro;)
+        </div>
+        <?php }?>
         <div class="priceblock">
-            Gesamptreis: <span class="price"><?php echo $_smarty_tpl->tpl_vars['price']->value['netto'];?>
- &euro;</span>
+            <div class="price-item">Preis p.P. brutto: <?php echo $_smarty_tpl->tpl_vars['price']->value['person'];?>
+ &euro;</div>
+            <div class="price-item">Gesamtpreis brutto: <?php echo $_smarty_tpl->tpl_vars['price']->value['brutto'];?>
+ &euro;</div>
+            <div class="price-item"><?php echo $_smarty_tpl->tpl_vars['provision']->value;?>
+ % Provision: <?php echo $_smarty_tpl->tpl_vars['price']->value['provision'];?>
+ &euro;</div>
+            <div class="price-item">19 % Mwst: <?php echo $_smarty_tpl->tpl_vars['price']->value['percent'];?>
+ &euro;</div>
+            <div class="price-item"><b>Gesamtpreis netto: <?php echo $_smarty_tpl->tpl_vars['price']->value['netto'];?>
+ &euro;</b></div>
         </div>
         <div class="bottomblock">
             <div class="signature">
@@ -140,8 +166,8 @@ $_smarty_tpl->tpl_vars['manuel']->_loop = true;
                 <div class="line"></div>
             </div>
             <p>Mit freundlichen Grüßen</p>
-
-            <span>Paul Rawluschko<br/>Unique World GmbH</span>
+            <span><?php echo $_smarty_tpl->tpl_vars['user']->value['fullname'];?>
+ <br/>Unique World GmbH</span>
         </div>
     </div>
     <div id="footer"></div>

@@ -5,12 +5,13 @@
 
     </div>
     <div id="content">
-        <h1>REISEANGEBOT</h1>
+        <h1>RECHNUNG / BESTÄTIGUNG (KUNDENKOPIE)</h1>
 
         <div class="vorgansnummer-wr">
             <div class="left">
                 <div class="header">Vorgangsnummer {$vorgansnummer}</div>
                 <br/>
+                <div class="nummer"><strong>Rechnungsnummer: {$rechnungsnummber}</strong></div>
                 <div class="nummer"><strong>Abreisedatum: {$abreisedatum}</strong></div>
             </div>
             <div class="right">
@@ -23,11 +24,13 @@
                 <span class="header">Reiseteilnehmer:</span>
                 {foreach $persons as $ind => $person}
                 <div class="person">
-                     <div class="num">{$ind + 1}</div>
+                    <div class="num">{$ind + 1}</div>
+                        <div class="num">{$ind + 1}</div>
                   {if $person.name neq ''}
                     <div class="sex">{$person.sex}</div>
                     <div class="name">{$person.name}</div>
                  {/if}
+
                 </div>
                 {/foreach}
                 <br class="clear"/>
@@ -75,13 +78,8 @@
             </pre>
         </div>
         <div class="priceblock">
-            <div class="price-item">Preis p.P. brutto: {$price.person} &euro;</div>
+            <div class="price-item"><b>Preis p.P. brutto: {$price.person} &euro;</b></div>
             <div class="price-item">Gesamtpreis brutto: {$price.brutto} &euro;</div>
-            {if $type eq 'A'}
-            <div class="price-item">{$provision} % Provision: {$price.provision} &euro;</div>
-            <div class="price-item">19 % Mwst: {$price.percent} &euro;</div>
-            {/if}
-            <div class="price-item"><b>Gesamtpreis netto: {$price.netto} &euro;</b></div>
         </div>
         <div class="bottomblock">
             <div class="signature">

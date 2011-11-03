@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty 3.1.4, created on 2011-10-26 01:35:04
+<?php /* Smarty version Smarty 3.1.4, created on 2011-10-26 22:46:59
          compiled from "Z:\home\localhost\www\hotel\templates\result.html" */ ?>
 <?php /*%%SmartyHeaderCode:195224ea58be4295403-52903432%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'afa21b99333870375de950eeea38049080121dbe' => 
     array (
       0 => 'Z:\\home\\localhost\\www\\hotel\\templates\\result.html',
-      1 => 1319559821,
+      1 => 1319658360,
       2 => 'file',
     ),
   ),
@@ -31,8 +31,8 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'persons' => 0,
     'type' => 0,
     'address' => 0,
-    'anzahlung' => 0,
     'abreisedatum' => 0,
+    'zahlungsdatum' => 0,
   ),
   'has_nocache_code' => false,
 ),false); /*/%%SmartyHeaderCode%%*/?>
@@ -99,9 +99,8 @@ $_valid = $_smarty_tpl->decodeProperties(array (
         <div class="content_pad">
             <h1><a href="index.php">Dashboard Admin</a></h1>
             <ul id="nav">
-                <li class="nav_current nav_icon"><a href="./dashboard.html">Angebot</a></li>
-                <li class="nav_icon"><a href="#">Eingangsmitteilungen</a></li>
-                <li class="nav_icon"><a href="#">Rechnungen</a></li>
+            <li class="nav_icon nav_current"><a href="#">New formular</a></li>
+            <li class="nav_icon"><a href="./open.php">Open formular</a></li>
             </ul>
         </div>
     </div>
@@ -134,7 +133,7 @@ N HOTEL: <?php echo $_smarty_tpl->tpl_vars['hotel']->value['hotelname'];?>
                         <?php echo $_smarty_tpl->tpl_vars['hotel']->value['roomcapacity'];?>
  / <?php echo $_smarty_tpl->tpl_vars['hotel']->value['roomtype'];?>
  / <?php echo $_smarty_tpl->tpl_vars['hotel']->value['service'];?>
- / <?php echo $_smarty_tpl->tpl_vars['hotel']->value['transfer'];?>
+ / TRANSFER <?php echo $_smarty_tpl->tpl_vars['hotel']->value['transfer'];?>
  /
                         <?php echo $_smarty_tpl->tpl_vars['hotel']->value['remark'];?>
 
@@ -228,9 +227,12 @@ $_smarty_tpl->tpl_vars['smarty']->value['section']['foo']['last']       = ($_sma
                             <label for="sex">Herr/Frau</label>
                             <select name="sex[<?php echo $_smarty_tpl->getVariable('smarty')->value['section']['foo']['index'];?>
 ]" id="sex">
-                                <option value="herr">Herr</option>
-                                <option value="frau">Frau</option>
-                                <option value="kein">Kein</option>
+                                <option value="herr" <?php ob_start();?><?php echo $_smarty_tpl->getVariable('smarty')->value['section']['foo']['index'];?>
+<?php $_tmp2=ob_get_clean();?><?php if ($_smarty_tpl->tpl_vars['persons']->value[$_tmp2-1]['sex']=='herr'){?>selected<?php }?>>Herr</option>
+                                <option value="frau" <?php ob_start();?><?php echo $_smarty_tpl->getVariable('smarty')->value['section']['foo']['index'];?>
+<?php $_tmp3=ob_get_clean();?><?php if ($_smarty_tpl->tpl_vars['persons']->value[$_tmp3-1]['sex']=='frau'){?>selected<?php }?>>Frau</option>
+                                <option value="kein" <?php ob_start();?><?php echo $_smarty_tpl->getVariable('smarty')->value['section']['foo']['index'];?>
+<?php $_tmp4=ob_get_clean();?><?php if ($_smarty_tpl->tpl_vars['persons']->value[$_tmp4-1]['sex']=='kein'){?>selected<?php }?>>Kein</option>
                             </select>
                         </div>
                         <div class="input">
@@ -238,7 +240,7 @@ $_smarty_tpl->tpl_vars['smarty']->value['section']['foo']['last']       = ($_sma
                             <input type="text" name="person_name[<?php echo $_smarty_tpl->getVariable('smarty')->value['section']['foo']['index'];?>
 ]" id="person_name"
                                    value="<?php ob_start();?><?php echo $_smarty_tpl->getVariable('smarty')->value['section']['foo']['index'];?>
-<?php $_tmp2=ob_get_clean();?><?php echo $_smarty_tpl->tpl_vars['persons']->value[$_tmp2-1]['name'];?>
+<?php $_tmp5=ob_get_clean();?><?php echo $_smarty_tpl->tpl_vars['persons']->value[$_tmp5-1]['name'];?>
 "
                                    size="20"/>
                         </div>
@@ -254,7 +256,7 @@ $_smarty_tpl->tpl_vars['smarty']->value['section']['foo']['last']       = ($_sma
                 </div>
                 <div id="anzahlung-wr">
                     <label for="anzahlung">Anzahlung</label>
-                    <input type="text" name="anzahlung" size="3" maxlength="3" value="<?php echo $_smarty_tpl->tpl_vars['anzahlung']->value;?>
+                    <input type="text" name="anzahlung" size="3" maxlength="3" value="<?php echo $_smarty_tpl->tpl_vars['price']->value['anzahlung'];?>
 "
                            id="anzahlung"/>% - <span
                         id="anzahlungsum">0</span> &euro;
@@ -264,6 +266,8 @@ $_smarty_tpl->tpl_vars['smarty']->value['section']['foo']['last']       = ($_sma
                     <input type="text" name="abreisedatum" size="8" maxlength="8" value="<?php echo $_smarty_tpl->tpl_vars['abreisedatum']->value;?>
 "
                            id="abreisedatum"/>
+                    <input type="hidden" name="zahlungsdatum" id="zahlungsdatum" value="<?php echo $_smarty_tpl->tpl_vars['zahlungsdatum']->value;?>
+" />
                 </div>
                 
             </div>

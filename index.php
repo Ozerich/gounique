@@ -71,12 +71,14 @@ else if (isset($_GET['step']) && $_GET['step'] == 'final') {
         WriteToPdf($id, 1);
         WriteToPdf($id, 2);
         WriteToPdf($id, 3);
+        WriteToPdf($id, 4);
         header("Location: index.php?step=final&vorgan=" . $_POST['vorgan']);
     }
     else
     {
         FillSmarty($_GET['vorgan']);
-        $smarty->display("final.html");
+       $smarty->display("final.html");
+       // $smarty->display("email/angebot.html");
     }
 }
 else if (isset($_GET['step']) && $_GET['step'] == "start") {
@@ -88,9 +90,9 @@ else if (isset($_GET['step']) && $_GET['step'] == "start") {
 else if (isset($_GET['step']) && $_GET['step'] == "finish") {
     if (isset($_POST['submit'])) {
         $Message = new Mailer();
-        $Message->from = 'GoUnique';
+        $Message->from =$_SESSION['user']['fullname'].'<'.$_SESSION['user']['email'].'>';
         $Message->subject = 'Subject';
-        $Message->Attach('pdf/' . $_POST['vorgan'] . '_' . $_POST['stage'] . '.pdf', 'text/pdf');
+        $Message->Attach('pdf/' . $_POST['vorgan'] . '_' . $_POST['stage'] . '.pdf', 'application/pdf');
         $Message->to = $_SESSION['user']['email'];
         $Message->Send();
         foreach ($_POST['email'] as $email)

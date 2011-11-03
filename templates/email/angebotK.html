@@ -5,7 +5,7 @@
 
     </div>
     <div id="content">
-        <h1>REISEANGEBOT</h1>
+        <h1>REISEANGEBOT (KUNDENKOPIE)</h1>
 
         <div class="vorgansnummer-wr">
             <div class="left">
@@ -75,13 +75,9 @@
             </pre>
         </div>
         <div class="priceblock">
-            <div class="price-item">Preis p.P. brutto: {$price.person} &euro;</div>
+            <div class="price-item"><b>Preis p.P. brutto: {$price.person} &euro;</b></div>
             <div class="price-item">Gesamtpreis brutto: {$price.brutto} &euro;</div>
-            {if $type eq 'A'}
-            <div class="price-item">{$provision} % Provision: {$price.provision} &euro;</div>
-            <div class="price-item">19 % Mwst: {$price.percent} &euro;</div>
-            {/if}
-            <div class="price-item"><b>Gesamtpreis netto: {$price.netto} &euro;</b></div>
+       
         </div>
         <div class="bottomblock">
             <div class="signature">

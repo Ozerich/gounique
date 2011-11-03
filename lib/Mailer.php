@@ -20,7 +20,7 @@ var $aAttaches;      // (array)
 // Конструктор класса
 function Mailer()
          {
-         $this->charset      = 'Windows-1251';
+         $this->charset      = '?utf-8?B?';
          $this->aAttaches     = array();
          $this->sBoundary     = '----'.substr(md5(uniqid(rand(),true)),0,16);
          $this->sHtmlTemplate = '<html><head><title>{title}</title></head><body>{body}</body></html>';
@@ -38,11 +38,13 @@ function Attach($sPath,$mimeType)
          if (file_exists($sPath))
             {
             $sName=basename($sPath);
-            $sAttach ="Content-Type: $mimeType; name=\"$sName\"\r\n";
-            $sAttach.="Content-Disposition: attachment; filename=\"$sName\"\r\n";
+            $sAttach ="Content-Type: $mimeType;\r\n";
+            $sAttach.="name=\"$sName\"\r\n";
+            $sAttach.="Content-Disposition: inline;\r\n";
+            $sAttach.="filename=\"$sName\"\r\n";
             $sAttach.="Content-Transfer-Encoding: base64\r\n";
             $sAttach.="\r\n";
-            $sAttach.=base64_encode(file_get_contents($sPath))."\r\n";
+            $sAttach.=chunk_split(base64_encode(file_get_contents($sPath)))."\r\n";
             $this->aAttaches[] = $sAttach;
             }
          }
@@ -92,11 +94,11 @@ function Send()
                 $this->sHeaders.="Content-Type: multipart/mixed; boundary=\"{$this->sBoundary}\"\r\n";
                 $this->sBody .= "--{$this->sBoundary}\r\n";
                 $this->sBody .= "Content-Type: text/html; charset={$this->charset}\r\n";
-                $this->sBody .= "Content-Transfer-Encoding: 8bit\r\n";
+                $this->sBody .= "Content-Transfer-Encoding: base64\r\n";
                 $this->sBody .= "\r\n";
                 $aFields=array();
-                $aFields['{title}'] = $this->subject;
-                $aFields['{body}']  = $this->html;
+                $aFields['{title}'] =base64_encode( $this->subject);
+                $aFields['{body}']  =base64_encode( $this->html);
                 $this->sBody .= strtr($this->sHtmlTemplate,$aFields);
                 foreach ($this->aAttaches as $sAttach)
                         {
