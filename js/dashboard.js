@@ -23,7 +23,6 @@ function update(param, hotel_block) {
 
 function BindHotelEvents() {
     $('.hotel-wr:visible').each(function() {
-
         $(this).find('#hotelcode').keypress(function(event) {
             hotel_block = $(this).parents('.hotel-wr');
             if (event.keyCode == KEY_ESC) {
@@ -426,7 +425,6 @@ $(document).ready(function() {
                 return false;
             }
         });
-
 
     /*
      * PAGE 2 PERSONS

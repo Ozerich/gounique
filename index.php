@@ -9,7 +9,6 @@ if (!isset($_SESSION['auth']) || $_SESSION['auth'] == false)
 
 if (isset($_GET['step']) && $_GET['step'] == 'result') {
     if (isset($_POST['submit'])) {
-
         $hotels = $manuels = array();
         if ($_POST['hotelcode'])
             foreach ($_POST['hotelcode'] as $ind => $code) {
@@ -50,7 +49,7 @@ if (isset($_GET['step']) && $_GET['step'] == 'result') {
     }
     else {
         FillSmarty($_GET['vorgan']);
-        $smarty->display("result.html");
+        $content = $smarty->fetch("result.html");
     }
 
 }
@@ -77,14 +76,13 @@ else if (isset($_GET['step']) && $_GET['step'] == 'final') {
     else
     {
         FillSmarty($_GET['vorgan']);
-       $smarty->display("final.html");
-       // $smarty->display("email/angebot.html");
+        $content = $smarty->fetch("final.html");
     }
 }
 else if (isset($_GET['step']) && $_GET['step'] == "start") {
     if (isset($_GET['vorgan'])) {
         FillSmarty($_GET['vorgan']);
-        $smarty->display("dashboard.html");
+        $content = $smarty->fetch("dashboard.html");
     }
 }
 else if (isset($_GET['step']) && $_GET['step'] == "finish") {
@@ -106,6 +104,10 @@ else if (isset($_GET['step']) && $_GET['step'] == "finish") {
         header("Location: index.php");
 }
 else
-    $smarty->display("dashboard.html");
+    $content = $smarty->fetch("dashboard.html");
+
+$smarty->assign("main_content", $content);
+$smarty->display("main_template.html");
+
 
 ?>

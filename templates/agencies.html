@@ -1,0 +1,26 @@
+<div class="search-wr">
+	<div class="search-block">
+    		<span>ID</span>
+    		<input type="text" id="id-search" />
+    		<button class="search-btn">Search</button>
+	</div>
+	<div class="search-block">
+    		<span>Name</span>
+    		<input type="text" id="name-search" />
+    		<button class="search-btn">Search</button>
+	</div>
+</div>
+
+<div class="search-results" id="agency-list">
+	{foreach $agency_list as $agency_item}
+		<div class="agency">
+			<span class="name">{$agency_item.name}</span>
+			<button class="btn btn-small btn-blue">View</button>
+			<button class="btn btn-small btn-blue">Delete</button>
+		</div>
+	{/foreach}
+</div>
+
+<div class="add-button">
+	<button class="btn btn-small btn-blue">Add agency</button>
+</div>
