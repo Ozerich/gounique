@@ -45,7 +45,7 @@ $(document).ready(function() {
         }).click();
 
     $('#edit-button').click(function() {
-        document.location = "index.php?step=result&vorgan=" + $('#vorgan').val();
+        document.location = "formular.php?step=result&vorgan=" + $('#vorgan').val();
         return false;
     });
 

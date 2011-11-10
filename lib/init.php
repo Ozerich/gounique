@@ -69,4 +69,34 @@ function create_tables()
         `address` TEXT NOT NULL,
         PRIMARY KEY (`v_num`)
     ) ENGINE=MyISAM DEFAULT CHARSET=utf8") or die(mysql_error());
+
+    mysql_query("CREATE TABLE IF NOT EXISTS agency (
+        `id` INT NOT NULL AUTO_INCREMENT,
+        `type` ENUM('agency', 'person') DEFAULT 'agency' NOT NULL,
+        `datecreated` DATETIME NOT NULL,
+        `name` VARCHAR(255) NOT NULL,
+        `address` VARCHAR(255) NOT NULL,
+        `zipcode` VARCHAR(10) NOT NULL,
+        `city` VARCHAR(20) NOT NULL,
+        `website` VARCHAR(255) NOT NULL,
+        `contactperson` VARCHAR(100) NOT NULL,
+        `email` VARCHAR(50) NOT NULL,
+        `phone` VARCHAR(20) NOT NULL,
+        `fax` VARCHAR(20) NOT NULL,
+        `provision` INT NOT NULL,
+        `comment` TEXT NOT NULL,
+        PRIMARY KEY (`id`)
+    ) ENGINE=MyISAM DEFAULT CHARSET=utf8") or die(mysql_error());
+
+    mysql_query("CREATE TABLE IF NOT EXISTS config (
+        `id` INT NOT NULL AUTO_INCREMENT,
+        `param` VARCHAR(255) NOT NULL,
+        `value` TEXT NOT NULL,
+        PRIMARY KEY (`id`)
+    ) ENGINE=MyISAM DEFAULT CHARSET=utf8") or die(mysql_error());
+
+    $sql = mysql_query("SELECT COUNT(*) FROM config WHERE param='last_rnum'") or die(mysql_error());
+    $count = mysql_result($sql, 0, 0);
+    if($count == 0)
+        mysql_query("INSERT INTO CONFIG(param, value) VALUES('last_rnum', '1')") or die(mysql_error());
 }

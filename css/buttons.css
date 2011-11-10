@@ -21,14 +21,11 @@
 	cursor: pointer;
 	position: relative;
 }
-	
-	/* Active/Click state */
-	.btn:active, .btn-icon:active, .btn-mini:active { top: 1px; }
 
 
 /* Sizes */
 .btn, .btn-icon { background-position: 0 -80px; font-size: 12px; height: 32px; line-height: 29px; }
-.btn.btn-small, .btn-icon.btn-small { background-position: 0 0; font-size: 10px; height: 26px; line-height: 23px; }
+.btn.btn-small, .btn-icon.btn-small { background-position: 0 0; font-size: 10px; height: 26px; line-height: 20px; }
 .btn.btn-large, .btn-icon.btn-large { background-position: 0 -160px; font-size: 15px; height: 42px; line-height: 40px; }
 
 	/* Sizes - Line height for A buttons need to be different */

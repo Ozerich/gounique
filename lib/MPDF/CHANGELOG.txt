@@ -969,10 +969,10 @@ mPDF v4.3   (28/02/2010)
 
 NEW FEATURES
 ------------
-- Page (sheet) size can be reset within document (http://mpdf1.com/manual/index.php?tid=436) [4.2.024, 4.2.025]
-- PDF/A1-b compliant files (http://mpdf1.com/manual/index.php?tid=420)
-- Improve performance using simpleTables (http://mpdf1.com/manual/index.php?tid=430)
-- mPDFI incorporated into main mPDF class (http://mpdf1.com/manual/index.php?tid=432)
+- Page (sheet) size can be reset within document (http://mpdf1.com/manual/formular.php?tid=436) [4.2.024, 4.2.025]
+- PDF/A1-b compliant files (http://mpdf1.com/manual/formular.php?tid=420)
+- Improve performance using simpleTables (http://mpdf1.com/manual/formular.php?tid=430)
+- mPDFI incorporated into main mPDF class (http://mpdf1.com/manual/formular.php?tid=432)
 - <dottab> added as custom HTML tag: inserts dots to the following text, which is right-aligned [4.2.031]
 
 See Example files 38 and 39 for PDFA compliant file and <dottab>
@@ -980,7 +980,7 @@ See Example files 38 and 39 for PDFA compliant file and <dottab>
 BACKWARD COMPATIBILITY
 ----------------------
 All changes are backwards compatible except the use of mPDFI. You will need to make minor changes to your scripts.
-See the manual http://mpdf1.com/manual/index.php?tid=432 for details.
+See the manual http://mpdf1.com/manual/formular.php?tid=432 for details.
 
 BUG FIXES
 ---------
@@ -1169,7 +1169,7 @@ Major additions
 - Multiple Barcode types supported
 
 **********************************************************************************************
-*  For more details see the documentation manual: http://mpdf1.com/manual/index.php?tid=410  *
+*  For more details see the documentation manual: http://mpdf1.com/manual/formular.php?tid=410  *
 **********************************************************************************************
 
 Bug fixes (parsing CSS)
@@ -1687,7 +1687,7 @@ Bug fixes
 - Table borders in columns not being correctly handled (bug since 2.0 introduced a buffer to save the borders and print at the end of the table - fixed so does not use buffer if in columns - potentially does not deal with conflicting borders as well, but works in columns)
 - Table cell width if set as a percent was being downsized when autosizing table
 - Table CSS was buggy - improved
-- SetBasePath (when fetching remote website) - now handles string with query string on it e.g. http://www.domain.com/index.php?tid=42
+- SetBasePath (when fetching remote website) - now handles string with query string on it e.g. http://www.domain.com/formular.php?tid=42
 - Table cells with Rotated text - text not positioned correctly
 - Page number totals not working in utf-8 mode
 
@@ -2043,7 +2043,7 @@ function AddExtGState() edited to check if graphics state already exists before 
 
 ASCII-proof code
 ================
-"»¤¬" used as a special identifier in the program changed to "\xbb\xa4\xac" to make the mpdf.php script file immune from someone saving it as a utf-8 encoded file
+"ï¿½ï¿½ï¿½" used as a special identifier in the program changed to "\xbb\xa4\xac" to make the mpdf.php script file immune from someone saving it as a utf-8 encoded file
 
 Images
 ======

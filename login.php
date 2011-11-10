@@ -1,7 +1,7 @@
 <?
 
 if (isset($_SESSION['auth']) && $_SESSION['auth'] == true)
-    header("Location: index.php");
+    header("Location: formular.php");
 
 require "lib/init.php";
 
@@ -13,7 +13,7 @@ if (isset($_POST['login-submit'])) {
         if ($email == $user['email'] && $password == $user['password']) {
             $_SESSION['auth'] = true;
             $_SESSION['user'] = array("email" => $email, "fullname" => $user['fullname']);
-            header("Location: index.php");
+            header("Location: agency.php");
         }
     }
 

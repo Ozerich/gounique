@@ -7,6 +7,7 @@ require_once "lib/pdf.php";
 if (!isset($_SESSION['auth']) || $_SESSION['auth'] == false)
     header("Location: login.php");
 
+$page = "dashboard";
 if (isset($_GET['step']) && $_GET['step'] == 'result') {
     if (isset($_POST['submit'])) {
         $hotels = $manuels = array();
@@ -45,11 +46,11 @@ if (isset($_GET['step']) && $_GET['step'] == 'result') {
         mysql_query("INSERT INTO formulars SET " . $sql_set . ", v_num='" . $vorgangsnummer . "' ON DUPLICATE KEY UPDATE " .
                     $sql_set) or die(mysql_error());
 
-        header("Location: index.php?step=result&vorgan=" . $_POST['vorgangsnummer']);
+        header("Location: formular.php?step=result&vorgan=" . $_POST['vorgangsnummer']);
     }
     else {
         FillSmarty($_GET['vorgan']);
-        $content = $smarty->fetch("result.html");
+        $page = "result";
     }
 
 }
@@ -71,18 +72,18 @@ else if (isset($_GET['step']) && $_GET['step'] == 'final') {
         WriteToPdf($id, 2);
         WriteToPdf($id, 3);
         WriteToPdf($id, 4);
-        header("Location: index.php?step=final&vorgan=" . $_POST['vorgan']);
+        header("Location: formular.php?step=final&vorgan=" . $_POST['vorgan']);
     }
     else
     {
         FillSmarty($_GET['vorgan']);
-        $content = $smarty->fetch("final.html");
+        $page = "final";
     }
 }
 else if (isset($_GET['step']) && $_GET['step'] == "start") {
     if (isset($_GET['vorgan'])) {
         FillSmarty($_GET['vorgan']);
-        $content = $smarty->fetch("dashboard.html");
+        $page = "dashboard";
     }
 }
 else if (isset($_GET['step']) && $_GET['step'] == "finish") {
@@ -98,15 +99,41 @@ else if (isset($_GET['step']) && $_GET['step'] == "finish") {
             $Message->to = $email;
             $Message->Send();
         }
-        header("Location: index.php?step=finish&vorgan=" . $_POST['vorgan']);
+        header("Location: formular.php?step=finish&vorgan=" . $_POST['vorgan']);
     }
     else
-        header("Location: index.php");
+        header("Location: formular.php");
 }
-else
-    $content = $smarty->fetch("dashboard.html");
+else if(!isset($_GET['step']))
+{
+    $smarty->assign("kundennummer",$_GET['k_num']);
+    $sql = mysql_query("SELECT type, provision FROM agency WHERE id='".$_GET['k_num']."'") or die(mysql_error());
+    $data = mysql_fetch_assoc($sql);
+    $smarty->assign("type", $data['type']);
+    if($data['type'] == "agency")
+        $smarty->assign("provision", $data['provision']);
+    $sql = mysql_query("SELECT value FROM config WHERE param='last_rnum'");
+    $smarty->assign("rechnungsnummber",mysql_result($sql, 0, 0));
+}
+
+switch($page)
+{
+    case "dashboard":
+        $content = $smarty->fetch("dashboard.html");
+        $js = array("js/dashboard.js");
+        break;
+    case "result":
+        $content = $smarty->fetch("result.html");
+        $js = array("js/result.js");
+        break;
+    case "final":
+        $content = $smarty->fetch("final.html");
+        $js = array("js/final.js");
+        break;
+}
 
 $smarty->assign("main_content", $content);
+$smarty->assign("JS_FILES", $js);
 $smarty->display("main_template.html");
 
 

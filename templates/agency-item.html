@@ -1,12 +1,104 @@
 <div class="agency-item">
-	<form action="agency.php?add" method="POST">
-		<div class="param">
-			<label for="name">Name</label>
-			<input type="text" name="name" id="name" />
-		</div>
-		<div class="submit">
-			<button id="cancel-button">Cancel</button>
-			<input type="submit" class="btn btn-small btn-blue" value="Apply" />
-		</div>
-	</form>
+    <div class="agency-params">
+        <div class="view-param">
+            <label for="name">Firmenname</label>
+            <span id="name">{$agency.name}</span>
+            <input type="text" id="name_input"/>
+            <button class="btn btn-small btn-blue edit-button">Edit</button>
+            <br class="clear"/>
+        </div>
+        <div class="view-param">
+            <label for="address">Adresse</label>
+            <span id="address">{$agency.address}</span>
+            <input type="text" id="agency_input"/>
+            <button class="btn btn-small btn-blue edit-button">Edit</button>
+            <br class="clear"/>
+        </div>
+        <div class="view-param">
+            <label for="zipcode">PLZ</label>
+            <span id="zipcode">{$agency.zipcode}</span>
+            <input type="text" id="zipcode_input"/>
+            <button class="btn btn-small btn-blue edit-button">Edit</button>
+            <br class="clear"/>
+        </div>
+        <div class="view-param">
+            <label for="city">Stadt</label>
+            <span id="city">{$agency.city}</span>
+            <input type="text" id="city_input"/>
+            <button class="btn btn-small btn-blue edit-button">Edit</button>
+            <br class="clear"/>
+        </div>
+        <div class="view-param">
+            <label for="website">Web-Seite</label>
+            <span id="website">{$agency.website}</span>
+            <input type="text" id="website_input"/>
+            <button class="btn btn-small btn-blue edit-button">Edit</button>
+            <br class="clear"/>
+        </div>
+        <div class="view-param">
+            <label for="contactperson">Ansprechpartner</label>
+            <span id="contactperson">{$agency.contactperson}</span>
+            <input type="text" id="contactperson_input"/>
+            <button class="btn btn-small btn-blue edit-button">Edit</button>
+            <br class="clear"/>
+        </div>
+        <div class="view-param">
+            <label for="email">E-Mail Adresse</label>
+            <span id="email">{$agency.email}</span>
+            <input type="text" id="email_input"/>
+            <button class="btn btn-small btn-blue edit-button">Edit</button>
+            <br class="clear"/>
+        </div>
+        <div class="view-param">
+            <label for="phone">Telefon</label>
+            <span id="phone">{$agency.phone}</span>
+            <input type="text" id="phone_input"/>
+            <button class="btn btn-small btn-blue edit-button">Edit</button>
+            <br class="clear"/>
+        </div>
+        <div class="view-param">
+            <label for="fax">Fax</label>
+            <span id="fax">{$agency.fax}</span>
+            <input type="text" id="fax_input"/>
+            <button class="btn btn-small btn-blue edit-button">Edit</button>
+            <br class="clear"/>
+        </div>
+        {if $agency.type eq 'agentur'}
+        <div class="view-param">
+            <label for="provision">Provision Prozent</label>
+            <span id="provision">{$agency.provision}</span>
+            <input type="text" id="provision_input"/>
+            <button class="btn btn-small btn-blue edit-button">Edit</button>
+            <br class="clear"/>
+        </div>
+        {/if}
+        <div class="view-param">
+            <label for="comment">Comment</label>
+            <span id="comment">{$agency.comment}</span>
+            <textarea id="comment_input"></textarea>
+            <button class="btn btn-small btn-blue edit-button">Edit</button>
+            <br class="clear"/>
+        </div>
+        <input type="hidden" value="{$agency.id}" name="agency_id" id="agency_id"/></div>
+    <table class="agency-list" id="agency-formulars">
+        <thead>
+        <th>Vorgangsnummer</th>
+        <th>Rechnungsnummer</th>
+        <th>Date created</th>
+        <th>View</th>
+        </thead>
+        {foreach $agency.formulars as $formular}
+        <tr>
+            <td class="v_num">{$formular.v_num}</td>
+            <td>{$formular.r_num}</td>
+            <td>{$formular.date}</td>
+            <td width="50px">
+                <button class="btn btn-small btn-blue view-button">View</button>
+            </td>
+        </tr>
+        {/foreach}
+    </table>
+    <div class="add-button-wr">
+        <button class="btn btn-small btn-blue" id="add_formular-button">Add Formular</button>
+    </div>
 </div>

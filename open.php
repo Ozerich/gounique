@@ -1,7 +1,7 @@
 <?
 
 if (isset($_SESSION['auth']) && $_SESSION['auth'] == true)
-    header("Location: index.php");
+    header("Location: formular.php");
 
 require "lib/init.php";
 

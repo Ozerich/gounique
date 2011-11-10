@@ -1,17 +1,9 @@
 <div id="dashboard-page">
-<form action="index.php?step=result" method="POST">
+<form action="formular.php?step=result" method="POST">
 <div class="page" id="page1">
-    <div class="input">
-        <label for="agent_kunden">K/A</label>
-        <select name="agent_kunden" id="agent_kunden">
-            <option value="A">A</option>
-            <option value="K">K</option>
-        </select>
-        <span class="hiddentext" id="agent_kunden_hid">agentur</span>
-    </div>
     <div class="input" id="kundennummer-wr">
         <label for="kundennummer">Kundennumer:</label>
-        <input type="text" noempty id="kundennummer" value="{$kundennummer}" name="kundennummer" size="10"/>
+        <input type="text" noempty disabled id="kundennummer" value="{$kundennummer}" name="kundennummer" size="10"/>
         <span class="hiddentext" id="kundennummer_hid"></span>
     </div>
     <div class="input" id="vorgangsnummer-wr">
@@ -21,15 +13,17 @@
     </div>
     <div class="input" id="rechnungsnummber-wr">
         <label for="rechnungsnummber">Rechnungsnummer:</label>
-        <input type="text" id="rechnungsnummber" value="{$rechnungsnummber}" name="rechnungsnummber" size="10"/>
+        <input type="text" disabled id="rechnungsnummber" value="{$rechnungsnummber}" name="rechnungsnummber" size="10"/>
         <span class="hiddentext" id="rechnungsnummber_hid"></span>
     </div>
+    {if $type eq 'agency'}
     <div class="input" id="provision-wr">
         <label for="provision">Provision %:</label>
         <input type="text" noempty numerical id="provision" name="provision"
                value="{if $provision neq ''}{$provision}{else}11{/if}" size="3"/>
         <span class="hiddentext" id="provision_hid">11</span>
     </div>
+    {/if}
     <div class="input" id="personcount-wr">
         <label for="personcount">Personen:</label>
         <input type="text" noempty numerical id="personcount" value="{$personcount}" name="personcount"

@@ -1,26 +1,29 @@
-<div class="search-wr">
-	<div class="search-block">
-    		<span>ID</span>
-    		<input type="text" id="id-search" />
-    		<button class="search-btn">Search</button>
-	</div>
-	<div class="search-block">
-    		<span>Name</span>
-    		<input type="text" id="name-search" />
-    		<button class="search-btn">Search</button>
-	</div>
-</div>
-
-<div class="search-results" id="agency-list">
-	{foreach $agency_list as $agency_item}
-		<div class="agency">
-			<span class="name">{$agency_item.name}</span>
-			<button class="btn btn-small btn-blue">View</button>
-			<button class="btn btn-small btn-blue">Delete</button>
-		</div>
-	{/foreach}
-</div>
-
-<div class="add-button">
-	<button class="btn btn-small btn-blue">Add agency</button>
+<table id="agency-all" class="agency-list">
+    <thead>
+    <th width="25px">ID</th>
+    <th width="60%">Name</th>
+    <th>City</th>
+    <th>Phone</th>
+    <th width="50px">View</th>
+    <th width="50px">Delete</th>
+    </thead>
+    <tbody>
+    {foreach $agency_list as $agency_item}
+    <tr>
+    <td class="id">{$agency_item.id}</td>
+    <td class="name">{$agency_item.name}</td>
+    <td class="city">{$agency_item.city}</td>
+    <td class="phone">{$agency_item.phone}</td>
+    <td>
+        <button class="btn btn-small btn-blue view-button">View</button>
+    </td>
+    <td>
+        <button class="btn btn-small btn-blue delete-button">Delete</button>
+    </td>
+    </tr>
+    {/foreach}
+    </tbody>
+</table>
+<div class="add-button-wr">
+    <button class="btn btn-small btn-blue" id="add_agency-button">Add agency</button>
 </div>
