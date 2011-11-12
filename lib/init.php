@@ -98,5 +98,5 @@ function create_tables()
     $sql = mysql_query("SELECT COUNT(*) FROM config WHERE param='last_rnum'") or die(mysql_error());
     $count = mysql_result($sql, 0, 0);
     if($count == 0)
-        mysql_query("INSERT INTO CONFIG(param, value) VALUES('last_rnum', '1')") or die(mysql_error());
+        mysql_query("INSERT INTO config(param, value) VALUES('last_rnum', '1')") or die(mysql_error());
 }

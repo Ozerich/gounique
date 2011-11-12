@@ -1,0 +1,60 @@
+<div class="agency-item">
+    <form action="agency.php" method="POST">
+        <div class="param">
+            <label for="type">Type</label>
+            <div id="type">
+                <input type="radio" id="radio1" name="stage" value="1" checked/><label for="radio1">Agentur</label>
+                <input type="radio" id="radio2" name="stage" value="2"/><label for="radio2">Kunden</label>
+            </div>
+            <br class="clear" />
+        </div>
+        <div class="param">
+            <label for="name">Firmenname</label>
+            <input type="text" name="name" id="name"/>
+        </div>
+        <div class="param">
+            <label for="address">Adresse</label>
+            <input type="text" name="address" id="address"/>
+        </div>
+        <div class="param">
+            <label for="zipcode">PLZ</label>
+            <input type="text" name="zipcode" id="zipcode"/>
+        </div>
+        <div class="param">
+            <label for="city">Stadt</label>
+            <input type="text" name="city" id="city"/>
+        </div>
+        <div class="param">
+            <label for="website">Web-Seite</label>
+            <input type="text" name="website" id="website"/>
+        </div>
+        <div class="param">
+            <label for="contactperson">Ansprechpartner</label>
+            <input type="text" name="contactperson" id="contactperson"/>
+        </div>
+        <div class="param">
+            <label for="email">E-Mail Adresse</label>
+            <input type="text" name="email" id="email"/>
+        </div>
+        <div class="param">
+            <label for="phone">Telefon</label>
+            <input type="text" name="phone" id="phone"/>
+        </div>
+        <div class="param">
+            <label for="fax">Fax</label>
+            <input type="text" name="fax" id="fax"/>
+        </div>
+        <div class="param" id="provision-wr">
+            <label for="provision">Provision Prozent</label>
+            <input type="text" name="provision" id="provision"/>
+        </div>
+        <div class="param">
+            <label for="comment">Comment</label>
+            <textarea name="comment" id="comment"></textarea>
+        </div>
+        <div class="buttons">
+            <button id="cancel-button" class="btn btn-small btn-red">Cancel</button>
+            <input type="submit" name="add_submit" class="btn btn-small btn-blue" value="Apply"/>
+        </div>
+    </form>
+</div>
