@@ -1,6 +1,7 @@
 $(document).ready(function() {
-    $('#agency-all').dataTable({
-    });
+    $('#agency-all').dataTable();    
+    $('#agency-formulars').dataTable();
+
 
     $('#add_agency-button').click(function() {
         document.location = "agency.php?add";
@@ -14,53 +15,49 @@ $(document).ready(function() {
 
     $("#type").buttonset().change(function() {
         if ($("#radio1").is(":checked"))
-            $("#provision-wr").show();
+		{
+            $("#agentur-block").show();
+            $("#kunden-block").hide();
+		}
         else
-            $("#provision-wr").hide();
+        {
+            $("#agentur-block").hide();
+            $("#kunden-block").show();
+		}
     });
 
-    $('#agency-all .view-button').click(function() {
-        document.location = "agency.php?id=" + $(this).parent().parent().find(".id").text();
+    $('#agency-all .edit-button').click(function() {
+        document.location = "agency.php?edit&id=" + $(this).parent().parent().attr("agency_id");
         return false;
     });
+    
+    $('.agency-item input, .agency-item textarea').keypress(function(event){
+		if(event.keyCode == KEY_ENTER)
+		{
+			var input = $(this).attr("name") == "comment" ? $('input[type=submit]').focus() : $(this).next('input, textarea');
+			if($(input).size() == 0)
+				input = $(this).parents('.param').next().find('input,textarea').first();
+			$(input).focus();
+			return false;
+		}
+		else if(event.keyCode == KEY_ESC)
+		{
+			var input = $(this).prev('input, textarea');
+			if($(input).size() == 0)
+				input = $(this).parents('.param').prev().find('input,textarea').last();
+			$(input).focus();
+			return false;
+		}
+	});
+    
 
-    $('.delete-button').click(function() {
-        document.location = "agency.php?delete&id=" + $(this).parent().parent().find(".id").text();
-        return false;
-    });
-
-    $('.edit-button').click(function() {
-        var input = $(this).parent().find("input, textarea");
-        var span = $(this).parent().find("span");
-        var button = $(this);
-        if ($(this).html() == "Edit") {
-            $(span).hide();
-            $(input).show().val($(this).parent().find("span").html()).focus();
-            $(button).html("Apply");
-        }
-        else {
-            $(input).prop("disabled", true);
-            $.ajax({
-                url: "agency.php?edit&id=" + $("#agency_id").val(),
-                type: "post",
-                data: "param=" + $(span).attr("id") + "&value=" + $(input).val(),
-                success: function(data) {
-                    $(input).prop("disabled", false).hide();
-                    $(span).html(data).show();
-                    $(button).html("Edit");
-                }
-            });
-        }
-    });
-
+    
     $('.view-param input').keypress(function(event) {
         if (event.keyCode == KEY_ENTER) {
             $(this).parent().find('button').click();
             return false;
         }
     });
-
-    $('#agency-formulars').dataTable();
 
     $('#agency-formulars .view-button').click(function() {
         document.location = "formular.php?step=final&vorgan=" + $(this).parents("tr").find(".v_num").html();

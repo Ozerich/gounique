@@ -148,21 +148,26 @@ input:focus {
     margin-top: 10px;
     clear: both;
 }
+.agency-item .param input[name=plz]{width: 45px;}
+.agency-item .param input[name=ort]{width: 306px;}
+
 .agency-item .param label, .agency-item .view-param label{
     font-weight: bold;
-    width: 115px;
+    width: 131px;
     display: block;
     float: left;
     vertical-align: top;
 }
 .agency-item #type label{
-    width: 189px;
+    width: 171px;
 }
-.agency-item .param input{width: 376px;}
-.agency-item .param textarea{width: 380px;}
+.agency-item .param input{width: 368px;}
+.agency-item .param textarea{width: 372px;}
 
 .agency-item .view-param input{width: 316px;}
 .agency-item .view-param textarea{width: 320px;}
+
+.agency-item #kunden-block{display:none;}
 
 
 .agency-item .buttons{

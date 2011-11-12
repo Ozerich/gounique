@@ -1,24 +1,18 @@
 <table id="agency-all" class="agency-list">
     <thead>
-    <th width="25px">ID</th>
     <th width="60%">Name</th>
     <th>City</th>
     <th>Phone</th>
-    <th width="50px">View</th>
-    <th width="50px">Delete</th>
+    <th width="50px">Edit</th>
     </thead>
     <tbody>
     {foreach $agency_list as $agency_item}
-    <tr>
-    <td class="id">{$agency_item.id}</td>
-    <td class="name">{$agency_item.name}</td>
+    <tr agency_id="{$agency_item.id}">
+    <td class="name"><a href="agency.php?view&id={$agency_item.id}">{$agency_item.name}</a></td>
     <td class="city">{$agency_item.city}</td>
     <td class="phone">{$agency_item.phone}</td>
     <td>
-        <button class="btn btn-small btn-blue view-button">View</button>
-    </td>
-    <td>
-        <button class="btn btn-small btn-blue delete-button">Delete</button>
+        <button class="btn btn-small btn-blue edit-button">Edit</button>
     </td>
     </tr>
     {/foreach}
