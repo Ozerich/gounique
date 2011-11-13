@@ -148,8 +148,9 @@ input:focus {
     margin-top: 10px;
     clear: both;
 }
-.agency-item .param input[name=plz]{width: 45px;}
-.agency-item .param input[name=ort]{width: 306px;}
+.agency-item .param input.plz{width: 45px;}
+.agency-item .param input.ort{width: 306px;}
+.agency-item .param input[type=radio]{width: auto !important;}
 
 .agency-item .param label, .agency-item .view-param label{
     font-weight: bold;
@@ -169,7 +170,7 @@ input:focus {
 
 .agency-item #kunden-block{display:none;}
 
-
+.agency-item .param-header{font-weight: bold;}
 .agency-item .buttons{
     float: right;
     margin-top: 10px;

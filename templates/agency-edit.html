@@ -1,124 +1,115 @@
 <div class="agency-item">
     <form action="agency.php" method="POST">
-        <div class="param">
-            <label for="type">Typ</label>
-
-            <div id="type">
-                <input type="radio" id="radio1" name="stage" value="1" checked/><label for="radio1">Agentur</label>
-                <input type="radio" id="radio2" name="stage" value="2"/><label for="radio2">Kunde</label>
-            </div>
-            <br class="clear"/>
-        </div>
-        <div id="agentur-block">
+        <div class="agency-params">
+            {if $agency.type eq 'agency'}
             <div class="param">
                 <label for="name">Firmenname</label>
-                <input type="text" name="a_name"/>
+                <input type="text" name="name" value="{$agency.name}"/>
             </div>
             <div class="param">
                 <label for="address">Adresse</label>
-                <input type="text" name="a_address"/>
+                <input type="text" name="address" value="{$agency.address}"/>
             </div>
             <div class="param">
                 <label for="plz">PLZ / Ort</label>
-                <input type="text" class="plz" name="a_plz" maxlength="5"/> /
-                <input type="text" class="ort" name="a_ort"/>
+                <input type="text" class="plz" name="plz" maxlength="5" value="{$agency.plz}"/> /
+                <input type="text" class="ort" name="ort" value="{$agency.ort}"/>
             </div>
             <div class="param">
                 <label for="city">Stadt</label>
-                <input type="text" name="a_city"/>
+                <input type="text" name="city" value="{$agency.city}"/>
             </div>
             <div class="param">
                 <label for="website">Web-Seite</label>
-                <input type="text" name="a_website"/>
+                <input type="text" name="website" value="{$agency.website}"/>
             </div>
             <div class="param">
                 <label>Sex</label>
-                <input type="radio" name="a_sex" value="herr" checked/>Herr&nbsp;
-                <input type="radio" name="a_sex" value="frau"/>Frau
+                <input type="radio" name="sex" value="herr"{if $agency.sex eq 'herr'}checked{/if}/>Herr&nbsp;
+                <input type="radio" name="sex" value="frau"{if $agency.sex eq 'frau'}checked{/if}/>Frau
             </div>
             <div class="param-header">Ansprechpartner</div>
             <div class="param">
                 <label for="const">Vorname</label>
-                <input type="text" name="a_contactperson"/>
+                <input type="text" name="contactperson" value="{$agency.contactperson}"/>
             </div>
             <div class="param">
                 <label for="const">Nachname</label>
-                <input type="text" name="a_surname"/>
+                <input type="text" name="surname" value="{$agency.surname}" />
             </div>
             <div class="param">
                 <label for="email">E-Mail Adresse</label>
-                <input type="text" name="a_email"/>
+                <input type="text" name="email" value="{$agency.email}"/>
             </div>
             <div class="param">
                 <label for="phone">Telefon</label>
-                <input type="text" name="a_phone"/>
+                <input type="text" name="phone" value="{$agency.phone}"/>
             </div>
             <div class="param">
                 <label for="fax">Fax</label>
-                <input type="text" name="a_fax"/>
+                <input type="text" name="fax" value="{$agency.fax}"/>
             </div>
             <div class="param" id="provision-wr">
                 <label for="provision">Provision Prozent</label>
-                <input type="text" name="a_provision"/>
+                <input type="text" name="provision" value="{$agency.provision}"/>
             </div>
             <div class="param">
                 <label for="comment">Comment</label>
-                <textarea name="a_comment"></textarea>
+                <textarea name="comment">{$agency.comment}</textarea>
             </div>
-        </div>
-        <div id="kunden-block">
+            {else}
             <div class="param">
                 <label>Sex</label>
-                <input type="radio" name="k_sex" value="herr" checked/>Herr&nbsp;
-                <input type="radio" name="k_sex" value="frau"/>Frau
+                <input type="radio" name="sex" value="herr"{if $agency.sex eq 'herr'}checked{/if}/>Herr&nbsp;
+                <input type="radio" name="sex" value="frau"{if $agency.sex eq 'frau'}checked{/if}/>Frau
             </div>
             <div class="param">
                 <label for="contactperson">Titel</label>
-                <input type="text" name="k_contactperson"/>
+                <input type="text" name="contactperson" value="{$agency.contactperson}"/>
             </div>
             <div class="param">
                 <label for="name">Name</label>
-                <input type="text" name="k_name"/>
+                <input type="text" name="name" value="{$agency.name}"/>
             </div>
             <div class="param">
                 <label for="surname">Vorname</label>
-                <input type="text" name="k_surname"/>
+                <input type="text" name="surname" value="{$agency.surname}"/>
             </div>
             <div class="param">
                 <label for="city">Stadt</label>
-                <input type="text" name="k_city"/>
+                <input type="text" name="city" value="{$agency.city}"/>
             </div>
             <div class="param">
                 <label for="address">Strasse, Hausnummer</label>
-                <input type="text" name="k_address"/>
+                <input type="text" name="address" value="{$agency.address}"/>
             </div>
             <div class="param">
                 <label for="plz">PLZ / Ort</label>
-                <input type="text" class="plz" name="k_plz" maxlength="5"/> /
-                <input type="text" class="ort" name="k_ort"/>
+                <input type="text" class="plz" name="plz" maxlength="5" value="{$agency.plz}"/> /
+                <input type="text" class="ort" name="ort" value="{$agency.ort}"/>
             </div>
             <div class="param">
                 <label for="phone">Telefon</label>
-                <input type="text" name="k_phone"/>
+                <input type="text" name="phone" value="{$agency.phone}"/>
             </div>
             <div class="param">
                 <label for="fax">Fax</label>
-                <input type="text" name="k_fax"/>
+                <input type="text" name="fax" value="{$agency.fax}"/>
             </div>
             <div class="param">
                 <label for="email">E-Mail Adresse</label>
-                <input type="text" name="k_email"/>
+                <input type="text" name="email" value="{$agency.email}"/>
             </div>
             <div class="param">
                 <label for="comment">Comment</label>
-                <textarea name="k_comment"></textarea>
+                <textarea name="comment">{$agency.comment}</textarea>
             </div>
+            {/if}
         </div>
-        <input type="hidden" name="type" value="agency"/>
-
         <div class="buttons">
             <button id="cancel-button" tabindex="2" class="btn btn-small btn-grey">Cancel</button>
-            <input type="submit" name="add_submit" class="btn btn-small btn-blue" value="Apply"/>
+            <input type="submit" name="edit_submit" class="btn btn-small btn-blue" value="Apply"/>
         </div>
+        <input type="hidden" value="{$agency.id}" name="agency_id"/>
     </form>
 </div>

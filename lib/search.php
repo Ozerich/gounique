@@ -54,8 +54,8 @@ function FillSmarty($id)
         $hotel['allservice'] = GetService($hotel['hotelcode'], $hotel['roomcapacity'], $hotel['roomtype']);
         foreach ($hotel['allservice'] as &$item)
             $item['current'] = $item['value'] == $hotel['service'] ? 1 : 0;
-    }
 
+    }
     $smarty->assign("hotels", $hotels);
 
     $manuel_price = 0;

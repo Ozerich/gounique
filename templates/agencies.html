@@ -1,6 +1,8 @@
 <table id="agency-all" class="agency-list">
     <thead>
+    <th>Kundennummer</th>
     <th width="60%">Name</th>
+    <th>Typ</th>
     <th>City</th>
     <th>Phone</th>
     <th width="50px">Edit</th>
@@ -8,7 +10,9 @@
     <tbody>
     {foreach $agency_list as $agency_item}
     <tr agency_id="{$agency_item.id}">
+        <td>{$agency_item.id}</td>
     <td class="name"><a href="agency.php?view&id={$agency_item.id}">{$agency_item.name}</a></td>
+    <td>{$agency_item.type}</td>
     <td class="city">{$agency_item.city}</td>
     <td class="phone">{$agency_item.phone}</td>
     <td>
