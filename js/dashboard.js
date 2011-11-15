@@ -633,7 +633,7 @@ $(document).ready(function() {
      */
 
     $('#flugpage #flightplan').keypress(function(event) {
-        if (event.keyCode == KEY_ENTER || event.keyCode == KEY_TAB) {
+        if (event.keyCode == KEY_TAB) {
             $('#flugpage #flightprice').focus();
             return false;
         }

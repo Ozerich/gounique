@@ -1,22 +1,23 @@
 <table id="agency-all" class="agency-list">
     <thead>
-    <th>Kundennummer</th>
-    <th width="60%">Name</th>
-    <th>Typ</th>
-    <th>City</th>
-    <th>Phone</th>
-    <th width="50px">Edit</th>
+    <th width="120px">Kundennummer</th>
+    <th>Name</th>
+    <th width="50px">Typ</th>
+    <th width="50px">PLZ</th>
+    <th width="100px">Phone</th>
+    <th width="135px">Actions</th>
     </thead>
     <tbody>
     {foreach $agency_list as $agency_item}
     <tr agency_id="{$agency_item.id}">
-        <td>{$agency_item.id}</td>
+    <td class="kundennummer">{$agency_item.id}</td>
     <td class="name"><a href="agency.php?view&id={$agency_item.id}">{$agency_item.name}</a></td>
     <td>{$agency_item.type}</td>
-    <td class="city">{$agency_item.city}</td>
+    <td class="city">{$agency_item.plz}</td>
     <td class="phone">{$agency_item.phone}</td>
     <td>
         <button class="btn btn-small btn-blue edit-button">Edit</button>
+        <button class="btn btn-small btn-green createformular-button">New</button>
     </td>
     </tr>
     {/foreach}

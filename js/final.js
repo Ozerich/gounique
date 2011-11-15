@@ -62,4 +62,15 @@ $(document).ready(function() {
         });
     });
 
+    $('#makerechnung-button').click(function(){
+        $.ajax({
+            url: "ajax.php?mode=dorechnung",
+            type: "post",
+            data: "v_num=" + $("#vorgan").val(),
+            async: false
+        });
+        document.location = "formular.php?step=final&vorgan=" + $("#vorgan").val();
+        return false;
+    });
+
 });

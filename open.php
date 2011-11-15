@@ -5,5 +5,9 @@ if (isset($_SESSION['auth']) && $_SESSION['auth'] == true)
 
 require "lib/init.php";
 
-$smarty->display("open.html");
+$content = $smarty->fetch("open.html");
+
+$smarty->assign("page", "open_formular");
+$smarty->assign("main_content", $content);
+$smarty->display("main_template.html");
 ?>

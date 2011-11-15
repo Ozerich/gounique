@@ -1,11 +1,7 @@
 <div id="dashboard-page">
 <form action="formular.php?step=result" method="POST">
+<input type="hidden" value="{$kundennummer}" name="kundennummer"/>
 <div class="page" id="page1">
-    <div class="input" id="kundennummer-wr">
-        <label for="kundennummer">Kundennumer:</label>
-        <input type="text" noempty readonly id="kundennummer" value="{$kundennummer}" name="kundennummer" size="10"/>
-        <span class="hiddentext" id="kundennummer_hid">{$kundennummer}</span>
-    </div>
     <div class="input" id="vorgangsnummer-wr">
         <label for="vorgangsnummer">Vorgangsnummer:</label>
         <input type="text" noempty id="vorgangsnummer" value="{$id}" name="vorgangsnummer" size="10"/>

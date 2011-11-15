@@ -19,7 +19,7 @@ function FixDate($date, $end = false)
 switch ($mode)
 {
     case "stage":
-        mysql_query("UPDATE formulars SET stage='".$_POST['stage']."' WHERE v_num='".$_POST['vorgan']."'") or die(mysql_error());
+        mysql_query("UPDATE formulars SET stage='" . $_POST['stage'] . "' WHERE v_num='" . $_POST['vorgan'] . "'") or die(mysql_error());
         break;
 
     case "hotelname":
@@ -64,6 +64,13 @@ switch ($mode)
             $datestart = mktime(0, 0, 0, $day['mon'], $day['mday'] + 1, $day['year']);
         }
 
+        break;
+
+    case "dorechnung":
+        $sql = mysql_query("SELECT value FROM config WHERE param='last_rnum'");
+        $r_num = mysql_result($sql, 0, 0);
+        mysql_query("UPDATE config SET value=".($r_num + 1)." WHERE param='last_rnum'") or die(mysql_error());
+        mysql_query("UPDATE formulars SET stage=2, r_num=$r_num WHERE v_num='" . $_POST['v_num'] . "'") or die(mysql_error());
         break;
 }
 

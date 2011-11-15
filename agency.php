@@ -59,7 +59,7 @@ else if (isset($_GET['id'])) {
 else
 {
     $list = array();
-    $sql = mysql_query("SELECT id,type, name, city, phone FROM agency");
+    $sql = mysql_query("SELECT id,type, name, city, plz, phone FROM agency");
     while (($row = mysql_fetch_array($sql)))
         $list[] = $row;
 
@@ -68,6 +68,7 @@ else
     $content = $smarty->fetch("agencies.html");
 }
 $smarty->assign("JS_FILES", array("js/agency.js"));
+$smarty->assign("page", "new_formular");
 $smarty->assign("main_content", $content);
 $smarty->display("main_template.html");
 

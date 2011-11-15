@@ -2,7 +2,18 @@
     <form action="formular.php?step=finish&vorgan={$id}" method="POST">
         <div class="page" id="resultpage">
             <div id="resultcontent">
-                <div id="results-wr">
+                <div id="topinfo" class="block">
+                    <div class="left-float">
+                        <span class="param">Vorgangsnummer: </span><span class="value">{$vorgansnummer}</span><br/>
+                        <span class="param">Abreisedatum: </span><span class="value">{$abreisedatum}</span><br/>
+                    </div>
+                    <div class="right-float">
+                        <span class="param">Datum: </span><span class="value">{$today}</span><br/>
+                        <span class="param">Sachbearbeiter: </span><span class="value">{$user.fullname}</span><br/>
+                    </div>
+                    <br class="clear" />
+                </div>
+                <div id="results-wr" class="block">
                     <span class="number">1</span>
 
                     <div id="results">
@@ -22,13 +33,13 @@
                     </div>
                 </div>
                 {if $flightplan.content neq ''}
-                <div id="flightplan-wr">
+                <div id="flightplan-wr" class="block">
                     <span class="number">2</span>
                     <span>Flightplan</span>&nbsp;<br/><br/>
                     <pre class="flightplan">{$flightplan.content}</pre>
                 </div>
                 {/if}
-                <div id="priceresult">
+                <div id="priceresult" class="block">
                     <input type="hidden" name="priceperson"/>
                     <span class="price_title">Preis p.P brutto:</span><span
                         id="oneprice">{$price.person}</span> &euro;<br/>
@@ -40,6 +51,8 @@
                         id="percent">{$price.percent}</span> &euro;<br/><br/>
                     <span class="price_title">Gesamtpreis netto:</span><span
                         id="netto">{$price.netto}</span> &euro;<br/>
+                              <span class="price_title">Anzahlung:</span><span
+                        id="netto">{$price.anzahlung} %</span><br/>
                 </div>
                 <br class="clear"/>
 
@@ -62,20 +75,23 @@
                     <p><pre>{$address}</pre></p>
                 </div>
                 <div id="anzahlung-wr">
-                    <span>Anzahlung: {$price.anzahlung} %</span>
-                </div>
-                <div id="abreisedatum-wr">
-                    <span>Abreisedatum: {$abreisedatum}</span>
+
                 </div>
 
                 <div id="stage-wr">
-                    <label for="stage">Stage</label>
+                    <label for="stage" class="stage-header">Stage</label>
                     <div id="stage">
                         <input type="radio" id="radio1" name="stage" value="1" {if $stage eq 1}checked="checked"{/if}/><label for="radio1">Angebot</label>
                         <input type="radio" id="radio2" name="stage" value="2" {if $stage eq 2}checked="checked"{/if}/><label for="radio2">Angebot (Kundenkopie)</label>
+                        {if $stage eq 2}
                         <input type="radio" id="radio3" name="stage" value="3" {if $stage eq 3}checked="checked"{/if}/><label for="radio3">Rechnung</label>
                         <input type="radio" id="radio4" name="stage" value="4" {if $stage eq 4}checked="checked"{/if}/><label for="radio4">Rechnung (Kundenkopie)</label>
+                        {/if}
                     </div>
+                    {if $stage neq 2}
+                     <button class="btn btn-small btn-blue" id="makerechnung-button">Make Rechnung</button>
+                    {/if}
+                    <br class="clear"/>
                 </div>
 
                 <div class="mail-wr">
@@ -84,12 +100,13 @@
                         <input type="text" size="30" class="email"/>
                         <span class="good" style="display:none;">OK</span>
                     </div>
+
                 </div>
             </div>
             <input type="hidden" id="vorgan" name="vorgan" value="{$id}"/>
 
             <div id="final-buttons">
-                <button class="btn btn-small btn-blue" id="edit-button">Edit Formular</button>
+                {if $stage eq 1}<button class="btn btn-small btn-blue" id="edit-button">Edit Formular</button>{/if}
                 <button class="btn btn-small btn-blue" id="addmail-button">Add mail</button>
                 <button class="btn btn-small btn-blue" id="druck-button">Druck</button>
                 <button class="btn btn-small btn-blue" id="close-button" name="submit">Send & Close</button>

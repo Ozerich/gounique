@@ -3,7 +3,13 @@
     margin: 0 auto;
     padding: 10px;
     padding-bottom: 30px;
-    border: 1px dotted gray;
+}
+
+.left-float{float:left;display: block;}
+.right-float{float:right;display: block;}
+
+.bold {
+    font-weight: bold;
 }
 
 .input {
@@ -60,16 +66,27 @@ input:focus {
 
 #resultpage #flightplan-wr {
     float: left;
-    border: 1px solid black;
     width: 350px;
     padding-left: 20px;
 }
 
 #resultpage #results-wr {
     padding-left: 20px;
-    border: 1px solid black;
     width: 780px;
     margin-bottom: 10px;
+}
+
+#resultpage #topinfo {
+    width: 780px;
+    padding: 5px 10px;
+    margin-bottom: 10px;
+}
+#resultpage #topinfo .param{
+    font-weight: bold;
+}
+
+#resultpage .block {
+        border: 1px solid black;
 }
 
 #resultpage #results {
@@ -96,7 +113,24 @@ input:focus {
 #resultpage .personresult-wr {
     margin-bottom: 10px;
 }
-#stage-wr{margin-top: 10px;}
+
+#stage-wr {
+    margin-top: 10px;
+}
+
+#stage {
+  
+    float: left;
+}
+
+#stage-wr button {
+    float: right;
+}
+
+#stage-wr label.stage-header {
+    float: left;
+    width: 100%;
+}
 
 .manuel-wr, .hotel-wr {
     margin-top: 20px;
@@ -116,88 +150,163 @@ input:focus {
     display: none;
 }
 
-
-.agency-list{
-    width: 100%;    
+.agency-list {
+    width: 100%;
     margin: 0 auto;
     clear: both;
 }
 
-.add-button-wr{
+.add-button-wr {
     clear: both;
 }
 
-.add-button-wr button{
+.add-button-wr button {
     float: right;
 }
 
-.agency-list .btn.btn-small{
+.agency-list .btn.btn-small {
     height: 19px;
     line-height: 6px;
     margin-right: 3px;
 }
-.agency-list td{
+
+.agency-list td {
     padding: 5px 0;
 }
 
-.agency-item{
+.agency-item {
     width: 510px;
     margin: 0 auto;
 }
-.agency-item .param, .agency-item .view-param{
+
+.agency-item .param, .agency-item .view-param {
     margin-top: 10px;
     clear: both;
 }
-.agency-item .param input.plz{width: 45px;}
-.agency-item .param input.ort{width: 306px;}
-.agency-item .param input[type=radio]{width: auto !important;}
 
-.agency-item .param label, .agency-item .view-param label{
+.agency-item .param input.plz {
+    width: 55px;
+}
+
+.agency-item .param input.ort {
+    width: 296px;
+}
+
+.agency-item .param input[type=radio] {
+    width: auto !important;
+}
+
+.agency-item .param label, .agency-item .view-param label {
     font-weight: bold;
     width: 131px;
     display: block;
     float: left;
     vertical-align: top;
 }
-.agency-item #type label{
+
+.agency-item #type label {
     width: 171px;
 }
-.agency-item .param input{width: 368px;}
-.agency-item .param textarea{width: 372px;}
 
-.agency-item .view-param input{width: 316px;}
-.agency-item .view-param textarea{width: 320px;}
+.agency-item .param input {
+    width: 368px;
+}
 
-.agency-item #kunden-block{display:none;}
+.agency-item .param textarea {
+    width: 372px;
+}
 
-.agency-item .param-header{font-weight: bold;}
-.agency-item .buttons{
+.agency-item .view-param input {
+    width: 316px;
+}
+
+.agency-item .view-param textarea {
+    width: 320px;
+}
+
+.agency-item #kunden-block {
+    display: none;
+}
+
+.agency-item .param-header {
+    font-weight: bold;
+}
+
+.agency-item .buttons {
     float: right;
     margin-top: 10px;
     width: 150px;
 }
 
-.agency-item .view-param span{
+.agency-item .view-param span {
     width: 320px;
     float: left;
     display: block;
 }
 
-.agency-item .view-param button{
+.agency-item .view-param button {
     float: left;
     margin-left: 5px;
 }
 
-.agency-item .edit-button{
+.agency-item .edit-button {
     height: 21px;
     line-height: 10px;
 }
 
-.agency-item .view-param input[type=text], .agency-item .view-param textarea{
+.agency-item .view-param input[type=text], .agency-item .view-param textarea {
     display: none;
     float: left;
 }
 
-.agency-item .agency-params{
+.agency-item .agency-params {
     margin-bottom: 15px;
+}
+
+#agency-all td.kundennummer {
+    padding-left: 5px;
+}
+
+.agency-item .block {
+    border: 1px solid black;
+}
+
+.agency-item .block span.header {
+    border-bottom: 1px solid black;
+    padding: 2px 5px;
+    display: block;
+    font-weight: bold;
+}
+
+.agency-item .block .agencyblock-content {
+    min-height: 50px;
+    padding: 3px 3px;
+}
+
+.agency-item .topinfo .block .agencyblock-content {
+    min-height: 102px;
+}
+
+.agency-item .address {
+    float: left;
+    width: 250px;
+}
+
+.agency-item .agencyperson {
+    float: right;
+    width: 250px;
+}
+
+.agency-item .comment {
+    clear: both;
+    margin-top: 10px;
+}
+
+.agency-view {
+    margin-bottom: 25px;
+}
+
+.agency-item .edit-button-wr {
+    float: right;
+    margin: 10px 2px 20px;
 }

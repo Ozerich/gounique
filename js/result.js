@@ -19,7 +19,7 @@ $(document).ready(function() {
     });
 
     $('#comment').keypress(function(event) {
-        if (event.keyCode == KEY_ENTER || event.keyCode == KEY_TAB) {
+        if (event.keyCode == KEY_TAB) {
             $(".person:first #sex").focus();
             return false;
         }

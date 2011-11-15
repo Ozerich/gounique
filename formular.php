@@ -11,7 +11,7 @@ $page = "dashboard";
 if (isset($_GET['step']) && $_GET['step'] == 'result') {
     if (isset($_POST['submit'])) {
         $hotels = $manuels = array();
-        foreach ($_POST['ismanuel'] as $ind=>$is_manuel)
+        foreach ($_POST['ismanuel'] as $ind => $is_manuel)
         {
             if ($is_manuel)
                 $hotels[] = array(
@@ -129,8 +129,6 @@ else
         $smarty->assign("type", $data['type']);
         if ($data['type'] == "agency")
             $smarty->assign("provision", $data['provision']);
-        $sql = mysql_query("SELECT value FROM config WHERE param='last_rnum'");
-        $smarty->assign("rechnungsnummber", mysql_result($sql, 0, 0));
     }
 
 switch ($page)
@@ -144,8 +142,13 @@ switch ($page)
         while ($row = mysql_fetch_assoc($sql_service)) $service[] = $row['service'];
         while ($row = mysql_fetch_assoc($sql_capacity)) $capacity[] = $row['roomcapacity'];
 
-        $smarty->assign("id", rand() % 10000 + 10000);
-
+        if(!isset($_GET['vorgan']))
+            $smarty->assign("id", rand() % 10000 + 10000);
+        if (isset($_GET['k_num'])) {
+            $agency = mysql_query("SELECT * FROM agency WHERE id=" . $_GET['k_num']) or die(mysql_error());
+            $agency = mysql_fetch_assoc($agency);
+            $smarty->assign("agency", $agency);
+        }
 
         $smarty->assign("all_options", array("roomtype" => $roomtype,
                                             "service" => $service,
@@ -164,6 +167,7 @@ switch ($page)
         break;
 }
 
+$smarty->assign("page", "formular");
 $smarty->assign("main_content", $content);
 $smarty->assign("JS_FILES", $js);
 $smarty->display("main_template.html");

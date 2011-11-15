@@ -1,113 +1,67 @@
 <div class="agency-item">
-    <div class="agency-params">
+    <div class="agency-view">
         {if $agency.type eq 'agency'}
-        <div class="view-param">
-            <label for="name">Firmenname</label>
-            <span id="name">{$agency.name}</span>
+        <div class="topinfo">
+
+            <div class="address block">
+                <span class="header">Adresse</span>
+
+                <div class="agencyblock-content">
+                    {$agency.name}<br/>
+                    {$agency.address}<br/>
+                    {$agency.plz} {$agency.ort}
+                </div>
+            </div>
+            <div class="agencyperson block">
+                <span class="header">Ansprechpartner</span>
+
+                <div class="agencyblock-content">
+                    {$agency.contactperson} {$agency.surname} - {$agency.sex}<br/>
+                    e-mail: <a href="mailto:{$agency.email}">{$agency.email}</a><br/>
+                    phone: {$agency.phone}<br/>
+                    fax: {$agency.fax}<br/>
+                    www: <a href="{$agency.website}">{$agency.website}</a> <br/>
+                </div>
+            </div>
             <br class="clear"/>
         </div>
-        <div class="view-param">
-            <label for="address">Adresse</label>
-            <span id="address">{$agency.address}</span>
-            <br class="clear"/>
-        </div>
-        <div class="view-param">
-            <label for="zipcode">PLZ / Ort</label>
-            <span id="zipcode">{$agency.plz} / {$agency.ort}</span>
-            <br class="clear"/>
-        </div>
-        <div class="view-param">
-            <label for="city">Stadt</label>
-            <span id="city">{$agency.city}</span>
-            <br class="clear"/>
-        </div>
-        <div class="view-param">
-            <label for="website">Web-Seite</label>
-            <span id="website">{$agency.website}</span>
-            <br class="clear"/>
-        </div>
-        <div class="view-param">
-            <label for="contactperson">Ansprechpartner</label>
-            <span id="contactperson">{$agency.contactperson} {$agency.surname} - {$agency.sex}</span>
-            <br class="clear"/>
-        </div>
-        <div class="view-param">
-            <label for="email">E-Mail Adresse</label>
-            <span id="email">{$agency.email}</span>
-            <br class="clear"/>
-        </div>
-        <div class="view-param">
-            <label for="phone">Telefon</label>
-            <span id="phone">{$agency.phone}</span>
-            <br class="clear"/>
-        </div>
-        <div class="view-param">
-            <label for="fax">Fax</label>
-            <span id="fax">{$agency.fax}</span>
-            <br class="clear"/>
-        </div>
-        <div class="view-param">
-            <label for="provision">Provision Prozent</label>
-            <span id="provision">{$agency.provision}</span>
-            <br class="clear"/>
-        </div>
-        <div class="view-param">
-            <label for="comment">Comment</label>
-            <span id="comment">{$agency.comment}</span>
-            <br class="clear"/>
-        </div>
+        <br/> <span class="bold">Provision: </span> {$agency.provision}%<br/>
+
         {else}
-        <div class="view-param">
-            <label for="name">Titel</label>
-            <span id="name">{$agency.contactperson}</span>
-            <br class="clear"/>
-        </div>
-        <div class="view-param">
-            <label for="address">Name</label>
-            <span id="address">{$agency.name}</span>
-            <br class="clear"/>
-        </div>
-        <div class="view-param">
-            <label for="zipcode">Vorname</label>
-            <span id="zipcode">{$agency.surname}</span>
-            <br class="clear"/>
-        </div>
-        <div class="view-param">
-            <label for="city">Stadt</label>
-            <span id="city">{$agency.city}</span>
-            <br class="clear"/>
-        </div>
-        <div class="view-param">
-            <label for="website">Strasse, Hausnummer</label>
-            <span id="website">{$agency.address}</span>
-            <br class="clear"/>
-        </div>
-        <div class="view-param">
-            <label for="zipcode">PLZ / Ort</label>
-            <span id="zipcode">{$agency.plz} / {$agency.ort}</span>
-            <br class="clear"/>
-        </div>
-        <div class="view-param">
-            <label for="phone">Telefon</label>
-            <span id="phone">{$agency.phone}</span>
-            <br class="clear"/>
-        </div>
-        <div class="view-param">
-            <label for="fax">Fax</label>
-            <span id="fax">{$agency.fax}</span>
-            <br class="clear"/>
-        </div>
-        <div class="view-param">
-            <label for="email">E-Mail Adresse</label>
-            <span id="email">{$agency.email}</span>
-            <br class="clear"/>
-        </div>
-        <div class="view-param">
-            <label for="comment">Comment</label>
-            <span id="comment">{$agency.comment}</span>
+        <div class="topinfo">
+
+            <div class="address block">
+                <span class="header">Adresse</span>
+
+                <div class="agencyblock-content">
+                    {$agency.address}<br/>
+                    {$agency.plz} {$agency.ort}
+                </div>
+            </div>
+            <div class="agencyperson block">
+                <span class="header">Ansprechpartner</span>
+
+                <div class="agencyblock-content">
+                    {$agency.name} {$agency.surname} - {$agency.sex} ({$agency.contactperson})<br/>
+                    e-mail: <a href="mailto:{$agency.email}">{$agency.email}</a><br/>
+                    phone: {$agency.phone}<br/>
+                    fax: {$agency.fax}<br/>
+                </div>
+            </div>
             <br class="clear"/>
         </div>
         {/if}
+        <div class="comment block">
+            <span class="header">Comment</span>
+
+            <div class="agencyblock-content">
+                <pre>{$agency.comment}</pre>
+            </div>
+        </div>
+      <div class="edit-button-wr">
+        <button class="btn btn-small btn-blue" id="edit_agency-button">Edit {if $agency.type eq 'person'}kunden{else}agency{/if}</button>
+    </div>
+
     </div>
     <table class="agency-list" id="agency-formulars">
         <thead>
@@ -127,7 +81,8 @@
         </tr>
         {/foreach}
     </table>
-    <input type="hidden" name="agency_id" value="{$agency.id}" id="agency_id" />
+    <input type="hidden" name="agency_id" value="{$agency.id}" id="agency_id"/>
+
     <div class="add-button-wr">
         <button class="btn btn-small btn-blue" id="add_formular-button">Add Formular</button>
     </div>

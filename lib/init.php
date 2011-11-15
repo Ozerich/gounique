@@ -63,8 +63,8 @@ function create_tables()
         `flightplan` TEXT NOT NULL,
         `flightprice` TEXT NOT NULL,
         `anzahlung` INT NOT NULL,
-        `abreisedatum` VARCHAR(8) NOT NULL,
-        `zahlungsdatum` VARCHAR(8) NOT NULL,
+        `abreisedatum` VARCHAR(25) NOT NULL,
+        `zahlungsdatum` VARCHAR(25) NOT NULL,
         `comment` TEXT NOT NULL,
         `address` TEXT NOT NULL,
         PRIMARY KEY (`v_num`)

@@ -28,7 +28,7 @@
     <script src="js/widgets.js"></script>
 
     {foreach $JS_FILES as $js}
-        <script src="{$js}"></script>
+    <script src="{$js}"></script>
     {/foreach}
 
     <link rel="stylesheet" href="css/cupertino/jquery-ui-1.8.16.custom.css" type="text/css" media="screen"
@@ -44,43 +44,65 @@
 
 <div id="wrapper">
 
-<div id="top">
-    <div class="content_pad">
-        <ul class="right">
-            <li><a href="javascript:;" class="top_icon"><span class="ui-icon ui-icon-person"></span>Eingeloggt als
-                {$user.fullname}</a></li>
-            <!--	<li><a href="javascript:;" class="new_messages top_alert">1 New Message</a></li>
-            <li><a href="./pages/settings.html">Settings</a></li>-->
-            <li><a href="logout.php">Logout</a></li>
-        </ul>
+    <div id="top">
+        <div class="content_pad">
+            <ul class="right">
+                <li><a href="javascript:;" class="top_icon"><span class="ui-icon ui-icon-person"></span>Eingeloggt als
+                    {$user.fullname}</a></li>
+                <!--	<li><a href="javascript:;" class="new_messages top_alert">1 New Message</a></li>
+               <li><a href="./pages/settings.html">Settings</a></li>-->
+                <li><a href="logout.php">Logout</a></li>
+            </ul>
+        </div>
     </div>
-</div>
 
-<div id="header">
-    <div class="content_pad">
-        <h1><a href="formular.php">Dashboard Admin</a></h1>
-        <ul id="nav">
-        </ul>
+    <div id="header">
+        <div class="content_pad">
+            <h1><a href="agency.php">Dashboard Admin</a></h1>
+            <ul id="nav">
+                <li class="nav_icon {if $page eq 'new_formular'} nav_current{/if}">
+                    <a href="agency.php">New formular</a>
+                </li>
+                <li class="nav_icon {if $page eq 'open_formular'} nav_current{/if}">
+                    <a href="open.php">Open formular</a>
+                </li>
+            </ul>
+        </div>
     </div>
-</div>
 
 
-<div id="masthead">
-    <div class="content_pad">
-        <h1 class="no_breadcrumbs">{$page_header}</h1>
+    <div id="masthead">
+        <div class="content_pad">
+            <h1 class="no_breadcrumbs">
+                {if $page eq 'new_formular'}
+                Reiseangebot Formular
+                {elseif $page eq 'open_formular'}
+                Open Formular
+                {elseif $page eq 'formular'}
+                {if $stage eq 1}Angebot{elseif $stage eq 2}Rechnung{/if} Formular:
+                {if $agency.type eq 'person'}
+                {$agency.name} {$agency.surname}
+                {else}
+                {$agency.name}
+                {/if}
+                {if $stage eq 2}
+                    <span class="right-float">Rechnungnummer: {$rechnungsnummber}</span>
+                {/if}
+                {/if}
+            </h1>
+        </div>
     </div>
-</div>
 
-<div class="content xgrid">
-{$main_content}
-</div>
-
-
-<div id="footer">
-    <div class="content_pad">
-        <p>&copy; 2010-11 Copyright <a href="#">goUnique</a>. Powered by <a href="#">UniqueWorld.de</a>.</p>
+    <div class="content xgrid">
+        {$main_content}
     </div>
-</div>
+
+
+    <div id="footer">
+        <div class="content_pad">
+            <p>&copy; 2010-11 Copyright <a href="#">goUnique</a>. Powered by <a href="#">UniqueWorld.de</a>.</p>
+        </div>
+    </div>
 
 </body>
 </html>
