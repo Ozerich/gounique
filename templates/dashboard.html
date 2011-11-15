@@ -7,12 +7,6 @@
         <input type="text" noempty id="vorgangsnummer" value="{$id}" name="vorgangsnummer" size="10"/>
         <span class="hiddentext" id="vorgangsnummer_hid">{$id}</span>
     </div>
-    <div class="input" id="rechnungsnummber-wr">
-        <label for="rechnungsnummber">Rechnungsnummer:</label>
-        <input type="text" readonly id="rechnungsnummber" value="{$rechnungsnummber}" name="rechnungsnummber"
-               size="10"/>
-        <span class="hiddentext" id="rechnungsnummber_hid">{$rechnungsnummber}</span>
-    </div>
     {if $type eq 'agency'}
     <div class="input" id="provision-wr">
         <label for="provision">Provision %:</label>

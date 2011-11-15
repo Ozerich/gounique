@@ -416,7 +416,7 @@ $(document).ready(function() {
     /*
      * PAGE 1
      */
-
+    $('#vorgangsnummer').focus();
     $("#page1 input, #page1 select").bind("change",
         function(event) {
             $("#" + $(this).attr('id') + "_hid").html($(this).val());

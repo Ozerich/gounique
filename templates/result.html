@@ -15,7 +15,7 @@
                         {if $manuels}
 
                         {foreach $manuels as $manuel}
-                        {$manuel.datestart} - {$manuel.dateend} {$manuel.text}  - &nbsp;<b>{$manuel.price}&euro;
+                        {$manuel.datestart} - {$manuel.dateend} {$manuel.text}  - &nbsp;<b>{$manuel.price}&euro;</b>
                         <br/>
                         {/foreach}
                         {/if}
@@ -71,10 +71,7 @@
                     {/section}
                 </div>
 
-                <div id="address-wr">
-                    <label for="address">{if $type eq 'K'}Kundenadresse{else}Agenturadresse{/if}</label>
-                    <textarea name="address" id="address" style="width:100%">{$address}</textarea>
-                </div>
+               
                 <div id="anzahlung-wr">
                     <label for="anzahlung">Anzahlung</label>
                     <input type="text" name="anzahlung" size="3" maxlength="3" value="{$price.anzahlung}"

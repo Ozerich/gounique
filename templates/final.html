@@ -1,4 +1,4 @@
-    <div id="final-page">
+<div id="final-page">
     <form action="formular.php?step=finish&vorgan={$id}" method="POST">
         <div class="page" id="resultpage">
             <div id="resultcontent">
@@ -11,14 +11,15 @@
                         <span class="param">Datum: </span><span class="value">{$today}</span><br/>
                         <span class="param">Sachbearbeiter: </span><span class="value">{$user.fullname}</span><br/>
                     </div>
-                    <br class="clear" />
+                    <br class="clear"/>
                 </div>
                 <div id="results-wr" class="block">
                     <span class="number">1</span>
 
                     <div id="results">
                         {foreach from=$hotels item=hotel}
-                        {$hotel.datestartformatted} - {$hotel.dateendformatted} {$hotel.dayscount}N HOTEL: {$hotel.hotelname} /
+                        {$hotel.datestartformatted} - {$hotel.dateendformatted} {$hotel.dayscount}N HOTEL:
+                        {$hotel.hotelname} /
                         {$hotel.roomcapacity} / {$hotel.roomtype} / {$hotel.service} / TRANSFER {$hotel.transfer} /
                         {$hotel.remark}
                         <br/>
@@ -51,7 +52,7 @@
                         id="percent">{$price.percent}</span> &euro;<br/><br/>
                     <span class="price_title">Gesamtpreis netto:</span><span
                         id="netto">{$price.netto}</span> &euro;<br/>
-                              <span class="price_title">Anzahlung:</span><span
+                    <span class="price_title">Anzahlung:</span><span
                         id="netto">{$price.anzahlung} %</span><br/>
                 </div>
                 <br class="clear"/>
@@ -72,7 +73,16 @@
                 <div id="address-wr">
                     <h3>{if $type eq 'K'}Kundenadresse{else}Agenturadresse{/if}</h3>
 
-                    <p><pre>{$address}</pre></p>
+                    <p>
+                        {if $agency.type eq 'agency'}
+                        {$agency.name}<br/>
+                        {$agency.address}<br/>
+                        {$agency.plz} {$agency.ort}
+                        {else}
+                        {$agency.address}<br/>
+                        {$agency.plz} {$agency.ort}
+                        {/if}
+                    </p>
                 </div>
                 <div id="anzahlung-wr">
 
@@ -80,16 +90,21 @@
 
                 <div id="stage-wr">
                     <label for="stage" class="stage-header">Stage</label>
+
                     <div id="stage">
-                        <input type="radio" id="radio1" name="stage" value="1" {if $stage eq 1}checked="checked"{/if}/><label for="radio1">Angebot</label>
-                        <input type="radio" id="radio2" name="stage" value="2" {if $stage eq 2}checked="checked"{/if}/><label for="radio2">Angebot (Kundenkopie)</label>
+                        <input type="radio" id="radio1" name="stage" value="1" {if $stage eq
+                        1}checked="checked"{/if}/><label for="radio1">Angebot</label>
+                        <input type="radio" id="radio2" name="stage" value="2" {if $stage eq
+                        2}checked="checked"{/if}/><label for="radio2">Angebot (Kundenkopie)</label>
                         {if $stage eq 2}
-                        <input type="radio" id="radio3" name="stage" value="3" {if $stage eq 3}checked="checked"{/if}/><label for="radio3">Rechnung</label>
-                        <input type="radio" id="radio4" name="stage" value="4" {if $stage eq 4}checked="checked"{/if}/><label for="radio4">Rechnung (Kundenkopie)</label>
+                        <input type="radio" id="radio3" name="stage" value="3" {if $stage eq
+                        3}checked="checked"{/if}/><label for="radio3">Rechnung</label>
+                        <input type="radio" id="radio4" name="stage" value="4" {if $stage eq
+                        4}checked="checked"{/if}/><label for="radio4">Rechnung (Kundenkopie)</label>
                         {/if}
                     </div>
                     {if $stage neq 2}
-                     <button class="btn btn-small btn-blue" id="makerechnung-button">Make Rechnung</button>
+                    <button class="btn btn-small btn-blue" id="makerechnung-button">Make Rechnung</button>
                     {/if}
                     <br class="clear"/>
                 </div>
@@ -106,7 +121,9 @@
             <input type="hidden" id="vorgan" name="vorgan" value="{$id}"/>
 
             <div id="final-buttons">
-                {if $stage eq 1}<button class="btn btn-small btn-blue" id="edit-button">Edit Formular</button>{/if}
+                {if $stage eq 1}
+                <button class="btn btn-small btn-blue" id="edit-button">Edit Formular</button>
+                {/if}
                 <button class="btn btn-small btn-blue" id="addmail-button">Add mail</button>
                 <button class="btn btn-small btn-blue" id="druck-button">Druck</button>
                 <button class="btn btn-small btn-blue" id="close-button" name="submit">Send & Close</button>

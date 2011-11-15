@@ -11,40 +11,41 @@ $page = "dashboard";
 if (isset($_GET['step']) && $_GET['step'] == 'result') {
     if (isset($_POST['submit'])) {
         $hotels = $manuels = array();
-        foreach ($_POST['ismanuel'] as $ind => $is_manuel)
-        {
-            if ($is_manuel)
-                $hotels[] = array(
-                    "hotelname" => $_POST['hotelname'][$ind],
-                    "datestart" => $_POST['datestart'][$ind],
-                    "dateend" => $_POST['dateend'][$ind],
-                    "dayscount" => $_POST['dayscount'][$ind],
-                    "roomcapacity" => $_POST['roomcapacity'][$ind],
-                    "roomtype" => $_POST['roomtype'][$ind],
-                    "service" => $_POST['service'][$ind],
-                    "transfer" => $_POST['transfer'][$ind],
-                    "remark" => $_POST['remark'][$ind],
-                    "price" => $_POST['price'][$ind],
-                    "ismanuel" => "1",
-                );
-            else
-                $hotels[] = array(
-                    "hotelname" => $_POST['hotelname'][$ind],
-                    "hotelcode" => $_POST['hotelcode'][$ind],
-                    "datestart" => $_POST['datestart'][$ind],
-                    "dateend" => $_POST['dateend'][$ind],
-                    "dayscount" => $_POST['dayscount'][$ind],
-                    "roomcapacity" => $_POST['roomcapacity'][$ind],
-                    "roomtype" => $_POST['roomtype'][$ind],
-                    "service" => $_POST['service'][$ind],
-                    "transfer" => $_POST['transfer'][$ind],
-                    "remark" => $_POST['remark'][$ind],
-                    "price" => $_POST['price'][$ind],
-                    "ismanuel" => "0",
-                );
-        }
+        if (!empty($_POST['ismanuel']) && is_array($_POST['ismanuel']))
+            foreach ($_POST['ismanuel'] as $ind => $is_manuel)
+            {
+                if ($is_manuel)
+                    $hotels[] = array(
+                        "hotelname" => $_POST['hotelname'][$ind],
+                        "datestart" => $_POST['datestart'][$ind],
+                        "dateend" => $_POST['dateend'][$ind],
+                        "dayscount" => $_POST['dayscount'][$ind],
+                        "roomcapacity" => $_POST['roomcapacity'][$ind],
+                        "roomtype" => $_POST['roomtype'][$ind],
+                        "service" => $_POST['service'][$ind],
+                        "transfer" => $_POST['transfer'][$ind],
+                        "remark" => $_POST['remark'][$ind],
+                        "price" => $_POST['price'][$ind],
+                        "ismanuel" => "1",
+                    );
+                else
+                    $hotels[] = array(
+                        "hotelname" => $_POST['hotelname'][$ind],
+                        "hotelcode" => $_POST['hotelcode'][$ind],
+                        "datestart" => $_POST['datestart'][$ind],
+                        "dateend" => $_POST['dateend'][$ind],
+                        "dayscount" => $_POST['dayscount'][$ind],
+                        "roomcapacity" => $_POST['roomcapacity'][$ind],
+                        "roomtype" => $_POST['roomtype'][$ind],
+                        "service" => $_POST['service'][$ind],
+                        "transfer" => $_POST['transfer'][$ind],
+                        "remark" => $_POST['remark'][$ind],
+                        "price" => $_POST['price'][$ind],
+                        "ismanuel" => "0",
+                    );
+            }
 
-        if ($_POST['manueltext'])
+        if (!empty($_POST['manueltext']) && is_array($_POST['manueltext']))
             foreach ($_POST['manueltext'] as $ind => $manuel)
             {
                 $manuels[] = array(
@@ -142,7 +143,7 @@ switch ($page)
         while ($row = mysql_fetch_assoc($sql_service)) $service[] = $row['service'];
         while ($row = mysql_fetch_assoc($sql_capacity)) $capacity[] = $row['roomcapacity'];
 
-        if(!isset($_GET['vorgan']))
+        if (!isset($_GET['vorgan']))
             $smarty->assign("id", rand() % 10000 + 10000);
         if (isset($_GET['k_num'])) {
             $agency = mysql_query("SELECT * FROM agency WHERE id=" . $_GET['k_num']) or die(mysql_error());
@@ -153,6 +154,7 @@ switch ($page)
         $smarty->assign("all_options", array("roomtype" => $roomtype,
                                             "service" => $service,
                                             "capacity" => $capacity));
+
 
         $content = $smarty->fetch("dashboard.html");
         $js = array("js/dashboard.js");
