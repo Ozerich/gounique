@@ -1,8 +1,21 @@
 <div id="page">
     <div id="header">
-        <br/><br/><br/><br/><br/><br/><br/><br/><br/>
-        <pre>{$address}</pre>
+        <br/><br/><br/><br/><br/><br/><br/><br/>
 
+        <div class="address">
+            {if $agency.type eq 'agency'}
+            {$agency.contactperson} {$agency.surname} - {$agency.sex}<br/>
+            e-mail: <a href="mailto:{$agency.email}">{$agency.email}</a><br/>
+            phone: {$agency.phone}<br/>
+            fax: {$agency.fax}<br/>
+            www: <a href="{$agency.website}">{$agency.website}</a> <br/>
+            {else}
+            {$agency.name} {$agency.surname} - {$agency.sex} ({$agency.contactperson})<br/>
+            e-mail: <a href="mailto:{$agency.email}">{$agency.email}</a><br/>
+            phone: {$agency.phone}<br/>
+            fax: {$agency.fax}<br/>
+            {/if}
+        </div>
     </div>
     <div id="content">
         <h1>REISEANGEBOT</h1>
@@ -11,6 +24,7 @@
             <div class="left">
                 <div class="header">Vorgangsnummer {$vorgansnummer}</div>
                 <br/>
+
                 <div class="nummer"><strong>Abreisedatum: {$abreisedatum}</strong></div>
             </div>
             <div class="right">
@@ -23,11 +37,11 @@
                 <span class="header">Reiseteilnehmer:</span>
                 {foreach $persons as $ind => $person}
                 <div class="person">
-                     <div class="num">{$ind + 1}</div>
-                  {if $person.name neq ''}
+                    <div class="num">{$ind + 1}</div>
+                    {if $person.name neq ''}
                     <div class="sex">{$person.sex}</div>
                     <div class="name">{$person.name}</div>
-                 {/if}
+                    {/if}
                 </div>
                 {/foreach}
                 <br class="clear"/>
@@ -53,6 +67,7 @@
             {if $flightplan.content neq ''}
             <div class="flugplan">
                 <span class="header">Flugplan:</span>
+
                 <div class="content">
                     <pre>{$flightplan.content}</pre>
                 </div>
@@ -61,12 +76,13 @@
         </div>
         {if $print_under}
         <div class="undertable">
-        {if $price.anzahlung==0}
-        
-        {else}
-            {$price.anzahlung}% Anzahlung ({$price.anzahlung_value} &euro;) nach Erhalt der Rechnung. 
-           {if $price.anzahlung!=100} Restzahlung bis {$zahlungsdatum} ({$price.brutto - $price.anzahlung_value}&euro;) {/if}
-         {/if}
+            {if $price.anzahlung==0}
+
+            {else}
+            {$price.anzahlung}% Anzahlung ({$price.anzahlung_value} &euro;) nach Erhalt der Rechnung.
+            {if $price.anzahlung!=100} Restzahlung bis {$zahlungsdatum} ({$price.brutto - $price.anzahlung_value}&euro;)
+            {/if}
+            {/if}
         </div>
         {/if}
         <div class="commentblock">
@@ -86,6 +102,7 @@
         <div class="bottomblock">
             <div class="signature">
                 <span>Bei Buchungswunsch bitte unterschrieben zurückfaxen:</span>
+
                 <div class="line"></div>
             </div>
             <p>Mit freundlichen Grüßen</p>

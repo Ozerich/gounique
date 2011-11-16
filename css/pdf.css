@@ -1,15 +1,11 @@
 #header{
     width: 712px;
-    height: 285px;
+    height: 190px;
     padding: 0 30px;
-
-  //  background: url('../img/pdf-header.jpg') no-repeat;
 }
 
 #footer{
     width: 792px;
-
-  //  background: url('../img/pdf-footer.jpg') no-repeat;
 }
 
 #content{
@@ -24,6 +20,10 @@ h1{
 
 #page{
     width: 760px;
+}
+
+#header .address{
+    margin-left: 25px;
 }
 
 .vorgansnummer-wr{
@@ -124,3 +124,4 @@ h1{
     margin: 13px 5px 0 0;
     width: 200px;
 }
+

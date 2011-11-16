@@ -20,11 +20,10 @@
                 <input type="text" name="website" value="{$agency.website}"/>
             </div>
             <div class="param">
-                <label>Sex</label>
+                <label>Ansprechpartner</label>
                 <input type="radio" name="sex" value="herr"{if $agency.sex eq 'herr'}checked{/if}/>Herr&nbsp;
                 <input type="radio" name="sex" value="frau"{if $agency.sex eq 'frau'}checked{/if}/>Frau
             </div>
-            <div class="param-header">Ansprechpartner</div>
             <div class="param">
                 <label for="const">Vorname</label>
                 <input type="text" name="contactperson" value="{$agency.contactperson}"/>

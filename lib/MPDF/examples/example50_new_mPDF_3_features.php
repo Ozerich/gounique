@@ -1881,7 +1881,7 @@ $header = array(
 $footer = '
 <table width="100%" style="border-top: 0.1mm solid #000000; vertical-align: top; font-family: sans; font-size: 9pt; color: #000055;"><tr>
 <td width="50%"></td>
-<td width="50%" align="right">See <a href="http://mpdf1.com/manual/index.php">documentation manual</a> for further details</td>
+<td width="50%" align="right">See <a href="http://mpdf1.com/manual/formular.php">documentation manual</a> for further details</td>
 </tr></table>
 ';
 

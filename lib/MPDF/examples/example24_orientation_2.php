@@ -126,9 +126,9 @@ $headerE = '
 <td width="33%" style="text-align: right;">Inner header p <span style="font-size:14pt;">{PAGENO}</span></td>
 </tr></table>
 ';
-$header = '<div align="center" style="background-color: #f0f2ff;background-gradient: linear #c7cdde #f0f2ff 0 1 0 0.5;border-radius: 4mm;font-size:18pt;font-weight:bold;font-style:italic;">{DATE j-m-Y} &raquo; {PAGENO} &raquo; My document<br />My document<br />See <a href="http://mpdf1.com/manual/index.php">documentation manual</a><br />My document</div>';
+$header = '<div align="center" style="background-color: #f0f2ff;background-gradient: linear #c7cdde #f0f2ff 0 1 0 0.5;border-radius: 4mm;font-size:18pt;font-weight:bold;font-style:italic;">{DATE j-m-Y} &raquo; {PAGENO} &raquo; My document<br />My document<br />See <a href="http://mpdf1.com/manual/formular.php">documentation manual</a><br />My document</div>';
 $headerE = '<div align="center" style="background-color: #f0f2ff;background: transparent url(\'bg.jpg\') repeat scroll left top;border-radius: 4mm;font-size:18pt;font-weight:bold;font-style:italic;">Even page footer - {PAGENO} -<br />My document<br />My document<br />My document</div>';
-$footer = '<div align="center" style="background-color: #f0f2ff;background-gradient: linear #c7cdde #f0f2ff 0 1 0 0.5;border-radius: 4mm;font-size:18pt;font-weight:bold;font-style:italic;">{DATE j-m-Y} &raquo; {PAGENO} &raquo; My document<br />My document<br />See <a href="http://mpdf1.com/manual/index.php">documentation manual</a><br />My document</div>';
+$footer = '<div align="center" style="background-color: #f0f2ff;background-gradient: linear #c7cdde #f0f2ff 0 1 0 0.5;border-radius: 4mm;font-size:18pt;font-weight:bold;font-style:italic;">{DATE j-m-Y} &raquo; {PAGENO} &raquo; My document<br />My document<br />See <a href="http://mpdf1.com/manual/formular.php">documentation manual</a><br />My document</div>';
 $footerE = '<div align="center" style="background-color: #f0f2ff;background: transparent url(\'bg.jpg\') repeat scroll right bottom;border-radius: 4mm;font-size:18pt;font-weight:bold;font-style:italic;">Even page footer - {PAGENO} -<br />My document<br />My document<br />My document</div>';
 
 //==============================================================

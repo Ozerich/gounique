@@ -1,8 +1,21 @@
 <div id="page">
     <div id="header">
-        <br/><br/><br/><br/><br/><br/><br/><br/><br/>
-        <pre>{$address}</pre>
+        <br/><br/><br/><br/><br/><br/><br/><br/>
 
+        <div class="address">
+            {if $agency.type eq 'agency'}
+            {$agency.contactperson} {$agency.surname} - {$agency.sex}<br/>
+            e-mail: <a href="mailto:{$agency.email}">{$agency.email}</a><br/>
+            phone: {$agency.phone}<br/>
+            fax: {$agency.fax}<br/>
+            www: <a href="{$agency.website}">{$agency.website}</a> <br/>
+            {else}
+            {$agency.name} {$agency.surname} - {$agency.sex} ({$agency.contactperson})<br/>
+            e-mail: <a href="mailto:{$agency.email}">{$agency.email}</a><br/>
+            phone: {$agency.phone}<br/>
+            fax: {$agency.fax}<br/>
+            {/if}
+        </div>
     </div>
     <div id="content">
         <h1>REISEANGEBOT (KUNDENKOPIE)</h1>

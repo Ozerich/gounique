@@ -105,9 +105,6 @@ function FillSmarty($id)
     $smarty->assign("abreisedatum", $data['abreisedatum']);
     $smarty->assign("zahlungsdatum", $data['zahlungsdatum']);
 
-    $smarty->assign("abreisedatum", substr($smarty->tpl_vars['abreisedatum'],0,2).".".substr($smarty->tpl_vars['abreisedatum'],2,2).".".substr($smarty->tpl_vars['abreisedatum'],4));
-    $smarty->assign("zahlungsdatum", substr($smarty->tpl_vars['zahlungsdatum'],0,2).".".substr($smarty->tpl_vars['zahlungsdatum'],2,2).".".substr($smarty->tpl_vars['zahlungsdatum'],4));
-
     $date_a = mktime(0, 0, 0, substr($data['abreisedatum'], 2, 2), substr($data['abreisedatum'], 0, 2), substr($data['abreisedatum'], 4));
     $date_z = mktime(0, 0, 0, substr($data['zahlungsdatum'], 2, 2), substr($data['zahlungsdatum'], 0, 2), substr($data['zahlungsdatum'], 4));
     $smarty->assign("print_under", (($date_a - $date_z) >= 432000) ? 1 : 0);

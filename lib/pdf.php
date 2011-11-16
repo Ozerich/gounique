@@ -17,6 +17,10 @@ function WriteToPdf($vorgangnummer, $type)
 
     FIllSmarty($vorgangnummer);
 
+    $smarty->assign("abreisedatum", substr($smarty->tpl_vars['abreisedatum'],0,2).".".substr($smarty->tpl_vars['abreisedatum'],2,2).".".substr($smarty->tpl_vars['abreisedatum'],4));
+    $smarty->assign("zahlungsdatum", substr($smarty->tpl_vars['zahlungsdatum'],0,2).".".substr($smarty->tpl_vars['zahlungsdatum'],2,2).".".substr($smarty->tpl_vars['zahlungsdatum'],4));
+
+
 
     $template = "";
     if($type == 1)

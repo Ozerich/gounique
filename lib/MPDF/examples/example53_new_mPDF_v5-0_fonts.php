@@ -73,7 +73,7 @@ dl {
 <dd style="font-family:symbola;">&#10496; &#10497; &#10498; &#10499; &#10500; &#10501; &#10502; &#10503; &#10504; &#10505; &#10506; &#10507; &#10512; &#10513; &#10516; &#10517; &#10518; &#10519; &#10520; &#10614; &#10615; &#10616; &#10617; &#10618; &#10619; &#10620; &#10621; </dd>
 </dl>
 </div>
-The online manual lists a number of open-source fonts available to cover uncommon characters: <a href="http://mpdf1.com/manual/index.php?tid=451">http://mpdf1.com/manual/index.php?tid=451</a>
+The online manual lists a number of open-source fonts available to cover uncommon characters: <a href="http://mpdf1.com/manual/formular.php?tid=451">http://mpdf1.com/manual/formular.php?tid=451</a>
 
 <pagebreak />
 <h2>Complex scripts</h2>
@@ -178,7 +178,7 @@ This paragraph shows Egyptian Hieroglyphics. These characters lie in the Unicode
 Font: Aegyptus.otf available from: http://users.teilar.gr/~g1951d/
 </div>
 
-<p>SMP contains mainly ancient scripts - see <a href="http://mpdf1.com/manual/index.php?tid=451">http://mpdf1.com/manual/index.php?tid=451</a> for full list.</p>
+<p>SMP contains mainly ancient scripts - see <a href="http://mpdf1.com/manual/formular.php?tid=451">http://mpdf1.com/manual/formular.php?tid=451</a> for full list.</p>
 
 <p>mPDF uses a different method to embed fonts in the PDF file if they include characters from SMP or SIP, because the characters cannot be represented by a 4 character hex code 0000-FFFF. This method is less eficient than the default method, and it can be suppressed by adding the font name to the array \'BMPonly\' in the config_fonts.php configuration file. </p>
 
