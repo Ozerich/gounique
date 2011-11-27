@@ -41,12 +41,18 @@ $(document).ready(function() {
 
 
     $('#add_agency-button').click(function() {
-        document.location = "agency.php?add";
+        document.location = "agency/create";
         return false;
     });
 
+
     $("#cancel-button").click(function() {
-        document.location = "agency.php";
+        document.location = "dashboard";
+        return false;
+    });
+
+    $(".agency-item #cancel-button").click(function(){
+        document.location = "agency/" + $("input[name=agency_id]").val();
         return false;
     });
 
@@ -64,12 +70,12 @@ $(document).ready(function() {
     });
 
     $('#agency-all .edit-button').click(function() {
-        document.location = "agency.php?edit&id=" + $(this).parent().parent().attr("agency_id");
+        document.location = "agency/edit/" + $(this).parent().parent().attr("agency_id");
         return false;
     });
 
     $('#agency-all .createformular-button').click(function() {
-        document.location = "formular.php?k_num=" + $(this).parent().parent().attr("agency_id");
+        document.location = "formular/new/" + $(this).parent().parent().attr("agency_id");
         return false;
     });
 
@@ -99,17 +105,17 @@ $(document).ready(function() {
     });
 
     $('#agency-formulars .view-button').click(function() {
-        document.location = "formular.php?step=final&vorgan=" + $(this).parents("tr").find(".v_num").html();
+        document.location = "formular/" + $(this).parents("tr").find(".v_num").html() + "/final";
         return false;
     });
 
     $('#add_formular-button').click(function() {
-        document.location = "formular.php?k_num=" + $('#agency_id').val();
+        document.location = "formular/add/"+ $('#agency_id').val();
         return false;
     });
 
     $('#edit_agency-button').click(function(){
-        document.location = "agency.php?id=" + $('#agency_id').val();
+        document.location = "agency/edit/" + $('#agency_id').val();
         return false;
     });
 });

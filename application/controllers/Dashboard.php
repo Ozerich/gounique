@@ -9,4 +9,14 @@ class Dashboard extends MY_Controller
         if(!$this->user)
             redirect('login');
     }
+
+    public function index()
+    {
+        $this->view_data['agency_list'] = Agency_model::all();
+
+        $this->view_data['page_name'] = 'formular-list';
+
+        $this->view_data['JS_files'] = array("js/agency.js");
+
+    }
 }

@@ -4,7 +4,7 @@ body { background: #fff; font: 12px/1.7em arial, sans-serif; margin: 75px; }
 
 #login h1
 {
-	background: url(/img/logo-login.jpg) no-repeat 0 0;
+	background: url(/images/logo-login.jpg) no-repeat 0 0;
 	width: 395px;
 	height: 146px;
 	line-height: 800px;
