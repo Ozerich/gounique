@@ -45,12 +45,12 @@ $(document).ready(function() {
         }).click();
 
     $('#edit-button').click(function() {
-        document.location = "formular.php?step=result&vorgan=" + $('#vorgan').val();
+        document.location = "formular/result/" + $('.vorgan_value').html();
         return false;
     });
 
     $('#druck-button').click(function() {
-        window.location = "pdf/" + $("#vorgan").val() + "_" + $("#stage input:checked").val() + ".pdf";
+        window.location = "pdf/" + $('.vorgan_value').html() + "_" + $("#stage input:checked").val() + ".pdf";
         return false;
     });
 
@@ -58,7 +58,7 @@ $(document).ready(function() {
         $.ajax({
             url: "ajax.php?mode=stage",
             type: "post",
-            data: "vorgan=" + $('#vorgan').val() + "&stage=" + $('#stage input:checked').val()
+            data: "vorgan=" + $('.vorgan_value').html() + "&stage=" + $('#stage input:checked').val()
         });
     });
 
@@ -69,7 +69,7 @@ $(document).ready(function() {
             data: "v_num=" + $("#vorgan").val(),
             async: false
         });
-        document.location = "formular.php?step=final&vorgan=" + $("#vorgan").val();
+        document.location = "formular/final/" + $('.vorgan_value').html();
         return false;
     });
 

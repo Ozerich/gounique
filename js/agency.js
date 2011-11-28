@@ -75,7 +75,7 @@ $(document).ready(function() {
     });
 
     $('#agency-all .createformular-button').click(function() {
-        document.location = "formular/new/" + $(this).parent().parent().attr("agency_id");
+        document.location = "formular/create/" + $(this).parent().parent().attr("agency_id");
         return false;
     });
 
@@ -110,7 +110,7 @@ $(document).ready(function() {
     });
 
     $('#add_formular-button').click(function() {
-        document.location = "formular/add/"+ $('#agency_id').val();
+        document.location = "formular/create/"+ $('#agency_id').val();
         return false;
     });
 

@@ -10,7 +10,7 @@ function update(param, hotel_block) {
     "&transfer=" + $(hotel_block).find("#transfer").val();
 
     $.ajax({
-        url: "ajax.php?mode=" + param,
+        url: "formular/find/" + param,
         async: false,
         data: data,
         type: "POST",
@@ -32,11 +32,11 @@ function BindHotelEvents() {
             }
             if (event.keyCode == KEY_ENTER || event.keyCode == KEY_TAB) {
                 if ($(hotel_block).hasClass('hotel-wr')) {
-                    data = update("hotelname", hotel_block);
+                    data = update("name", hotel_block);
                     if (data.length > 0) {
                         $(hotel_block).find('#hotelname').html(data);
                         $(hotel_block).find('#hotelname_hid').val(data);
-                        data = update("roomtype", hotel_block);
+                        data = update("room_type", hotel_block);
 
                         $(hotel_block).find('#roomtype').empty();
                         data = jQuery.parseJSON(data);
@@ -71,7 +71,7 @@ function BindHotelEvents() {
             hotel_block = $(this).parents('.hotel');
             if (event.keyCode == KEY_ENTER || event.keyCode == KEY_TAB) {
                 if ($(hotel_block).hasClass('hotel-wr')) {
-                    data = update("roomcapacity", hotel_block);
+                    data = update("room_capacity", hotel_block);
                     $(hotel_block).find('#roomcapacity').empty();
                     data = jQuery.parseJSON(data);
                     for (var i = 0; i < data.length; i++)
@@ -95,7 +95,7 @@ function BindHotelEvents() {
             hotel_block = $(this).parents('.hotel');
             if (event.keyCode == KEY_ENTER || event.keyCode == KEY_TAB) {
                 if ($(hotel_block).hasClass('hotel-wr')) {
-                    data = update("service", hotel_block);
+                    data = update("room_service", hotel_block);
                     $(hotel_block).find('#service').empty();
                     data = jQuery.parseJSON(data);
                     for (var i = 0; i < data.length; i++)

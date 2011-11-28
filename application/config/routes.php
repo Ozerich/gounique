@@ -47,6 +47,8 @@ $route['logout'] = "auth/logout";
 $route['agency'] = 'dashboard';
 $route['agency/(:num)'] = 'agency/view/$1';
 
+$route['formular/final/(:num)'] = 'formular/final_/$1';
+
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

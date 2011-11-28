@@ -43,7 +43,7 @@ class Agency extends MY_Controller
         $agency = Agency_model::find_by_id($id);
         if($agency)
         {
-            $this->view_data['formulars'] = Formular::all();
+            $this->view_data['formulars'] = Formular_Model::all();
             $this->view_data['agency'] = $agency;
         }
         else
