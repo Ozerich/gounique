@@ -73,23 +73,8 @@
     <div id="masthead">
         <div class="content_pad">
             <h1 class="no_breadcrumbs">
-                <?
-                    if($current_page == 'dashboard_index')
-                        echo "Dashboard";
-                    elseif($current_page == 'formular_create')
-                        echo "Reiseangebot Formular";
-                    elseif($current_page == 'formular_open')
-                        echo "Open formular";
-                    elseif($current_page == "agency_view")
-                        echo "Agency";
-                    elseif($current_page == "formular_view")
-                    {
-                        echo ($formular->stage == 1 ? "Angebot" : "Rechnung")." Formular: ";
-                        echo $agency->type == 'person' ? $agency->name ." ". $agency->surname : $agency->name;
-                        if($formular->stage == 2)
-                            echo '<span class="right-float">Rechnungnummer: '.$formular->r_num.'</span>';
-                    }
-                ?>
+                <?=$left_header?>
+                <span class="right-float"><?=$right_header?></span>
             </h1>
         </div>
     </div>

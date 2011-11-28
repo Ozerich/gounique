@@ -1,7 +1,45 @@
 <?php
 
+define("BLANK_FILE", "UNI_Briefpapier.pdf");
+require_once APPPATH . "libraries/MPDF/mpdf.php";
+
+
 class Formular extends MY_Controller
 {
+
+    private function write_to_pdf($v_num, $type)
+    {
+        $pdf = new mPDF('utf-8', 'A4', '8', '', 4, 4, 25, 25, 0, 0);
+        $pdf->SetImportUse();
+        $pdf->AddPage();
+        $pagecount = $pdf->SetSourceFile(BLANK_FILE);
+        $tplId = $pdf->ImportPage($pagecount);
+        $pdf->UseTemplate($tplId);
+
+        $view = "";
+        if ($type == 1)
+            $view = "angebot";
+        elseif ($type == 2)
+            $view = "angebotK";
+        elseif ($type == 3)
+            $view = "rechnung";
+        elseif ($type == 4)
+            $view = "rechnungK";
+
+        $this->view_data['formular'] = Formular_Model::first(array("conditions" => array("v_num = ?", $v_num)));
+        $this->fill_price($this->view_data['formular']);
+
+        $html = $this->load->view("email/" . $view, $this->view_data, TRUE);
+
+
+        $stylesheet = file_get_contents('css/pdf.css');
+        $pdf->WriteHTML($stylesheet, 1);
+        $pdf->list_indent_first_level = 0;
+        $pdf->WriteHTML($html, 2);
+
+        $pdf->Output("pdf/" . $v_num . "_" . $type . '.pdf', 'F');
+    }
+
 
     public function __construct()
     {
@@ -192,12 +230,13 @@ class Formular extends MY_Controller
             $formular->personcount = $this->input->post('personcount');
 
             $formular->save();
+
+            redirect('formular/result/' . $formular->id);
         }
 
 
         $this->view_data["formular"] = $formular;
         $this->get_paramlist();
-
 
 
     }
@@ -306,6 +345,34 @@ class Formular extends MY_Controller
         }
     }
 
+    private function fill_price($formular)
+    {
+        $hotel_price = $manuel_price = 0;
+        $hotels = unserialize($formular->hotels);
+        foreach ($hotels as $hotel)
+            $hotel_price += $hotel['price'];
+
+        $manuels = unserialize($formular->manuels);
+        foreach ($manuels as $manuel)
+            $manuel_price += $manuel['price'];
+
+        $price = $hotel_price;
+        $price += $formular->flight_price;
+        $price = $price * $formular->personcount;
+
+        $price_data = array();
+
+        $price_data['brutto'] = $price + $manuel_price;
+        $price_data['person'] = $formular->personcount == 0 ? 0 : $price_data['brutto'] / $formular->personcount;
+        $price_data['netto'] = round($price_data['brutto'] / 1.19, 2);
+        $price_data['provision'] = round($price_data['brutto'] * $formular->provision / 100, 2);
+        $price_data['percent'] = round($price_data['provision'] / 1.19 * 0.19, 2);
+        $price_data['anzahlung'] = $formular->anzahlung;
+        $price_data['anzahlung_value'] = round($price_data['brutto'] / 100 * $formular->anzahlung);
+
+        $this->view_data['price'] = $price_data;
+    }
+
 
     public function result($id = 0)
     {
@@ -339,34 +406,16 @@ class Formular extends MY_Controller
 
             $formular->save();
 
+            $this->write_to_pdf($id, 1);
+            $this->write_to_pdf($id, 2);
+            $this->write_to_pdf($id, 3);
+            $this->write_to_pdf($id, 4);
+
             redirect('formular/final/' . $formular->v_num);
         }
         else
         {
-            $hotel_price = $manuel_price = 0;
-            $hotels = unserialize($formular->hotels);
-            foreach ($hotels as $hotel)
-                $hotel_price += $hotel['price'];
-
-            $manuels = unserialize($formular->manuels);
-            foreach ($manuels as $manuel)
-                $manuel_price += $manuel['price'];
-
-            $price = $hotel_price;
-            $price += $formular->flight_price;
-            $price = $price * $formular->personcount;
-
-            $price_data = array();
-
-            $price_data['brutto'] = $price + $manuel_price;
-            $price_data['person'] = $formular->personcount == 0 ? 0 : $price_data['brutto'] / $formular->personcount;
-            $price_data['netto'] = round($price_data['brutto'] / 1.19, 2);
-            $price_data['provision'] = round($price_data['brutto'] * $formular->provision / 100, 2);
-            $price_data['percent'] = round($price_data['provision'] / 1.19 * 0.19, 2);
-            $price_data['anzahlung'] = $formular->anzahlung;
-            $price_data['anzahlung_value'] = round($price_data['brutto'] / 100 * $formular->anzahlung);
-
-            $this->view_data['price'] = $price_data;
+            $this->fill_price($formular);
         }
     }
 
@@ -383,34 +432,36 @@ class Formular extends MY_Controller
 
         $this->view_data['formular'] = $formular;
 
+        $this->fill_price($formular);
 
-        $hotel_price = $manuel_price = 0;
-        $hotels = unserialize($formular->hotels);
-        foreach ($hotels as $hotel)
-            $hotel_price += $hotel['price'];
-
-        $manuels = unserialize($formular->manuels);
-        foreach ($manuels as $manuel)
-            $manuel_price += $manuel['price'];
-
-        $price = $hotel_price;
-        $price += $formular->flight_price;
-        $price = $price * $formular->personcount;
-
-        $price_data = array();
-
-        $price_data['brutto'] = $price + $manuel_price;
-        $price_data['person'] = $formular->personcount == 0 ? 0 : $price_data['brutto'] / $formular->personcount;
-        $price_data['netto'] = round($price_data['brutto'] / 1.19, 2);
-        $price_data['provision'] = round($price_data['brutto'] * $formular->provision / 100, 2);
-        $price_data['percent'] = round($price_data['provision'] / 1.19 * 0.19, 2);
-        $price_data['anzahlung'] = $formular->anzahlung;
-        $price_data['anzahlung_value'] = round($price_data['brutto'] / 100 * $formular->anzahlung);
-
-        $this->view_data['price'] = $price_data;
+        if ($formular->stage == 2)
+            $this->set_right_header('Rechnungnummer: ' . $formular->r_num);
+        $this->set_left_header(($formular->stage == 1 ? "Angebot" : "Rechnung") . " Formular: " .
+                               ($formular->agency->type == 'person'
+                                       ? $formular->agency->name . " " . $formular->agency->surname
+                                       : $formular->agency->name));
 
         $this->content_view = "formular/final";
-
     }
+
+
+    public function do_rechnung($id = 0)
+    {
+        $formular = Formular_Model::first(array('conditions' => array("v_num = ? ", $id)));
+
+        if (!$formular) {
+            show_404();
+            return false;
+        }
+
+        if ($formular->stage == 2)
+            return true;
+
+        $formular->stage = 2;
+        $formular->save();
+
+        redirect("formular/final/" . $formular->v_num);
+    }
+
 
 }

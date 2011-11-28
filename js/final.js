@@ -63,13 +63,7 @@ $(document).ready(function() {
     });
 
     $('#makerechnung-button').click(function(){
-        $.ajax({
-            url: "ajax.php?mode=dorechnung",
-            type: "post",
-            data: "v_num=" + $("#vorgan").val(),
-            async: false
-        });
-        document.location = "formular/final/" + $('.vorgan_value').html();
+        document.location = "formular/do_rechnung/" + $('.vorgan_value').html();
         return false;
     });
 

@@ -151,7 +151,7 @@
             <label for="roomtype">Room type</label>
             <select name="roomtype[<?=($ind + 1)?>]" id="roomtype">
                 <? foreach ($hotel['all_params']['room_type'] as $type): ?>
-                <option value=<?=$type?>><?=$type?></option>
+                <option value=<?=$type?> <?if($type == $hotel['room_type']) echo 'selected'?>><?=$type?></option>
                 <? endforeach; ?>
             </select>
         </div>
@@ -159,7 +159,7 @@
             <label for="roomcapacity">Capacity</label>
             <select name="roomcapacity[<?=($ind + 1)?>]" id="roomcapacity">
                 <? foreach ($hotel['all_params']['room_capacity'] as $type): ?>
-                <option value=<?=$type?>><?=$type?></option>
+                <option value=<?=$type?> <?if($type == $hotel['room_capacity']) echo 'selected'?>><?=$type?></option>
                 <? endforeach; ?>
             </select>
         </div>
@@ -167,7 +167,7 @@
             <label for="service">Service</label>
             <select name="service[<?=($ind + 1)?>]" id="service">
                 <? foreach ($hotel['all_params']['room_service'] as $type): ?>
-                <option value=<?=$type?>><?=$type?></option>
+                <option value=<?=$type?> <?if($type == $hotel['room_service']) echo 'selected'?>><?=$type?></option>
                 <? endforeach; ?>
             </select>
         </div>
