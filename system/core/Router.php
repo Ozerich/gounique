@@ -204,6 +204,7 @@ class CI_Router {
 		}
 
 		// re-index the routed segments array so it starts with 1 rather than 0
+
 		$this->uri->_reindex_segments();
 
 		log_message('debug', "No URI present. Default controller set.");

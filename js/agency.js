@@ -105,7 +105,7 @@ $(document).ready(function() {
     });
 
     $('#agency-formulars .view-button').click(function() {
-        document.location = "formular/" + $(this).parents("tr").find(".v_num").html() + "/final";
+        document.location = "formular/final/" + $(this).parents("tr").find(".v_num").html();
         return false;
     });
 

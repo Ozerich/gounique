@@ -1,6 +1,6 @@
 <?php
 
-class Formular_Model extends ActiveRecord\Model
+class Formular_model extends ActiveRecord\Model
 {
     static $table_name = "formulars";
 
