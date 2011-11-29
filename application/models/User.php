@@ -35,7 +35,7 @@ class User extends ActiveRecord\Model
             User::login($user->id);
             return $user;
         }
-        else
+      else
             return FALSE;
     }
 
