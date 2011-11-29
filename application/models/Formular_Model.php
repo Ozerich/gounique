@@ -46,7 +46,7 @@ class Formular_model extends ActiveRecord\Model
 
     public function get_agency()
     {
-        return Agency_Model::find_by_id($this->k_num);
+        return Agency_model::find_by_id($this->k_num);
     }
 }
 

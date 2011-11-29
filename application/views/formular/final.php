@@ -1,5 +1,5 @@
 <div id="final-page">
-    <? form_open("formular/finish/" . $formular->v_num); ?>
+    <?=form_open("formular/sendmail/" . $formular->v_num); ?>
     <div class="page" id="resultpage">
         <div id="resultcontent">
             <div id="topinfo" class="block">
@@ -9,7 +9,7 @@
                         class="value"><?=$formular->abreisedatum?></span><br/>
                 </div>
                 <div class="right-float">
-                    <span class="param">Datum: </span><span class="value">TODAY</span><br/>
+                    <span class="param">Datum: </span><span class="value"><?=mdate("%d.%m.%Y", time());?></span><br/>
                     <span class="param">Sachbearbeiter: </span><span
                         class="value"><?=$user->name . " " . $user->surname?></span><br/>
                 </div>
@@ -60,7 +60,7 @@
         </div>
         <div id="persons-wr">
             <h3>Persons:</h3>
-            <? foreach ($formular->person_list as $ind => $person)
+            <? if($formular->person_list) foreach ($formular->person_list as $ind => $person)
             echo ($ind + 1) . " - " . $person['name'] . " (" . $person['sex'] . ")<br/>";
             ?>
             <br/><br/>

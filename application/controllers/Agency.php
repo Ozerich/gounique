@@ -15,7 +15,7 @@ class Agency extends MY_Controller
     {
         if ($_POST) {
             $p = $this->input->post('type') == "agency" ? "a_" : "k_";
-            $agency = Agency_Model::create(
+            $agency = Agency_model::create(
                 array(
                      "type" => $this->input->post('type'),
                      "name" => $this->input->post($p.'name'),
@@ -40,10 +40,10 @@ class Agency extends MY_Controller
 
     public function view($id)
     {
-        $agency = Agency_Model::find_by_id($id);
+        $agency = Agency_model::find_by_id($id);
         if($agency)
         {
-            $this->view_data['formulars'] = Formular_Model::all();
+            $this->view_data['formulars'] = Formular_model::all(array('conditions' => array('k_num = ?', $id)));
             $this->view_data['agency'] = $agency;
         }
         else
@@ -54,7 +54,7 @@ class Agency extends MY_Controller
     {
         if ($_POST) {
 
-            $agency = Agency_Model::find_by_id($this->input->post("agency_id"));
+            $agency = Agency_model::find_by_id($this->input->post("agency_id"));
 
             if(!$agency)
                 show_404();
@@ -79,7 +79,7 @@ class Agency extends MY_Controller
 
         }
 
-        $agency = Agency_Model::find($id);
+        $agency = Agency_model::find($id);
         $this->view_data['agency'] = $agency;
     }
 

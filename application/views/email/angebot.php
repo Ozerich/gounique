@@ -5,7 +5,7 @@
         <div class="address">
             <?
             if ($formular->agency->type == "agency")
-                echo $formular->$agency->contactperson . ' ' . $formular->agency->surname . ' - ' . $formular->agency->sex . '<br/>' .
+                echo $formular->agency->contactperson . ' ' . $formular->agency->surname . ' - ' . $formular->agency->sex . '<br/>' .
                      'e-mail: <a href="mailto:' . $formular->agency->email . '">' . $formular->agency->email . '</a><br/>' .
                      'phone: ' . $formular->agency->phone . '<br/>' .
                      'fax: ' . $formular->agency->fax . '<br/>' .
@@ -28,7 +28,7 @@
                 <div class="nummer"><strong>Abreisedatum: <?=$formular->abreisedatum?></strong></div>
             </div>
             <div class="right">
-                <div>Datum: TODAY</div>
+                <div>Datum: <?=mdate("%d.%m.%Y", time());?></div>
                 <div>Sachbearbeiter: <?=$user->name." ".$user->surname?></div>
             </div>
         </div>

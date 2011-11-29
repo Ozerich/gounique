@@ -26,7 +26,7 @@ class Formular extends MY_Controller
         elseif ($type == 4)
             $view = "rechnungK";
 
-        $this->view_data['formular'] = Formular_Model::first(array("conditions" => array("v_num = ?", $v_num)));
+        $this->view_data['formular'] = Formular_model::first(array("conditions" => array("v_num = ?", $v_num)));
         $this->fill_price($this->view_data['formular']);
 
         $html = $this->load->view("email/" . $view, $this->view_data, TRUE);
@@ -45,7 +45,12 @@ class Formular extends MY_Controller
     {
         parent::__construct();
 
+        if(!$this->user)
+            redirect('');
+
         $this->view_data['JS_files'] = array("js/formular.js");
+
+        $this->load->helper('date');
     }
 
     private function generate_id()
@@ -78,7 +83,7 @@ class Formular extends MY_Controller
 
     public function create($agency_id = 0)
     {
-        $agency = Agency_Model::find_by_id($agency_id);
+        $agency = Agency_model::find_by_id($agency_id);
 
         if (!$agency) {
             show_404();
@@ -136,7 +141,7 @@ class Formular extends MY_Controller
             $v_num = $_POST['vorgangsnummer'];
 
 
-            Formular_Model::create(array(
+            Formular_model::create(array(
                                         "v_num" => $v_num,
                                         "type" => $this->input->post('agent_kunden'),
                                         "k_num" => $agency_id,
@@ -147,6 +152,7 @@ class Formular extends MY_Controller
                                         "flight_plan" => $this->input->post('flightplan'),
                                         "flight_price" => $this->input->post('flightprice'),
                                         "personcount" => $this->input->post('personcount'),
+                                        "datecreated" => time(),
                                    ));
 
 
@@ -168,7 +174,7 @@ class Formular extends MY_Controller
 
     public function edit($v_num = 0)
     {
-        $formular = Formular_Model::first(array("conditions" => array("v_num = ?", $v_num)));
+        $formular = Formular_model::first(array("conditions" => array("v_num = ?", $v_num)));
 
         if (!$formular) {
             show_404();
@@ -376,7 +382,7 @@ class Formular extends MY_Controller
 
     public function result($id = 0)
     {
-        $formular = Formular_Model::first(array('conditions' => array('v_num = ?', $id)));
+        $formular = Formular_model::first(array('conditions' => array('v_num = ?', $id)));
 
         if (!$formular) {
             show_404();
@@ -421,7 +427,7 @@ class Formular extends MY_Controller
 
     public function final_($id)
     {
-        $formular = Formular_Model::first(array('conditions' => array('v_num = ?', $id)));
+        $formular = Formular_model::first(array('conditions' => array('v_num = ?', $id)));
 
         if (!$formular) {
             show_404();
@@ -432,22 +438,24 @@ class Formular extends MY_Controller
 
         $this->view_data['formular'] = $formular;
 
+
         $this->fill_price($formular);
+
 
         if ($formular->stage == 2)
             $this->set_right_header('Rechnungnummer: ' . $formular->r_num);
+
         $this->set_left_header(($formular->stage == 1 ? "Angebot" : "Rechnung") . " Formular: " .
                                ($formular->agency->type == 'person'
                                        ? $formular->agency->name . " " . $formular->agency->surname
                                        : $formular->agency->name));
-
         $this->content_view = "formular/final";
     }
 
 
     public function do_rechnung($id = 0)
     {
-        $formular = Formular_Model::first(array('conditions' => array("v_num = ? ", $id)));
+        $formular = Formular_model::first(array('conditions' => array("v_num = ? ", $id)));
 
         if (!$formular) {
             show_404();
@@ -461,6 +469,36 @@ class Formular extends MY_Controller
         $formular->save();
 
         redirect("formular/final/" . $formular->v_num);
+    }
+
+
+    public function sendmail($v_num)
+    {
+        $emails = array($this->user->email);
+        $input = $this->input->post("email");
+
+        if (empty($input))
+            redirect('');
+
+        foreach($input as $item)
+            $emails[] = $item;
+
+        $this->load->library("email");
+
+
+        foreach ($emails as $email)
+        {
+            $this->email->clear();
+            
+            $this->email->from($this->user->email, $this->user->name . " " . $this->user->surname." <".$this->user->email.">");
+            $this->email->to($email);
+
+            $this->email->subject('Subject');
+            $this->email->attach('pdf/'.$v_num."_".$this->input->post('stage').".pdf");
+            $this->email->send();
+        }
+
+        redirect('');
     }
 
 

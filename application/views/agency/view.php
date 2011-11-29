@@ -75,7 +75,7 @@
         <tr>
             <td class="v_num"><?=$formular->v_num?></td>
             <td><?=$formular->r_num?></td>
-            <td><?=$formular->date?></td>
+            <td><?=mdate("%d.%m.%Y", $formular->datecreated);?></td>
             <td width="50px">
                 <button class="btn btn-small btn-blue view-button">View</button>
             </td>
