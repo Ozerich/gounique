@@ -1,6 +1,6 @@
 <?php
 
-class Agency extends MY_Controller
+class Agency_Controller extends MY_Controller
 {
     public function __construct()
     {
@@ -15,7 +15,7 @@ class Agency extends MY_Controller
     {
         if ($_POST) {
             $p = $this->input->post('type') == "agency" ? "a_" : "k_";
-            $agency = Agency_model::create(
+            $agency = Agency::create(
                 array(
                      "type" => $this->input->post('type'),
                      "name" => $this->input->post($p.'name'),
@@ -40,7 +40,7 @@ class Agency extends MY_Controller
 
     public function view($id)
     {
-        $agency = Agency_model::find_by_id($id);
+        $agency = Agency::find_by_id($id);
         if($agency)
         {
             $this->view_data['formulars'] = Formular_model::all(array('conditions' => array('k_num = ?', $id)));
@@ -54,7 +54,7 @@ class Agency extends MY_Controller
     {
         if ($_POST) {
 
-            $agency = Agency_model::find_by_id($this->input->post("agency_id"));
+            $agency = Agency::find_by_id($this->input->post("agency_id"));
 
             if(!$agency)
                 show_404();
@@ -79,7 +79,7 @@ class Agency extends MY_Controller
 
         }
 
-        $agency = Agency_model::find($id);
+        $agency = Agency::find($id);
         $this->view_data['agency'] = $agency;
     }
 

@@ -38,17 +38,21 @@
 |
 */
 
-$route['default_controller'] = "dashboard";
+$route['default_controller'] = "Dashboard_Controller";
 $route['404_override'] = '';
 
-$route['login'] = "auth/login";
-$route['logout'] = "auth/logout";
+$route['auth'] = 'Auth_Controller';
 
-$route['agency'] = 'dashboard';
+$route['login'] = "Auth_Controller/login";
+$route['logout'] = "Auth_Controller/logout";
+
+$route['settings'] = "Settings_Controller/offers";
+$route['settings/(:any)'] = "Settings_Controller/$1";
+
+$route['agency'] = 'Dashboard';
 $route['agency/(:num)'] = 'agency/view/$1';
 
 $route['formular/final/(:num)'] = 'formular/final_/$1';
-
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

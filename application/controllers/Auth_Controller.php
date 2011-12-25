@@ -1,8 +1,7 @@
 <?php
 
-class Auth extends MY_Controller
+class Auth_Controller extends MY_Controller
 {
-
     public function login()
     {
         if ($_POST) {
