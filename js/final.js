@@ -45,7 +45,7 @@ $(document).ready(function() {
         }).click();
 
     $('#edit-button').click(function() {
-        document.location = "formular/result/" + $('.vorgan_value').html();
+        document.location = "formular/result/" + $('#input[name=formular_id]').val();
         return false;
     });
 

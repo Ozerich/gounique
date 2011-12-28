@@ -122,7 +122,7 @@ $(document).ready(function() {
     $('#abreisedatum').val(old_val);
 
     $('#back-button').click(function(event) {
-        document.location = "formular/edit/" + $('#vorgan').val();
+        document.location = "formular/edit/" + $('input[name=formular_id]').val();
         return false;
     });
 

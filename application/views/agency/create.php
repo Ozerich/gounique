@@ -31,18 +31,14 @@
                 <input type="radio" name="a_sex" value="herr" checked/>Herr&nbsp;
                 <input type="radio" name="a_sex" value="frau"/>Frau
             </div>
-          
-            <div class="param">
-                <label for="const">Vorname</label>
-                <input type="text" name="a_contactperson"/>
-            </div>
-            <div class="param">
-                <label for="const">Nachname</label>
-                <input type="text" name="a_surname"/>
-            </div>
+
             <div class="param">
                 <label for="email">E-Mail Adresse</label>
                 <input type="text" name="a_email"/>
+            </div>
+            <div class="param">
+                <label for="contactperson">Contact person:</label>
+                <input type="text" name="a_person_name"/>
             </div>
             <div class="param">
                 <label for="phone">Telefon</label>
@@ -57,8 +53,8 @@
                 <input type="text" name="a_provision"/>
             </div>
             <div class="param">
-                <label for="comment">Comment</label>
-                <textarea name="a_comment"></textarea>
+                <label for="about">Comment</label>
+                <textarea name="a_about"></textarea>
             </div>
         </div>
         <div id="kunden-block">
@@ -69,15 +65,15 @@
             </div>
             <div class="param">
                 <label for="contactperson">Titel</label>
-                <input type="text" name="k_contactperson"/>
-            </div>
-            <div class="param">
-                <label for="name">Name</label>
                 <input type="text" name="k_name"/>
             </div>
             <div class="param">
+                <label for="name">Name</label>
+                <input type="text" name="k_person_name"/>
+            </div>
+            <div class="param">
                 <label for="surname">Vorname</label>
-                <input type="text" name="k_surname"/>
+                <input type="text" name="k_person_surname"/>
             </div>
             <div class="param">
                 <label for="address">Strasse, Hausnummer</label>
@@ -101,8 +97,8 @@
                 <input type="text" name="k_email"/>
             </div>
             <div class="param">
-                <label for="comment">Comment</label>
-                <textarea name="k_comment"></textarea>
+                <label for="about">Comment</label>
+                <textarea name="k_about"></textarea>
             </div>
         </div>
         <input type="hidden" name="type" value="agency"/>

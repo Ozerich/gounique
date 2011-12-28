@@ -16,7 +16,7 @@
                 <span class="header">Ansprechpartner</span>
 
                 <div class="agencyblock-content">
-                    <?=$agency->contactperson.' '.$agency->surname." - ".$agency->sex?><br/>
+                    <?=$agency->person_name.' '." - ".$agency->sex?><br/>
                     e-mail: <a href="mailto:<?=$agency->email?>"><?=$agency->email?></a><br/>
                     phone: <?=$agency->phone?><br/>
                     fax: <?=$agency->fax?><br/>
@@ -42,7 +42,7 @@
                 <span class="header">Ansprechpartner</span>
 
                 <div class="agencyblock-content">
-                    <?=$agency->name.' '.$agency->surname.' - '.$agency->sex.' ('.$agency->contactperson.')'?><br/>
+                    <?=$agency->person_name." ".$agency->person_surname.' - '.$agency->sex.' ('.$agency->name.')'?><br/>
                     e-mail: <a href="mailto:<?=$agency->email?>"><?=$agency->email?></a><br/>
                     phone: <?=$agency->phone?><br/>
                     fax: <?=$agency->fax?><br/>
@@ -51,11 +51,11 @@
             <br class="clear"/>
         </div>
         <? endif; ?>
-        <div class="comment block">
+        <div class="about block">
             <span class="header">Comment</span>
 
             <div class="agencyblock-content">
-                <pre><?=$agency->comment?></pre>
+                <pre><?=$agency->about?></pre>
             </div>
         </div>
         <div class="edit-button-wr">

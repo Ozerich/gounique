@@ -19,23 +19,26 @@ class Agency_Controller extends MY_Controller
                 array(
                      "type" => $this->input->post('type'),
                      "name" => $this->input->post($p.'name'),
-                     "datecreated" => mdate("%Y-%m-%d"),
-                     "surname" => $this->input->post($p.'surname'),
+                     "date_created" => mdate("%Y-%m-%d"),
+                     "person_name" => $this->input->post($p.'person_name'),
+                     "person_surname" => $this->input->post($p.'person_surname'),
                      "address" => $this->input->post($p.'address'),
                      "plz" => $this->input->post($p.'plz'),
                      "ort" => $this->input->post($p.'ort'),
                      "website" => $this->input->post($p.'website'),
-                     "sex" => $this->input->post($p.'sex'),
-                     "contactperson" => $this->input->post($p.'contactperson'),
+                     "sex" => $this->input->post($p.'sex') == "herr" ? "man" : "woman",
                      "email" => $this->input->post($p.'email'),
                      "phone" => $this->input->post($p.'phone'),
                      "fax" => $this->input->post($p.'fax'),
                      "provision" => $this->input->post($p.'provision'),
-                     "comment" => $this->input->post($p.'comment'),
+                     "about" => $this->input->post($p.'about'),
                 ));
+
             if($agency)
                 redirect('agency/'.$agency->id);
         }
+
+        $this->set_page_title("New agency");
     }
 
     public function view($id)
@@ -43,8 +46,10 @@ class Agency_Controller extends MY_Controller
         $agency = Agency::find_by_id($id);
         if($agency)
         {
-            $this->view_data['formulars'] = Formular_model::all(array('conditions' => array('k_num = ?', $id)));
+            $this->view_data['formulars'] = Formular::all(array('conditions' => array('k_num = ?', $id)));
             $this->view_data['agency'] = $agency;
+
+            $this->set_page_title("Agency: ".$agency->name);
         }
         else
             show_404();
@@ -60,18 +65,18 @@ class Agency_Controller extends MY_Controller
                 show_404();
 
             $agency->name = $this->input->post("name");
-            $agency->surname = $this->input->post("surname");
             $agency->address = $this->input->post("address");
             $agency->plz = $this->input->post("plz");
             $agency->ort = $this->input->post("ort");
             $agency->website = $this->input->post("website");
-            $agency->sex = $this->input->post("sex");
-            $agency->contactperson = $this->input->post("contactperson");
+            $agency->sex = $this->input->post("sex") == "herr" ? "man" : "woman";
+            $agency->person_name = $this->input->post("person_name");
+            $agency->person_surname = $this->input->post("person_surname");
             $agency->email = $this->input->post("email");
             $agency->phone = $this->input->post("phone");
             $agency->fax = $this->input->post("fax");
             $agency->provision = $this->input->post("provision");
-            $agency->comment = $this->input->post("comment");
+            $agency->about = $this->input->post("about");
 
             $agency->save();
 

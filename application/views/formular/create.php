@@ -1,11 +1,32 @@
-<div id="dashboard-page">
+<div id="dashboard-page" class="create-page">
     <? echo form_open("formular/create/" . $agency->id); ?>
-    <div class="page" id="page1">
-        <div class="input" id="vorgangsnummer-wr">
-            <label for="vorgangsnummer">Vorgangsnummer:</label>
-            <input type="text" noempty id="vorgangsnummer" value="<?=$formular_id?>" name="vorgangsnummer" size="10"/>
-            <span class="hiddentext" id="vorgangsnummer_hid"><?=$formular_id?></span>
+
+    <div class="formular-header" style="display:none">
+        <div class="type-view">
+            Type: <span id="formular-type-val"><?=$formular->type?></span>
+            <a href="#" id="change-type">Change</a>
         </div>
+        <span class="v-num">Vorgangsnummer: <span class="value" id="vnum-value"><?=$formular->v_num?></span></span>
+        <input type="hidden" value="" name="formular_vnum"/>
+    </div>
+
+    <div class="type-edit">
+        <div id="type-page" class="type-page">
+            <span>Choose formular type:</span>
+
+            <div id="type-radio">
+                <input type="radio" name="formular-type" id="type_1" value="pausschalreise"><label for="type_1">Pauschalreise</label>
+                <input type="radio" name="formular-type" id="type_2" value="bausteinreise"><label for="type_2">Bausteinreise</label>
+                <input type="radio" name="formular-type" id="type_3" value="nurflug"><label for="type_3">Nur flug</label>
+            </div>
+            <div id="new-vnum" style="display:none"><br/>Vorgangsnummer: <input type="text" class="vnum-input" value="<?=$formular->v_num?>"/></div>
+
+            <br/><button id="type-submit" class="btn btn-blue">Next</button>&nbsp;<span id="type-error"></span>
+        </div>
+    </div>
+
+
+    <div class="page" id="page1" style="display:none">
         <? if ($agency->type == 'agency'): ?>
         <div class="input" id="provision-wr">
             <label for="provision">Provision %:</label>
@@ -57,10 +78,10 @@
                 <div class="input" id="transfer-wr" style="display:none">
                     <label for="transfer">Transfer</label>
                     <select id="transfer" name="transfer">
-                        <option value="NO">KEIN TRANSFER</option>
-                        <option value="IN">TRANSFER IN</option>
-                        <option value="OUT">TRANSFER OUT</option>
-                        <option value="RT">TRANSFER RT</option>
+                        <option value="kein">KEIN TRANSFER</option>
+                        <option value="in">TRANSFER IN</option>
+                        <option value="out">TRANSFER OUT</option>
+                        <option value="rt">TRANSFER RT</option>
                     </select>
                 </div>
                 <div class="input" id="price-wr" style="display:none">
@@ -84,24 +105,24 @@
                 <div class="input" id="roomtype-wr">
                     <label for="roomtype">Room type</label>
                     <select name="roomtype" id="roomtype">
-                        <? foreach ($all_params['room_type'] as $type): ?>
-                        <option value=<?=$type?>><?=$type?></option>
+                        <? foreach (RoomType::all() as $type): ?>
+                        <option value=<?=$type->id?>><?=$type->value?></option>
                         <? endforeach; ?>
                     </select>
                 </div>
                 <div class="input" id="roomcapacity-wr">
                     <label for="roomcapacity">Capacity</label>
                     <select name="roomcapacity" id="roomcapacity">
-                        <? foreach ($all_params['room_capacity'] as $type): ?>
-                        <option value=<?=$type?>><?=$type?></option>
+                        <? foreach (RoomCapacity::all() as $type): ?>
+                        <option value=<?=$type->id?>><?=$type->value?></option>
                         <? endforeach; ?>
                     </select>
                 </div>
                 <div class="input" id="service-wr">
                     <label for="service">Service</label>
                     <select name="service" id="service">
-                        <? foreach ($all_params['room_service'] as $type): ?>
-                        <option value=<?=$type?>><?=$type?></option>
+                        <? foreach (HotelService::all() as $type): ?>
+                        <option value=<?=$type->id?>><?=$type->value?></option>
                         <? endforeach; ?>
                     </select>
                 </div>
@@ -118,10 +139,10 @@
                 <div class="input" id="transfer-wr">
                     <label for="transfer">Transfer</label>
                     <select id="transfer" name="transfer">
-                        <option value="NO">KEIN TRANSFER</option>
-                        <option value="IN">TRANSFER IN</option>
-                        <option value="OUT">TRANSFER OUT</option>
-                        <option value="RT">TRANSFER RT</option>
+                        <option value="kein">KEIN TRANSFER</option>
+                        <option value="in">TRANSFER IN</option>
+                        <option value="out">TRANSFER OUT</option>
+                        <option value="rt">TRANSFER RT</option>
                     </select>
                 </div>
                 <div class="input" id="price-wr">
@@ -140,22 +161,22 @@
 
             <div class="manuel-wr" style="display:none">
                 <div class="input" id="text-wr">
-                    <input type="text" size="100" name="text" id="text"/>
+                    <input type="text" size="100" name="manuel_text" id="text"/>
                 </div>
                 <div class="input" id="date-wr">
                     <span>Date</span><br/>
                     <label for="datestart">Von</label>
-                    <input type="text" name="manueldatestart" class="datestart" value="" size="10"/>
+                    <input type="text" name="manuel_datestart" class="datestart" value="" size="10"/>
                     <br class="clear"/>
                     <label for="dateend">Bis&nbsp;</label>
-                    <input type="text" name="manueldateend" class="dateend" value="" disabled size="10"/>
+                    <input type="text" name="manuel_dateend" class="dateend" value="" disabled size="10"/>
                     <br class="clear"/>
-                    Days Count <input type="text" name="manueldayscount" class="dayscount" disabled value="0"
+                    Days Count <input type="text" name="manuel_dayscount" class="dayscount" disabled value="0"
                                       size="3"/>
                 </div>
                 <div class="input" id="price-wr">
                     <label for="price">Price</label>
-                    <input id="price" size="4" name="manuelprice"/>&nbsp;EUR
+                    <input id="price" size="4" name="manuel_price"/>&nbsp;EUR
                 </div>
                 <br class="clear"/>
             </div>
@@ -181,5 +202,6 @@
         <button class="btn btn-small btn-blue" id="flug-button">Flug</button>
         <button class="btn btn-small btn-blue" id="fertig-button" name="submit">Fertig</button>
     </div>
+    <input type="hidden" name="agency_id" value="<?=$agency->id?>"/>
     </form>
 </div>

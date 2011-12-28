@@ -38,21 +38,31 @@
 |
 */
 
-$route['default_controller'] = "Dashboard_Controller";
+$route['default_controller'] = 'Dashboard_Controller';
 $route['404_override'] = '';
 
 $route['auth'] = 'Auth_Controller';
 
-$route['login'] = "Auth_Controller/login";
-$route['logout'] = "Auth_Controller/logout";
+$route['login'] = 'Auth_Controller/login';
+$route['logout'] = 'Auth_Controller/logout';
 
-$route['settings'] = "Settings_Controller/offers";
-$route['settings/(:any)'] = "Settings_Controller/$1";
+$route['settings'] = 'Settings_Controller';
+$route['settings'] = 'Settings_Controller/offers';
+$route['settings/(:any)'] = 'Settings_Controller/$1';
+
+$route['formular'] = 'Formular_Controller';
+$route['formular/final/(:num)'] = 'Formular_Controller/final_/$1';
+$route['formular/(:any)'] = 'Formular_Controller/$1';
+
+$route['dashboard'] = 'DashBoard_Controller';
+$route['dashboard/(:any)'] = 'DashBoard_Controller/$1';
+
 
 $route['agency'] = 'Dashboard';
-$route['agency/(:num)'] = 'agency/view/$1';
+$route['agency/(:num)'] = 'Agency_Controller/view/$1';
+$route['agency/(:any)'] = 'Agency_Controller/$1';
 
-$route['formular/final/(:num)'] = 'formular/final_/$1';
+
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

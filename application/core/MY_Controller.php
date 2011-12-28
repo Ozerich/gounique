@@ -51,6 +51,12 @@ class MY_Controller extends CI_Controller
     {
         $this->right_header = $plaintext;
     }
+
+
+    protected function set_page_title($title)
+    {
+        $this->view_data['page_title'] = $title;
+    }
 }
 
 ?>

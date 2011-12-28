@@ -1,12 +1,12 @@
 <div id="final-page">
-    <?=form_open("formular/sendmail/" . $formular->v_num); ?>
+    <?=form_open("formular/sendmail/" . $formular->v_num, array("formular_id" => $formular->id)); ?>
     <div class="page" id="resultpage">
         <div id="resultcontent">
             <div id="topinfo" class="block">
                 <div class="left-float">
                     <span class="param">Vorgangsnummer: </span><span class="value vorgan_value"><?=$formular->v_num?></span><br/>
                     <span class="param">Abreisedatum: </span><span
-                        class="value"><?=$formular->abreisedatum?></span><br/>
+                        class="value"><?=$formular->payment_date?></span><br/>
                 </div>
                 <div class="right-float">
                     <span class="param">Datum: </span><span class="value"><?=mdate("%d.%m.%Y", time());?></span><br/>
@@ -16,26 +16,26 @@
                 <br class="clear"/>
             </div>
             <div id="results">
-                <?if ($formular->hotel_list) {
-
-                foreach ($formular->hotel_list as $hotel)
-                {
-                    echo $hotel['date_start'] . " - " . $hotel['date_end'] . " " . $hotel['days_count'] . "N HOTEL: " . $hotel['name'] .
-                         " / " . $hotel['room_capacity'] . " / " . $hotel['room_type'] . " / " . $hotel['room_service'] . " / TRANSFER " .
-                         $hotel['transfer'] . " / " . $hotel['remark'] . " - &nbsp;<b>" . $hotel['price'] . "&euro;</b><br/>";
-                }
-            }
+                <?
+                if ($hotels)
+                    foreach ($hotels as $hotel)
+                    {
+                        echo $hotel->date_start . " - " . $hotel->date_end . " " . $hotel->days_count . "N HOTEL: " .
+                            $hotel->hotel_name . " / " . RoomCapacity::find_by_id($hotel->roomcapacity_id)->value . " / " .
+                            RoomType::find_by_id($hotel->roomtype_id)->value . " / " . HotelService::find_by_id($hotel->hotelservice_id)->value .
+                            " / TRANSFER " . strtoupper($hotel->transfer) . " / " . $hotel->remark . " - &nbsp;<b>" . $hotel->price . "&euro;</b><br/>";
+                    }
                 if (!empty($manuels))
                     foreach ($manuels as $manuel)
-                        echo $manuel['date_start'] . " - " . $manuel['date_end'] . " " . $manuel['text'] . " - &nbsp;<b>" . $manuel['price'] . "&euro;</b><br/>";
+                        echo $manuel->date_start . " - " . $manuel->date_end . " " . $manuel->text . " - &nbsp;<b>" . $manuel->price . "&euro;</b><br/>";
                 ?>
             </div>
         </div>
-        <? if ($formular->flight_plan != ""): ?>
+        <? if ($formular->flight_text != ""): ?>
         <div id="flightplan-wr">
             <span class="number">2</span>
             <span>Flightplan</span>&nbsp;<b><?=$formular->flight_price?>&euro;</b><br/><br/>
-            <pre class="flightplan"><?=$formular->flight_plan?></pre>
+            <pre class="flightplan"><?=$formular->flight_text?></pre>
         </div>
         <? endif; ?>
         <div id="priceresult">
@@ -60,8 +60,10 @@
         </div>
         <div id="persons-wr">
             <h3>Persons:</h3>
-            <? if($formular->person_list) foreach ($formular->person_list as $ind => $person)
-            echo ($ind + 1) . " - " . $person['name'] . " (" . $person['sex'] . ")<br/>";
+            <? $persons = FormularPerson::find('all', array('conditions' => array('formular_id = ?', $formular->id)));
+             if($persons)
+                 foreach ($persons as $ind => $person)
+            echo ($ind + 1) . " - " . $person->person_name . " (" . FormularPerson::$sex_map[$person->sex] . ")<br/>";
             ?>
             <br/><br/>
         </div>
@@ -121,6 +123,7 @@
         <button class="btn btn-small btn-blue" id="druck-button">Druck</button>
         <button class="btn btn-small btn-blue" id="close-button" name="submit">Send & Close</button>
     </div>
+
 </div>
 </form>
 
