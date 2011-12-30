@@ -1,129 +1,152 @@
 <div id="final-page">
-    <?= form_open("formular/sendmail/" . $formular->id, null, array("formular_id" => $formular->id))
+    <?=
+    form_open("formular/sendmail/" . $formular->id, null, array("formular_id" => $formular->id))
     ; ?>
+    <div class="info-block">
 
-<div class="page" id="resultpage">
-    <div id="resultcontent">
-        <div id="topinfo" class="block">
-            <div class="left-float">
-                <span class="param">Vorgangsnummer: </span><span
-                class="value vorgan_value"><?=$formular->v_num?></span><br/>
-                <? if ($formular->r_num): ?>
-                <span class="param">Rechnungsnummer: </span><span class="value"><?=$formular->r_num?></span><br/>
-                <? endif ?>
-                <span class="param">Abreisedatum: </span><span
-                class="value"><?=$formular->payment_date->format('d.m.Y')?></span><br/>
-            </div>
-            <div class="right-float">
-                <span class="param">Datum: </span><span class="value"><?=mdate("%d.%m.%Y", time());?></span><br/>
-                <span class="param">Sachbearbeiter: </span><span
-                class="value"><?=$user->name . " " . $user->surname?></span><br/>
-            </div>
-            <br class="clear"/>
+        <div class="left-info">
+            <span class="param">Vorgangsnummer: </span><span
+            class="value vorgan_value"><?=$formular->v_num?></span><br/>
+            <span class="param">Rechnungsnummer: </span><span
+            class="value"><?=($formular->r_num) ? $formular->r_num : "none";?></span><br/>
+            <span class="param">Abreisedatum: </span><span
+            class="value"><?=$formular->payment_date->format('d.m.Y')?></span><br/>
         </div>
-        <div id="results">
-            <?
-            if ($hotels)
-                foreach ($hotels as $hotel)
-                {
-                    echo $hotel->date_start->format('d.m.Y') . " - " . $hotel->date_end->format('d.m.Y') . " " . $hotel->days_count . "N HOTEL: " .
-                        $hotel->hotel_name . " / " . RoomCapacity::find_by_id($hotel->roomcapacity_id)->value . " / " .
-                        RoomType::find_by_id($hotel->roomtype_id)->value . " / " . HotelService::find_by_id($hotel->hotelservice_id)->value .
-                        " / TRANSFER " . strtoupper($hotel->transfer) . " / " . $hotel->remark . " - &nbsp;<b>" . $hotel->price . "&euro;</b><br/>";
-                }
-            if (!empty($manuels))
-                foreach ($manuels as $manuel)
-                    echo $manuel->date_start->format('d.m.Y') . " - " . $manuel->date_end->format('d.m.Y') . " " . $manuel->text . " - &nbsp;<b>" . $manuel->price . "&euro;</b><br/>";
-            ?>
+
+        <div class="right-info">
+            <span class="param">Datum: </span><span class="value"><?=mdate("%d.%m.%Y", time());?></span><br/>
+            <span class="param">Sachbearbeiter: </span><span
+            class="value"><?=$user->name . " " . $user->surname?></span><br/>
         </div>
-    </div>
-    <? if ($formular->flight_text != ""): ?>
-    <div id="flightplan-wr">
-        <span class="number">2</span>
-        <span>Flightplan</span>&nbsp;<b><?=$formular->flight_price?>&euro;</b><br/><br/>
-        <pre class="flightplan"><?=$formular->flight_text?></pre>
-    </div>
-    <? endif; ?>
-    <div id="priceresult">
-        <input type="hidden" name="priceperson"/>
-        <span class="price_title">Preis p.P brutto:</span><span
-        id="oneprice"><?=$price['person']?></span> &euro;<br/>
-        <span class="price_title">Gesamtpreis brutto:</span><span
-        id="gesamtpreis"><?=$price['brutto']?></span> &euro;<br/>
-        <span class="price_title">Provision:</span><span
-        id="provision"><?=$price['provision']?></span> &euro;<br/>
-        <span class="price_title">19 % Mwst:</span><span
-        id="percent"><?=$price['percent']?></span> &euro;<br/><br/>
-        <span class="price_title">Gesamtpreis netto:</span><span
-        id="netto"><?=$price['netto']?></span> &euro;<br/>
-    </div>
-    <br class="clear"/>
 
-    <div class="comment-wr">
-        <h3>Comment</h3>
-
-        <p><?=$formular->comment?></p>
-    </div>
-    <div id="persons-wr">
-        <h3>Persons:</h3>
-        <? $persons = FormularPerson::find('all', array('conditions' => array('formular_id = ?', $formular->id)));
-        if ($persons)
-            foreach ($persons as $ind => $person)
-                echo ($ind + 1) . " - " . $person->person_name . " (" . FormularPerson::$sex_map[$person->sex] . ")<br/>";
-        ?>
-        <br/><br/>
-    </div>
-
-    <div id="address-wr">
-        <h3><? echo $formular->type == 'person' ? "Kundenadresse" : "Agenturadresse"?></h3>
-
-        <p>
-            <?
-            echo ($formular->agency->type == 'agency')
-                ? $formular->agency->name . "<br />" . $formular->agency->address . "<br/>" . $formular->agency->plz .
-                    " " . $formular->agency->ort :
-                $formular->agency->address . "<br/>" . $formular->agency->plz . " " . $formular->agency->ort;
-            ?>
-        </p>
-    </div>
-    <div id="anzahlung-wr">
-
-    </div>
-
-    <? if (!$formular->canceled): ?>
-    <div id="stage-wr">
-        <label for="stage" class="stage-header">Stage</label>
-
-        <div id="stage">
-            <input type="radio" id="radio1" name="stage"
-                   value="1" <?if ($formular->r_num == 0) echo 'checked';?>/><label for="radio1">Angebot</label>
-            <input type="radio" id="radio2" name="stage"
-                   value="2"/><label for="radio2">Angebot
-            (Kundenkopie)</label>
-            <? if ($formular->r_num): ?>
-            <input type="radio" id="radio3" name="stage" value="3" <?if ($formular->r_num) echo 'checked';?>/><label
-                for="radio3">Rechnung</label>
-            <input type="radio" id="radio4" name="stage" value="4"/><label for="radio4">Rechnung
-                (Kundenkopie)</label>
-            <? endif; ?>
-        </div>
-        <? if ($formular->r_num == 0): ?>
-        <button class="btn btn-small btn-blue" id="makerechnung-button">Make Rechnung</button>
-        <? else: ?>
-        <button class="btn btn-small btn-red" id="makestoreno-button">Storno</button>
-        <? endif; ?>
         <br class="clear"/>
     </div>
 
-    <div class="mail-wr">
+    <div class="persons-block">
+        <h3 class="block-header">Reiseteilnehmer:</h3>
+
+        <?if ($formular->persons)
+        foreach ($formular->persons as $ind => $person):?>
+            <div class="person-item">
+                <span class="num"><?=($ind + 1);?></span>
+                <span class="sex"><?=FormularPerson::$sex_map[$person->sex];?></span>
+                <span class="name"><?=$person->person_name;?>
+            </div>
+            <? endforeach; ?>
+    </div>
+
+    <div class="item-list">
+        <h3 class="block-header">Leistung:</h3>
+
+        <span class="header">Hotels:</span>
+
+        <? foreach ($formular->hotels as $ind => $hotel): ?>
+        <div class="item">
+            <span class="num"><?=($ind + 1)?></span>
+            <span class="text"><?=$hotel->plain_text; ?></span>
+        </div>
+        <? endforeach; ?>
+
+        <hr/>
+
+        <span class="header">Manuels:</span>
+
+        <? foreach ($formular->manuels as $ind => $manuel): ?>
+        <div class="item">
+            <span class="num"><?=($ind + 1)?></span>
+            <span class="text"><?=$manuel->plain_text; ?></span>
+        </div>
+        <? endforeach; ?>
+    </div>
+
+    <div class="flight-block">
+        <h3 class="block-header">Flugplan: <span class="flight-price"><?=$formular->flight_price?> &euro;</span></h3>
+
+        <p>
+        <pre><?=$formular->flight_text?></pre>
+        </p>
+    </div>
+
+    <div class="bottom-block">
+        <div class="left">
+            <div class="comment-block">
+                <h3 class="block-header">Comment:</h3>
+
+                <p><?=$formular->comment;?></p>
+            </div>
+
+
+            <div class="address-block">
+                <h3 class="block-header"><?=$formular->type == 'person' ? "Kundenadresse" : 'Agenturadresse'?></h3>
+
+                <p><?=$formular->agency->plain_text;?></p>
+            </div>
+
+            <div class="anzahlung-block">
+                <p>Anzahlung sofort nach Erhalt de Rechnung: <?=$formular->price['anzahlung_value']?> &euro;</p>
+                <p>Restzahlung fallig am: <?=$formular->payment_date->format('d-M-y')?>&nbsp;&nbsp;<?=($formular->price['brutto'] - $formular->price['anzahlung_value'])?> &euro;</p>
+            </div>
+        </div>
+
+        <table class="price-table">
+            <tr>
+                <td class="param">Preis Brutto/p.Person</td>
+                <td><?=$formular->price['person']?></td>
+            </tr>
+            <tr class="underline up">
+                <td class="param">Gesamtpreis</td>
+                <td><?=$formular->price['brutto']?></td>
+            </tr>
+            <? if($formular->agency->type == 'agency'): ?>
+            <tr>
+                <td class="param">Provision <?=$formular->provision?>%</td>
+                <td><?=$formular->price['provision']?></td>
+            </tr>
+            <tr>
+                <td class="param">MWST auf Prov 19%</td>
+                <td><?=$formular->price['mwst']?></td>
+            </tr>
+            <tr>
+                <td class="param">Total Provision:</td>
+                <td><?=$formular->price['total_provision']?></td>
+            </tr>
+            <tr class="empty">
+                <td class="param">&nbsp;</td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr class="up">
+                <td class="param">Endpreise Netto</td>
+                <td><?=$formular->price['netto']?></td>
+            </tr>
+            <? endif; ?>
+        </table>
+        <br class="clear"/>
+    </div>
+
+
+    <? if (!$formular->canceled): ?>
+    <div id="stage">
+        <input type="radio" id="radio1" name="stage"
+               value="1" <?if ($formular->r_num == 0) echo 'checked';?>/><label for="radio1">Angebot</label>
+        <input type="radio" id="radio2" name="stage"
+               value="2"/><label for="radio2">Angebot
+        (Kundenkopie)</label>
+        <? if ($formular->r_num): ?>
+        <input type="radio" id="radio3" name="stage" value="3" checked/><label
+            for="radio3">Rechnung</label>
+        <input type="radio" id="radio4" name="stage" value="4"/><label for="radio4">Rechnung
+            (Kundenkopie)</label>
+        <? endif; ?>
+    </div>
+
+    <div class="mail-block">
         <div class="mail" style="display:none">
             <span>Mail</span>
             <input type="text" size="30" class="email"/>
             <span class="good" style="display:none;">OK</span>
         </div>
+    </div>
 
-    </div>
-    </div>
 
     <div id="final-buttons">
         <? if ($formular->r_num == 0): ?>
@@ -132,12 +155,20 @@
         <button class="btn btn-small btn-blue" id="addmail-button">Add mail</button>
         <button class="btn btn-small btn-blue" id="druck-button">Druck</button>
         <button class="btn btn-small btn-blue" id="sendclose-button" name="submit">Send & Close</button>
+        <? if ($formular->r_num == 0): ?>
+        <button class="btn btn-small btn-blue" id="makerechnung-button">Make Rechnung</button>
+        <? else: ?>
+        <button class="btn btn-small btn-red" id="makestoreno-button">Storno</button>
+        <? endif; ?>
     </div>
+
     <? else: ?>
     <div id="final-buttons">
-        <a href="agency/<?=$formular->agency_id?>" class="btn btn-small btn-blue" id="close-button" name="submit">Close</a>
+        <a href="agency/<?=$formular->agency_id?>" class="btn btn-small btn-blue" id="close-button"
+           name="submit">Close</a>
     </div>
     <? endif; ?>
+
     </form>
 
 </div>

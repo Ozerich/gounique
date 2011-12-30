@@ -6,7 +6,7 @@ require_once APPPATH . "libraries/MPDF/mpdf.php";
 class Formular_Controller extends MY_Controller
 {
 
-    private function write_to_pdf($v_num, $type)
+    private function write_to_pdf($formular_id, $type)
     {
         $pdf = new mPDF('utf-8', 'A4', '8', '', 4, 4, 25, 25, 0, 0);
         $pdf->SetImportUse();
@@ -25,8 +25,7 @@ class Formular_Controller extends MY_Controller
         elseif ($type == 4)
             $view = "rechnungK";
 
-        $this->view_data['formular'] = Formular::first(array("conditions" => array("v_num = ?", $v_num)));
-        $this->fill_price($this->view_data['formular']);
+        $this->view_data['formular'] = Formular::find_by_id($formular_id);
 
         $html = $this->load->view("pdf_reports/" . $view, $this->view_data, TRUE);
 
@@ -35,7 +34,7 @@ class Formular_Controller extends MY_Controller
         $pdf->list_indent_first_level = 0;
         $pdf->WriteHTML($html, 2);
 
-        $pdf->Output("pdf/" . $v_num . "_" . $type . '.pdf', 'F');
+        $pdf->Output("pdf/" . $formular_id . "_" . $type . '.pdf', 'F');
     }
 
 
@@ -59,7 +58,8 @@ class Formular_Controller extends MY_Controller
         } while (Formular::find_by_v_num($val));
 
         echo $val;
-        exit();    }
+        exit();
+    }
 
     public function create($agency_id = 0)
     {
@@ -396,37 +396,6 @@ class Formular_Controller extends MY_Controller
         }
     }
 
-    private function fill_price($formular)
-    {
-        $hotel_price = $manuel_price = 0;
-        $hotels = FormularHotel::find('all', array('conditions' => array('formular_id = ?', $formular->id)));
-
-        foreach ($hotels as $hotel)
-        {
-            if ($hotel->hotel_id != 0)
-                $hotel_price += $hotel->price;
-            else
-                $manuel_price += $hotel->price;
-        }
-
-
-        $price = $hotel_price;
-        $price += $formular->flight_price;
-        $price = $price * $formular->person_count;
-
-
-        $price_data = array();
-
-        $price_data['brutto'] = $price + $manuel_price;
-        $price_data['person'] = $formular->person_count == 0 ? 0 : $price_data['brutto'] / $formular->person_count;
-        $price_data['netto'] = round($price_data['brutto'] / 1.19, 2);
-        $price_data['provision'] = round($price_data['brutto'] * $formular->provision / 100, 2);
-        $price_data['percent'] = round($price_data['provision'] / 1.19 * 0.19, 2);
-        $price_data['anzahlung'] = $formular->prepayment;
-        $price_data['anzahlung_value'] = round($price_data['brutto'] / 100 * $formular->prepayment);
-
-        $this->view_data['price'] = $price_data;
-    }
 
 
     public function result($id = 0)
@@ -476,13 +445,7 @@ class Formular_Controller extends MY_Controller
 
             redirect('formular/final/' . $formular->id);
         }
-        else
-        {
-            $this->fill_price($formular);
 
-            $this->view_data['hotels'] = FormularHotel::find('all', array('conditions' => array('formular_id = ?', $formular->id)));
-            $this->view_data['manuels'] = FormularManuel::find('all', array('conditions' => array('formular_id = ?', $formular->id)));
-        }
     }
 
     public function final_($id)
@@ -498,12 +461,6 @@ class Formular_Controller extends MY_Controller
         $this->view_data['JS_files'][] = "js/final.js";
 
         $this->view_data['formular'] = $formular;
-
-
-        $this->fill_price($formular);
-        $this->view_data['hotels'] = FormularHotel::find('all', array('conditions' => array('formular_id = ?', $formular->id)));
-        $this->view_data['manuels'] = FormularManuel::find('all', array('conditions' => array('formular_id = ?', $formular->id)));
-
 
         // if ($formular->stage == 2)
         //   $this->set_right_header('Rechnungnummer: ' . $formular->r_num);
@@ -539,14 +496,12 @@ class Formular_Controller extends MY_Controller
     {
         $formular = Formular::find_by_id($id);
 
-        if(!$formular)
-        {
+        if (!$formular) {
             show_404();
             return false;
         }
 
-        if($_POST)
-        {
+        if ($_POST) {
             $formular->canceled = 1;
 
             $this->load->library('session');
@@ -563,7 +518,7 @@ class Formular_Controller extends MY_Controller
 
             $formular->save();
 
-            redirect("formular/final/".$formular->id);
+            redirect("formular/final/" . $formular->id);
         }
 
         $this->view_data['formular'] = $formular;

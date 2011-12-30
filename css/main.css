@@ -1,23 +1,22 @@
-*{
+* {
     margin: 0;
 }
 
-body, html{
+body, html {
     height: 100%;
 }
 
-#wrapper{
+#wrapper {
     margin: 0 auto;
 }
 
-.content-wr{
+.content-wr {
     width: 900px;
     margin: 0 auto;
 }
 
-
 /* --------------------------------------------------------------
-  Footer
+ Footer
 -------------------------------------------------------------- */
 #footer {
     background: #333;
@@ -25,7 +24,9 @@ body, html{
     height: 4em;
 }
 
-#footer p{padding-top: 15px;}
+#footer p {
+    padding-top: 15px;
+}
 
 *+html #footer {
     float: left;
@@ -41,7 +42,7 @@ body, html{
     color: #FFF;
 }
 
-#footer .author-link{
+#footer .author-link {
     text-decoration: none;
     font-weight: bold;
 }
@@ -85,13 +86,9 @@ body, html{
 
 .content {
     width: 900px;
-    margin: 0 auto;
-    padding: 10px;
     padding-bottom: 30px;
+    margin: 0 auto;
 }
-
-.left-float{float:left;display: block;}
-.right-float{float:right;display: block;}
 
 .bold {
     font-weight: bold;
@@ -166,22 +163,18 @@ input:focus {
     padding: 5px 10px;
     margin-bottom: 10px;
 }
-#resultpage #topinfo .param{
+
+#resultpage #topinfo .param {
     font-weight: bold;
 }
 
 #resultpage .block {
-        border: 1px solid black;
+    border: 1px solid black;
 }
 
 #resultpage #results {
     margin-bottom: 10px;
     margin-top: -14px;
-}
-
-#resultpage .mail-wr {
-    margin-top: 20px;
-    margin-bottom: 20px;
 }
 
 #resultpage .price_title {
@@ -199,25 +192,7 @@ input:focus {
     margin-bottom: 10px;
 }
 
-#stage-wr {
-    margin-top: 10px;
-}
-
-#stage {
-  
-    float: left;
-}
-
-#stage-wr button {
-    float: right;
-}
-
-#stage-wr label.stage-header {
-    float: left;
-    width: 100%;
-}
-
-.manuel-wr, .hotel-wr {
+.manuel-wr, .hotel-wr, .manuelhotel-wr {
     margin-top: 20px;
     padding-top: 20px;
     border-top: 1px solid black;
@@ -248,10 +223,12 @@ input:focus {
 .add-button-wr button {
     float: right;
 }
-.agency-list a.btn-small{
+
+.agency-list a.btn-small {
     height: 18px;
     line-height: 18px;
 }
+
 .agency-list td {
     padding: 5px 0;
 }
@@ -391,4 +368,128 @@ input:focus {
 .agency-item .edit-button-wr {
     float: right;
     margin: 10px 2px 20px;
+}
+
+/* NEW STYLES!!! */
+
+#final-page .info-block {
+    border: 1px solid black;
+    margin-bottom: 15px;
+    padding: 4px;
+}
+
+#final-page .info-block .left-info {
+    float: left;
+    width: 50%;
+}
+
+#final-page .info-block .right-info {
+    float: right;
+    width: 50%;
+    text-align: left;
+}
+
+#final-page .info-block .param {
+    display: inline-block;
+    width: 125px;
+    font-weight: bold;
+}
+
+#final-page h3.block-header {
+    margin-bottom: 8px;
+}
+
+#final-page .persons-block .sex {
+    text-transform: uppercase;
+    width: 40px;
+    display: inline-block;
+    padding-left: 5px;
+}
+
+#final-page .item-list {
+    margin-top: 15px;
+}
+
+#final-page .item-list span.header {
+    color: #444444;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+#final-page .item-list hr {
+    margin: 5px 0;
+}
+
+#final-page .flight-block {
+    margin-top: 15px;
+}
+
+#final-page .bottom-block {
+    margin-top: 25px;
+    border-top: 1px solid black;
+    padding-top: 15px;
+}
+
+#final-page .bottom-block .price-table {
+    display: block;
+    float: right;
+    border: 1px solid black;
+}
+
+#final-page .bottom-block .price-table tr{
+    height: 15px;
+}
+
+#final-page .bottom-block .price-table td {
+    width: 75px;
+    text-align: right;
+    padding: 1px 3px;
+    font-size: 13px;
+}
+
+#final-page .bottom-block .price-table td.param{
+    border-right: 1px solid black;
+    width: 150px;
+}
+
+#final-page .bottom-block .price-table tr.underline{
+    border-bottom: 1px solid black;
+}
+
+#final-page .bottom-block .price-table tr.up td{
+    font-weight: bold;
+    font-size: 15px;
+}
+
+#final-page .bottom-block .price-table tr.empty td{
+    border-bottom: 1px solid black;
+}
+
+#final-page .bottom-block .left{
+    float: left;
+}
+
+#final-page .bottom-block .comment-block{
+    width: 600px;
+}
+
+#final-page .bottom-block .address-block{
+    width: 600px;
+    margin-top: 15px;
+}
+
+#final-page #stage{
+    margin-top: 15px;
+}
+
+#final-page .mail-block{
+    margin-top: 15px;
+}
+
+#final-page #final-buttons{
+    margin-top: 15px;
+}
+
+#final-page .anzahlung-block{
+    margin-top: 15px;
 }
