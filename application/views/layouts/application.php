@@ -83,7 +83,7 @@
 </div>
 <div id="footer">
     <div class="content_pad">
-        <p>&copy; 2010-12 Copyright <a href="#">goUnique</a>. Powered by <a class="author-link"
+        <p>&copy; 2010 - 2012 Copyright <a href="#">goUnique</a>. Powered by <a class="author-link"
                                                                             href="mailto:ozicoder@gmail.com">Vital
             Ozierski</a>.</p>
     </div>

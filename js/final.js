@@ -21,7 +21,7 @@ $(document).ready(function() {
 
     $('#addmail-button').click(
         function(event) {
-            $('.mail:first').clone().appendTo('.mail-wr').show();
+            $('.mail:first').clone().appendTo('.mail-block').show();
             $('.mail:last span:first').html("Mail " + ($('.mail').size() - 1));
             $('.mail:last input').attr("name", "email[" + ($('.mail').size() - 1) + "]");
             $('.mail:last input').focus();
@@ -50,16 +50,8 @@ $(document).ready(function() {
     });
 
     $('#druck-button').click(function() {
-        window.location = "pdf/" + $('.vorgan_value').html() + "_" + $("#stage input:checked").val() + ".pdf";
+        window.location = "pdf/" + $('input[name=formular_id]').val() + "_" + $("#stage input:checked").val() + ".pdf";
         return false;
-    });
-
-    $('#stage input').change(function() {
-        $.ajax({
-            url: "ajax.php?mode=stage",
-            type: "post",
-            data: "vorgan=" + $('.vorgan_value').html() + "&stage=" + $('#stage input:checked').val()
-        });
     });
 
     $('#makerechnung-button').click(function(){

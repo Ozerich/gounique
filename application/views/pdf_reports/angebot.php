@@ -3,18 +3,7 @@
         <br/><br/><br/><br/><br/><br/><br/><br/>
 
         <div class="address">
-            <?
-            if ($formular->agency->type == "agency")
-                echo $formular->agency->contactperson . ' ' . $formular->agency->surname . ' - ' . $formular->agency->sex . '<br/>' .
-                     'e-mail: <a href="mailto:' . $formular->agency->email . '">' . $formular->agency->email . '</a><br/>' .
-                     'phone: ' . $formular->agency->phone . '<br/>' .
-                     'fax: ' . $formular->agency->fax . '<br/>' .
-                     'www: <a href="' . $formular->agency->website . '">' . $formular->agency->website . '</a><br/>';
-            else echo $formular->agency->name . ' ' . $formular->agency->surname . ' - ' . $formular->agency->sex . ' (' . $formular->agency->contactperson . ')<br/>' .
-                      'e-mail: <a href="mailto:' . $formular->agency->email . '">' . $formular->agency->email . '</a><br/>' .
-                      'phone: ' . $formular->agency->phone . '<br/>' .
-                      'fax: ' . $formular->agency->fax . '<br/>';
-            ?>
+            <?=$formular->agency->plain_text?>
         </div>
     </div>
     <div id="content">
@@ -22,25 +11,25 @@
 
         <div class="vorgansnummer-wr">
             <div class="left">
-                <div class="header">Vorgangsnummer <?=$formular->v_num?></div>
+                <div class="header">Vorgangsnummer: <?=$formular->v_num?></div>
                 <br/>
 
-                <div class="nummer"><strong>Abreisedatum: <?=$formular->abreisedatum?></strong></div>
+                <div class="nummer"><strong>Abreisedatum: <?=$formular->payment_date->format('d.m.Y')?></strong></div>
             </div>
             <div class="right">
                 <div>Datum: <?=mdate("%d.%m.%Y", time());?></div>
-                <div>Sachbearbeiter: <?=$user->name." ".$user->surname?></div>
+                <div>Sachbearbeiter:<?=$user->name . " " . $user->surname?></div>
             </div>
         </div>
         <div class="mainblock">
             <div class="persons">
                 <span class="header">Reiseteilnehmer:</span>
-                <? foreach ($formular->person_list as $ind => $person): ?>
+                <? foreach ($formular->persons as $ind => $person): ?>
                 <div class="person">
                     <div class="num"><?=($ind + 1)?></div>
-                    <? if ($person['name'] != ""): ?>
-                    <div class="sex"><?=$person['sex']?></div>
-                    <div class="name"><?=$person['name']?></div>
+                    <? if ($person->person_name != ""): ?>
+                    <div class="sex"><?=FormularPerson::$sex_map[$person->sex]?></div>
+                    <div class="name"><?=$person->person_name?></div>
                     <? endif; ?>
                 </div>
                 <? endforeach; ?>
@@ -48,36 +37,33 @@
             </div>
             <div class="tours">
                 <span class="header">Leistung:</span>
-                <? foreach ($formular->hotel_list as $ind => $hotel): ?>
+                <? foreach ($formular->hotels as $ind => $hotel): ?>
                 <div class="tour">
-                    <div class="date"> <?=$hotel['date_start']?> - <?=$hotel['date_end']?></div>
-                    <div class="content">  <?=$hotel['days_count']?>tN HOTEL: <?=$hotel['name']?> /
-                        <?=$hotel['room_capacity']?> / <?=$hotel['room_type']?> / <?=$hotel['room_service']?> /
-                        TRANSFER <?=$hotel['transfer']?> / <?=$hotel['comment']?>
-                    </div>
+                    <div class="date"> <?=$hotel->date_start->format('d.m.Y')?> - <?=$hotel->date_end->format('d.m.Y')?></div>
+                    <div class="content"><?=$hotel->pdf_text;?></div>
                 </div>
                 <? endforeach; ?>
-                <? foreach ($formular->manuel_list as $ind => $manuel): ?>
+                <? foreach ($formular->manuels as $ind => $manuel): ?>
                 <div class="tour">
-                    <div class="date"> <?=$manuel['date_start']?> - <?=$manuel['date_end']?></div>
-                    <div class="content"><?=$manuel['text']?></div>
+                    <div class="date"> <?=$manuel->date_start->format('d.m.Y')?> - <?=$manuel->date_end->format('d.m.Y')?></div>
+                    <div class="content"><?=$manuel->pdf_text?></div>
                 </div>
                 <? endforeach; ?>
             </div>
-            <? if ($formular->flight_plan != ""): ?>
+            <? if ($formular->flight_text != ""): ?>
             <div class="flugplan">
                 <span class="header">Flugplan:</span>
 
                 <div class="content">
-                    <pre><?=$formular->flight_plan?></pre>
+                    <pre><?=$formular->flight_text?></pre>
                 </div>
             </div>
             <? endif; ?>
         </div>
         <div class="undertable">
-            <?if ($formular->anzahlung != 0): ?>
-            <?=$price['anzahlung'];?>% Anzahlung (<?=$price['anzahlung_value']?> &euro;) nach Erhalt der Rechnung.
-            <?if ($price['anzahlung'] != 100) echo 'Restzahlung bis $zahlungsdatum (' . $price['brutto'] . ' - ' . $price['anzahlung_value'] . '&euro;)';?>
+            <?if ($formular->prepayment): ?>
+            <?=$formular->price['anzahlung']?>% Anzahlung (<?=$formular->price['anzahlung_value']?> &euro;) nach Erhalt der Rechnung.
+            <?if ($formular->price['anzahlung'] != 100) echo 'Restzahlung bis $zahlungsdatum (' . $formular->price['brutto'] . ' - ' . $formular->price['anzahlung_value'] . '&euro;)';?>
             <? endif; ?>
         </div>
         <div class="commentblock">
@@ -86,13 +72,13 @@
             </pre>
         </div>
         <div class="priceblock">
-            <div class="price-item">Preis p.P. brutto: <?=$price['person']?> &euro;</div>
-            <div class="price-item">Gesamtpreis brutto: <?=$price['brutto']?> &euro;</div>
+            <div class="price-item">Preis p.P. brutto: <?=$formular->price['person']?> &euro;</div>
+            <div class="price-item">Gesamtpreis brutto: <?=$formular->price['brutto']?> &euro;</div>
             <? if ($formular->agency->type == 'agency'): ?>
-            <div class="price-item">$provision % Provision: <?=$price['provision']?> &euro;</div>
-            <div class="price-item">19 % Mwst: <?=$price['percent']?> &euro;</div>
+            <div class="price-item"><?=$formular->provision?> % Provision: <?=$formular->price['provision']?> &euro;</div>
+            <div class="price-item">19 % Mwst: <?=$formular->price['mwst']?> &euro;</div>
             <? endif; ?>
-            <div class="price-item"><b>Gesamtpreis netto: <?=$price['netto']?> &euro;</b></div>
+            <div class="price-item"><b>Gesamtpreis netto: <?=$formular->price['netto']?> &euro;</b></div>
         </div>
         <div class="bottomblock">
             <div class="signature">

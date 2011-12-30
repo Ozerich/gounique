@@ -2,11 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1eff6da6-54e6-4b19-a410-f3c1d995c642" name="Default" comment="Final page and pdf correct now">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/application/models/FormularStatusLog.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/application/views/formular/status.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/controllers/Formular_Controller.php" afterPath="$PROJECT_DIR$/application/controllers/Formular_Controller.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/models/Agency.php" afterPath="$PROJECT_DIR$/application/models/Agency.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/models/Formular.php" afterPath="$PROJECT_DIR$/application/models/Formular.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/models/FormularHotel.php" afterPath="$PROJECT_DIR$/application/models/FormularHotel.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/models/FormularManuel.php" afterPath="$PROJECT_DIR$/application/models/FormularManuel.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/formular/edit.php" afterPath="$PROJECT_DIR$/application/views/formular/edit.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/formular/final.php" afterPath="$PROJECT_DIR$/application/views/formular/final.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/layouts/application.php" afterPath="$PROJECT_DIR$/application/views/layouts/application.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/pdf_reports/angebot.php" afterPath="$PROJECT_DIR$/application/views/pdf_reports/angebot.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/css/main.css" afterPath="$PROJECT_DIR$/css/main.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/final.js" afterPath="$PROJECT_DIR$/js/final.js" />
     </list>
     <list id="a972c9e9-6531-4e31-85fd-40e9f3562a82" name="Failed commit: Default" comment="Email work now and other fixes" />
     <ignored path="gounique.iws" />
@@ -32,7 +39,7 @@
       <file leaf-file-name="final.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/views/formular/final.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="34" selection-start="34" selection-end="34" vertical-scroll-proportion="78.76923">
+            <state line="15" column="78" selection-start="877" selection-end="877" vertical-scroll-proportion="97.73077">
               <folding />
             </state>
           </provider>
@@ -50,7 +57,7 @@
       <file leaf-file-name="FormularHotel.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/models/FormularHotel.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="46" column="0" selection-start="1457" selection-end="1457" vertical-scroll-proportion="0.0">
+            <state line="71" column="0" selection-start="2625" selection-end="2625" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -68,8 +75,11 @@
       <file leaf-file-name="Formular_Controller.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/controllers/Formular_Controller.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="494" column="9" selection-start="20434" selection-end="20434" vertical-scroll-proportion="0.0">
-              <folding />
+            <state line="457" column="9" selection-start="18807" selection-end="18807" vertical-scroll-proportion="0.0">
+              <folding>
+                <marker date="1325263644150" expanded="true" signature="20788:20812" placeholder="..." />
+                <marker date="1325263644150" expanded="true" signature="20078:20196" placeholder="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -98,19 +108,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.css" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="main.css" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/css/main.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="380" column="0" selection-start="5678" selection-end="5678" vertical-scroll-proportion="0.0">
+            <state line="357" column="0" selection-start="5354" selection-end="5354" vertical-scroll-proportion="-3.4935305">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Formular.php" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Formular.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/models/Formular.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="0" selection-start="366" selection-end="366" vertical-scroll-proportion="0.47134936">
+            <state line="67" column="0" selection-start="1961" selection-end="1961" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -141,11 +151,11 @@
         <option value="$PROJECT_DIR$/application/views/pdf_reports/angebot.php" />
         <option value="$PROJECT_DIR$/application/views/layouts/application.php" />
         <option value="$PROJECT_DIR$/css/main.css" />
-        <option value="$PROJECT_DIR$/application/views/formular/final.php" />
         <option value="$PROJECT_DIR$/application/models/FormularStatusLog.php" />
         <option value="$PROJECT_DIR$/application/controllers/Formular_Controller.php" />
         <option value="$PROJECT_DIR$/application/views/formular/status.php" />
         <option value="$PROJECT_DIR$/application/models/Formular.php" />
+        <option value="$PROJECT_DIR$/application/views/formular/final.php" />
       </list>
     </option>
   </component>
@@ -211,46 +221,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="application" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="gounique" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="gounique" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="application" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="gounique" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="gounique" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="application" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="formular" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -480,16 +450,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/formular/final.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="34" selection-start="34" selection-end="34" vertical-scroll-proportion="78.76923">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/application/models/FormularHotel.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="46" column="0" selection-start="1457" selection-end="1457" vertical-scroll-proportion="0.0">
+        <state line="71" column="0" selection-start="2625" selection-end="2625" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -523,8 +486,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/application/controllers/Formular_Controller.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="494" column="9" selection-start="20434" selection-end="20434" vertical-scroll-proportion="0.0">
-          <folding />
+        <state line="457" column="9" selection-start="18807" selection-end="18807" vertical-scroll-proportion="0.0">
+          <folding>
+            <marker date="1325263644150" expanded="true" signature="20788:20812" placeholder="..." />
+            <marker date="1325263644150" expanded="true" signature="20078:20196" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -535,16 +501,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/css/main.css">
+    <entry file="file://$PROJECT_DIR$/application/models/Formular.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="380" column="0" selection-start="5678" selection-end="5678" vertical-scroll-proportion="0.0">
+        <state line="67" column="0" selection-start="1961" selection-end="1961" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/models/Formular.php">
+    <entry file="file://$PROJECT_DIR$/application/views/formular/final.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="0" selection-start="366" selection-end="366" vertical-scroll-proportion="0.47134936">
+        <state line="15" column="78" selection-start="877" selection-end="877" vertical-scroll-proportion="97.73077">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/css/main.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="357" column="0" selection-start="5354" selection-end="5354" vertical-scroll-proportion="-3.4935305">
           <folding />
         </state>
       </provider>

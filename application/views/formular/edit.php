@@ -51,6 +51,17 @@
 <div class="page" id="hotels-page">
 <div class="hotels">
 <div class="hotel hotel-wr" style="display:none">
+    <? if($formular->r_num): ?>
+        <div class="status-block">
+            <span class="header">Status: </span>
+            <div class="status-radio">
+                <input type="radio" name="status" value="rq"><label>RQ</label>
+                <input type="radio" name="status" value="wl"><label>WL</label>
+                <input type="radio" name="status" value="ok"><label>OK</label>
+            </div>
+        </div>
+    <? endif; ?>
+
     <div class="input">
         <label for="hotelcode">Hotel Code</label>
         <input type="text" name="hotelcode" size="8" id="hotelcode"/>
