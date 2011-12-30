@@ -397,7 +397,6 @@ class Formular_Controller extends MY_Controller
     }
 
 
-
     public function result($id = 0)
     {
         $formular = Formular::find_by_id($id);
@@ -451,11 +450,32 @@ class Formular_Controller extends MY_Controller
     {
         $formular = Formular::find_by_id($id);
 
-        if(!$formular)
-        {
+        if (!$formular) {
             show_404();
             return false;
         }
+
+        if ($_POST) {
+            $item = ($this->input->post('item_type') == 'hotel') ? FormularHotel::find_by_id($this->input->post('item_id'))
+                : FormularManuel::find_by_id($this->input->post('item_id'));
+
+            FormularStatusLog::create(array(
+                'item_type' => $this->input->post('item_type'),
+                'item_id' => $this->input->post('item_id'),
+                'old_status' => $item->status,
+                'new_status' => $this->input->post('status'),
+                'comment' => $this->input->post('comment'),
+                'user_id' => $this->user->id,
+                'datetime' => time_to_mysqldatetime(time()),
+            ));
+
+            $item->status = $this->input->post('status');
+            $item->save();
+
+            exit();
+        }
+
+        $this->view_data['formular'] = $formular;
 
     }
 

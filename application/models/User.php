@@ -50,6 +50,11 @@ class User extends ActiveRecord\Model
         $CI =& get_instance();
         $CI->session->sess_destroy();
     }
+
+    public function get_fullname()
+    {
+        return $this->name." ".$this->surname;
+    }
 }
 
 ?>

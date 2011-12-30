@@ -11,12 +11,14 @@ class MY_Controller extends CI_Controller
     protected $left_header = "";
     protected $right_header = "";
 
+
     public function __construct()
     {
         parent::__construct();
 
         $this->user = $this->session->userdata('user_id') ? User::find($this->session->userdata('user_id')) : FALSE;
         $this->view_data['user'] = $this->user;
+
     }
 
     public function _output($output)

@@ -743,4 +743,70 @@ $(document).ready(function () {
         document.location = "formular/final/" + $('input[name=formular_id]').val();
         return false;
     });
+
+    $('#status-page .status-radio').buttonset();
+
+    $('#status-page .change-button').click(function () {
+        var block = $(this).parents('.item');
+
+        $(block).find('.item-edit').show().find('.error').html('');;
+        $(block).find('.buttons').hide();
+
+        return false;
+    });
+
+    $('#status-page .item-edit .cancel-button').click(function () {
+        var block = $(this).parents('.item');
+
+        $(block).find('.item-edit').hide();
+        $(block).find('.buttons').show();
+
+        return false;
+    });
+
+    $('#status-page .item-edit .ok-button').click(function () {
+        var block = $(this).parents('.item');
+
+        if($(block).find('.status-radio input:checked').length == 0)
+        {
+            $(block).find('.error').html('ERROR: No selected status').show();
+            return false;
+        }
+
+        $.ajax({
+            url: 'formular/status/' + $('input[name=formular_id]').val(),
+            type: 'post',
+
+            data: 'status=' + $(block).find('.status-radio input:checked').val() +
+                '&item_type=' + $(block).find('input[name=item_type]').val() +
+                '&item_id=' + $(block).find('input[name=item_id]').val() +
+                '&comment=' + $(block).find('.item-edit textarea').val(),
+
+            success: function(data)
+            {
+                document.location = 'formular/status/' + $('input[name=formular_id]').val();
+            }
+        });
+
+        return false;
+    });
+
+    $('#status-page .openlog').click(function(){
+        var block = $(this).parents('.item');
+
+        $(block).find('.buttons').hide();
+        $(block).find('.status-log').show();
+
+        return false;
+    });
+
+    $('#status-page .closelog').click(function(){
+        var block = $(this).parents('.item');
+
+        $(block).find('.buttons').show();
+        $(block).find('.status-log').hide();
+
+        return false;
+    });
+
 });

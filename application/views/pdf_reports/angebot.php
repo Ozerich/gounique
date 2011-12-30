@@ -40,13 +40,13 @@
                 <? foreach ($formular->hotels as $ind => $hotel): ?>
                 <div class="tour">
                     <div class="date"> <?=$hotel->date_start->format('d.m.Y')?> - <?=$hotel->date_end->format('d.m.Y')?></div>
-                    <div class="content"><?=$hotel->pdf_text;?></div>
+                    <div class="content"><?=$hotel->nodate_text;?></div>
                 </div>
                 <? endforeach; ?>
                 <? foreach ($formular->manuels as $ind => $manuel): ?>
                 <div class="tour">
                     <div class="date"> <?=$manuel->date_start->format('d.m.Y')?> - <?=$manuel->date_end->format('d.m.Y')?></div>
-                    <div class="content"><?=$manuel->pdf_text?></div>
+                    <div class="content"><?=$manuel->nodate_text?></div>
                 </div>
                 <? endforeach; ?>
             </div>

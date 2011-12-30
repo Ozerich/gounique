@@ -493,3 +493,86 @@ input:focus {
 #final-page .anzahlung-block{
     margin-top: 15px;
 }
+
+#status-page{
+    width: 500px;
+    margin: 0 auto;
+}
+
+#status-page .item{
+    margin-bottom: 20px;
+    border: 1px solid black;
+    padding: 4px;
+}
+
+#status-page .item-edit{
+    display: none;
+    margin-top: 10px;
+    border-top: 1px solid black;
+    padding-top: 5px;
+}
+
+#status-page .item-edit label.input-header{
+    font-weight: bold;
+    display: block;
+}
+
+#status-page .item-edit textarea{
+    width: 98%;
+    height: 50px;
+}
+
+#status-page .item-edit span.error{
+    color: #ff0000;
+    padding-left: 2px;
+    font-weight: bold;
+    display: none;
+}
+
+
+#status-page .status-log{
+    display: none;
+    margin-top: 10px;
+    border-top: 1px solid black;
+    padding-top: 10px;
+}
+
+#status-page .status-log .log{
+    border-bottom: 1px dotted #0d000a;
+    padding: 5px 0;
+}
+
+#status-page .status-log .log .date{
+    width: 210px;
+    display: inline-block;
+}
+
+#status-page .status-log .log .path{
+    font-weight: bold;
+    font-size: 14px;
+}
+
+#status-page .status-log .log .user{
+    text-align: right;
+    display: inline-block;
+    width: 190px;
+}
+
+#status-page .status-log button{
+    margin-top: 15px;
+}
+
+
+#status-page .item-info .num{
+    font-weight: bold;
+}
+
+#status-page .status .value{
+    font-weight: bold;
+}
+
+#status-page .status .buttons{
+    float: right;
+}
+
+

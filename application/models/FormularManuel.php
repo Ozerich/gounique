@@ -12,10 +12,35 @@ class FormularManuel extends ActiveRecord\Model
         return $text;
     }
 
-    public function get_pdf_text()
+    public function get_nodate_text()
     {
         $text = $this->text . " - &nbsp;<b>" . $this->price . "&euro;</b>";
 
         return $text;
+    }
+
+    public function get_status_logs()
+    {
+        return FormularStatusLog::find_all_by_item_id($this->id);
+    }
+
+    public function get_plain_status()
+    {
+        switch($this->status)
+        {
+            case 'rq':
+                return 'RQ';
+            case 'wl':
+                return 'WL';
+            case 'ok':
+                return 'OK';
+            default:
+                return 'No status';
+        }
+    }
+
+    public function get_type()
+    {
+        return "manuel";
     }
 }

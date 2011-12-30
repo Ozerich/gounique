@@ -1,23 +1,6 @@
 <div id="final-page">
     <?=form_open("formular/sendmail/" . $formular->id, null, array("formular_id" => $formular->id)); ?>
     <div class="info-block">
-    <div id="resultcontent">
-        <div id="topinfo" class="block">
-            <div class="left-float">
-                <span class="param">Vorgangsnummer: </span><span
-                class="value vorgan_value"><?=$formular->v_num?></span><br/>
-                <? if ($formular->r_num): ?>
-                <span class="param">Rechnungsnummer: </span><span class="value"><?=$formular->r_num?></span><br/>
-                <? endif ?>
-                <span class="param">Abreisedatum: </span><span
-                class="value"><?=$formular->payment_date->format('d.m.Y')?></span><br/>
-            </div>
-            <div class="right-float">
-                <span class="param">Datum: </span><span class="value"><?=mdate("%d.%m.%Y", time());?></span><br/>
-                <span class="param">Sachbearbeiter: </span><span
-                class="value"><?=$user->name . " " . $user->surname?></span><br/>
-            </div>
-            <br class="clear"/>
         <div class="left-info">
             <span class="param">Vorgangsnummer: </span><span
             class="value vorgan_value"><?=$formular->v_num?></span><br/>
@@ -74,7 +57,8 @@
     </div>
 
     <div class="flight-block">
-        <h3 class="block-header">Flugplan: <span class="flight-price"><?=$formular->flight_price?> &euro;</span></h3>
+        <h3 class="block-header">Flugplan: <span class="flight-price"><?=$formular->flight_price?> &euro;</span>
+        </h3>
 
         <p>
         <pre><?=$formular->flight_text?></pre>
@@ -98,7 +82,9 @@
 
             <div class="anzahlung-block">
                 <p>Anzahlung sofort nach Erhalt de Rechnung: <?=$formular->price['anzahlung_value']?> &euro;</p>
-                <p>Restzahlung fallig am: <?=$formular->payment_date->format('d-M-y')?>&nbsp;&nbsp;<?=($formular->price['brutto'] - $formular->price['anzahlung_value'])?> &euro;</p>
+
+                <p>Restzahlung fallig am: <?=$formular->payment_date->format('d-M-y')?>
+                    &nbsp;&nbsp;<?=($formular->price['brutto'] - $formular->price['anzahlung_value'])?> &euro;</p>
             </div>
         </div>
 
@@ -111,7 +97,7 @@
                 <td class="param">Gesamtpreis</td>
                 <td><?=$formular->price['brutto']?></td>
             </tr>
-            <? if($formular->agency->type == 'agency'): ?>
+            <? if ($formular->agency->type == 'agency'): ?>
             <tr>
                 <td class="param">Provision <?=$formular->provision?>%</td>
                 <td><?=$formular->price['provision']?></td>
@@ -163,9 +149,9 @@
 
     <div id="final-buttons">
         <? if ($formular->r_num == 0): ?>
-            <a href="formular/edit/<?=$formular->id?>" class="btn btn-small btn-blue">Edit Formular</a>
+        <a href="formular/edit/<?=$formular->id?>" class="btn btn-small btn-blue">Edit Formular</a>
         <? else: ?>
-            <a href="formular/status/<?=$formular->id?>" class="btn btn-small btn-blue">Edit Statuses</a>
+        <a href="formular/status/<?=$formular->id?>" class="btn btn-small btn-blue">Edit Statuses</a>
         <? endif; ?>
         <button class="btn btn-small btn-blue" id="addmail-button">Add mail</button>
         <button class="btn btn-small btn-blue" id="druck-button">Druck</button>

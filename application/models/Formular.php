@@ -29,6 +29,16 @@ class Formular extends ActiveRecord\Model
         return FormularManuel::find_all_by_formular_id($this->id);
     }
 
+    public function get_hotels_and_manuels()
+    {
+        $hotels = $this->get_hotels();
+
+        foreach($this->get_manuels() as $manuel)
+            $hotels[] = $manuel;
+
+        return $hotels;
+    }
+
     public function get_price()
     {
         $hotel_price = 0;

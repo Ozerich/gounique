@@ -1,56 +1,65 @@
 <div id="status-page">
-    <? foreach ($formular->hotels as $ind => $hotel): ?>
+    <input type="hidden" name="formular_id" value="<?=$formular->id?>"/>
+    <? foreach ($formular->hotels_and_manuels as $ind => $hotel): ?>
     <div class="item">
-        <div class="item-info">
-            <span
-                class="date"><?=$hotel->date_start->format('d.m.Y') . ' ' . $hotel->date_end->format('d.m.Y'); ?></span>
+        <input type="hidden" name="item_type" value="<?=$hotel->type;?>"/>
+        <input type="hidden" name="item_id" value="<?=$hotel->id?>"/>
 
-            <p><?=$hotel->plain_text?></p>
+        <div class="item-info">
+            <span class="num"><?=($ind + 1)?></span>
+            <span
+                class="date"><?=$hotel->date_start->format('d.m.Y') . ' - ' . $hotel->date_end->format('d.m.Y'); ?></span>
+
+            <p><?=$hotel->nodate_text?></p>
 
             <div class="status">
-                <span><?=$hotel->status?></span>
-                <button class="change-button btn btn-blue btn-small"></button>
-                <a href="#" id="openlog-button">Log</a>
+                <span>Current status: <span class="value"><?=$hotel->plain_status?></span></span>
+
+                <div class="buttons">
+                    <button class="change-button btn btn-blue btn-small">Change</button>
+                    <button class="openlog btn btn-blue btn-small">Log</button>
+                </div>
+                <br class="clear"/>
             </div>
         </div>
         <div class="item-edit">
             <div class="status-top">
-                <span>New status: </span>
+                <label class="input-header">New status: </label>
 
                 <div class="status-radio">
-                    <input type="radio" name="status" <?if($hotel->status == 'rq') echo 'checked';?> value="rq"><label>RQ</label>
-                    <input type="radio" name="status" <?if($hotel->status == 'wl') echo 'checked';?> value="wl"><label>WL</label>
-                    <input type="radio" name="status" <?if($hotel->status == 'ok') echo 'checked';?> value="ok"><label>OK</label>
+                    <input type="radio" name="status"
+                           id="status<?=($ind + 1)?>_rq" <?if ($hotel->status == 'rq') echo 'checked';?>
+                           value="rq"><label for="status<?=($ind + 1)?>_rq">RQ</label>
+                    <input type="radio" name="status"
+                           id="status<?=($ind + 1)?>_wl" <?if ($hotel->status == 'wl') echo 'checked';?>
+                           value="wl"><label for="status<?=($ind + 1)?>_wl">WL</label>
+                    <input type="radio" name="status"
+                           id="status<?=($ind + 1)?>_ok" <?if ($hotel->status == 'ok') echo 'checked';?>
+                           value="ok"><label for="status<?=($ind + 1)?>_ok">OK</label>
                 </div>
 
                 <div class="comment">
-                    <label for="comment">Comment:</label>
+                    <label for="comment" class="input-header">Comment:</label>
                     <textarea id="comment"></textarea>
                 </div>
 
                 <button class="cancel-button btn btn-blue btn-small">Cancel</button>
                 <button class="ok-button btn btn-blue btn-small">OK</button>
+                <span class="error"></span>
             </div>
         </div>
         <div class="status-log">
-            <div class="log" style="display:none">
-                <div class="header">
-                    <span class="date"></span>
-                    <span class="path"></span>
-                    <span class="user"></span>
-                </div>
-                <p class="comment"></p>
-            </div>
-            <? foreach ($hotel->status_log as $log_ind => $log): ?>
+            <? foreach ($hotel->status_logs as $log_ind => $log): ?>
             <div class="log">
                 <div class="header">
                     <span class="date"><?=$log->datetime->format('d.m.Y H:i:s');?></span>
                     <span class="path"><?=$log->old_status . " -> " . $log->new_status;?></span>
-                    <span class="user"><?=$log->user->name . " " . $log->user->surname;?></span>
+                    <span class="user"><?=$log->user->fullname;?></span>
                 </div>
                 <p class="comment"><?=$log->comment;?></p>
             </div>
             <? endforeach; ?>
+            <button class="closelog btn btn-small btn-blue">Close log</button>
         </div>
     </div>
     <? endforeach; ?>
