@@ -88,7 +88,7 @@ $(document).ready(function() {
             $(this).change();
         }).change(function() {
             var val = $(this).val() != "" ? parseInt($(this).val()) : 0;
-            $("#anzahlungsum").html((parseFloat($("#netto").text()) / 100 * val).toFixed(2));
+            $("#anzahlungsum").html((parseFloat($("#brutto-value").text()) / 100 * val).toFixed(2));
         });
 
     old_val = $('#abreisedatum').val();

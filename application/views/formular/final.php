@@ -1,4 +1,4 @@
-<div id="final-page">
+<div id="final-page" class="result-page">
     <?=form_open("formular/sendmail/" . $formular->id, null, array("formular_id" => $formular->id)); ?>
     <div class="info-block">
         <div class="left-info">

@@ -1,59 +1,64 @@
-<div id="result-page">
+<div id="result-page" class="result-page">
     <? echo form_open("formular/result/" . $formular->id, '', array("vorgan" => $formular->v_num, "paymentdate" => $formular->payment_date,
     "formular_id" => $formular->id)); ?>
-    <div class="page" id="resultpage">
+    <div class="info-block">
+        <div class="left-info">
+            <span class="param">Vorgangsnummer: </span><span
+            class="value vorgan_value"><?=$formular->v_num?></span><br/>
+            <span class="param">Rechnungsnummer: </span><span
+            class="value"><?=($formular->r_num) ? $formular->r_num : "none";?></span><br/>
+            <span class="param">Abreisedatum: </span><span
+            class="value"><?=$formular->payment_date->format('d.m.Y')?></span><br/>
+        </div>
 
-        <div id="resultcontent">
-            <div id="results-wr">
-                <span class="number">1</span>
+        <div class="right-info">
+            <span class="param">Datum: </span><span class="value"><?=mdate("%d.%m.%Y", time());?></span><br/>
+            <span class="param">Sachbearbeiter: </span><span
+            class="value"><?=$user->name . " " . $user->surname?></span><br/>
+        </div>
 
-                <div id="results">
-                    <?
-                    if ($hotels)
-                        foreach ($hotels as $hotel)
-                        {
-                            echo $hotel->date_start->format('d.m.Y') . " - " . $hotel->date_end->format('d.m.Y') . " " . $hotel->days_count . "N HOTEL: " .
-                                $hotel->hotel_name . " / " . RoomCapacity::find_by_id($hotel->roomcapacity_id)->value . " / " .
-                                RoomType::find_by_id($hotel->roomtype_id)->value . " / " . HotelService::find_by_id($hotel->hotelservice_id)->value .
-                                " / TRANSFER " . strtoupper($hotel->transfer) . " / " . $hotel->remark . " - &nbsp;<b>" . $hotel->price . "&euro;</b><br/>";
-                        }
-                    if (!empty($manuels))
-                        foreach ($manuels as $manuel)
-                            echo $manuel->date_start->format('d.m.Y') . " - " . $manuel->date_end->format('d.m.Y') . " " . $manuel->text . " - &nbsp;<b>" . $manuel->price . "&euro;</b><br/>";
-                    ?>
-                </div>
-            </div>
-            <? if ($formular->flight_text != ""): ?>
-            <div id="flightplan-wr">
-                <span class="number">2</span>
-                <span>Flightplan</span>&nbsp;<b><?=$formular->flight_price?>&euro;</b><br/><br/>
-                <pre class="flightplan"><?=$formular->flight_text?></pre>
-            </div>
-            <? endif; ?>
-            <div id="priceresult">
-                <input type="hidden" name="priceperson"/>
-                <span class="price_title">Preis p.P brutto:</span><span
-                id="oneprice"><?=$price['person']?></span> &euro;<br/>
-                <span class="price_title">Gesamtpreis brutto:</span><span
-                id="gesamtpreis"><?=$price['brutto']?></span> &euro;<br/>
-                <span class="price_title">Provision:</span><span
-                id="provision"><?=$price['provision']?></span> &euro;<br/>
-                <span class="price_title">19 % Mwst:</span><span
-                id="percent"><?=$price['percent']?></span> &euro;<br/><br/>
-                <span class="price_title">Gesamtpreis netto:</span><span
-                id="netto"><?=$price['netto']?></span> &euro;<br/>
-            </div>
-            <br class="clear"/>
+        <br class="clear"/>
+    </div>
+    <div class="item-list">
+        <h3 class="block-header">Leistung:</h3>
 
-            <div class="comment-wr">
-                <label for="comment">Comment</label>
-                <textarea id="comment" name="bigcomment" style="width:100%"><?=$formular->comment?></textarea>
-            </div>
+        <span class="header">Hotels:</span>
+
+        <? foreach ($formular->hotels as $ind => $hotel): ?>
+        <div class="item">
+            <span class="num"><?=($ind + 1)?></span>
+            <span class="text"><?=$hotel->plain_text; ?></span>
+        </div>
+        <? endforeach; ?>
+
+        <hr/>
+
+        <span class="header">Manuels:</span>
+
+        <? foreach ($formular->manuels as $ind => $manuel): ?>
+        <div class="item">
+            <span class="num"><?=($ind + 1)?></span>
+            <span class="text"><?=$manuel->plain_text; ?></span>
+        </div>
+        <? endforeach; ?>
+    </div>
+
+    <? if ($formular->flight_text != ""): ?>
+    <div class="flight-block">
+        <h3 class="block-header">Flugplan: <span class="flight-price"><?=$formular->flight_price?> &euro;</span>
+        </h3>
+
+        <p>
+        <pre><?=$formular->flight_text?></pre>
+        </p>
+    </div>
+    <? endif; ?>
+    <div class="bottom-block">
+        <div class="left">
             <div id="persons-wr">
-                <? $persons = FormularPerson::find('all', array('conditions' => array('formular_id = ?', $formular->id)));
-
-                if ($persons)
-                    foreach ($persons as $ind => $person):?>
+                <?
+                if ($formular->persons)
+                    foreach ($formular->persons as $ind => $person):?>
                         <div class="person">
                             <span class="num"><?=($ind + 1)?></span>
 
@@ -80,7 +85,7 @@
                             <input type="hidden" name="person_id[<?=$ind?>]" value="<?=$person->id?>"/>
                         </div>
                         <? endforeach; ?>
-                <? for ($i = count($persons); $i < $formular->person_count; $i++): ?>
+                <? for ($i = count($formular->persons); $i < $formular->person_count; $i++): ?>
                 <div class="person">
                     <span class="num"><?=($i + 1)?></span>
 
@@ -103,25 +108,63 @@
             </div>
 
 
-            <div id="anzahlung-wr">
+            <div class="anzahlung-block">
                 <label for="anzahlung">Anzahlung</label>
                 <input type="text" name="prepayment" size="3" maxlength="3" value="<?=$formular->prepayment?>"
                        id="anzahlung"/>% -
-                <span id="anzahlungsum">0</span> &euro;
-            </div>
-            <div id="abreisedatum-wr">
+                <span id="anzahlungsum">0</span> &euro; <br/>
                 <label for="abreisedatum">Abreisedatum</label>
                 <input type="text" name="prepayment_date" size="8" maxlength="8"
                        value="<?=$formular->payment_date->format('dmY')?>"
                        id="abreisedatum"/>
             </div>
-
         </div>
 
-        <div id="result-buttons">
-            <button class="btn btn-small btn-blue" id="back-button">Back</button>
-            <button class="btn btn-small btn-blue" id="next-button" name="submit">Save</button>
-        </div>
+        <table class="price-table">
+            <tr>
+                <td class="param">Preis Brutto/p.Person</td>
+                <td><?=$formular->price['person']?></td>
+            </tr>
+            <tr class="underline up">
+                <td class="param">Gesamtpreis</td>
+                <td id="brutto-value"><?=$formular->price['brutto']?></td>
+            </tr>
+            <? if ($formular->agency->type == 'agency'): ?>
+            <tr>
+                <td class="param">Provision <?=$formular->provision?>%</td>
+                <td><?=$formular->price['provision']?></td>
+            </tr>
+            <tr>
+                <td class="param">MWST auf Prov 19%</td>
+                <td><?=$formular->price['mwst']?></td>
+            </tr>
+            <tr>
+                <td class="param">Total Provision:</td>
+                <td><?=$formular->price['total_provision']?></td>
+            </tr>
+            <tr class="empty">
+                <td class="param">&nbsp;</td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr class="up">
+                <td class="param">Endpreise Netto</td>
+                <td><?=$formular->price['netto']?></td>
+            </tr>
+            <? endif; ?>
+        </table>
+        <br class="clear"/>
     </div>
-    </form>
+
+    <div class="comment-block">
+        <h3 class="block-header">Comment:</h3>
+        <textarea id="comment" name="bigcomment"><?=$formular->comment?></textarea>
+    </div>
+
+
+    <div id="result-buttons">
+        <button class="btn btn-small btn-blue" id="back-button">Back</button>
+        <button class="btn btn-small btn-blue" id="next-button" name="submit">Save</button>
+    </div>
+</div>
+</form>
 </div>
