@@ -1,8 +1,8 @@
-<div id="final-page">
+<div class="page" id="resultpage">
     <?= form_open("formular/sendmail/" . $formular->id, null, array("formular_id" => $formular->id))
     ; ?>
 
-<div class="page" id="resultpage">
+
     <div id="resultcontent">
         <div id="topinfo" class="block">
             <div class="left-float">
@@ -123,11 +123,13 @@
         </div>
 
     </div>
-    </div>
+
 
     <div id="final-buttons">
         <? if ($formular->r_num == 0): ?>
-        <button class="btn btn-small btn-blue" id="edit-button">Edit Formular</button>
+            <a href="formular/edit/<?=$formular->id?>" class="btn btn-small btn-blue">Edit Formular</a>
+        <? else: ?>
+            <a href="formular/status/<?=$formular->id?>" class="btn btn-small btn-blue">Edit Statuses</a>
         <? endif; ?>
         <button class="btn btn-small btn-blue" id="addmail-button">Add mail</button>
         <button class="btn btn-small btn-blue" id="druck-button">Druck</button>

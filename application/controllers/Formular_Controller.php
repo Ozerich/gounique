@@ -447,7 +447,6 @@ class Formular_Controller extends MY_Controller
             if (isset($_POST['person_sex']) && is_array($_POST['person_sex']))
                 foreach ($_POST['person_sex'] as $ind => $person_sex)
                 {
-
                     if (isset($_POST['person_id'][$ind])) {
                         $person = FormularPerson::find_by_id($_POST['person_id'][$ind]);
                         $person->sex = $_POST['person_sex'][$ind];
@@ -485,10 +484,21 @@ class Formular_Controller extends MY_Controller
         }
     }
 
-    public function final_($id)
+    public function status($id)
     {
         $formular = Formular::find_by_id($id);
 
+        if(!$formular)
+        {
+            show_404();
+            return false;
+        }
+
+    }
+
+    public function final_($id)
+    {
+        $formular = Formular::find_by_id($id);
 
         if (!$formular) {
             show_404();
