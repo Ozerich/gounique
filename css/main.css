@@ -248,13 +248,10 @@ input:focus {
 .add-button-wr button {
     float: right;
 }
-
-.agency-list .btn.btn-small {
-    height: 19px;
-    line-height: 6px;
-    margin-right: 3px;
+.agency-list a.btn-small{
+    height: 18px;
+    line-height: 18px;
 }
-
 .agency-list td {
     padding: 5px 0;
 }

@@ -2,6 +2,7 @@
     <? echo form_open("formular/result/" . $formular->id, '', array("vorgan" => $formular->v_num, "paymentdate" => $formular->payment_date,
     "formular_id" => $formular->id)); ?>
     <div class="page" id="resultpage">
+
         <div id="resultcontent">
             <div id="results-wr">
                 <span class="number">1</span>
@@ -11,14 +12,14 @@
                     if ($hotels)
                         foreach ($hotels as $hotel)
                         {
-                            echo $hotel->date_start . " - " . $hotel->date_end . " " . $hotel->days_count . "N HOTEL: " .
+                            echo $hotel->date_start->format('d.m.Y') . " - " . $hotel->date_end->format('d.m.Y') . " " . $hotel->days_count . "N HOTEL: " .
                                 $hotel->hotel_name . " / " . RoomCapacity::find_by_id($hotel->roomcapacity_id)->value . " / " .
                                 RoomType::find_by_id($hotel->roomtype_id)->value . " / " . HotelService::find_by_id($hotel->hotelservice_id)->value .
                                 " / TRANSFER " . strtoupper($hotel->transfer) . " / " . $hotel->remark . " - &nbsp;<b>" . $hotel->price . "&euro;</b><br/>";
                         }
                     if (!empty($manuels))
                         foreach ($manuels as $manuel)
-                            echo $manuel->date_start . " - " . $manuel->date_end . " " . $manuel->text . " - &nbsp;<b>" . $manuel->price . "&euro;</b><br/>";
+                            echo $manuel->date_start->format('d.m.Y') . " - " . $manuel->date_end->format('d.m.Y') . " " . $manuel->text . " - &nbsp;<b>" . $manuel->price . "&euro;</b><br/>";
                     ?>
                 </div>
             </div>
@@ -110,7 +111,8 @@
             </div>
             <div id="abreisedatum-wr">
                 <label for="abreisedatum">Abreisedatum</label>
-                <input type="text" name="prepayment_date" size="8" maxlength="8" value="<?=$formular->payment_date?>"
+                <input type="text" name="prepayment_date" size="8" maxlength="8"
+                       value="<?=$formular->payment_date->format('dmY')?>"
                        id="abreisedatum"/>
             </div>
 

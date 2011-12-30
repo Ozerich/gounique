@@ -45,7 +45,7 @@ $(document).ready(function() {
         }).click();
 
     $('#edit-button').click(function() {
-        document.location = "formular/result/" + $('#input[name=formular_id]').val();
+        document.location = "formular/result/" + $('input[name=formular_id]').val();
         return false;
     });
 
@@ -63,7 +63,12 @@ $(document).ready(function() {
     });
 
     $('#makerechnung-button').click(function(){
-        document.location = "formular/do_rechnung/" + $('.vorgan_value').html();
+        document.location = "formular/rechnung/" + $('input[name=formular_id]').val();
+        return false;
+    });
+
+    $('#makestoreno-button').click(function(){
+        document.location = "formular/storeno/" + $('input[name=formular_id]').val();
         return false;
     });
 

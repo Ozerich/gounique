@@ -46,8 +46,8 @@ class Agency_Controller extends MY_Controller
         $agency = Agency::find_by_id($id);
         if($agency)
         {
-            $this->view_data['formulars'] = Formular::all(array('conditions' => array('k_num = ?', $id)));
             $this->view_data['agency'] = $agency;
+
 
             $this->set_page_title("Agency: ".$agency->name);
         }

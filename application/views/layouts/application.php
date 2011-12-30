@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
-    <title><?=$page_title?> | Go Unique</title>
+    <title><?if(isset($page_title)) echo $page_title;?> | Go Unique</title>
     <base href="<?=base_url()?>"/>
 
     <link rel="stylesheet" href="css/reset.css" type="text/css" media="screen" title="no title"/>

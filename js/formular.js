@@ -408,7 +408,7 @@ $(document).ready(function () {
     BindManuelEvents();
 
     $('.type-view #change-type').click(function () {
-        $('.formular-header').hide();
+        $('.formular-header, #buttons').hide();
         $('.type-edit').show();
 
         return false;
@@ -421,6 +421,7 @@ $(document).ready(function () {
             $('#new-vnum').hide().find('.vnum-input').hide();
     });
 
+
     $('.type-edit #type-submit').click(function () {
 
         if (!$('#type-radio input').is(':checked')) {
@@ -428,11 +429,38 @@ $(document).ready(function () {
             return false;
         }
 
-        if ($('#type-radio #type_1').is(':checked') || $('#type-radio #type_3').is(':checked'))
+        if ($('#type-radio #type_1').is(':checked') || $('#type-radio #type_3').is(':checked')) {
             if ($('.vnum-input').val() == '') {
                 $('#type-error').html('Error: Empty vorgangsnummer');
                 return false;
             }
+
+            var error = 0;
+            $.ajax({
+                url:'formular/find/vnum',
+                type:'post',
+                data:'value=' + $('.vnum-input').val(),
+                async:false,
+                success:function (data) {
+                    if (data == 1) {
+                        $('#type-error').html('Error: This vnum is exist. Choose another, please');
+                        error = 1;
+                    }
+                }
+            });
+
+            if (error)
+                return false;
+        }
+        else {
+            $.ajax({
+                url:'formular/generate_vnum/',
+                async:false,
+                success:function (data) {
+                    $('.vnum-input').val(data);
+                }
+            });
+        }
 
         $('#type-error').html('');
 
@@ -446,11 +474,11 @@ $(document).ready(function () {
             $('.formular-header #formular-type-val').html('Nur flug');
 
         $('.formular-header').show().find('#vnum-value').html($('.vnum-input').val());
+        $('#buttons').show();
 
         $('input[name=formular_vnum]').val($('.vnum-input').val());
 
-        if($('#dashboard-page').hasClass('create-page'))
-        {
+        if ($('#dashboard-page').hasClass('create-page')) {
             $('#page1').show();
             $(this).html('Apply');
         }
@@ -711,10 +739,8 @@ $(document).ready(function () {
         }
     });
 
-
-    /*
-     * PAGE 5
-     */
-
-
+    $('#cancel-storeno').click(function () {
+        document.location = "formular/final/" + $('input[name=formular_id]').val();
+        return false;
+    });
 });

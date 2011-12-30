@@ -52,6 +52,7 @@ $route['settings/(:any)'] = 'Settings_Controller/$1';
 
 $route['formular'] = 'Formular_Controller';
 $route['formular/final/(:num)'] = 'Formular_Controller/final_/$1';
+$route['formular/(:num)'] = 'Formular_Controller/final_/$1';
 $route['formular/(:any)'] = 'Formular_Controller/$1';
 
 $route['dashboard'] = 'DashBoard_Controller';

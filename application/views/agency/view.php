@@ -71,13 +71,13 @@
         <th>Date created</th>
         <th>View</th>
         </thead>
-        <? foreach($formulars as $formular): ?>
+        <? foreach($agency->formulars as $formular): ?>
         <tr>
             <td class="v_num"><?=$formular->v_num?></td>
             <td><?=$formular->r_num?></td>
-            <td><?=mdate("%d.%m.%Y", $formular->datecreated);?></td>
+            <td><?=$formular->created_date->format('d.m.Y');?></td>
             <td width="50px">
-                <button class="btn btn-small btn-blue view-button">View</button>
+                <a href="formular/<?=$formular->id?>" class="btn btn-small btn-blue">View</a>
             </td>
         </tr>
         <? endforeach; ?>

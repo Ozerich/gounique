@@ -104,11 +104,6 @@ $(document).ready(function() {
         }
     });
 
-    $('#agency-formulars .view-button').click(function() {
-        document.location = "formular/final/" + $(this).parents("tr").find(".v_num").html();
-        return false;
-    });
-
     $('#add_formular-button').click(function() {
         document.location = "formular/create/"+ $('#agency_id').val();
         return false;

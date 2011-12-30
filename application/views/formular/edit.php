@@ -6,7 +6,7 @@
         Type: <?=$formular->type?>
         <a href="#" id="change-type">Change</a>
     </div>
-    <span class="v-num">Vorgangsnummer: <span class="value"><?=$formular->v_num?></span></span>
+    <span class="v-num">Vorgangsnummer: <span class="value" id="vnum-value"><?=$formular->v_num?></span></span>
 </div>
 
 
@@ -210,11 +210,11 @@ if ($hotels)
             <div class="input" id="date-wr">
                 <span>Date</span><br/>
                 <label for="datestart">Von</label>
-                <input type="text" name="datestart[<?=($ind + 1)?>]" class="datestart" value="<?=$hotel->date_start?>"
+                <input type="text" name="datestart[<?=($ind + 1)?>]" class="datestart" value="<?=$hotel->date_start->format('dmY');?>"
                        size="10"/>
                 <br class="clear"/>
                 <label for="dateend">Bis&nbsp;</label>
-                <input type="text" name="dateend[<?=($ind + 1)?>]" class="dateend" value="<?=$hotel->date_end?>"
+                <input type="text" name="dateend[<?=($ind + 1)?>]" class="dateend" value="<?=$hotel->date_end->format('dmY');?>"
                        size="10"/>
                 <br class="clear"/>
                 Days Count <input type="text" name="dayscount[<?=($ind + 1)?>]" class="dayscount"
@@ -290,11 +290,11 @@ if ($hotels)
             <div class="input" id="date-wr">
                 <span>Date</span><br/>
                 <label for="datestart">Von</label>
-                <input type="text" name="datestart[<?=($ind + 1)?>]" class="datestart" value="<?=$hotel->date_start?>"
+                <input type="text" name="datestart[<?=($ind + 1)?>]" class="datestart" value="<?=$hotel->date_start->format('dmY');?>"
                        size="10"/>
                 <br class="clear"/>
                 <label for="dateend">Bis&nbsp;</label>
-                <input type="text" name="dateend[<?=($ind + 1)?>]" class="dateend" value="<?=$hotel->date_end?>"
+                <input type="text" name="dateend[<?=($ind + 1)?>]" class="dateend" value="<?=$hotel->date_end->format('dmY');?>"
                        size="10"/>
                 <br class="clear"/>
                 Days Count <input type="text" name="dayscount[<?=($ind + 1)?>]" class="dayscount"
@@ -361,11 +361,11 @@ if ($hotels)
             <span>Date</span><br/>
             <label for="datestart">Von</label>
             <input type="text" name="manuel_datestart[<?=($ind + 1)?>]" class="datestart"
-                   value="<?=$manuel->date_start?>"
+                   value="<?=$manuel->date_start->format('dmY');?>"
                    size="10"/>
             <br class="clear"/>
             <label for="dateend">Bis&nbsp;</label>
-            <input type="text" name="manuel_dateend[<?=($ind + 1)?>]" class="dateend" value="<?=$manuel->date_end?>"
+            <input type="text" name="manuel_dateend[<?=($ind + 1)?>]" class="dateend" value="<?=$manuel->date_end->format('dmY');?>"
                    size="10"/>
             <br class="clear"/>
             Days Count <input type="text" name="manuel_dayscount[<?=($ind + 1)?>]" class="dayscount"

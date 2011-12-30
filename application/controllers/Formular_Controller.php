@@ -3,7 +3,6 @@
 define("BLANK_FILE", "UNI_Briefpapier.pdf");
 require_once APPPATH . "libraries/MPDF/mpdf.php";
 
-
 class Formular_Controller extends MY_Controller
 {
 
@@ -51,6 +50,16 @@ class Formular_Controller extends MY_Controller
 
         $this->load->helper('date');
     }
+
+    public function generate_vnum()
+    {
+        $val = 0;
+        do {
+            $val = rand() % 1000 + 1000;
+        } while (Formular::find_by_v_num($val));
+
+        echo $val;
+        exit();    }
 
     public function create($agency_id = 0)
     {
@@ -150,6 +159,7 @@ class Formular_Controller extends MY_Controller
             return false;
         }
         if ($_POST) {
+
             $formular->provision = $this->input->post('provision');
             $formular->flight_text = $this->input->post('flightplan');
             $formular->flight_price = $this->input->post('flightprice');
@@ -298,6 +308,9 @@ class Formular_Controller extends MY_Controller
 
         switch ($mode)
         {
+            case "vnum":
+                echo Formular::find_by_v_num($this->input->post('value')) ? 1 : 0;
+                break;
             case "name":
                 $sql_options = array('conditions' => array('code = ?', $hotel_code),
                     'select' => 'name, stars');
@@ -503,22 +516,57 @@ class Formular_Controller extends MY_Controller
     }
 
 
-    public function do_rechnung($id = 0)
+    public function rechnung($id = 0)
     {
-        $formular = Formular::first(array('conditions' => array("v_num = ? ", $id)));
+        $formular = Formular::find_by_id($id);
 
         if (!$formular) {
             show_404();
             return false;
         }
 
-        if ($formular->stage == 2)
-            return true;
+        $next_rnum = Config::find_by_param('next_rnum');
 
-        $formular->stage = 2;
+        $formular->r_num = $next_rnum->value++;
+        $next_rnum->save();
+
         $formular->save();
 
-        redirect("formular/final/" . $formular->v_num);
+        redirect("formular/final/" . $formular->id);
+    }
+
+    public function storeno($id = 0)
+    {
+        $formular = Formular::find_by_id($id);
+
+        if(!$formular)
+        {
+            show_404();
+            return false;
+        }
+
+        if($_POST)
+        {
+            $formular->canceled = 1;
+
+            $this->load->library('session');
+            $user_session = $this->session->all_userdata();
+
+            FormularCancellation::create(array(
+                'formular_id' => $formular->id,
+                'client_percent' => $this->input->post('client_percent'),
+                'provision' => $this->input->post('provision'),
+                'reason' => $this->input->post('reason'),
+                'user_id' => $user_session['user_id'],
+                'datetime' => time_to_mysqldatetime(time()),
+            ));
+
+            $formular->save();
+
+            redirect("formular/final/".$formular->id);
+        }
+
+        $this->view_data['formular'] = $formular;
     }
 
 
