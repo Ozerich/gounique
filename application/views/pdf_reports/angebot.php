@@ -14,7 +14,7 @@
                 <div class="header">Vorgangsnummer: <?=$formular->v_num?></div>
                 <br/>
 
-                <div class="nummer"><strong>Abreisedatum: <?=$formular->payment_date->format('d.m.Y')?></strong></div>
+                <div class="nummer"><strong>Abreisedatum: <?=$formular->prepayment_date->format('d.m.Y')?></strong></div>
             </div>
             <div class="right">
                 <div>Datum: <?=mdate("%d.%m.%Y", time());?></div>

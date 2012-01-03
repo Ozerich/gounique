@@ -1,14 +1,22 @@
 <div id="result-page" class="result-page">
-    <? echo form_open("formular/result/" . $formular->id, '', array("vorgan" => $formular->v_num, "paymentdate" => $formular->payment_date,
+    <? echo form_open("formular/result/" . $formular->id, '', array("vorgan" => $formular->v_num, "paymentdate" => $formular->prepayment_date,
     "formular_id" => $formular->id)); ?>
     <div class="info-block">
         <div class="left-info">
+
             <span class="param">Vorgangsnummer: </span><span
             class="value vorgan_value"><?=$formular->v_num?></span><br/>
+
+            <? if($formular->r_num): ?>
             <span class="param">Rechnungsnummer: </span><span
             class="value"><?=($formular->r_num) ? $formular->r_num : "none";?></span><br/>
+            <? endif; ?>
+
+            <? if ($formular->prepayment_date): ?>
             <span class="param">Abreisedatum: </span><span
-            class="value"><?=$formular->payment_date->format('d.m.Y')?></span><br/>
+                class="value"><?=$formular->prepayment_date->format('d.m.Y')?></span><br/>
+            <? endif; ?>
+
         </div>
 
         <div class="right-info">
@@ -109,14 +117,32 @@
 
 
             <div class="anzahlung-block">
-                <label for="anzahlung">Anzahlung</label>
-                <input type="text" name="prepayment" size="3" maxlength="3" value="<?=$formular->prepayment?>"
-                       id="anzahlung"/>% -
-                <span id="anzahlungsum">0</span> &euro; <br/>
-                <label for="abreisedatum">Abreisedatum</label>
-                <input type="text" name="prepayment_date" size="8" maxlength="8"
-                       value="<?=$formular->payment_date->format('dmY')?>"
-                       id="abreisedatum"/>
+
+                <div class="param-block">
+                    <label for="anzahlung">Anzahlung %</label>
+                    <input type="text" name="prepayment" size="3" maxlength="3"
+                           value="<?=$formular->prepayment ? $formular->prepayment : '25'?>"
+                           id="anzahlung"/>
+                    <span id="anzahlungsum">0</span> &euro;
+                </div>
+                <div class="param-block">
+                    <label for="prepayment_date">Anzahlung datum:</label>
+                    <input type="text" name="preprepayment_date" size="8" maxlength="8"
+                           value="<?=$formular->prepayment_date ? $formular->prepayment_date->format('dmY') : ''?>"
+                           id="prepayment_date"/>
+                </div>
+                <div class="param-block">
+                    <label for="departure_date">Abreisedatum</label>
+                    <input type="text" name="departure_date" size="8" maxlength="8"
+                           value="<?=$formular->departure_date ? $formular->departure_date->format('dmY') : ''?>"
+                           id="departure_date"/>
+                </div>
+                <div class="param-block">
+                    <label for="finalpayment_date">Restzahlung datum:</label>
+                    <input type="text" name="finalpayment_date" size="8" maxlength="8" id="finalpayment_date"
+                           value="<?=$formular->finalpayment_date ? $formular->finalpayment_date : ''?>"/>
+
+                </div>
             </div>
         </div>
 

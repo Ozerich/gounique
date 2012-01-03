@@ -1,7 +1,7 @@
-$(document).ready(function() {
+$(document).ready(function () {
     $('#comment').focus();
 
-    $('#result-buttons button').keypress(function(event) {
+    $('#result-buttons button').keypress(function (event) {
         if (event.keyCode == KEY_LEFT) {
             if ($(this).index('button:visible') == 0)
                 $('#result-buttons button:visible:last').focus();
@@ -18,7 +18,7 @@ $(document).ready(function() {
         }
     });
 
-    $('#comment').keypress(function(event) {
+    $('#comment').keypress(function (event) {
         if (event.keyCode == KEY_TAB) {
             $(".person:first #sex").focus();
             return false;
@@ -28,7 +28,7 @@ $(document).ready(function() {
         }
     });
 
-    $('.person #sex').keypress(function(event) {
+    $('.person #sex').keypress(function (event) {
         if (event.keyCode == KEY_ENTER || event.keyCode == KEY_TAB) {
             $(this).parent().parent().find('#person_name').focus();
             return false;
@@ -42,7 +42,7 @@ $(document).ready(function() {
         }
     });
 
-    $('.person #person_name').keypress(function(event) {
+    $('.person #person_name').keypress(function (event) {
         if (event.keyCode == KEY_ENTER || event.keyCode == KEY_TAB) {
             if ($(this).val() != "")
                 $(this).parent().parent().next('.person').find('#sex').focus();
@@ -54,7 +54,7 @@ $(document).ready(function() {
         }
     });
 
-    $('.person:last').find('#person_name').keypress(function(event) {
+    $('.person:last').find('#person_name').keypress(function (event) {
         if (event.keyCode == KEY_ENTER || event.keyCode == KEY_TAB) {
             if ($(this).val() != "") {
                 $('#address').focus();
@@ -63,7 +63,7 @@ $(document).ready(function() {
         }
     });
     $('#address').keypress(
-        function(event) {
+        function (event) {
             if (event.keyCode == KEY_ENTER || event.keyCode == KEY_TAB) {
                 $('#anzahlung').focus();
                 return false;
@@ -74,7 +74,7 @@ $(document).ready(function() {
             }
         });
     $('#anzahlung').keypress(
-        function(event) {
+        function (event) {
             if (event.keyCode == KEY_ENTER || event.keyCode == KEY_TAB) {
                 $('#abreisedatum').focus();
                 return false;
@@ -84,16 +84,16 @@ $(document).ready(function() {
                 return false;
             }
         }).keyup(
-        function() {
+        function () {
             $(this).change();
-        }).change(function() {
+        }).change(function () {
             var val = $(this).val() != "" ? parseInt($(this).val()) : 0;
             $("#anzahlungsum").html((parseFloat($("#brutto-value").text()) / 100 * val).toFixed(2));
         });
 
     old_val = $('#abreisedatum').val();
     $('#abreisedatum').keypress(
-        function(event) {
+        function (event) {
             if (event.keyCode == KEY_ENTER || event.keyCode == KEY_TAB) {
                 $('#next-button').focus();
                 return false;
@@ -102,26 +102,24 @@ $(document).ready(function() {
                 $('#anzahlung').focus();
                 return false;
             }
-        }).change(function() {
+        }).change(function () {
             var a = $(this).val();
             a = new Date(a.substr(4, 4), parseInt(a.substr(2, 2)) - 1, a.substr(0, 2));
             a.setMonth(a.getMonth() - 1);
             $('#zahlungsdatum').val((a.getDate() < 10 ? "0" + a.getDate() : a.getDate()) + "" + (a.getMonth() < 9 ? "0" + (a.getMonth() + 1) : (a.getMonth() + 1)) + "" + a.getFullYear());
             return true;
-        }).datepicker({
-            onClose: function() {
-                $("abreisedatum").focus();
-            },
-            onSelect: function() {
-                $('#next-button').focus();
-                $(this).change();
-            }
-        }).
-        datepicker("option", "showAnim", "blind").
-        datepicker("option", "dateFormat", 'ddmmyy');
+        });
     $('#abreisedatum').val(old_val);
 
-    $('#back-button').click(function(event) {
+    $('#prepayment_date, #departure_date, #finalpayment_date').datepicker({
+        onSelect:function () {
+            $(this).change();
+        }
+    }).
+        datepicker("option", "showAnim", "blind").
+        datepicker("option", "dateFormat", 'ddmmyy');
+
+    $('#back-button').click(function (event) {
         document.location = "formular/edit/" + $('input[name=formular_id]').val();
         return false;
     });

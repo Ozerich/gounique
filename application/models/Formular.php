@@ -39,6 +39,22 @@ class Formular extends ActiveRecord\Model
         return $hotels;
     }
 
+    public function get_payments()
+    {
+        return FormularPayment::find_all_by_formular_id($this->id);
+    }
+
+    public function get_paid_amount()
+    {
+        $payments = $this->payments;
+        $res = 0;
+
+        foreach($payments as $payment)
+            $res += $payment->value;
+
+        return $res;
+    }
+
     public function get_price()
     {
         $hotel_price = 0;

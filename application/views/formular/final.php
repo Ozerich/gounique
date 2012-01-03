@@ -2,12 +2,18 @@
     <?=form_open("formular/sendmail/" . $formular->id, null, array("formular_id" => $formular->id)); ?>
     <div class="info-block">
         <div class="left-info">
+
             <span class="param">Vorgangsnummer: </span><span
             class="value vorgan_value"><?=$formular->v_num?></span><br/>
+
+            <? if($formular->r_num): ?>
             <span class="param">Rechnungsnummer: </span><span
             class="value"><?=($formular->r_num) ? $formular->r_num : "none";?></span><br/>
+            <? endif; ?>
+
             <span class="param">Abreisedatum: </span><span
-            class="value"><?=$formular->payment_date->format('d.m.Y')?></span><br/>
+            class="value"><?=$formular->prepayment_date->format('d.m.Y')?></span><br/>
+
         </div>
 
         <div class="right-info">
@@ -83,7 +89,7 @@
             <div class="anzahlung-block">
                 <p>Anzahlung sofort nach Erhalt de Rechnung: <?=$formular->price['anzahlung_value']?> &euro;</p>
 
-                <p>Restzahlung fallig am: <?=$formular->payment_date->format('d-M-y')?>
+                <p>Restzahlung fallig am: <?=$formular->prepayment_date->format('d-M-y')?>
                     &nbsp;&nbsp;<?=($formular->price['brutto'] - $formular->price['anzahlung_value'])?> &euro;</p>
             </div>
         </div>
@@ -114,9 +120,13 @@
                 <td class="param">&nbsp;</td>
                 <td>&nbsp;</td>
             </tr>
-            <tr class="up">
+            <tr class="up underline">
                 <td class="param">Endpreise Netto</td>
                 <td><?=$formular->price['netto']?></td>
+            </tr>
+            <tr>
+                <td class="param">Paid</td>
+                <td><?=$formular->paid_amount?></td>
             </tr>
             <? endif; ?>
         </table>
@@ -152,6 +162,7 @@
         <a href="formular/edit/<?=$formular->id?>" class="btn btn-small btn-blue">Edit Formular</a>
         <? else: ?>
         <a href="formular/status/<?=$formular->id?>" class="btn btn-small btn-blue">Edit Statuses</a>
+        <a href="formular/payments/<?=$formular->id?>" class="btn btn-small btn-blue">Payments</a>
         <? endif; ?>
         <button class="btn btn-small btn-blue" id="addmail-button">Add mail</button>
         <button class="btn btn-small btn-blue" id="druck-button">Druck</button>

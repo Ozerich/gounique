@@ -502,7 +502,7 @@ input:focus {
 
 .result-page .anzahlung-block label{
     font-weight: bold;
-    width: 100px;
+    width: 150px;
     display: inline-block;
     margin-top: 10px;
 }
@@ -587,5 +587,47 @@ input:focus {
 #status-page .status .buttons{
     float: right;
 }
+
+#payment-page .payments-list{
+    width: 500px;
+    margin: 0 auto;
+    border: 1px solid black;
+    border-collapse: separate;
+    padding: 4px;
+}
+
+#payment-page .payments-list caption{
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+#payment-page .payments-list .total-amount{
+    font-weight: bold;
+    text-align: right;
+    padding-right: 15px;
+}
+
+#payment-page .payments-list .total-amount-value{
+    font-weight: bold;
+}
+
+
+#payment-page .newpayment-block{
+    width: 500px;
+    margin: 0 auto;
+    margin-top: 10px;
+}
+
+#payment-page .newpayment-block label{
+    display: block;
+    font-weight: bold;
+}
+
+#payment-page .newpayment-block input#payment-value{
+    float: left;
+    margin-right: 15px;
+}
+
 
 

@@ -48,4 +48,11 @@ function time_to_mysqldatetime($time = "")
     return time_to_mysqldate($time)." ".time_to_mysqltime($time);
 }
 
+function inputdate_to_mysqldate($date = "")
+{
+    $time = mktime(0,0,0,substr($date, 2, 2), substr($date,0,2), substr($date, 4));
+
+    return time_to_mysqldate($time);
+}
+
 ?>

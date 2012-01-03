@@ -76,7 +76,7 @@ class Formular_Controller extends MY_Controller
                     'agency_id' => $this->input->post('agency_id'),
                     'created_date' => date('Y-m-d', time()),
                     'type' => $this->input->post('formular-type'),
-                    'r_num' => '-1',
+                    'r_num' => 0,
                     'provision' => $this->input->post('provision'),
                     'flight_text' => $this->input->post('flightplan'),
                     'flight_price' => $this->input->post('flightprice'),
@@ -282,14 +282,6 @@ class Formular_Controller extends MY_Controller
         }
     }
 
-    private function usertime_to_mysql($date, $end = false)
-    {
-        $day = substr($date, 0, 2);
-        $res = mktime(0, 0, 0, substr($date, 2, 2), ($end ? $day - 1 : $day), substr($date, 4));
-
-        return date("Y-m-d", $res);
-    }
-
     public function find($mode = "")
     {
         $this->layout_view = '';
@@ -431,8 +423,12 @@ class Formular_Controller extends MY_Controller
                 }
 
             $formular->comment = $this->input->post("bigcomment");
+
             $formular->prepayment = $this->input->post("prepayment");
-            $formular->payment_date = $this->usertime_to_mysql($this->input->post("prepayment_date"));
+
+            $formular->prepayment_date = inputdate_to_mysqldate($this->input->post("preprepayment_date"));
+            $formular->finalpayment_date = inputdate_to_mysqldate($this->input->post("finalpayment_date"));
+            $formular->departure_date = inputdate_to_mysqldate($this->input->post("departure_date"));
 
             $formular->save();
 
@@ -584,5 +580,29 @@ class Formular_Controller extends MY_Controller
         redirect('');
     }
 
+    public function payments($id = 0)
+    {
+        $formular = Formular::find_by_id($id);
+
+        if(!$formular)
+        {
+            show_404();
+            return false;
+        }
+
+        if($_POST)
+        {
+            FormularPayment::create(array(
+                "formular_id" => $id,
+                "value" => $this->input->post("payment_value"),
+                "datetime" => time_to_mysqldatetime(time()),
+                "user_id" => $this->user->id,
+            ));
+
+            redirect("formular/".$id);
+        }
+
+        $this->view_data['formular'] = $formular;
+    }
 
 }
