@@ -41,12 +41,19 @@
 $route['default_controller'] = 'dashboard_controller';
 $route['404_override'] = '';
 
-$route['kundenverwaltung'] = 'client_controller';
+$route['kundenverwaltung'] = 'kundenverwaltung_controller';
+
+$route['agenturen'] = 'kundenverwaltung_controller/agenturen';
+$route['incoming'] = 'kundenverwaltung_controller/incoming';
+$route['stammkunden'] = 'kundenverwaltung_controller/stammkunden';
+$route['mitarbeiter'] = 'kundenverwaltung_controller/mitarbeiter';
+
+
 
 $route['auth'] = 'auth_controller';
 
 $route['login'] = 'auth_controller/login';
-$route['logout'] = 'cuth_controller/logout';
+$route['logout'] = 'auth_controller/logout';
 
 $route['settings'] = 'settings_controller';
 $route['settings'] = 'settings_controller/offers';

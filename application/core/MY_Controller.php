@@ -33,6 +33,8 @@ class MY_Controller extends CI_Controller
         if ($this->content_view !== FALSE && empty($this->content_view))
             $this->content_view = $controller_class . "/" . $this->router->method;
 
+
+
         $content = file_exists(APPPATH . "views/" . $this->content_view . EXT)
                         ? $this->load->view($this->content_view, $this->view_data, TRUE) : FALSE;
 
