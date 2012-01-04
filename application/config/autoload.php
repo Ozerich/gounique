@@ -65,7 +65,7 @@ $autoload['libraries'] = array('session');
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array('url', 'form');
+$autoload['helper'] = array('url', 'form', 'date');
 
 $autoload['sparks'] = array('php-activerecord/0.0.2');
 

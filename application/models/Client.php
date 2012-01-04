@@ -1,8 +1,8 @@
 <?php
 
-class Agency extends ActiveRecord\Model
+class Client extends ActiveRecord\Model
 {
-    static $table_name = "agencies";
+    static $table_name = "clients";
 
     public function get_formulars()
     {

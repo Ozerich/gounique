@@ -11,7 +11,7 @@ class Formular extends ActiveRecord\Model
 
     public function get_agency()
     {
-        return Agency::find_by_id($this->agency_id);
+        return Client::find_by_id($this->agency_id);
     }
 
     public function get_persons()

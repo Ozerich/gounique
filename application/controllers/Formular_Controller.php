@@ -63,7 +63,7 @@ class Formular_Controller extends MY_Controller
 
     public function create($agency_id = 0)
     {
-        $agency = Agency::find_by_id($agency_id);
+        $agency = Client::find_by_id($agency_id);
 
         if (!$agency) {
             show_404();

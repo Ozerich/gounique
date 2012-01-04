@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="css/reset.css" type="text/css" media="screen" title="no title"/>
 
     <link rel="stylesheet/less" href="css/main.less" type="text/css"/>
+    <link rel="stylesheet/less" href="css/arrows.css" type="text/css"/>
 
 
     <script src="js/jquery-1.7.1.min.js"></script>

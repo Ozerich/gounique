@@ -8,8 +8,7 @@ class MY_Controller extends CI_Controller
     protected $content_view = "";
     protected $view_data = array();
 
-    protected $left_header = "";
-    protected $right_header = "";
+    private $template_path;
 
 
     public function __construct()
@@ -18,8 +17,6 @@ class MY_Controller extends CI_Controller
 
         $this->user = $this->session->userdata('user_id') ? User::find($this->session->userdata('user_id')) : FALSE;
 
-        if(!$this->user)
-            redirect('login');
 
         $this->view_data['user'] = $this->user;
     }
@@ -31,8 +28,7 @@ class MY_Controller extends CI_Controller
         $controller_class = strpos(strtolower($this->router->class), '_controller') !== FALSE ? substr($this->router->class, 0, -11) : $this->router->class;
 
         if ($this->content_view !== FALSE && empty($this->content_view))
-            $this->content_view = $controller_class . "/" . $this->router->method;
-
+            $this->content_view = $controller_class . "/" .  str_replace('_','',$this->router->method). (($this->template_path) ? '/'.$this->template_path : '');
 
 
         $content = file_exists(APPPATH . "views/" . $this->content_view . EXT)
@@ -47,6 +43,11 @@ class MY_Controller extends CI_Controller
     protected function set_page_title($title)
     {
         $this->view_data['page_title'] = $title;
+    }
+
+    protected function set_page_tpl($path)
+    {
+        $this->template_path = $path;
     }
 }
 

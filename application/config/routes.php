@@ -48,6 +48,13 @@ $route['incoming'] = 'kundenverwaltung_controller/incoming';
 $route['stammkunden'] = 'kundenverwaltung_controller/stammkunden';
 $route['mitarbeiter'] = 'kundenverwaltung_controller/mitarbeiter';
 
+$route['agenturen/new'] = 'kundenverwaltung_controller/new_/agenturen';
+$route['incoming/new'] = 'kundenverwaltung_controller/new_/incoming';
+$route['stammkunden/new'] = 'kundenverwaltung_controller/new_/stammkunden';
+$route['mitarbeiter/new'] = 'kundenverwaltung_controller/new_/mitarbeiter';
+
+$route['kundenverwaltung/(:any)'] = 'kundenverwaltung_controller/$1';
+
 
 
 $route['auth'] = 'auth_controller';
