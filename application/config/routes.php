@@ -38,30 +38,32 @@
 |
 */
 
-$route['default_controller'] = 'Dashboard_Controller';
+$route['default_controller'] = 'dashboard_controller';
 $route['404_override'] = '';
 
-$route['auth'] = 'Auth_Controller';
+$route['kundenverwaltung'] = 'client_controller';
 
-$route['login'] = 'Auth_Controller/login';
-$route['logout'] = 'Auth_Controller/logout';
+$route['auth'] = 'auth_controller';
 
-$route['settings'] = 'Settings_Controller';
-$route['settings'] = 'Settings_Controller/offers';
-$route['settings/(:any)'] = 'Settings_Controller/$1';
+$route['login'] = 'auth_controller/login';
+$route['logout'] = 'cuth_controller/logout';
 
-$route['formular'] = 'Formular_Controller';
-$route['formular/final/(:num)'] = 'Formular_Controller/final_/$1';
-$route['formular/(:num)'] = 'Formular_Controller/final_/$1';
-$route['formular/(:any)'] = 'Formular_Controller/$1';
+$route['settings'] = 'settings_controller';
+$route['settings'] = 'settings_controller/offers';
+$route['settings/(:any)'] = 'settings_controller/$1';
 
-$route['dashboard'] = 'DashBoard_Controller';
-$route['dashboard/(:any)'] = 'DashBoard_Controller/$1';
+$route['formular'] = 'formular_controller';
+$route['formular/final/(:num)'] = 'formular_controller/final_/$1';
+$route['formular/(:num)'] = 'formular_controller/final_/$1';
+$route['formular/(:any)'] = 'formular_controller/$1';
+
+$route['dashboard'] = 'dashBoard_controller';
+$route['dashboard/(:any)'] = 'dashBoard_controller/$1';
 
 
-$route['agency'] = 'Dashboard';
-$route['agency/(:num)'] = 'Agency_Controller/view/$1';
-$route['agency/(:any)'] = 'Agency_Controller/$1';
+$route['agency'] = 'dashboard';
+$route['agency/(:num)'] = 'agency_Controller/view/$1';
+$route['agency/(:any)'] = 'agency_Controller/$1';
 
 
 

@@ -1,0 +1,784 @@
+.linearGradient(@stop1:0, @color1:#ccc, @stop2:50%, @color2:#ddd, @stop3:100%, @color3:#ccc){
+    background-color:@color2;
+    background:-webkit-gradient(linear, left bottom, left top, color-stop(@stop1, @color1), color-stop(@stop2, @color2), color-stop(@stop3, @color3));
+    background:-moz-linear-gradient(left bottom, @color1 @stop1, @color2 @stop2, @color3 @stop3);
+    background:-ms-linear-gradient(left bottom, @color1 @stop1, @color2 @stop2, @color3 @stop3);
+    background:-o-linear-gradient(left bottom, @color1 @stop1, @color2 @stop2, @color3 @stop3);
+    background:linear-gradient(left bottom, @color1 @stop1, @color2 @stop2, @color3 @stop3);
+    -pie-background: linear-gradient(@color1, @color2, @color3);
+    filter: e(%("progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=%d,endColorstr=%d)", @color1, @color3));
+}
+
+.border-radius (@radius) {
+  border-radius: @radius;
+  -moz-border-radius: @radius;
+  -webkit-border-radius: @radius;
+}
+
+* {
+    margin: 0;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  position: relative;
+}
+
+#wrapper{
+    padding-bottom: 100px;
+}
+
+div.content{
+    width: 900px;
+    margin: 0 auto;
+}
+
+/*---------------------------------------------------------------
+    Header
+--------------------------------------------------------------- */
+
+#header{
+    width: 100%;
+    background: url('img/small-logo.png') no-repeat 15px center #4f4b4c;
+    height: 25px;
+}
+
+#header .time{
+    float: right;
+    display: block;
+    padding: 1px 10px 0 0;
+    font-size: 17px;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+/* --------------------------------------------------------------
+ Footer
+-------------------------------------------------------------- */
+
+#footer-wr {
+  height: 100px;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+}
+
+#footer-wr #footer-logo{
+    height: 56px;
+    width: 207px;
+    margin: 0 auto 14px auto;
+    background: url('img/footer-logo.jpg');
+}
+
+
+#footer {
+    background: url('img/small-logo.png') no-repeat 15px center #a7a6a6;
+    width: 100%;
+    height: 30px;
+    position: relative;
+}
+
+#footer .copyright{
+    text-align: center;
+    width: 100%;
+    display: block;
+    color: #fff;
+    font-size: 14px;
+    padding-top: 6px;
+}
+
+#footer .username{
+    position: absolute;
+    right: 10px;
+    top: 4px;
+    font-size: 18px;
+    text-transform: uppercase;
+    color: #fff;
+}
+
+/*-------------------------------------------------------------------------------------------------
+    Navigation
+-------------------------------------------------------------------------------------------------*/
+
+.nav{
+    margin: 30px 0 0 25px;
+}
+
+.nav .row{
+    margin-bottom: 40px;
+}
+
+.nav a{
+    width: 250px;
+    margin-right: 50px;
+    display: inline-block;
+    text-align: center;
+    color: #000;
+    font-size: 22px;
+
+    .linearGradient(0, #fff, 100%, #b9e8fa);
+    .border-radius(7px);
+
+    height: 40px;
+    line-height: 40px;
+}
+.nav a.center{margin-left: 300px;}
+.nav a.last{margin-right: 0;}
+
+.nav a:hover{
+    text-decoration: none;
+    .linearGradient(0, #fff, 100%, #59a1fa);
+}
+
+/*----------------------------------------------------------------------------------------------------------
+    Page header
+----------------------------------------------------------------------------------------------------------*/
+
+#page-header-wr{
+    height: 180px;
+    width: 100%;
+    border-bottom: 5px solid #918f8f;
+}
+
+#page-header{
+    height: 100%;
+    width: 800px;
+    margin: 0 auto;
+}
+
+#page-header .home-link{
+    display: block;
+    float: left;
+    margin: 15px 0 0 10px;
+}
+
+#page-header .page-path{
+    padding: 50px 0 0 500px;
+}
+
+#page-header .page-path li{
+    width: 250px;
+    text-align: center;
+    color: #000;
+    font-size: 22px;
+
+    .linearGradient(0, #fff, 100%, #b9e8fa);
+    .border-radius(7px);
+
+    height: 40px;
+    line-height: 40px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.bold {
+    font-weight: bold;
+}
+
+.input {
+    float: left;
+    margin-right: 20px;
+}
+
+.input label {
+    display: block;
+    font-weight: bold;
+}
+
+.input.personen {
+    display: block;
+    float: none;
+}
+
+.person span {
+    display: block;
+    float: left;
+    margin-right: 10px;
+    margin-top: 5px;
+}
+
+input:focus {
+    border: 1px solid red;
+}
+
+#date-wr label {
+    float: left;
+}
+
+#flightplan {
+    width: 415px;
+    height: 120px;
+}
+
+#hotelname {
+    font-size: 15px;
+}
+
+#page2, #page3 {
+    margin-top: 10px;
+}
+
+#resultpage .number {
+    margin: 0 8px 0 -20px;
+}
+
+#resultpage {
+    width: 800px;
+    margin: 0 auto;
+}
+
+#resultpage #flightplan-wr {
+    float: left;
+    width: 350px;
+    padding-left: 20px;
+}
+
+#resultpage #results-wr {
+    padding-left: 20px;
+    width: 780px;
+    margin-bottom: 10px;
+}
+
+#resultpage #topinfo {
+    width: 780px;
+    padding: 5px 10px;
+    margin-bottom: 10px;
+}
+
+#resultpage #topinfo .param {
+    font-weight: bold;
+}
+
+#resultpage .block {
+    border: 1px solid black;
+}
+
+#resultpage #results {
+    margin-bottom: 10px;
+    margin-top: -14px;
+}
+
+#resultpage .price_title {
+    display: inline-block;
+    width: 140px;
+}
+
+#resultpage #priceresult {
+    float: right;
+    border: 1px solid black;
+    width: 350px
+}
+
+#resultpage .personresult-wr {
+    margin-bottom: 10px;
+}
+
+.manuel-wr, .hotel-wr, .manuelhotel-wr {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid black;
+}
+
+#buttons, #hotel-buttons, #result-buttons {
+    margin-top: 10px;
+}
+
+#buttons button:focus, #hotel-buttons button:focus, #result-buttons button:focus, #final-buttons button:focus {
+    background-color: #3C84A1;
+}
+
+.hiddentext {
+    display: none;
+}
+
+.agency-list {
+    width: 100%;
+    margin: 0 auto;
+    clear: both;
+}
+
+.add-button-wr {
+    clear: both;
+}
+
+.add-button-wr button {
+    float: right;
+}
+
+.agency-list a.btn-small {
+    height: 18px;
+    line-height: 18px;
+}
+
+.agency-list td {
+    padding: 5px 0;
+}
+
+.agency-item {
+    width: 510px;
+    margin: 0 auto;
+}
+
+.agency-item .param, .agency-item .view-param {
+    margin-top: 10px;
+    clear: both;
+}
+
+.agency-item .param input.plz {
+    width: 55px;
+}
+
+.agency-item .param input.ort {
+    width: 296px;
+}
+
+.agency-item .param input[type=radio] {
+    width: auto !important;
+}
+
+.agency-item .param label, .agency-item .view-param label {
+    font-weight: bold;
+    width: 131px;
+    display: block;
+    float: left;
+    vertical-align: top;
+}
+
+.agency-item #type label {
+    width: 171px;
+}
+
+.agency-item .param input {
+    width: 368px;
+}
+
+.agency-item .param textarea {
+    width: 372px;
+}
+
+.agency-item .view-param input {
+    width: 316px;
+}
+
+.agency-item .view-param textarea {
+    width: 320px;
+}
+
+.agency-item #kunden-block {
+    display: none;
+}
+
+.agency-item .param-header {
+    font-weight: bold;
+}
+
+.agency-item .buttons {
+    float: right;
+    margin-top: 10px;
+    width: 150px;
+}
+
+.agency-item .view-param span {
+    width: 320px;
+    float: left;
+    display: block;
+}
+
+.agency-item .view-param button {
+    float: left;
+    margin-left: 5px;
+}
+
+.agency-item .edit-button {
+    height: 21px;
+    line-height: 10px;
+}
+
+.agency-item .view-param input[type=text], .agency-item .view-param textarea {
+    display: none;
+    float: left;
+}
+
+.agency-item .agency-params {
+    margin-bottom: 15px;
+}
+
+#agency-all td.kundennummer {
+    padding-left: 5px;
+}
+
+.agency-item .block {
+    border: 1px solid black;
+}
+
+.agency-item .block span.header {
+    border-bottom: 1px solid black;
+    padding: 2px 5px;
+    display: block;
+    font-weight: bold;
+}
+
+.agency-item .block .agencyblock-content {
+    min-height: 50px;
+    padding: 3px 3px;
+}
+
+.agency-item .topinfo .block .agencyblock-content {
+    min-height: 102px;
+}
+
+.agency-item .address {
+    float: left;
+    width: 250px;
+}
+
+.agency-item .agencyperson {
+    float: right;
+    width: 250px;
+}
+
+.agency-item .comment {
+    clear: both;
+    margin-top: 10px;
+}
+
+.agency-view {
+    margin-bottom: 25px;
+}
+
+.agency-item .edit-button-wr {
+    float: right;
+    margin: 10px 2px 20px;
+}
+
+/* NEW STYLES!!! */
+
+.result-page .info-block {
+    border: 1px solid black;
+    margin-bottom: 15px;
+    padding: 4px;
+}
+
+.result-page .info-block .left-info {
+    float: left;
+    width: 50%;
+}
+
+.result-page .info-block .right-info {
+    float: right;
+    width: 50%;
+    text-align: left;
+}
+
+.result-page .info-block .param {
+    display: inline-block;
+    width: 125px;
+    font-weight: bold;
+}
+
+.result-page h3.block-header {
+    margin-bottom: 8px;
+}
+
+.result-page .persons-block .sex {
+    text-transform: uppercase;
+    width: 40px;
+    display: inline-block;
+    padding-left: 5px;
+}
+
+.result-page .item-list {
+    margin-top: 15px;
+}
+
+.result-page .item-list span.header {
+    color: #444444;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.result-page .item-list hr {
+    margin: 5px 0;
+}
+
+.result-page .flight-block {
+    margin-top: 15px;
+}
+
+.result-page .bottom-block {
+    margin-top: 25px;
+    border-top: 1px solid black;
+    padding-top: 15px;
+}
+
+.result-page .bottom-block .price-table {
+    display: block;
+    float: right;
+    border: 1px solid black;
+}
+
+.result-page .bottom-block .price-table tr{
+    height: 15px;
+}
+
+.result-page .bottom-block .price-table td {
+    width: 75px;
+    text-align: right;
+    padding: 1px 3px;
+    font-size: 13px;
+}
+
+.result-page .bottom-block .price-table td.param{
+    border-right: 1px solid black;
+    width: 150px;
+}
+
+.result-page .bottom-block .price-table tr.underline{
+    border-bottom: 1px solid black;
+}
+
+.result-page .bottom-block .price-table tr.up td{
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.result-page .bottom-block .price-table tr.empty td{
+    border-bottom: 1px solid black;
+}
+
+.result-page .bottom-block .left{
+    float: left;
+}
+
+.result-page .comment-block{
+    margin-top: 10px;
+    width: 600px;
+}
+
+.result-page .comment-block textarea{
+    width: 100%;
+    height: 100px;
+}
+
+.result-page .bottom-block .address-block{
+    width: 600px;
+    margin-top: 15px;
+}
+
+.result-page #stage{
+    margin-top: 15px;
+}
+
+.result-page .mail-block{
+    margin-top: 15px;
+}
+
+.result-page #final-buttons{
+    margin-top: 15px;
+}
+
+.result-page .anzahlung-block{
+    margin-top: 15px;
+}
+
+.result-page .anzahlung-block label{
+    font-weight: bold;
+    width: 150px;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+#status-page{
+    width: 500px;
+    margin: 0 auto;
+}
+
+#status-page .item{
+    margin-bottom: 20px;
+    border: 1px solid black;
+    padding: 4px;
+}
+
+#status-page .item-edit{
+    display: none;
+    margin-top: 10px;
+    border-top: 1px solid black;
+    padding-top: 5px;
+}
+
+#status-page .item-edit label.input-header{
+    font-weight: bold;
+    display: block;
+}
+
+#status-page .item-edit textarea{
+    width: 98%;
+    height: 50px;
+}
+
+#status-page .item-edit span.error{
+    color: #ff0000;
+    padding-left: 2px;
+    font-weight: bold;
+    display: none;
+}
+
+
+#status-page .status-log{
+    display: none;
+    margin-top: 10px;
+    border-top: 1px solid black;
+    padding-top: 10px;
+}
+
+#status-page .status-log .log{
+    border-bottom: 1px dotted #0d000a;
+    padding: 5px 0;
+}
+
+#status-page .status-log .log .date{
+    width: 210px;
+    display: inline-block;
+}
+
+#status-page .status-log .log .path{
+    font-weight: bold;
+    font-size: 14px;
+}
+
+#status-page .status-log .log .user{
+    text-align: right;
+    display: inline-block;
+    width: 190px;
+}
+
+#status-page .status-log button{
+    margin-top: 15px;
+}
+
+
+#status-page .item-info .num{
+    font-weight: bold;
+}
+
+#status-page .status .value{
+    font-weight: bold;
+}
+
+#status-page .status .buttons{
+    float: right;
+}
+
+#payment-page .payments-list{
+    width: 500px;
+    margin: 0 auto;
+    border: 1px solid black;
+    border-collapse: separate;
+    padding: 4px;
+}
+
+#payment-page .payments-list caption{
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+#payment-page .payments-list .total-amount{
+    font-weight: bold;
+    text-align: right;
+    padding-right: 15px;
+}
+
+#payment-page .payments-list .total-amount-value{
+    font-weight: bold;
+}
+
+
+#payment-page .newpayment-block{
+    width: 500px;
+    margin: 0 auto;
+    margin-top: 10px;
+}
+
+#payment-page .newpayment-block label{
+    display: block;
+    font-weight: bold;
+}
+
+#payment-page .newpayment-block input#payment-value{
+    float: left;
+    margin-right: 15px;
+}
+
+/*------------------------------------------------------------------------------------------------------------
+    Dashboard
+-------------------------------------------------------------------------------------------------------------*/
+
+#dashboard-page #header-logo
+{
+    background: url('img/header-logo.jpg');
+    width: 395px;
+    height: 146px;
+    margin: 50px auto 0 auto;
+}
+
+
+
+/*-----------------------------------------------------------------------------------------------------------
+    Kundenverwaltung
+-----------------------------------------------------------------------------------------------------------*/
+
+#kundenverwaltung-page .nav{
+    margin: 100px 0 100px 0;
+}
+
+#kundenverwaltung-page .nav .row{
+    margin-bottom: 100px
+}
+
+
+

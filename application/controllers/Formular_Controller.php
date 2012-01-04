@@ -96,8 +96,8 @@ class Formular_Controller extends MY_Controller
                             'roomcapacity_id' => $_POST['roomcapacity'][$ind],
                             'roomtype_id' => $_POST['roomtype'][$ind],
                             'hotelservice_id' => $_POST['service'][$ind],
-                            'date_start' => $this->usertime_to_mysql($_POST['datestart'][$ind]),
-                            'date_end' => $this->usertime_to_mysql($_POST['dateend'][$ind]),
+                            'date_start' => inputdate_to_mysqldate($_POST['datestart'][$ind]),
+                            'date_end' => inputdate_to_mysqldate($_POST['dateend'][$ind]),
                             'price' => $_POST['price'][$ind],
                             'days_count' => $_POST['dayscount'][$ind],
                             'transfer' => $_POST['transfer'][$ind],
@@ -114,8 +114,8 @@ class Formular_Controller extends MY_Controller
                             'roomcapacity_id' => $_POST['roomcapacity'][$ind],
                             'roomtype_id' => $_POST['roomtype'][$ind],
                             'hotelservice_id' => $_POST['service'][$ind],
-                            'date_start' => $this->usertime_to_mysql($_POST['datestart'][$ind]),
-                            'date_end' => $this->usertime_to_mysql($_POST['dateend'][$ind]),
+                            'date_start' => inputdate_to_mysqldate($_POST['datestart'][$ind]),
+                            'date_end' => inputdate_to_mysqldate($_POST['dateend'][$ind]),
                             'price' => $_POST['price'][$ind],
                             'days_count' => $_POST['dayscount'][$ind],
                             'transfer' => $_POST['transfer'][$ind],
@@ -130,8 +130,8 @@ class Formular_Controller extends MY_Controller
                         'formular_id' => $formular->id,
                         'status' => 'none',
                         'text' => $manuel_text,
-                        'date_start' => $this->usertime_to_mysql($_POST['manuel_datestart'][$ind]),
-                        'date_end' => $this->usertime_to_mysql($_POST['manuel_dateend'][$ind]),
+                        'date_start' => inputdate_to_mysqldate($_POST['manuel_datestart'][$ind]),
+                        'date_end' => inputdate_to_mysqldate($_POST['manuel_dateend'][$ind]),
                         'days_count' => $_POST['manuel_dayscount'][$ind],
                         'price' => $_POST['manuel_price'][$ind]
                     ));
@@ -176,8 +176,8 @@ class Formular_Controller extends MY_Controller
                         $hotel->roomcapacity_id = $_POST['roomcapacity'][$ind];
                         $hotel->roomtype_id = $_POST['roomtype'][$ind];
                         $hotel->hotelservice_id = $_POST['service'][$ind];
-                        $hotel->date_start = $this->usertime_to_mysql($_POST['datestart'][$ind]);
-                        $hotel->date_end = $this->usertime_to_mysql($_POST['dateend'][$ind]);
+                        $hotel->date_start = inputdate_to_mysqldate($_POST['datestart'][$ind]);
+                        $hotel->date_end = inputdate_to_mysqldate($_POST['dateend'][$ind]);
                         $hotel->days_count = $_POST['dayscount'][$ind];
                         $hotel->price = $_POST['price'][$ind];
                         $hotel->transfer = $_POST['transfer'][$ind];
@@ -208,8 +208,8 @@ class Formular_Controller extends MY_Controller
                                 'roomcapacity_id' => $_POST['roomcapacity'][$ind],
                                 'roomtype_id' => $_POST['roomtype'][$ind],
                                 'hotelservice_id' => $_POST['service'][$ind],
-                                'date_start' => $this->usertime_to_mysql($_POST['datestart'][$ind]),
-                                'date_end' => $this->usertime_to_mysql($_POST['dateend'][$ind]),
+                                'date_start' => inputdate_to_mysqldate($_POST['datestart'][$ind]),
+                                'date_end' => inputdate_to_mysqldate($_POST['dateend'][$ind]),
                                 'price' => $_POST['price'][$ind],
                                 'days_count' => $_POST['dayscount'][$ind],
                                 'transfer' => $_POST['transfer'][$ind],
@@ -226,8 +226,8 @@ class Formular_Controller extends MY_Controller
                                 'roomcapacity_id' => $_POST['roomcapacity'][$ind],
                                 'roomtype_id' => $_POST['roomtype'][$ind],
                                 'hotelservice_id' => $_POST['service'][$ind],
-                                'date_start' => $this->usertime_to_mysql($_POST['datestart'][$ind]),
-                                'date_end' => $this->usertime_to_mysql($_POST['dateend'][$ind]),
+                                'date_start' => inputdate_to_mysqldate($_POST['datestart'][$ind]),
+                                'date_end' => inputdate_to_mysqldate($_POST['dateend'][$ind]),
                                 'price' => $_POST['price'][$ind],
                                 'days_count' => $_POST['dayscount'][$ind],
                                 'transfer' => $_POST['transfer'][$ind],
@@ -244,8 +244,8 @@ class Formular_Controller extends MY_Controller
                         $manuel = FormularManuel::find_by_id($_POST['manuel_id'][$ind]);
 
                         $manuel->text = $manuel_text;
-                        $manuel->date_start = $this->usertime_to_mysql($_POST['manuel_datestart'][$ind]);
-                        $manuel->date_end = $this->usertime_to_mysql($_POST['manuel_dateend'][$ind]);
+                        $manuel->date_start = inputdate_to_mysqldate($_POST['manuel_datestart'][$ind]);
+                        $manuel->date_end = inputdate_to_mysqldate($_POST['manuel_dateend'][$ind]);
                         $manuel->days_count = $_POST['manuel_dayscount'][$ind];
                         $manuel->price = $_POST['manuel_price'][$ind];
 
@@ -257,8 +257,8 @@ class Formular_Controller extends MY_Controller
                             'formular_id' => $formular->id,
                             'status' => 'none',
                             'text' => $manuel_text,
-                            'date_start' => $this->usertime_to_mysql($_POST['manuel_datestart'][$ind]),
-                            'date_end' => $this->usertime_to_mysql($_POST['manuel_dateend'][$ind]),
+                            'date_start' => inputdate_to_mysqldate($_POST['manuel_datestart'][$ind]),
+                            'date_end' => inputdate_to_mysqldate($_POST['manuel_dateend'][$ind]),
                             'days_count' => $_POST['manuel_dayscount'][$ind],
                             'price' => $_POST['manuel_price'][$ind]
                         ));
@@ -361,8 +361,8 @@ class Formular_Controller extends MY_Controller
 
             case "price":
                 $price = 0;
-                $date_start = $this->usertime_to_mysql($date_start);
-                $date_end = $this->usertime_to_mysql($date_end, TRUE);
+                $date_start = inputdate_to_mysqldate($date_start);
+                $date_end = inputdate_to_mysqldate($date_end, TRUE);
 
                 while ($date_start <= $date_end)
                 {
