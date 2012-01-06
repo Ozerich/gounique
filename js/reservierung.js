@@ -286,6 +286,12 @@ function BindHotelEvents() {
         }
 
         $(this).find('button.add').click(function () {
+            $(hotel_wrapper).hide();
+
+            $('.reservierung-page #formular-buttons').show();
+
+            $('#flight-window').hide();
+
             return false;
         });
 
@@ -469,6 +475,30 @@ function BindManuelEvents() {
                 $(manuel_block).find("#price").focus();
             }
         });
+
+        $(this).find('button.cancel').click(function () {
+            $(manuel_wrapper).find('input, textarea').html('');
+            $(manuel_wrapper).find('select option:first').attr('selected', 'selected');
+
+            $(manuel_wrapper).remove();
+
+            $('.reservierung-page #formular-buttons').show();
+
+            $('#flight-window').hide();
+
+            return false;
+        });
+
+        $(this).find('button.add').click(function () {
+            $(manuel_wrapper).hide();
+
+            $('.reservierung-page #formular-buttons').show();
+
+            $('#flight-window').hide();
+
+            return false;
+        });
+
     });
 }
 
@@ -590,12 +620,12 @@ $(document).ready(function () {
 
 
     $('.reservierung-page #formular-buttons #addhotel-button').click(function () {
-        var hotel_div = "#hotel_" + ($('.hotel').size() - 1);
+        var hotel_div = "#hotel_" + ($('.hotel').size());
 
-        $('.hotel-wr:first').clone().appendTo(".hotels").attr('id', 'hotel_' + ($('.hotel').size() - 2)).show();
+        $('.hotel-wr:first').clone().appendTo(".hotels").attr('id', 'hotel_' + ($('.hotel').size() - 1)).show();
 
         $(hotel_div).find('input[type=text], select, input[type=hidden], textarea').each(function () {
-            $(this).attr('name', $(this).attr('name') + '[' + ($('.hotel').size() - 2) + ']');
+            $(this).attr('name', $(this).attr('name') + '[' + ($('.hotel').size() - 1) + ']');
         });
 
 
@@ -622,12 +652,12 @@ $(document).ready(function () {
 
 
     $('#formular-buttons #addmanuel-button').click(function () {
-        var manuel_div = "#manuel_" + ($('.manuel').size() - 1);
+        var manuel_div = "#manuel_" + ($('.manuel').size());
 
-        $('.manuel-wr:first').clone().appendTo(".manuels").attr('id', 'manuel_' + ($('.manuel').size() - 2)).show();
+        $('.manuel-wr:first').clone().appendTo(".manuels").attr('id', 'manuel_' + ($('.manuel').size() - 1)).show();
 
         $(manuel_div).find('input[type=text], select, input[type=hidden], textarea').each(function () {
-            $(this).attr('name', $(this).attr('name') + '[' + ($('.hotel').size() - 2) + ']');
+            $(this).attr('name', $(this).attr('name') + '[' + ($('.hotel').size() - 1) + ']');
         });
 
         $('#formular-buttons').hide();
@@ -644,7 +674,7 @@ $(document).ready(function () {
             $(this).attr('id', $(this).attr('id') + '_' + ($('.manuel').size() - 1));
         });
 
-        $(manuel_div).find('#manueltype').buttonset().find('.manuelttype-date').attr('checked', 'checked')
+        $(manuel_div).find('#manueltype').buttonset().find('.manueltype-date').attr('checked', 'checked')
         $(manuel_div).find('#manueltype').buttonset('refresh');
 
         BindManuelEvents();

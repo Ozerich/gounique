@@ -7,8 +7,6 @@
             <li><span>neu formular</span></li>
         </ul>
     </div>
-
-
 </div>
 
 
@@ -105,8 +103,9 @@
     <br class="clear"/>
 </div>
 
-<div class="page" id="hotels-page">
+<div class="param-block" id="hotels-page">
     <div class="hotels">
+
         <div class="hotel hotel-wr" style="display:none">
             <div class="param">
                 <label class="param-name">Type</label>
@@ -247,7 +246,7 @@
 
                 <div class="param">
                     <label class="param-name" for="price">Price &euro;</label>
-                    <input id="price" size="4" name="price"/>
+                    <input id="price" size="4" type="text" name="price"/>
                 </div>
 
                 <div class="param">
@@ -266,7 +265,7 @@
 </div>
 
 
-<div class="page" id="manuel-page">
+<div class="param-block" id="manuel-page">
     <div class="manuels">
         <div class="manuel-wr manuel" style="display:none">
             <div class="param">
@@ -291,22 +290,22 @@
 
                 <div class="param">
                     <label class="param-name" for="datestart">Von</label>
-                    <input type="text" name="datestart" class="datestart" value="" size="10"/>
+                    <input type="text" name="manuel_datestart" class="datestart" value="" size="10"/>
                 </div>
 
                 <div class="param">
                     <label class="param-name" for="dateend">Bis&nbsp;</label>
-                    <input type="text" name="dateend" class="dateend" value="" size="10"/>
+                    <input type="text" name="manuel_dateend" class="dateend" value="" size="10"/>
                 </div>
 
                 <div class="param">
                     <label class="param-name" for="dayscount">Days Count</label>
-                    <input type="text" name="dayscount" class="dayscount" value="0" size="3"/>
+                    <input type="text" name="manuel_dayscount" class="dayscount" value="0" size="3"/>
                 </div>
 
                 <div class="param">
                     <label class="param-name" for="price">Price &euro</label>
-                    <input id="price" size="4" name="price"/>
+                    <input id="price" size="4" name="manuel_price"/>
                 </div>
 
             </div>
@@ -319,14 +318,14 @@
                 </div>
 
                 <div class="param">
-                    <label class="param-name" for="price">Price &euro</label>
-                    <input id="price" size="4" name="price"/>
+                    <label class="param-name" for="price">Price &euro;</label>
+                    <input id="price" type="text" size="4" name="manuel_price"/>
                 </div>
             </div>
 
             <div class="buttons">
                 <button class="cancel">Cancel</button>
-                <button class="add" disabled>Add</button>
+                <button class="add">Add</button>
             </div>
 
         </div>

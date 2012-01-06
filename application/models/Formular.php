@@ -11,7 +11,7 @@ class Formular extends ActiveRecord\Model
 
     public function get_kunde()
     {
-        return Client::find_by_id($this->kunde_id);
+        return Kunde::find_by_id($this->kunde_id);
     }
 
     public function get_persons()

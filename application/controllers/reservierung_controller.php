@@ -106,6 +106,8 @@ class Reservierung_Controller extends MY_Controller
                         'person_count' => $this->input->post('personcount')
                     )
                 );
+/*
+
                 if (isset($_POST['ismanuel']) && is_array($_POST['ismanuel']))
                     foreach ($_POST['ismanuel'] as $ind => $is_manuel)
                     {
@@ -146,6 +148,7 @@ class Reservierung_Controller extends MY_Controller
                             ));
                         }
                     }
+ */
                 if (isset($_POST['manuel_text']) && is_array($_POST['manuel_text']))
                     foreach ($this->input->post('manuel_text') as $ind => $manuel_text)
                     {
@@ -160,7 +163,7 @@ class Reservierung_Controller extends MY_Controller
                         ));
                     }
 
-                redirect('formular/result/' . $formular->id);
+                redirect('reservierung/result/' . $formular->id);
             }
             else
             {
@@ -182,10 +185,10 @@ class Reservierung_Controller extends MY_Controller
         }
         if ($_POST) {
 
+
             $formular->provision = $this->input->post('provision');
             $formular->flight_text = $this->input->post('flightplan');
             $formular->flight_price = $this->input->post('flightprice');
-            $formular->person_count = $this->input->post('personcount');
             $formular->person_count = $this->input->post('personcount');
 
             $formular->save();
@@ -288,7 +291,7 @@ class Reservierung_Controller extends MY_Controller
                     }
                 }
 
-            redirect('formular/result/' . $formular->id);
+            redirect('reservierung/result/' . $formular->id);
         }
 
 
@@ -301,7 +304,7 @@ class Reservierung_Controller extends MY_Controller
     public function open()
     {
         if ($_POST) {
-            redirect('formular/view/' . $_POST['vorgan']);
+            redirect('reservierung/view/' . $_POST['vorgan']);
         }
     }
 
@@ -462,7 +465,7 @@ class Reservierung_Controller extends MY_Controller
             $this->write_to_pdf($id, 3);
             $this->write_to_pdf($id, 4);
 
-            redirect('formular/final/' . $formular->id);
+            redirect('reservierung/final/' . $formular->id);
         }
 
     }
