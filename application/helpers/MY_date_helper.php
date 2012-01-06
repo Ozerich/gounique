@@ -22,6 +22,12 @@ function mysqldatetime_to_timestamp($datetime = "")
     return mktime($hours, $minutes, $seconds, $month, $day, $year);
 }
 
+function mysqldate_to_timestamp($date = "")
+{
+    list($year, $month, $day) = explode("-", $date);
+    return mktime(0,0,0,$month, $day, $year);
+}
+
 function time_to_mysqltime($time = "")
 {
     $time = getdate($time);

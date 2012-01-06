@@ -15,6 +15,18 @@
   -webkit-border-radius: @radius;
 }
 
+.buttonset-height (@height){
+
+    label.ui-button{
+        height: @height;
+    }
+
+    span.ui-button-text{
+        line-height: (@height / 2px);
+    }
+}
+
+
 .common-link{
     width: 250px;
     margin-right: 50px;
@@ -42,7 +54,7 @@
 
     .border-radius(7px);
 
-    color: #000;
+    color: #fff;
     font-size: 16px;
 
     background: #33bef2;
@@ -52,7 +64,21 @@
         background: #1fcbf0;
         text-decoration: none;
     }
+
+    &:disabled{
+        background: #cfcfcf;
+    }
 }
+
+p.error{
+    color: red;
+}
+
+
+input:focus, textarea:focus, select:focus {
+    border: 1px solid red !important;
+}
+
 
 * {
     margin: 0;
@@ -93,6 +119,12 @@ textarea{
 
 input[type=submit], button, a.button-link{
     .common-button;
+}
+
+label{
+    display: block;
+    font-weight: bold;
+    margin-bottom: 3px;
 }
 
 /*---------------------------------------------------------------
@@ -301,9 +333,6 @@ input[type=submit], button, a.button-link{
     margin-top: 5px;
 }
 
-input:focus {
-    border: 1px solid red;
-}
 
 #date-wr label {
     float: left;
@@ -396,7 +425,7 @@ input:focus {
 }
 
 
-.kundenverwaltung-new .agencyperson {
+.kundenverwaltung-new .kundeperson {
     float: right;
     width: 250px;
 }
@@ -406,7 +435,7 @@ input:focus {
     margin-top: 10px;
 }
 
-.agency-view {
+.kunde-view {
     margin-bottom: 25px;
 }
 
@@ -865,3 +894,156 @@ input:focus {
 }
 
 
+/*----------------------------------------------------------------------------------------------
+    Find kunde in create formular
+----------------------------------------------------------------------------------------------*/
+
+#findkunde-page{
+    width: 250px;
+}
+
+#findkunde-page label{
+    display: block;
+    font-weight: bold;
+    padding-bottom: 4px;
+}
+
+#findkunde-page input[type=submit]{
+    margin-left: 25px;
+}
+
+#findkunde-page .error{
+    color: red;
+    padding-bottom: 4px;
+}
+
+/*-------------------------------------------------------------------------------------------
+    Formulars
+-------------------------------------------------------------------------------------------*/
+
+.reservierung-page .formular-header{
+    width: 100%;
+    .border-radius(4px);
+    background: #f5f5f5;
+    border: 1px solid #d3d3d3;
+    padding: 7px 15px;
+    margin: -15px auto 25px auto;
+}
+
+.reservierung-page .formular-header .left-block{
+    float: left;
+    width: 50%;
+}
+
+.reservierung-page .formular-header .right-block{
+    float: right;
+}
+
+.reservierung-page .formular-header .param{
+    margin-bottom: 4px;
+}
+
+.reservierung-page .formular-header .param .param-name{
+    font-size: 12px;
+    font-weight: bold;
+    width: 110px;
+    display: inline-block;
+}
+
+.reservierung-page .formular-content .param{
+    margin-bottom: 10px;
+}
+
+.reservierung-page .formular-content .param label.param-name{
+    display: inline-block;
+    margin-right: 10px;
+    width: 120px;
+    border-right: 1px solid #cfcfcf;
+    vertical-align: top;
+    float: left;
+}
+
+.reservierung-page .formular-content input[type=text],
+.reservierung-page .formular-content select,
+.reservierung-page .formular-content textarea{
+    width: 400px;
+}
+
+.reservierung-page #formular-buttons{
+    margin-top: 15px;
+}
+
+.reservierung-page #hoteltype, .reservierung-page #manueltype{
+    .buttonset-height(22px);
+    margin-right: 10px;
+}
+
+/*--------------------------------------------------------------------------------------------
+    Formular create
+--------------------------------------------------------------------------------------------*/
+
+#createformular-page{
+    width: 800px;
+}
+
+#createformular-page .changetype-block{
+    width: 390px;
+    margin: 0 auto;
+}
+
+#createformular-page .changetype-block .type-edit{
+    margin-top: 20px;
+}
+
+#createformular-page .changetype-block .type-edit label{
+    margin-top: 10px;
+}
+
+#createformular-page .changetype-block .type-edit textarea{
+    width: 375px;
+    height: 150px;
+}
+
+#createformular-page .changetype-block .bottom-block{
+    margin-top: 10px;
+}
+
+#createformular-page p.error{
+    float: left;
+    width: 295px;
+}
+
+#createformular-page .changetype-block button{
+    float: right;
+    margin: 0 14px 0 0;
+}
+
+#createformular-page #flight-window{
+    background: none repeat scroll 0 0 #FFFEF0;
+    border: 1px solid #E6E6E6;
+    height: 200px;
+    left: 793px;
+    position: absolute;
+    top: 219px;
+    width: 400px;
+    display: none;
+    overflow: scroll;
+    padding: 5px 20px;
+}
+
+#createformular-page #flight-window .header{
+    font-size: 17px;
+    text-align:center;
+}
+
+#createformular-page #flight-window .text{
+    margin-top: 20px;
+}
+
+#createformular-page #flugpage{
+    margin-top: 20px;
+}
+
+#createformular-page #flugpage .buttons{
+    margin-top: 10px;
+}

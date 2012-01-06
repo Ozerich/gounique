@@ -9,9 +9,9 @@ class Formular extends ActiveRecord\Model
         return substr($this->zahlungsdatum, 0, 2) . "." . substr($this->zahlungsdatum, 2, 2) . "." . substr($this->zahlungsdatum, 4);
     }
 
-    public function get_agency()
+    public function get_kunde()
     {
-        return Client::find_by_id($this->agency_id);
+        return Client::find_by_id($this->kunde_id);
     }
 
     public function get_persons()

@@ -34,17 +34,25 @@ class Kundenverwaltung_Controller extends MY_Controller
 
     public function buchen($id = 0)
     {
-        redirect("formular/create/".$id);
+        redirect("reservierung//create/".$id);
     }
 
     public function historie($id = 0)
     {
+        $client = Kunde::find_by_id($id);
+
+        if(!$client)
+        {
+            show_404();
+            return false;
+        }
+
 
     }
 
     public function vervalten($id = 0)
     {
-        $client = Client::find_by_id($id);
+        $client = Kunde::find_by_id($id);
 
         if(!$client)
         {
@@ -100,7 +108,7 @@ class Kundenverwaltung_Controller extends MY_Controller
                 "provision" => $this->input->post("provision"),
                 "about" => $this->input->post("about"));
 
-            Client::create($params);
+            Kunde::create($params);
 
             redirect('/'.$type);
         }

@@ -32,7 +32,7 @@
 </div>
 
 <div class="page" id="page1">
-    <? if ($formular->agency->type == 'agency'): ?>
+    <? if ($formular->kunde->type == 'kunde'): ?>
     <div class="input" id="provision-wr">
         <label for="provision">Provision %:</label>
         <input type="text" readonly id="provision" name="provision"

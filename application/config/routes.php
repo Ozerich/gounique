@@ -41,26 +41,27 @@
 $route['default_controller'] = 'dashboard_controller';
 $route['404_override'] = '';
 
-$route['kundenverwaltung'] = 'kundenverwaltung_controller';
 
+$route['auth'] = 'auth_controller';
+$route['login'] = 'auth_controller/login';
+$route['logout'] = 'auth_controller/logout';
+
+
+$route['kundenverwaltung'] = 'kundenverwaltung_controller';
 $route['agenturen'] = 'kundenverwaltung_controller/agenturen';
 $route['incoming'] = 'kundenverwaltung_controller/incoming';
 $route['stammkunden'] = 'kundenverwaltung_controller/stammkunden';
 $route['mitarbeiter'] = 'kundenverwaltung_controller/mitarbeiter';
-
 $route['agenturen/new'] = 'kundenverwaltung_controller/new_/agenturen';
 $route['incoming/new'] = 'kundenverwaltung_controller/new_/incoming';
 $route['stammkunden/new'] = 'kundenverwaltung_controller/new_/stammkunden';
 $route['mitarbeiter/new'] = 'kundenverwaltung_controller/new_/mitarbeiter';
-
 $route['kundenverwaltung/(:any)'] = 'kundenverwaltung_controller/$1';
 
 
+$route['reservierung'] = 'reservierung_controller/create';
+$route['reservierung/(:any)'] = 'reservierung_controller/$1';
 
-$route['auth'] = 'auth_controller';
-
-$route['login'] = 'auth_controller/login';
-$route['logout'] = 'auth_controller/logout';
 
 $route['settings'] = 'settings_controller';
 $route['settings'] = 'settings_controller/offers';
@@ -71,13 +72,9 @@ $route['formular/final/(:num)'] = 'formular_controller/final_/$1';
 $route['formular/(:num)'] = 'formular_controller/final_/$1';
 $route['formular/(:any)'] = 'formular_controller/$1';
 
-$route['dashboard'] = 'dashBoard_controller';
-$route['dashboard/(:any)'] = 'dashBoard_controller/$1';
 
-
-$route['agency'] = 'dashboard';
-$route['agency/(:num)'] = 'agency_Controller/view/$1';
-$route['agency/(:any)'] = 'agency_Controller/$1';
+$route['dashboard'] = 'dashboard_controller';
+$route['dashboard/(:any)'] = 'dashboard_controller/$1';
 
 
 

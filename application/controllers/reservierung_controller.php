@@ -3,7 +3,7 @@
 define("BLANK_FILE", "UNI_Briefpapier.pdf");
 require_once APPPATH . "libraries/MPDF/mpdf.php";
 
-class Formular_Controller extends MY_Controller
+class Reservierung_Controller extends MY_Controller
 {
 
     private function write_to_pdf($formular_id, $type)
@@ -45,7 +45,7 @@ class Formular_Controller extends MY_Controller
         if (!$this->user)
             redirect('');
 
-        $this->view_data['JS_files'] = array("js/formular.js");
+        $this->view_data['JS_files'] = array("js/reservierung.js");
 
         $this->load->helper('date');
     }
@@ -61,92 +61,114 @@ class Formular_Controller extends MY_Controller
         exit();
     }
 
-    public function create($agency_id = 0)
+    public function create($kunde_id = 0)
     {
-        $agency = Client::find_by_id($agency_id);
+        if ($kunde_id == 0) {
 
-        if (!$agency) {
-            show_404();
-            return false;
-        }
+            $this->set_page_tpl("no_kunde");
 
-        if ($_POST) {
-            $formular = Formular::create(array(
-                    'v_num' => $this->input->post('formular_vnum'),
-                    'agency_id' => $this->input->post('agency_id'),
-                    'created_date' => date('Y-m-d', time()),
-                    'type' => $this->input->post('formular-type'),
-                    'r_num' => 0,
-                    'provision' => $this->input->post('provision'),
-                    'flight_text' => $this->input->post('flightplan'),
-                    'flight_price' => $this->input->post('flightprice'),
-                    'person_count' => $this->input->post('personcount')
-                )
-            );
-            if (isset($_POST['ismanuel']) && is_array($_POST['ismanuel']))
-                foreach ($_POST['ismanuel'] as $ind => $is_manuel)
+            if($_POST)
+            {
+                $kunde_id = $this->input->post('kunde_id');
+                $kunde = Kunde::find_by_k_num($kunde_id);
+
+                if(!$kunde)
                 {
-                    if ($is_manuel == 0) {
-                        $hotel = Hotel::find_by_code($_POST['hotelcode'][$ind]);
-                        FormularHotel::create(array(
-                            'formular_id' => $formular->id,
-                            'status' => 'none',
-                            'hotel_id' => $hotel->id,
-                            'hotel_name' => $hotel->name . " " . $hotel->stars . "*",
-                            'roomcapacity_id' => $_POST['roomcapacity'][$ind],
-                            'roomtype_id' => $_POST['roomtype'][$ind],
-                            'hotelservice_id' => $_POST['service'][$ind],
-                            'date_start' => inputdate_to_mysqldate($_POST['datestart'][$ind]),
-                            'date_end' => inputdate_to_mysqldate($_POST['dateend'][$ind]),
-                            'price' => $_POST['price'][$ind],
-                            'days_count' => $_POST['dayscount'][$ind],
-                            'transfer' => $_POST['transfer'][$ind],
-                            'remark' => $_POST['remark'][$ind],
-                        ));
-                    }
-                    else
-                    {
-                        FormularHotel::create(array(
-                            'formular_id' => $formular->id,
-                            'status' => 'none',
-                            'hotel_id' => '0',
-                            'hotel_name' => $_POST['hotelname'][$ind],
-                            'roomcapacity_id' => $_POST['roomcapacity'][$ind],
-                            'roomtype_id' => $_POST['roomtype'][$ind],
-                            'hotelservice_id' => $_POST['service'][$ind],
-                            'date_start' => inputdate_to_mysqldate($_POST['datestart'][$ind]),
-                            'date_end' => inputdate_to_mysqldate($_POST['dateend'][$ind]),
-                            'price' => $_POST['price'][$ind],
-                            'days_count' => $_POST['dayscount'][$ind],
-                            'transfer' => $_POST['transfer'][$ind],
-                            'remark' => $_POST['remark'][$ind]
-                        ));
-                    }
+                    $this->view_data['error'] = 'Client mit der Nummer "'.$kunde_id.'" wurde nicht gefunden';
                 }
-            if (isset($_POST['manuel_text']) && is_array($_POST['manuel_text']))
-                foreach ($this->input->post('manuel_text') as $ind => $manuel_text)
+                else
                 {
-                    FormularManuel::create(array(
-                        'formular_id' => $formular->id,
-                        'status' => 'none',
-                        'text' => $manuel_text,
-                        'date_start' => inputdate_to_mysqldate($_POST['manuel_datestart'][$ind]),
-                        'date_end' => inputdate_to_mysqldate($_POST['manuel_dateend'][$ind]),
-                        'days_count' => $_POST['manuel_dayscount'][$ind],
-                        'price' => $_POST['manuel_price'][$ind]
-                    ));
+                    redirect("reservierung/create/".$kunde->id);
                 }
+            }
 
-            redirect('formular/result/' . $formular->id);
         }
         else
         {
-            $this->view_data['agency'] = $agency;
-            $this->view_data['person_count'] = '';
-            $this->view_data['hotels'] = $this->view_data['manuels'] = array();
-            $this->view_data['flight_plan'] = FALSE;
-            $this->view_data['flight'] = array("content" => "", "price" => "");
 
+            $kunde = Kunde::find_by_id($kunde_id);
+
+            if (!$kunde) {
+                show_404();
+                return;
+            }
+
+            if ($_POST) {
+                $formular = Formular::create(array(
+                        'v_num' => $this->input->post('formular_vnum'),
+                        'kunde_id' => $this->input->post('kunde_id'),
+                        'created_date' => date('Y-m-d', time()),
+                        'type' => $this->input->post('formular-type'),
+                        'r_num' => 0,
+                        'provision' => $this->input->post('provision'),
+                        'flight_text' => $this->input->post('flightplan'),
+                        'flight_price' => $this->input->post('flightprice'),
+                        'person_count' => $this->input->post('personcount')
+                    )
+                );
+                if (isset($_POST['ismanuel']) && is_array($_POST['ismanuel']))
+                    foreach ($_POST['ismanuel'] as $ind => $is_manuel)
+                    {
+                        if ($is_manuel == 0) {
+                            $hotel = Hotel::find_by_code($_POST['hotelcode'][$ind]);
+                            FormularHotel::create(array(
+                                'formular_id' => $formular->id,
+                                'status' => 'none',
+                                'hotel_id' => $hotel->id,
+                                'hotel_name' => $hotel->name . " " . $hotel->stars . "*",
+                                'roomcapacity_id' => $_POST['roomcapacity'][$ind],
+                                'roomtype_id' => $_POST['roomtype'][$ind],
+                                'hotelservice_id' => $_POST['service'][$ind],
+                                'date_start' => inputdate_to_mysqldate($_POST['datestart'][$ind]),
+                                'date_end' => inputdate_to_mysqldate($_POST['dateend'][$ind]),
+                                'price' => $_POST['price'][$ind],
+                                'days_count' => $_POST['dayscount'][$ind],
+                                'transfer' => $_POST['transfer'][$ind],
+                                'remark' => $_POST['remark'][$ind],
+                            ));
+                        }
+                        else
+                        {
+                            FormularHotel::create(array(
+                                'formular_id' => $formular->id,
+                                'status' => 'none',
+                                'hotel_id' => '0',
+                                'hotel_name' => $_POST['hotelname'][$ind],
+                                'roomcapacity_id' => $_POST['roomcapacity'][$ind],
+                                'roomtype_id' => $_POST['roomtype'][$ind],
+                                'hotelservice_id' => $_POST['service'][$ind],
+                                'date_start' => inputdate_to_mysqldate($_POST['datestart'][$ind]),
+                                'date_end' => inputdate_to_mysqldate($_POST['dateend'][$ind]),
+                                'price' => $_POST['price'][$ind],
+                                'days_count' => $_POST['dayscount'][$ind],
+                                'transfer' => $_POST['transfer'][$ind],
+                                'remark' => $_POST['remark'][$ind]
+                            ));
+                        }
+                    }
+                if (isset($_POST['manuel_text']) && is_array($_POST['manuel_text']))
+                    foreach ($this->input->post('manuel_text') as $ind => $manuel_text)
+                    {
+                        FormularManuel::create(array(
+                            'formular_id' => $formular->id,
+                            'status' => 'none',
+                            'text' => $manuel_text,
+                            'date_start' => inputdate_to_mysqldate($_POST['manuel_datestart'][$ind]),
+                            'date_end' => inputdate_to_mysqldate($_POST['manuel_dateend'][$ind]),
+                            'days_count' => $_POST['manuel_dayscount'][$ind],
+                            'price' => $_POST['manuel_price'][$ind]
+                        ));
+                    }
+
+                redirect('formular/result/' . $formular->id);
+            }
+            else
+            {
+                $this->view_data['kunde'] = $kunde;
+
+            }
+
+            $this->set_page_tpl("kunde");
         }
     }
 
@@ -163,6 +185,7 @@ class Formular_Controller extends MY_Controller
             $formular->provision = $this->input->post('provision');
             $formular->flight_text = $this->input->post('flightplan');
             $formular->flight_price = $this->input->post('flightprice');
+            $formular->person_count = $this->input->post('personcount');
             $formular->person_count = $this->input->post('personcount');
 
             $formular->save();
@@ -361,24 +384,26 @@ class Formular_Controller extends MY_Controller
 
             case "price":
                 $price = 0;
-                $date_start = inputdate_to_mysqldate($date_start);
-                $date_end = inputdate_to_mysqldate($date_end, TRUE);
+                $date_start = mysqldate_to_timestamp(inputdate_to_mysqldate($date_start));
+                $date_end = mysqldate_to_timestamp(inputdate_to_mysqldate($date_end, TRUE));
 
                 while ($date_start <= $date_end)
                 {
-                    $date = date("Y-m-d", $date_start);
+
                     $sql_options = array('conditions' => array('hotel_id = ? AND roomtype_id = ? AND roomcapacity_id = ? AND hotelservice_id = ?
-                        AND date = ?', Hotel::find_by_code($hotel_code)->id, $room_type, $room_capacity, $hotel_service, $date),
+                        AND date = ?', Hotel::find_by_code($hotel_code)->id, $room_type, $room_capacity, $hotel_service, time_to_mysqldate($date_start)),
                         'select' => 'price');
+
                     $price_found = HotelOffer::first($sql_options);
 
                     if (!$price_found) {
                         $price = 0;
                         break;
                     }
-                    $price += $price_found->price;
 
+                    $price += $price_found->price;
                     $day = getdate($date_start);
+
                     $date_start = mktime(0, 0, 0, $day['mon'], $day['mday'] + 1, $day['year']);
                 }
 
@@ -492,9 +517,9 @@ class Formular_Controller extends MY_Controller
         //   $this->set_right_header('Rechnungnummer: ' . $formular->r_num);
 
         //$this->set_left_header(($formular->stage == 1 ? "Angebot" : "Rechnung") . " Formular: " .
-        //   ($formular->agency->type == 'person'
-        //        ? $formular->agency->name . " " . $formular->agency->surname
-        //       : $formular->agency->name));
+        //   ($formular->kunde->type == 'person'
+        //        ? $formular->kunde->name . " " . $formular->kunde->surname
+        //       : $formular->kunde->name));
         $this->content_view = "formular/final";
     }
 
@@ -584,14 +609,12 @@ class Formular_Controller extends MY_Controller
     {
         $formular = Formular::find_by_id($id);
 
-        if(!$formular)
-        {
+        if (!$formular) {
             show_404();
             return false;
         }
 
-        if($_POST)
-        {
+        if ($_POST) {
             FormularPayment::create(array(
                 "formular_id" => $id,
                 "value" => $this->input->post("payment_value"),
@@ -599,7 +622,7 @@ class Formular_Controller extends MY_Controller
                 "user_id" => $this->user->id,
             ));
 
-            redirect("formular/".$id);
+            redirect("formular/" . $id);
         }
 
         $this->view_data['formular'] = $formular;

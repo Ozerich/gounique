@@ -20,7 +20,7 @@ var language = {
 };
 
 $(document).ready(function() {
-    $('#agency-all').dataTable({   "aoColumns": [
+    $('#kunde-all').dataTable({   "aoColumns": [
         null,
         null,
         { "bSearchable": false },
@@ -31,7 +31,7 @@ $(document).ready(function() {
         "oLanguage": language
     });
 
-    $('#agency-formulars').dataTable({   "aoColumns": [
+    $('#kunde-formulars').dataTable({   "aoColumns": [
         null,
         null,
         { "bSearchable": false },
@@ -40,8 +40,8 @@ $(document).ready(function() {
         "oLanguage": language});
 
 
-    $('#add_agency-button').click(function() {
-        document.location = "agency/create";
+    $('#add_kunde-button').click(function() {
+        document.location = "kunde/create";
         return false;
     });
 
@@ -51,8 +51,8 @@ $(document).ready(function() {
         return false;
     });
 
-    $(".agency-item #cancel-button").click(function(){
-        document.location = "agency/" + $("input[name=agency_id]").val();
+    $(".kunde-item #cancel-button").click(function(){
+        document.location = "kunde/" + $("input[name=kunde_id]").val();
         return false;
     });
 
@@ -60,7 +60,7 @@ $(document).ready(function() {
         if ($("#radio1").is(":checked")) {
             $("#agentur-block").show();
             $("#kunden-block").hide();
-            $("input[name=type]").val("agency");
+            $("input[name=type]").val("kunde");
         }
         else {
             $("#agentur-block").hide();
@@ -69,17 +69,17 @@ $(document).ready(function() {
         }
     });
 
-    $('#agency-all .edit-button').click(function() {
-        document.location = "agency/edit/" + $(this).parent().parent().attr("agency_id");
+    $('#kunde-all .edit-button').click(function() {
+        document.location = "kunde/edit/" + $(this).parent().parent().attr("kunde_id");
         return false;
     });
 
-    $('#agency-all .createformular-button').click(function() {
-        document.location = "formular/create/" + $(this).parent().parent().attr("agency_id");
+    $('#kunde-all .createformular-button').click(function() {
+        document.location = "formular/create/" + $(this).parent().parent().attr("kunde_id");
         return false;
     });
 
-    $('.agency-item input').keypress(function(event) {
+    $('.kunde-item input').keypress(function(event) {
         if (event.keyCode == KEY_ENTER) {
             var input = $(this).attr("name") == "comment" ? $('input[type=submit]').focus() : $(this).next('input, textarea');
             if ($(input).size() == 0)
@@ -105,12 +105,12 @@ $(document).ready(function() {
     });
 
     $('#add_formular-button').click(function() {
-        document.location = "formular/create/"+ $('#agency_id').val();
+        document.location = "formular/create/"+ $('#kunde_id').val();
         return false;
     });
 
-    $('#edit_agency-button').click(function(){
-        document.location = "agency/edit/" + $('#agency_id').val();
+    $('#edit_kunde-button').click(function(){
+        document.location = "kunde/edit/" + $('#kunde_id').val();
         return false;
     });
 });

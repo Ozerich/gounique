@@ -83,7 +83,7 @@
             <div class="address-block">
                 <h3 class="block-header"><?=$formular->type == 'person' ? "Kundenadresse" : 'Agenturadresse'?></h3>
 
-                <p><?=$formular->agency->plain_text;?></p>
+                <p><?=$formular->kunde->plain_text;?></p>
             </div>
 
             <div class="anzahlung-block">
@@ -103,7 +103,7 @@
                 <td class="param">Gesamtpreis</td>
                 <td><?=$formular->price['brutto']?></td>
             </tr>
-            <? if ($formular->agency->type == 'agency'): ?>
+            <? if ($formular->kunde->type == 'kunde'): ?>
             <tr>
                 <td class="param">Provision <?=$formular->provision?>%</td>
                 <td><?=$formular->price['provision']?></td>
@@ -176,7 +176,7 @@
 
     <? else: ?>
     <div id="final-buttons">
-        <a href="agency/<?=$formular->agency_id?>" class="btn btn-small btn-blue" id="close-button"
+        <a href="kunde/<?=$formular->kunde_id?>" class="btn btn-small btn-blue" id="close-button"
            name="submit">Close</a>
     </div>
     <? endif; ?>

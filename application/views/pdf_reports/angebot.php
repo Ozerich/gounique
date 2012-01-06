@@ -3,7 +3,7 @@
         <br/><br/><br/><br/><br/><br/><br/><br/>
 
         <div class="address">
-            <?=$formular->agency->plain_text?>
+            <?=$formular->kunde->plain_text?>
         </div>
     </div>
     <div id="content">
@@ -74,7 +74,7 @@
         <div class="priceblock">
             <div class="price-item">Preis p.P. brutto: <?=$formular->price['person']?> &euro;</div>
             <div class="price-item">Gesamtpreis brutto: <?=$formular->price['brutto']?> &euro;</div>
-            <? if ($formular->agency->type == 'agency'): ?>
+            <? if ($formular->kunde->type == 'kunde'): ?>
             <div class="price-item"><?=$formular->provision?> % Provision: <?=$formular->price['provision']?> &euro;</div>
             <div class="price-item">19 % Mwst: <?=$formular->price['mwst']?> &euro;</div>
             <? endif; ?>

@@ -2,27 +2,44 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1eff6da6-54e6-4b19-a410-f3c1d995c642" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/application/views/kundenverwaltung/new/agenturen.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/application/views/kundenverwaltung/new/income.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/application/views/kundenverwaltung/new/mitarbeiter.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/application/views/kundenverwaltung/new/stammkunden.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/application/views/kundenverwaltung/vervalten/agenturen.php" />
-      <change type="DELETED" beforePath="Z:\home\localhost\www\gounique\application\controllers\Agency_Controller.php" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/application/models/Kunde.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/application/views/reservierung/create/no_kunde.php" />
+      <change type="DELETED" beforePath="Z:\home\localhost\www\gounique\application\models\Client.php" afterPath="" />
+      <change type="DELETED" beforePath="Z:\home\localhost\www\gounique\js\widgets.js" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/config/autoload.php" afterPath="$PROJECT_DIR$/application/config/autoload.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/config/routes.php" afterPath="$PROJECT_DIR$/application/config/routes.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/controllers/kundenverwaltung_controller.php" afterPath="$PROJECT_DIR$/application/controllers/kundenverwaltung_controller.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/core/MY_Controller.php" afterPath="$PROJECT_DIR$/application/core/MY_Controller.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/helpers/MY_date_helper.php" afterPath="$PROJECT_DIR$/application/helpers/MY_date_helper.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/models/Formular.php" afterPath="$PROJECT_DIR$/application/models/Formular.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/agency/create.php" afterPath="$PROJECT_DIR$/application/views/agency/create.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/agency/edit.php" afterPath="$PROJECT_DIR$/application/views/agency/edit.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/agency/index.php" afterPath="$PROJECT_DIR$/application/views/agency/index.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/agency/view.php" afterPath="$PROJECT_DIR$/application/views/agency/view.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/kundenverwaltung/agenturen.php" afterPath="$PROJECT_DIR$/application/views/kundenverwaltung/agenturen.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/kundenverwaltung/incoming.php" afterPath="$PROJECT_DIR$/application/views/kundenverwaltung/incoming.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/kundenverwaltung/mitarbeiter.php" afterPath="$PROJECT_DIR$/application/views/kundenverwaltung/mitarbeiter.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/kundenverwaltung/stammkunden.php" afterPath="$PROJECT_DIR$/application/views/kundenverwaltung/stammkunden.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/layouts/application.php" afterPath="$PROJECT_DIR$/application/views/layouts/application.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/pdf_reports/angebot.php" afterPath="$PROJECT_DIR$/application/views/pdf_reports/angebot.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/pdf_reports/angebotK.php" afterPath="$PROJECT_DIR$/application/views/pdf_reports/angebotK.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/pdf_reports/eingangsmitteilungen.php" afterPath="$PROJECT_DIR$/application/views/pdf_reports/eingangsmitteilungen.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/pdf_reports/rechnung.php" afterPath="$PROJECT_DIR$/application/views/pdf_reports/rechnung.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/pdf_reports/rechnungK.php" afterPath="$PROJECT_DIR$/application/views/pdf_reports/rechnungK.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/pdf_reports/rechnungen.php" afterPath="$PROJECT_DIR$/application/views/pdf_reports/rechnungen.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/css/main.less" afterPath="$PROJECT_DIR$/css/main.less" />
-      <change type="MOVED" beforePath="Z:\home\localhost\www\gounique\application\controllers\Auth_Controller.php" afterPath="$PROJECT_DIR$/application/controllers/auth_controller.php" />
-      <change type="MOVED" beforePath="Z:\home\localhost\www\gounique\application\controllers\Formular_Controller.php" afterPath="$PROJECT_DIR$/application/controllers/formular_controller.php" />
-      <change type="MOVED" beforePath="Z:\home\localhost\www\gounique\application\models\Agency.php" afterPath="$PROJECT_DIR$/application/models/Client.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/agency.js" afterPath="$PROJECT_DIR$/js/agency.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/system/helpers/inflector_helper.php" afterPath="$PROJECT_DIR$/system/helpers/inflector_helper.php" />
+      <change type="MOVED" beforePath="Z:\home\localhost\www\gounique\application\controllers\Formular_Controller.php" afterPath="$PROJECT_DIR$/application/controllers/reservierung_controller.php" />
+      <change type="MOVED" beforePath="Z:\home\localhost\www\gounique\application\views\formular\create.php" afterPath="$PROJECT_DIR$/application/views/reservierung/create/kunde.php" />
+      <change type="MOVED" beforePath="Z:\home\localhost\www\gounique\application\views\formular\edit.php" afterPath="$PROJECT_DIR$/application/views/reservierung/edit.php" />
+      <change type="MOVED" beforePath="Z:\home\localhost\www\gounique\application\views\formular\final.php" afterPath="$PROJECT_DIR$/application/views/reservierung/final.php" />
+      <change type="MOVED" beforePath="Z:\home\localhost\www\gounique\application\views\formular\open.php" afterPath="$PROJECT_DIR$/application/views/reservierung/open.php" />
+      <change type="MOVED" beforePath="Z:\home\localhost\www\gounique\application\views\formular\payments.php" afterPath="$PROJECT_DIR$/application/views/reservierung/payments.php" />
+      <change type="MOVED" beforePath="Z:\home\localhost\www\gounique\application\views\formular\result.php" afterPath="$PROJECT_DIR$/application/views/reservierung/result.php" />
+      <change type="MOVED" beforePath="Z:\home\localhost\www\gounique\application\views\formular\status.php" afterPath="$PROJECT_DIR$/application/views/reservierung/status.php" />
+      <change type="MOVED" beforePath="Z:\home\localhost\www\gounique\application\views\formular\storeno.php" afterPath="$PROJECT_DIR$/application/views/reservierung/storeno.php" />
+      <change type="MOVED" beforePath="Z:\home\localhost\www\gounique\js\formular.js" afterPath="$PROJECT_DIR$/js/reservierung.js" />
     </list>
     <list id="a972c9e9-6531-4e31-85fd-40e9f3562a82" name="Failed commit: Default" comment="Email work now and other fixes" />
     <ignored path="gounique.iws" />
@@ -40,24 +57,78 @@
   <component name="DaemonCodeAnalyzer">
     <disable_hints />
   </component>
+  <component name="DatabaseView">
+    <flatten value="false" />
+    <groupTables value="false" />
+  </component>
   <component name="FavoritesManager">
     <favorites_list name="gounique" />
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="agenturen.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/views/kundenverwaltung/vervalten/agenturen.php">
+      <file leaf-file-name="kunde.php" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/application/views/reservierung/create/kunde.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="50" column="27" selection-start="1852" selection-end="1852" vertical-scroll-proportion="-15.038462">
+            <state line="263" column="14" selection-start="10196" selection-end="10196" vertical-scroll-proportion="0.7773196">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="kundenverwaltung_controller.php" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/application/controllers/kundenverwaltung_controller.php">
+      <file leaf-file-name="reservierung.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/js/reservierung.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="41" column="0" selection-start="736" selection-end="736" vertical-scroll-proportion="0.41648108">
+            <state line="634" column="33" selection-start="26516" selection-end="26516" vertical-scroll-proportion="-8.68">
+              <folding>
+                <element signature="n#!!block;n#BindHotelEvents#0" expanded="false" />
+                <element signature="e#2263#3409#0" expanded="false" />
+                <element signature="e#3476#4443#0" expanded="false" />
+                <element signature="e#4514#5466#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="application.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/views/layouts/application.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="15" column="31" selection-start="624" selection-end="624" vertical-scroll-proportion="-9.807693">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Kunde.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/models/Kunde.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="27" column="27" selection-start="626" selection-end="626" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main.less" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/css/main.less">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="962" column="1" selection-start="17342" selection-end="17342" vertical-scroll-proportion="-11.4">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="reservierung_controller.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/controllers/reservierung_controller.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="408" column="0" selection-start="17366" selection-end="17366" vertical-scroll-proportion="-18.36">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MY_date_helper.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/helpers/MY_date_helper.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="27" column="45" selection-start="636" selection-end="636" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -77,22 +148,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/application/views/kundenverwaltung/agenturen/new.php" />
-        <option value="$PROJECT_DIR$/application/views/kundenverwaltung/income/new.php" />
-        <option value="$PROJECT_DIR$/application/views/kundenverwaltung/mitarbeiter/new.php" />
-        <option value="$PROJECT_DIR$/application/views/kundenverwaltung/stammkunden/new.php" />
-        <option value="$PROJECT_DIR$/application/views/kundenverwaltung/agenturen.php" />
-        <option value="$PROJECT_DIR$/application/views/kundenverwaltung/incoming.php" />
-        <option value="$PROJECT_DIR$/application/views/kundenverwaltung/mitarbeiter.php" />
-        <option value="$PROJECT_DIR$/application/views/kundenverwaltung/stammkunden.php" />
-        <option value="$PROJECT_DIR$/css/main.less" />
-        <option value="$PROJECT_DIR$/application/helpers/MY_date_helper.php" />
-        <option value="$PROJECT_DIR$/application/core/MY_Controller.php" />
-        <option value="$PROJECT_DIR$/application/config/autoload.php" />
         <option value="$PROJECT_DIR$/application/views/kundenverwaltung/new/agenturen.php" />
+        <option value="$PROJECT_DIR$/application/models/Kunden.php" />
         <option value="$PROJECT_DIR$/application/config/routes.php" />
+        <option value="$PROJECT_DIR$/application/views/reservierung/create.php" />
+        <option value="$PROJECT_DIR$/application/views/reservierung/create/create.php" />
         <option value="$PROJECT_DIR$/application/views/kundenverwaltung/vervalten/agenturen.php" />
+        <option value="$PROJECT_DIR$/application/views/reservierung/create/no_kunde.php" />
+        <option value="$PROJECT_DIR$/application/views/kundenverwaltung/agenturen.php" />
         <option value="$PROJECT_DIR$/application/controllers/kundenverwaltung_controller.php" />
+        <option value="$PROJECT_DIR$/application/models/Kunde.php" />
+        <option value="$PROJECT_DIR$/application/views/layouts/application.php" />
+        <option value="$PROJECT_DIR$/application/helpers/MY_date_helper.php" />
+        <option value="$PROJECT_DIR$/application/controllers/reservierung_controller.php" />
+        <option value="$PROJECT_DIR$/js/reservierung.js" />
+        <option value="$PROJECT_DIR$/css/main.less" />
+        <option value="$PROJECT_DIR$/application/views/reservierung/create/kunde.php" />
       </list>
     </option>
   </component>
@@ -148,6 +219,78 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gounique" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gounique" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="application" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gounique" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gounique" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="application" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gounique" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gounique" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="application" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="layouts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gounique" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gounique" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="application" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="helpers" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
       <pane id="Favorites" />
@@ -156,10 +299,10 @@
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="recentsLimit" value="5" />
     <property name="options.lastSelected" value="editor.preferences.appearance" />
-    <property name="options.searchVisible" value="true" />
+    <property name="recentsLimit" value="5" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -185,13 +328,6 @@
         <option name="PhingTarget" enabled="false" />
       </method>
     </configuration>
-    <configuration default="true" type="JavascriptDebugSession" factoryName="Local">
-      <JSDebuggerConfigurationSettings>
-        <option name="engineId" value="embedded" />
-        <option name="fileUrl" />
-      </JSDebuggerConfigurationSettings>
-      <method />
-    </configuration>
     <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
       <method>
         <option name="FtpUpload" enabled="false">
@@ -200,6 +336,13 @@
         </option>
         <option name="PhingTarget" enabled="false" />
       </method>
+    </configuration>
+    <configuration default="true" type="JavascriptDebugSession" factoryName="Local">
+      <JSDebuggerConfigurationSettings>
+        <option name="engineId" value="embedded" />
+        <option name="fileUrl" />
+      </JSDebuggerConfigurationSettings>
+      <method />
     </configuration>
     <list size="1">
       <item index="0" class="java.lang.String" itemvalue="PHPUnit.gounique" />
@@ -255,15 +398,13 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
-      <window_info id="Messages" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19112629" sideWeight="0.4969651" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32852808" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.29692832" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32935154" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32935154" sideWeight="0.0" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20561457" sideWeight="0.8088737" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2094082" sideWeight="0.67064846" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.12969284" sideWeight="0.49772382" order="7" side_tool="true" content_ui="tabs" />
@@ -273,6 +414,8 @@
       <window_info id="Phing Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32935154" sideWeight="0.0" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19112629" sideWeight="0.4969651" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
@@ -338,107 +481,105 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/application/views/kundenverwaltung/mitarbeiter.php">
+    <entry file="file://$PROJECT_DIR$/application/views/kundenverwaltung/vervalten/agenturen.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="49" selection-start="760" selection-end="760" vertical-scroll-proportion="0.635514">
-          <folding />
-        </state>
+        <state line="5" column="0" selection-start="236" selection-end="354" vertical-scroll-proportion="0.1588785" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/kundenverwaltung/stammkunden.php">
+    <entry file="file://$PROJECT_DIR$/application/views/reservierung/create/no_kunde.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="49" selection-start="760" selection-end="760" vertical-scroll-proportion="0.635514">
-          <folding />
-        </state>
+        <state line="11" column="36" selection-start="393" selection-end="393" vertical-scroll-proportion="0.33333334" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/agency.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-2.7272727" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/global.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/final.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="13" selection-start="70" selection-end="75" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/result.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="84" column="0" selection-start="2914" selection-end="2914" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/application/views/kundenverwaltung/agenturen.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="39" selection-start="738" selection-end="748" vertical-scroll-proportion="0.635514">
+        <state line="23" column="28" selection-start="806" selection-end="806" vertical-scroll-proportion="0.7308411">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/css/main.less">
+    <entry file="file://$PROJECT_DIR$/application/models/Kunde.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="736" column="49" selection-start="12842" selection-end="12842" vertical-scroll-proportion="0.031021899">
-          <folding />
-        </state>
+        <state line="27" column="27" selection-start="626" selection-end="626" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/com/jetbrains/php/lang/psi/stubs/data/standard_1.php">
+    <entry file="file://$PROJECT_DIR$/application/controllers/kundenverwaltung_controller.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="706" column="9" selection-start="20823" selection-end="20823" vertical-scroll-proportion="0.33333334">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/controllers/formular_controller.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="54" column="17" selection-start="1443" selection-end="1443" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/kundenverwaltung/new/agenturen.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="31" selection-start="621" selection-end="621" vertical-scroll-proportion="26.423077">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/config/routes.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="55" column="67" selection-start="2161" selection-end="2161" vertical-scroll-proportion="-5.12">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/config/autoload.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="78" column="1" selection-start="2256" selection-end="2256" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/core/MY_Controller.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="0" selection-start="410" selection-end="410" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/core/MY_Loader.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+        <state line="49" column="0" selection-start="876" selection-end="876" vertical-scroll-proportion="0.6666667">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/application/views/layouts/application.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="22" selection-start="863" selection-end="863" vertical-scroll-proportion="-13.384615">
+        <state line="15" column="31" selection-start="624" selection-end="624" vertical-scroll-proportion="-9.807693">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/application/helpers/MY_date_helper.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="0" selection-start="6" selection-end="6" vertical-scroll-proportion="0.0">
+        <state line="27" column="45" selection-start="636" selection-end="636" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/kundenverwaltung/vervalten/agenturen.php">
+    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/com/jetbrains/php/lang/psi/stubs/data/date.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="50" column="27" selection-start="1852" selection-end="1852" vertical-scroll-proportion="-15.038462">
+        <state line="449" column="9" selection-start="12338" selection-end="12338" vertical-scroll-proportion="0.33211678">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/controllers/kundenverwaltung_controller.php">
+    <entry file="file://$PROJECT_DIR$/application/controllers/reservierung_controller.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="41" column="0" selection-start="736" selection-end="736" vertical-scroll-proportion="0.41648108">
+        <state line="408" column="0" selection-start="17366" selection-end="17366" vertical-scroll-proportion="-18.36">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/reservierung.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="634" column="33" selection-start="26516" selection-end="26516" vertical-scroll-proportion="-8.68">
+          <folding>
+            <element signature="n#!!block;n#BindHotelEvents#0" expanded="false" />
+            <element signature="e#2263#3409#0" expanded="false" />
+            <element signature="e#3476#4443#0" expanded="false" />
+            <element signature="e#4514#5466#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/css/main.less">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="962" column="1" selection-start="17342" selection-end="17342" vertical-scroll-proportion="-11.4">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/reservierung/create/kunde.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="263" column="14" selection-start="10196" selection-end="10196" vertical-scroll-proportion="0.7773196">
           <folding />
         </state>
       </provider>

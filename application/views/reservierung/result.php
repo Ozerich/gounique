@@ -155,7 +155,7 @@
                 <td class="param">Gesamtpreis</td>
                 <td id="brutto-value"><?=$formular->price['brutto']?></td>
             </tr>
-            <? if ($formular->agency->type == 'agency'): ?>
+            <? if ($formular->kunde->type == 'kunde'): ?>
             <tr>
                 <td class="param">Provision <?=$formular->provision?>%</td>
                 <td><?=$formular->price['provision']?></td>

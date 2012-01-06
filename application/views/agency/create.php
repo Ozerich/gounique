@@ -1,5 +1,5 @@
-<div class="agency-item">
-    <? echo form_open("agency/create") ?>
+<div class="kunde-item">
+    <? echo form_open("kunde/create") ?>
         <div class="param">
             <label for="type">Typ</label>
             <div id="type">
@@ -101,7 +101,7 @@
                 <textarea name="k_about"></textarea>
             </div>
         </div>
-        <input type="hidden" name="type" value="agency"/>
+        <input type="hidden" name="type" value="kunde"/>
 
         <div class="buttons">
             <button id="cancel-button" tabindex="2" class="btn btn-small btn-grey">Cancel</button>

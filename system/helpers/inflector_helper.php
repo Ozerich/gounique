@@ -109,7 +109,7 @@ if ( ! function_exists('plural'))
 			'/([m|l])ouse$/'           => '\1ice',      // mouse, louse
 			'/(matr|vert|ind)ix|ex$/'  => '\1ices',     // matrix, vertex, index
 			'/(x|ch|ss|sh)$/'          => '\1es',       // search, switch, fix, box, process, address
-			'/([^aeiouy]|qu)y$/'       => '\1ies',      // query, ability, agency
+			'/([^aeiouy]|qu)y$/'       => '\1ies',      // query, ability, kunde
 			'/(hive)$/'                => '\1s',        // archive, hive
 			'/(?:([^f])fe|([lr])f)$/'  => '\1\2ves',    // half, safe, wife
 			'/sis$/'                   => 'ses',        // basis, diagnosis

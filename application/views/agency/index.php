@@ -1,4 +1,4 @@
-<table id="agency-all" class="agency-list">
+<table id="kunde-all" class="kunde-list">
     <thead>
     <th width="120px">Kundennummer</th>
     <th>Name</th>
@@ -8,13 +8,13 @@
     <th width="135px">Actions</th>
     </thead>
     <tbody>
-    <? foreach($agency_list as $agency): ?>
-    <tr agency_id="<?=$agency->id?>">
-    <td class="kundennummer"><?=$agency->id?></td>
-    <td class="name"><a href="agency/<?=$agency->id?>"><?=$agency->name?></a></td>
-    <td><?=$agency->type?></td>
-    <td class="city"><?=$agency->plz?></td>
-    <td class="phone"><?=$agency->phone?></td>
+    <? foreach($kunde_list as $kunde): ?>
+    <tr kunde_id="<?=$kunde->id?>">
+    <td class="kundennummer"><?=$kunde->id?></td>
+    <td class="name"><a href="kunde/<?=$kunde->id?>"><?=$kunde->name?></a></td>
+    <td><?=$kunde->type?></td>
+    <td class="city"><?=$kunde->plz?></td>
+    <td class="phone"><?=$kunde->phone?></td>
     <td>
         <button class="btn btn-small btn-blue edit-button">Edit</button>
         <button class="btn btn-small btn-green createformular-button">New</button>
@@ -24,5 +24,5 @@
     </tbody>
 </table>
 <div class="add-button-wr">
-    <button class="btn btn-small btn-blue" id="add_agency-button">Add agency</button>
+    <button class="btn btn-small btn-blue" id="add_kunde-button">Add kunde</button>
 </div>

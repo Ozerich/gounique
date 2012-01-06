@@ -11,7 +11,11 @@
     <link rel="stylesheet/less" href="css/arrows.css" type="text/css"/>
 
 
+    <link type="text/css" href="css/cupertino/jquery-ui-1.8.16.custom.css" rel="Stylesheet" />
+
+    <script src="js/global.js"></script>
     <script src="js/jquery-1.7.1.min.js"></script>
+    <script src="js/jquery-ui-1.8.16.custom.min.js"></script>
     <script src="js/less-1.1.5.min.js"></script>
 
     <? if (isset($JS_files))

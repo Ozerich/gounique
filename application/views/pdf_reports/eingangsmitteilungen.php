@@ -3,17 +3,17 @@
         <br/><br/><br/><br/><br/><br/><br/><br/>
 
         <div class="address">
-            {if $agency.type eq 'agency'}
-            {$agency.contactperson} {$agency.surname} - {$agency.sex}<br/>
-            e-mail: <a href="mailto:{$agency.email}">{$agency.email}</a><br/>
-            phone: {$agency.phone}<br/>
-            fax: {$agency.fax}<br/>
-            www: <a href="{$agency.website}">{$agency.website}</a> <br/>
+            {if $kunde.type eq 'kunde'}
+            {$kunde.contactperson} {$kunde.surname} - {$kunde.sex}<br/>
+            e-mail: <a href="mailto:{$kunde.email}">{$kunde.email}</a><br/>
+            phone: {$kunde.phone}<br/>
+            fax: {$kunde.fax}<br/>
+            www: <a href="{$kunde.website}">{$kunde.website}</a> <br/>
             {else}
-            {$agency.name} {$agency.surname} - {$agency.sex} ({$agency.contactperson})<br/>
-            e-mail: <a href="mailto:{$agency.email}">{$agency.email}</a><br/>
-            phone: {$agency.phone}<br/>
-            fax: {$agency.fax}<br/>
+            {$kunde.name} {$kunde.surname} - {$kunde.sex} ({$kunde.contactperson})<br/>
+            e-mail: <a href="mailto:{$kunde.email}">{$kunde.email}</a><br/>
+            phone: {$kunde.phone}<br/>
+            fax: {$kunde.fax}<br/>
             {/if}
         </div>
     </div>

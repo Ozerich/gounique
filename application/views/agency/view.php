@@ -1,31 +1,31 @@
-<div class="agency-item">
-    <div class="agency-view">
-        <? if ($agency->type == 'agency'): ?>
+<div class="kunde-item">
+    <div class="kunde-view">
+        <? if ($kunde->type == 'kunde'): ?>
         <div class="topinfo">
 
             <div class="address block">
                 <span class="header">Adresse</span>
 
-                <div class="agencyblock-content">
-                    <?=$agency->name?><br/>
-                    <?=$agency->address?><br/>
-                    <?=$agency->plz." ".$agency->ort?>
+                <div class="kundeblock-content">
+                    <?=$kunde->name?><br/>
+                    <?=$kunde->address?><br/>
+                    <?=$kunde->plz." ".$kunde->ort?>
                 </div>
             </div>
-            <div class="agencyperson block">
+            <div class="kundeperson block">
                 <span class="header">Ansprechpartner</span>
 
-                <div class="agencyblock-content">
-                    <?=$agency->person_name.' '." - ".$agency->sex?><br/>
-                    e-mail: <a href="mailto:<?=$agency->email?>"><?=$agency->email?></a><br/>
-                    phone: <?=$agency->phone?><br/>
-                    fax: <?=$agency->fax?><br/>
-                    www: <a href="<?=$agency->website?>"><?=$agency->website?></a> <br/>
+                <div class="kundeblock-content">
+                    <?=$kunde->person_name.' '." - ".$kunde->sex?><br/>
+                    e-mail: <a href="mailto:<?=$kunde->email?>"><?=$kunde->email?></a><br/>
+                    phone: <?=$kunde->phone?><br/>
+                    fax: <?=$kunde->fax?><br/>
+                    www: <a href="<?=$kunde->website?>"><?=$kunde->website?></a> <br/>
                 </div>
             </div>
             <br class="clear"/>
         </div>
-        <br/> <span class="bold">Provision: </span> <?=$agency->provision?>%<br/>
+        <br/> <span class="bold">Provision: </span> <?=$kunde->provision?>%<br/>
 
         <? else: ?>
         <div class="topinfo">
@@ -33,19 +33,19 @@
             <div class="address block">
                 <span class="header">Adresse</span>
 
-                <div class="agencyblock-content">
-                    <?=$agency->address?><br/>
-                    <?=$agency->plz.' '.$agency->ort?>
+                <div class="kundeblock-content">
+                    <?=$kunde->address?><br/>
+                    <?=$kunde->plz.' '.$kunde->ort?>
                 </div>
             </div>
-            <div class="agencyperson block">
+            <div class="kundeperson block">
                 <span class="header">Ansprechpartner</span>
 
-                <div class="agencyblock-content">
-                    <?=$agency->person_name." ".$agency->person_surname.' - '.$agency->sex.' ('.$agency->name.')'?><br/>
-                    e-mail: <a href="mailto:<?=$agency->email?>"><?=$agency->email?></a><br/>
-                    phone: <?=$agency->phone?><br/>
-                    fax: <?=$agency->fax?><br/>
+                <div class="kundeblock-content">
+                    <?=$kunde->person_name." ".$kunde->person_surname.' - '.$kunde->sex.' ('.$kunde->name.')'?><br/>
+                    e-mail: <a href="mailto:<?=$kunde->email?>"><?=$kunde->email?></a><br/>
+                    phone: <?=$kunde->phone?><br/>
+                    fax: <?=$kunde->fax?><br/>
                 </div>
             </div>
             <br class="clear"/>
@@ -54,24 +54,24 @@
         <div class="about block">
             <span class="header">Comment</span>
 
-            <div class="agencyblock-content">
-                <pre><?=$agency->about?></pre>
+            <div class="kundeblock-content">
+                <pre><?=$kunde->about?></pre>
             </div>
         </div>
         <div class="edit-button-wr">
-            <button class="btn btn-small btn-blue" id="edit_agency-button">Edit <?if($agency->type == 'person') echo 'kundenelseagency'?>
+            <button class="btn btn-small btn-blue" id="edit_kunde-button">Edit <?if($kunde->type == 'person') echo 'kundenelsekunde'?>
             </button>
         </div>
 
     </div>
-    <table class="agency-list" id="agency-formulars">
+    <table class="kunde-list" id="kunde-formulars">
         <thead>
         <th>Vorgangsnummer</th>
         <th>Rechnungsnummer</th>
         <th>Date created</th>
         <th>View</th>
         </thead>
-        <? foreach($agency->formulars as $formular): ?>
+        <? foreach($kunde->formulars as $formular): ?>
         <tr>
             <td class="v_num"><?=$formular->v_num?></td>
             <td><?=$formular->r_num?></td>
@@ -82,7 +82,7 @@
         </tr>
         <? endforeach; ?>
     </table>
-    <input type="hidden" name="agency_id" value="<?=$agency->id?>" id="agency_id"/>
+    <input type="hidden" name="kunde_id" value="<?=$kunde->id?>" id="kunde_id"/>
 
     <div class="add-button-wr">
         <button class="btn btn-small btn-blue" id="add_formular-button">Add Formular</button>

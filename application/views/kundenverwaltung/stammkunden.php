@@ -26,7 +26,7 @@
 
         <div class="list">
 
-            <? foreach (Client::find_all_by_type('agenturen') as $client): ?>
+            <? foreach (Kunde::find_all_by_type('agenturen') as $client): ?>
 
             <div class="item">
                 <span class="text"><?=$client->k_num?> - <?=$client->name?></span>
