@@ -93,4 +93,20 @@ class FormularHotel extends ActiveRecord\Model
     {
         return "hotel";
     }
+
+    public function get_hotel_code()
+    {
+        $hotel = Hotel::find_by_id($this->hotel_id);
+        return $hotel->code;
+    }
+
+    public function get_date_str()
+    {
+        return ($this->date_start && $this->date_end) ? $this->date_start->format('d.m.Y') . ' - ' . $this->date_end->format('d.m.Y') : '';
+    }
+
+    public function get_voucher_name()
+    {
+        return "voucher_hotel_".$this->id.".pdf";
+    }
 }

@@ -3,8 +3,8 @@
         <a href="dashboard" class="home-link"><img src="img/header-logo.jpg"/></a>
         <ul class="page-path">
             <li><a href="kundenverwaltung">kundenverwaltung</a></li>
-            <li><a href="agenturen">agenturen</a></li>
-            <li><span>agenturen <?=$client->k_num?></span></li>
+            <li><a href="<?=$kunde->type?>"><?=$kunde->type?></a></li>
+            <li><span><?=$kunde->type?> <?=$kunde->k_num?></span></li>
         </ul>
     </div>
 </div>
@@ -12,65 +12,67 @@
 
 <div id="edit-agenturen-page" class="kundenverwaltung-new content">
 
-    <? echo form_open("kundenverwaltung/vervalten/".$client->id) ?>
+    <? echo form_open("kundenverwaltung/vervalten/".$kunde->id) ?>
 
     <div class="new-block">
 
         <div class="param">
             <label for="name">Firmenname</label>
-            <input type="text" name="name" value="<?=$client->name?>"/>
+            <input type="text" name="name" value="<?=$kunde->name?>"/>
         </div>
 
         <div class="param">
             <label for="address">Adresse</label>
-            <input type="text" name="address" value="<?=$client->address?>"/>
+            <input type="text" name="address" value="<?=$kunde->address?>"/>
         </div>
 
         <div class="param">
             <label for="plz">PLZ / Ort</label>
-            <input type="text" class="plz" name="plz" maxlength="5"  value="<?=$client->plz?>"/> /
-            <input type="text" class="ort" name="ort"  value="<?=$client->ort?>"/>
+            <input type="text" class="plz" name="plz" maxlength="5"  value="<?=$kunde->plz?>"/> /
+            <input type="text" class="ort" name="ort"  value="<?=$kunde->ort?>"/>
         </div>
 
         <div class="param">
             <label for="website">Web-Seite</label>
-            <input type="text" name="website"  value="<?=$client->website?>"/>
+            <input type="text" name="website"  value="<?=$kunde->website?>"/>
         </div>
 
         <div class="param">
             <label>Ansprechpartner</label>
-            <input type="radio" name="sex" value="herr" <? if($client->sex == "herr") echo 'checked' ?>/>Herr&nbsp;
-            <input type="radio" name="sex" value="frau" <? if($client->sex == "frau") echo 'checked' ?>/>Frau
+            <input type="radio" name="sex" value="herr" <? if($kunde->sex == "herr") echo 'checked' ?>/>Herr&nbsp;
+            <input type="radio" name="sex" value="frau" <? if($kunde->sex == "frau") echo 'checked' ?>/>Frau
         </div>
 
         <div class="param">
             <label for="email">E-Mail Adresse</label>
-            <input type="text" name="email"  value="<?=$client->email?>"/>
+            <input type="text" name="email"  value="<?=$kunde->email?>"/>
         </div>
 
         <div class="param">
             <label for="contactperson">Contact person:</label>
-            <input type="text" name="person_name"  value="<?=$client->person_name?>"/>
+            <input type="text" name="person_name"  value="<?=$kunde->person_name?>"/>
         </div>
 
         <div class="param">
             <label for="phone">Telefon</label>
-            <input type="text" name="phone" value="<?=$client->phone?>"/>
+            <input type="text" name="phone" value="<?=$kunde->phone?>"/>
         </div>
 
         <div class="param">
             <label for="fax">Fax</label>
-            <input type="text" name="fax"  value="<?=$client->fax?>"/>
+            <input type="text" name="fax"  value="<?=$kunde->fax?>"/>
         </div>
 
+        <? if($kunde->type == "agenturen"): ?>
         <div class="param" id="provision-wr">
             <label for="provision">Provision Prozent</label>
-            <input type="text" name="provision"  value="<?=$client->provision?>"/>
+            <input type="text" name="provision"  value="<?=$kunde->provision?>"/>
         </div>
+        <? endif; ?>
 
         <div class="param">
             <label for="about">Comment</label>
-            <textarea name="about"><?=$client->about?></textarea>
+            <textarea name="about"><?=$kunde->about?></textarea>
         </div>
 
     </div>

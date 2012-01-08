@@ -13,3 +13,12 @@ function isInt(x) {
     if (isNaN(y)) return false;
     return x == y && x.toString() == y.toString();
 }
+
+function validateEmail(email) {
+
+    if (email.length < 5)
+        return false;
+    var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+    return reg.test(email);
+
+}

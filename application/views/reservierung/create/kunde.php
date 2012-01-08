@@ -2,7 +2,7 @@
     <div id="page-header">
         <a href="dashboard" class="home-link"><img src="img/header-logo.jpg"/></a>
         <ul class="page-path">
-            <li><span>agenturen <?=$kunde->k_num?></span></li>
+            <li><span><?=$kunde->plain_type;?> <?=$kunde->k_num?></span></li>
             </li>
             <li><span>neu formular</span></li>
         </ul>
@@ -38,7 +38,7 @@
 
         <div class="param">
             <span class="param-name">Status:</span>
-            <span class="param-value">Angebot</span>
+            <span class="param-value"><?=$formular->plain_status?></span>
         </div>
 
     </div>
@@ -57,9 +57,9 @@
 
     <div id="type-radio">
         <input type="radio" name="formular-type" id="type_1" checked value="Pausschalreise"><label
-        for="type_1">Pauschalreise</label>
+            for="type_1">Pauschalreise</label>
         <input type="radio" name="formular-type" id="type_2" value="Bausteinreise"><label
-        for="type_2">Bausteinreise</label>
+            for="type_2">Bausteinreise</label>
         <input type="radio" name="formular-type" id="type_3" value="Nurflug"><label for="type_3">Nur flug</label>
     </div>
 
@@ -67,11 +67,11 @@
 
         <div class="vorgansnummer-wr">
             <label for="vorgangsnummer">Vorgangsnummer:</label>
-            <input type="text" class="vnum-input"/>
+            <input type="text" class="vnum-input" name="formular-vnum"/>
         </div>
 
         <label for="flight-text">Flight plan</label>
-        <textarea id="flight-text"></textarea>
+        <textarea id="flight-text" name="flight-text"></textarea>
 
         <label for="flight-price">Flight price &euro;</label>
         <input type="text" name="flight-price" id="flight-price"/>
@@ -90,33 +90,41 @@
 <div id="intro-page">
     <div class="input" id="provision-wr">
         <label for="provision">Provision %:</label>
-        <input type="text" readonly id="provision" name="provision"
+        <input type="text" id="provision" name="provision"
                value="11" size="3"/>
-        <span class="hiddentext" id="provision_hid">11</span>
     </div>
     <div class="input" id="personcount-wr">
         <label for="personcount">Personen:</label>
-        <input type="text" noempty numerical id="personcount" value="" name="personcount"
+        <input type="text" id="personcount" value="" name="personcount"
                size="2"/>
-        <span class="hiddentext" id="personcount_hid"></span>
     </div>
     <br class="clear"/>
 </div>
 
-<div class="param-block" id="hotels-page">
-    <div class="hotels">
+<div id="item-list" class="param-block">
 
-        <div class="hotel hotel-wr" style="display:none">
-            <div class="param">
+</div>
+
+<div class="param-block  hidden-param-block" id="hotels">
+    <div class="hotel hotel-wr" style="display:none">
+
+        <div class="hotel-preview block-preview" style="display:none">
+            <p class="text"></p>
+            <button class="edit">Edit</button>
+            <br class="clear"/>
+        </div>
+
+        <div class="hotel-editcontent">
+            <div class="param hoteltype-wr">
                 <label class="param-name">Type</label>
 
                 <div id="hoteltype">
                     <input type="radio" name="hoteltype" checked value="database" class="hoteltype-db"
                            id="hoteltype-db"/><label
-                    for="hoteltype-db">database</label>
+                        for="hoteltype-db">database</label>
                     <input type="radio" name="hoteltype" value="manuel" class="hoteltype-manuel"
                            id="hoteltype-manuel"/><label
-                    for="hoteltype-manuel">manuel</label>
+                        for="hoteltype-manuel">manuel</label>
                 </div>
 
             </div>
@@ -130,7 +138,8 @@
 
                 <div class="param">
                     <label class="param-name" for="hotelname">Hotel Name</label>
-                    <input type="text" name="hotelname" size="8" disabled id="hotelname"/>
+                    <input type="text" size="8" disabled id="hotelname"/>
+                    <input type="hidden" name="hotelname" id="hotelname_hid"/>
                 </div>
 
                 <div class="param">
@@ -175,7 +184,7 @@
 
                 <div class="param">
                     <label class="param-name" for="price">Price &euro;</label>
-                    <input id="price" class="price" size="4" name="price" disabled="disabled"/>
+                    <input id="price" class="price" type="text" size="4" name="price" disabled="disabled"/>
                 </div>
 
                 <div class="param">
@@ -256,6 +265,7 @@
 
 
             </div>
+
             <div class="buttons">
                 <button class="cancel">Cancel</button>
                 <button class="add" disabled>Add</button>
@@ -264,20 +274,26 @@
     </div>
 </div>
 
+<div class="param-block  hidden-param-block" id="manuels">
+    <div class="manuel-wr manuel" style="display:none">
 
-<div class="param-block" id="manuel-page">
-    <div class="manuels">
-        <div class="manuel-wr manuel" style="display:none">
-            <div class="param">
+        <div class="manuel-preview block-preview" style="display:none">
+            <p class="text"></p>
+            <button class="edit">Edit</button>
+            <br class="clear"/>
+        </div>
+
+        <div class="manuel-editcontent">
+            <div class="param manueltype-wr">
                 <label class="param-name">Type</label>
 
-                <div id="manueltype">
-                    <input type="radio" name="manueltype" checked value="with-date" class="manueltype-date"
+                <div class="manueltype" id="manueltype">
+                    <input type="radio" name="manueltype" value="with-date" class="manueltype-date"
                            id="manueltype-date"/><label
-                    for="manueltype-date">with date</label>
-                    <input type="radio" name="manueltype" value="no-date" class="manuel-nodate"
+                        for="manueltype-date">with date</label>
+                    <input type="radio" name="manueltype" value="no-date" class="manueltype-nodate"
                            id="manueltype-nodate"/><label
-                    for="manueltype-nodate">no date</label>
+                        for="manueltype-nodate">no date</label>
                 </div>
             </div>
 
@@ -304,8 +320,8 @@
                 </div>
 
                 <div class="param">
-                    <label class="param-name" for="price">Price &euro</label>
-                    <input id="price" size="4" name="manuel_price"/>
+                    <label class="param-name" for="price">Price &euro;</label>
+                    <input id="price" type="text" size="4" name="manuel_price"/>
                 </div>
 
             </div>
@@ -336,11 +352,11 @@
 
     <div class="input" id="flightplan-wr">
         <label for="flightplan">Flight plan</label>
-        <textarea id="flightplan" name="flightplan"></textarea>
+        <textarea id="flightplan"></textarea>
     </div>
     <div class="input" id="flightprice-wr">
         <label for="flightprice">Preis of flight</label>
-        <input type="text" id="flightprice" size="5" value="" name="flightprice"/>
+        <input type="text" id="flightprice" size="5" value=""/>
     </div>
 
     <br class="clear"/>
@@ -351,14 +367,16 @@
 
 </div>
 
-<div id="formular-buttons" class="buttons-block">
+<div class="formular-buttons buttons-block">
     <button class="btn btn-small btn-blue" id="addhotel-button">Add hotel</button>
     <button class="btn btn-small btn-blue" id="addmanuel-button">Add manuel</button>
     <button class="btn btn-small btn-blue" id="flug-button">Flug</button>
     <button class="btn btn-small btn-blue" id="fertig-button" name="submit">Fertig</button>
 </div>
 
+
 <input type="hidden" name="kunde_id" value="<?=$kunde->id?>"/>
+
 </form>
 
 </div>

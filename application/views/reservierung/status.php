@@ -1,4 +1,16 @@
-<div id="status-page">
+<div id="page-header-wr">
+    <div id="page-header">
+        <a href="dashboard" class="home-link"><img src="img/header-logo.jpg"/></a>
+        <ul class="page-path">
+            <li><span><?=$formular->kunde->plain_type;?> <?=$formular->kunde->k_num?></span></li>
+            </li>
+            <li><a href="reservierung/final/<?=$formular->id?>">formular <?=$formular->v_num?></a></li>
+            <li><span>statuses</span></li>
+        </ul>
+    </div>
+</div>
+
+<div id="status-page" class="content">
     <input type="hidden" name="formular_id" value="<?=$formular->id?>"/>
     <? foreach ($formular->hotels_and_manuels as $ind => $hotel): ?>
     <div class="item">
@@ -8,7 +20,7 @@
         <div class="item-info">
             <span class="num"><?=($ind + 1)?></span>
             <span
-                class="date"><?=$hotel->date_start->format('d.m.Y') . ' - ' . $hotel->date_end->format('d.m.Y'); ?></span>
+                class="date"><?=$hotel->date_str?></span>
 
             <p><?=$hotel->nodate_text?></p>
 
@@ -59,12 +71,12 @@
                 <p class="comment"><?=$log->comment;?></p>
             </div>
             <? endforeach; ?>
-            <button class="closelog btn btn-small btn-blue">Close log</button>
+            <button class="closelog">Close log</button>
         </div>
     </div>
     <? endforeach; ?>
 
     <div class="buttons">
-        <a href="formular/<?=$formular->id?>" class="btn btn-blue btn-small">Back</a>
+        <a href="reservierung/final/<?=$formular->id?>" class="button-link">Back</a>
     </div>
 </div>

@@ -9,6 +9,11 @@ class Kunde extends ActiveRecord\Model
         return Formular::find_all_by_kunde_id($this->id);
     }
 
+    public function get_plain_type()
+    {
+        return $this->type;
+    }
+
     public function get_plain_text()
     {
         $text = '';
@@ -21,15 +26,18 @@ class Kunde extends ActiveRecord\Model
                 break;
 
             case 'stammkunden':
-                $text = '';
+                $text = $this->name . "<br />" . $this->address . "<br/>" . $this->plz .
+                                               " " . $this->ort;
                 break;
 
             case 'incoming':
-                $text = '';
+                $text = $this->name . "<br />" . $this->address . "<br/>" . $this->plz .
+                                               " " . $this->ort;
                 break;
 
             case 'mitarbeiter':
-                $text = '';
+                $text = $this->name . "<br />" . $this->address . "<br/>" . $this->plz .
+                                               " " . $this->ort;
                 break;
         }
         

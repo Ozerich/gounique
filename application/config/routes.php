@@ -56,21 +56,21 @@ $route['agenturen/new'] = 'kundenverwaltung_controller/new_/agenturen';
 $route['incoming/new'] = 'kundenverwaltung_controller/new_/incoming';
 $route['stammkunden/new'] = 'kundenverwaltung_controller/new_/stammkunden';
 $route['mitarbeiter/new'] = 'kundenverwaltung_controller/new_/mitarbeiter';
+$route['agenturen/(:any)'] = 'kundenverwaltung_controller/agenturen/$1';
+$route['incoming/(:any)'] = 'kundenverwaltung_controller/incoming/$1';
+$route['stammkunden/(:any)'] = 'kundenverwaltung_controller/stammkunden/$1';
+$route['mitarbeiter/(:any)'] = 'kundenverwaltung_controller/mitarbeiter/$1';
 $route['kundenverwaltung/(:any)'] = 'kundenverwaltung_controller/$1';
 
 
 $route['reservierung'] = 'reservierung_controller/create';
+$route['reservierung/final/(:num)'] = 'reservierung_controller/final_/$1';
 $route['reservierung/(:any)'] = 'reservierung_controller/$1';
 
 
 $route['settings'] = 'settings_controller';
 $route['settings'] = 'settings_controller/offers';
 $route['settings/(:any)'] = 'settings_controller/$1';
-
-$route['formular'] = 'formular_controller';
-$route['formular/final/(:num)'] = 'formular_controller/final_/$1';
-$route['formular/(:num)'] = 'formular_controller/final_/$1';
-$route['formular/(:any)'] = 'formular_controller/$1';
 
 
 $route['dashboard'] = 'dashboard_controller';

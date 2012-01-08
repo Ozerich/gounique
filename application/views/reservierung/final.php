@@ -1,99 +1,124 @@
-<div id="final-page" class="result-page">
-    <?=form_open("formular/sendmail/" . $formular->id, null, array("formular_id" => $formular->id)); ?>
-    <div class="info-block">
-        <div class="left-info">
+<div id="page-header-wr">
+    <div id="page-header">
+        <a href="dashboard" class="home-link"><img src="img/header-logo.jpg"/></a>
+        <ul class="page-path">
+            <li><span><?=$formular->kunde->plain_type;?> <?=$formular->kunde->k_num?></span></li>
+            </li>
+            <li><span>formular <?=$formular->v_num?></span></li>
+        </ul>
+    </div>
+</div>
 
-            <span class="param">Vorgangsnummer: </span><span
-            class="value vorgan_value"><?=$formular->v_num?></span><br/>
-
-            <? if($formular->r_num): ?>
-            <span class="param">Rechnungsnummer: </span><span
-            class="value"><?=($formular->r_num) ? $formular->r_num : "none";?></span><br/>
-            <? endif; ?>
-
-            <span class="param">Abreisedatum: </span><span
-            class="value"><?=$formular->prepayment_date->format('d.m.Y')?></span><br/>
-
+<div id="final-page" class="reservierung-page result-page content">
+<?=form_open("reservierung/sendmail/" . $formular->id, null, array("formular_id" => $formular->id)); ?>
+<div class="formular-header">
+    <div class="left-block">
+        <div class="param">
+            <span class="param-name">Kundensnummer:</span>
+            <a href="#"><?=$formular->kunde->k_num?></a>
         </div>
 
-        <div class="right-info">
-            <span class="param">Datum: </span><span class="value"><?=mdate("%d.%m.%Y", time());?></span><br/>
-            <span class="param">Sachbearbeiter: </span><span
-            class="value"><?=$user->name . " " . $user->surname?></span><br/>
+        <div class="param">
+            <span class="param-name">Type:</span>
+            <span class="param-value" id="formulartype-value"><?=$formular->type?></span>
         </div>
 
-        <br class="clear"/>
+        <div class="param">
+            <span class="param-name">Vorgangsnummer:</span>
+            <span class="param-value" id="vorgangsnummer-value"><?=$formular->v_num?></span>
+        </div>
+
     </div>
 
-    <div class="persons-block">
-        <h3 class="block-header">Reiseteilnehmer:</h3>
+    <div class="right-block">
 
-        <?if ($formular->persons)
-        foreach ($formular->persons as $ind => $person):?>
-            <div class="person-item">
-                <span class="num"><?=($ind + 1);?></span>
-                <span class="sex"><?=FormularPerson::$sex_map[$person->sex];?></span>
+        <div class="param">
+            <span class="param-name">Status:</span>
+            <span class="param-value"><?=$formular->plain_status?></span>
+        </div>
+
+    </div>
+    <br class="clear"/>
+
+</div>
+
+<div class="persons-block">
+    <h3 class="block-header">Reiseteilnehmer:</h3>
+
+    <?if ($formular->persons)
+    foreach ($formular->persons as $ind => $person):?>
+        <div class="person-item">
+            <span class="num"><?=($ind + 1);?></span>
+            <span class="sex"><?=FormularPerson::$sex_map[$person->sex];?></span>
                 <span class="name"><?=$person->person_name;?>
-            </div>
-            <? endforeach; ?>
-    </div>
-
-    <div class="item-list">
-        <h3 class="block-header">Leistung:</h3>
-
-        <span class="header">Hotels:</span>
-
-        <? foreach ($formular->hotels as $ind => $hotel): ?>
-        <div class="item">
-            <span class="num"><?=($ind + 1)?></span>
-            <span class="text"><?=$hotel->plain_text; ?></span>
         </div>
         <? endforeach; ?>
+</div>
 
-        <hr/>
+<div class="item-list">
+    <h3 class="block-header">Leistung:</h3>
 
-        <span class="header">Manuels:</span>
+    <span class="header">Hotels:</span>
 
-        <? foreach ($formular->manuels as $ind => $manuel): ?>
-        <div class="item">
-            <span class="num"><?=($ind + 1)?></span>
-            <span class="text"><?=$manuel->plain_text; ?></span>
-        </div>
-        <? endforeach; ?>
+    <? foreach ($formular->hotels as $ind => $hotel): ?>
+    <div class="item">
+        <span class="num"><?=($ind + 1)?></span>
+        <span class="text"><?=$hotel->plain_text; ?></span>
+        <? if($formular->status == "freigabe"): ?>
+            <a href="pdf/<?=$hotel->voucher_name?>" class="voucher-button">Voucher</a>
+        <? endif ?>
     </div>
+    <? endforeach; ?>
 
-    <div class="flight-block">
-        <h3 class="block-header">Flugplan: <span class="flight-price"><?=$formular->flight_price?> &euro;</span>
-        </h3>
+    <hr/>
 
-        <p>
-        <pre><?=$formular->flight_text?></pre>
-        </p>
+    <span class="header">Manuels:</span>
+
+    <? foreach ($formular->manuels as $ind => $manuel): ?>
+    <div class="item">
+        <span class="num"><?=($ind + 1)?></span>
+        <span class="text"><?=$manuel->plain_text; ?></span>
+        <? if($formular->status == "freigabe"): ?>
+            <a href="#" class="voucher-button">Voucher</a>
+        <? endif ?>
     </div>
+    <? endforeach; ?>
 
-    <div class="bottom-block">
-        <div class="left">
-            <div class="comment-block">
-                <h3 class="block-header">Comment:</h3>
+    <hr/>
+</div>
 
-                <p><?=$formular->comment;?></p>
-            </div>
+<div class="flight-block">
+    <h3 class="block-header">Flugplan: <span class="flight-price"><?=$formular->flight_price?> &euro;</span>
+    </h3>
 
+    <p>
+    <pre><?=$formular->flight_text?></pre>
+    </p>
+</div>
 
-            <div class="address-block">
-                <h3 class="block-header"><?=$formular->type == 'person' ? "Kundenadresse" : 'Agenturadresse'?></h3>
+<div class="bottom-block">
+    <div class="left-float">
+        <div class="comment-block">
+            <h3 class="block-header">Comment:</h3>
 
-                <p><?=$formular->kunde->plain_text;?></p>
-            </div>
-
-            <div class="anzahlung-block">
-                <p>Anzahlung sofort nach Erhalt de Rechnung: <?=$formular->price['anzahlung_value']?> &euro;</p>
-
-                <p>Restzahlung fallig am: <?=$formular->prepayment_date->format('d-M-y')?>
-                    &nbsp;&nbsp;<?=($formular->price['brutto'] - $formular->price['anzahlung_value'])?> &euro;</p>
-            </div>
+            <p><?=$formular->comment;?></p>
         </div>
 
+
+        <div class="address-block">
+            <h3 class="block-header"><?=$formular->type == 'person' ? "Kundenadresse" : 'Agenturadresse'?></h3>
+
+            <p><?=$formular->kunde->plain_text;?></p>
+        </div>
+
+        <div class="anzahlung-block">
+            <p>Anzahlung sofort nach Erhalt de Rechnung: <?=$formular->price['anzahlung_value']?> &euro;</p>
+
+            <p>Restzahlung fallig am: <?=$formular->finalpayment_date->format('d-M-y')?>
+                &nbsp;&nbsp;<?=($formular->price['brutto'] - $formular->price['anzahlung_value'])?> &euro;</p>
+        </div>
+    </div>
+    <div class="right-float">
         <table class="price-table">
             <tr>
                 <td class="param">Preis Brutto/p.Person</td>
@@ -103,7 +128,7 @@
                 <td class="param">Gesamtpreis</td>
                 <td><?=$formular->price['brutto']?></td>
             </tr>
-            <? if ($formular->kunde->type == 'kunde'): ?>
+            <? if ($formular->kunde->type == 'agenturen'): ?>
             <tr>
                 <td class="param">Provision <?=$formular->provision?>%</td>
                 <td><?=$formular->price['provision']?></td>
@@ -124,63 +149,81 @@
                 <td class="param">Endpreise Netto</td>
                 <td><?=$formular->price['netto']?></td>
             </tr>
-            <tr>
-                <td class="param">Paid</td>
-                <td><?=$formular->paid_amount?></td>
-            </tr>
+            <? if ($formular->status != 'angebot'): ?>
+                <tr>
+                    <td class="param">Paid</td>
+                    <td><?=$formular->paid_amount?></td>
+                </tr>
+                <tr>
+                    <td class="param">Need to paid</td>
+                    <td><?=($formular->price['brutto'] - $formular->paid_amount)?></td>
+                </tr>
+                <? endif; ?>
             <? endif; ?>
         </table>
-        <br class="clear"/>
-    </div>
-
-
-    <? if (!$formular->canceled): ?>
-    <div id="stage">
-        <input type="radio" id="radio1" name="stage"
-               value="1" <?if ($formular->r_num == 0) echo 'checked';?>/><label for="radio1">Angebot</label>
-        <input type="radio" id="radio2" name="stage"
-               value="2"/><label for="radio2">Angebot
-        (Kundenkopie)</label>
-        <? if ($formular->r_num): ?>
-        <input type="radio" id="radio3" name="stage" value="3" checked/><label
-            for="radio3">Rechnung</label>
-        <input type="radio" id="radio4" name="stage" value="4"/><label for="radio4">Rechnung
-            (Kundenkopie)</label>
-        <? endif; ?>
-    </div>
-
-    <div class="mail-block">
-        <div class="mail" style="display:none">
-            <span>Mail</span>
-            <input type="text" size="30" class="email"/>
-            <span class="good" style="display:none;">OK</span>
+        <div class="price-buttons">
+            <? if ($formular->status == "angebot"): ?>
+            <a href="reservierung/rechnung/<?=$formular->id?>" class="button-link">Make rechnung</a>
+            <? elseif ($formular->status == "rechnung"): ?>
+            <a href="reservierung/storeno/<?=$formular->id?>" class="button-link red">Storno</a>
+            <? endif; ?>
         </div>
     </div>
+    <br class="clear"/>
+</div>
 
-    <div id="final-buttons">
-        <? if ($formular->r_num == 0): ?>
-        <a href="formular/edit/<?=$formular->id?>" class="btn btn-small btn-blue">Edit Formular</a>
-        <? else: ?>
-        <a href="formular/status/<?=$formular->id?>" class="btn btn-small btn-blue">Edit Statuses</a>
-        <a href="formular/payments/<?=$formular->id?>" class="btn btn-small btn-blue">Payments</a>
-        <? endif; ?>
-        <button class="btn btn-small btn-blue" id="addmail-button">Add mail</button>
-        <button class="btn btn-small btn-blue" id="druck-button">Druck</button>
-        <button class="btn btn-small btn-blue" id="sendclose-button" name="submit">Send & Close</button>
-        <? if ($formular->r_num == 0): ?>
-        <button class="btn btn-small btn-blue" id="makerechnung-button">Make Rechnung</button>
-        <? else: ?>
-        <button class="btn btn-small btn-red" id="makestoreno-button">Storno</button>
-        <? endif; ?>
+
+<? if (!$formular->canceled): ?>
+<div id="stage">
+    <input type="radio" id="radio1" name="stage"
+           value="1" <?if ($formular->r_num == 0) echo 'checked';?>/><label for="radio1">Angebot</label>
+    <input type="radio" id="radio2" name="stage"
+           value="2"/><label for="radio2">Angebot
+    (Kundenkopie)</label>
+    <? if ($formular->r_num): ?>
+    <input type="radio" id="radio3" name="stage" value="3" checked/><label
+            for="radio3">Rechnung</label>
+    <input type="radio" id="radio4" name="stage" value="4"/><label for="radio4">Rechnung
+        (Kundenkopie)</label>
+    <? endif; ?>
+</div>
+
+<div class="mail-block">
+    <div class="mail" style="display:none">
+        <span class="left">Mail</span>
+        <input type="text" size="30" class="email"/>
+        <span class="status">not send</span>
+        <input type="hidden" class="sended" value="0"/>
     </div>
+    <div class="mail">
+        <span class="left">admin mail</span>
+        <input type="text" disabled size="30" class="email" value="<?=$user->email?>"/>
+        <span class="status">not send</span>
+        <input type="hidden" class="sended" value="0"/>
+    </div>
+
+</div>
+
+<div id="final-buttons" class="formular-buttons">
+    <? if ($formular->status == "angebot"): ?>
+    <a href="reservierung/edit/<?=$formular->id?>" class="button-link">Edit Formular</a>
+    <? else: ?>
+    <a href="reservierung/status/<?=$formular->id?>" class="button-link">Edit Statuses</a>
+    <a href="reservierung/payments/<?=$formular->id?>" class="button-link">Payments</a>
+    <? endif; ?>
+    <button id="addmail-button">Add mail</button>
+    <button id="druck-button">Druck</button>
+    <button id="send-button" name="submit">Send</button>
+    <a href="#" class="button-link">Close</a>
+</div>
 
     <? else: ?>
-    <div id="final-buttons">
-        <a href="kunde/<?=$formular->kunde_id?>" class="btn btn-small btn-blue" id="close-button"
-           name="submit">Close</a>
-    </div>
+<div id="final-buttons">
+    <a href="kunde/<?=$formular->kunde_id?>" id="close-button"
+       name="submit">Close</a>
+</div>
     <? endif; ?>
 
-    </form>
+</form>
 
 </div>

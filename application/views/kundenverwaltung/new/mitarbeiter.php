@@ -63,11 +63,6 @@
             <input type="text" name="fax"/>
         </div>
 
-        <div class="param" id="provision-wr">
-            <label for="provision">Provision Prozent</label>
-            <input type="text" name="provision"/>
-        </div>
-
         <div class="param">
             <label for="about">Comment</label>
             <textarea name="about"></textarea>

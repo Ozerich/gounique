@@ -6,7 +6,8 @@ class FormularManuel extends ActiveRecord\Model
     
     public function get_plain_text()
     {
-        $text = $this->date_start->format('d.m.Y') . " - " . $this->date_end->format('d.m.Y') . " ";
+        $text = '';
+        $text = ($this->date_start && $this->date_end) ? $this->date_start->format('d.m.Y') . " - " . $this->date_end->format('d.m.Y') . " " : '';
         $text .=  $this->text . " - &nbsp;<b>" . $this->price . "&euro;</b>";
 
         return $text;
@@ -42,5 +43,15 @@ class FormularManuel extends ActiveRecord\Model
     public function get_type()
     {
         return "manuel";
+    }
+
+    public function get_date_str()
+    {
+        return ($this->date_start && $this->date_end) ? $this->date_start->format('d.m.Y') . ' - ' . $this->date_end->format('d.m.Y') : '';
+    }
+
+    public function get_voucher_name()
+    {
+        return "voucher_manuel_".$this->id."pdf";
     }
 }

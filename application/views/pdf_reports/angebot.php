@@ -10,13 +10,13 @@
         <h1>REISEANGEBOT</h1>
 
         <div class="vorgansnummer-wr">
-            <div class="left">
+            <div class="left-float">
                 <div class="header">Vorgangsnummer: <?=$formular->v_num?></div>
                 <br/>
 
                 <div class="nummer"><strong>Abreisedatum: <?=$formular->prepayment_date->format('d.m.Y')?></strong></div>
             </div>
-            <div class="right">
+            <div class="right-float">
                 <div>Datum: <?=mdate("%d.%m.%Y", time());?></div>
                 <div>Sachbearbeiter:<?=$user->name . " " . $user->surname?></div>
             </div>
@@ -43,9 +43,9 @@
                     <div class="content"><?=$hotel->nodate_text;?></div>
                 </div>
                 <? endforeach; ?>
-                <? foreach ($formular->manuels as $ind => $manuel): ?>
+                <? foreach ($formular->manuels as $ind => $manuel):  ?>
                 <div class="tour">
-                    <div class="date"> <?=$manuel->date_start->format('d.m.Y')?> - <?=$manuel->date_end->format('d.m.Y')?></div>
+                    <div class="date"><?=($manuel->date_start && $manuel->date_end) ? $manuel->date_start->format('d.m.Y')." ".$manuel->date_end->format('d.m.Y') : ''?></div>
                     <div class="content"><?=$manuel->nodate_text?></div>
                 </div>
                 <? endforeach; ?>

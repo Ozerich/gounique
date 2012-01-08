@@ -32,9 +32,10 @@ class Kundenverwaltung_Controller extends MY_Controller
         return "";
     }
 
+
     public function buchen($id = 0)
     {
-        redirect("reservierung//create/".$id);
+        redirect("reservierung/create/".$id);
     }
 
     public function historie($id = 0)
@@ -47,6 +48,7 @@ class Kundenverwaltung_Controller extends MY_Controller
             return false;
         }
 
+        $this->view_data['kunde'] = $client;
 
     }
 
@@ -62,6 +64,7 @@ class Kundenverwaltung_Controller extends MY_Controller
 
         if($_POST)
         {
+
             $client->name = $this->input->post('name');
             $client->address = $this->input->post('address');
             $client->plz = $this->input->post('plz');
@@ -81,8 +84,7 @@ class Kundenverwaltung_Controller extends MY_Controller
             redirect('/'.$client->type);
         }
 
-        $this->set_page_tpl($client->type);
-        $this->view_data['client'] = $client;
+        $this->view_data['kunde'] = $client;
     }
 
     public function new_($type = "")
@@ -118,22 +120,36 @@ class Kundenverwaltung_Controller extends MY_Controller
 
     public function agenturen($action = "")
     {
+        $this->view_data['search_text'] = '';
+
+        if($action == "search")
+        {
+            if($_POST)
+            {
+                $this->view_data['search_text'] = $this->input->post('search_text');
+                $s = $this->input->post('search_text');
+                $this->view_data['items'] = Kunde::find('all', array('conditions' => array('k_num like "%'.$s.'%" OR name like "%'.$s.'%"')));
+            }
+        }
+        else
+            $this->view_data['items'] = Kunde::find_all_by_type('agenturen');
+
         $this->set_page_title("Agenturen Liste");
     }
 
-    public function incoming()
+    public function incoming($action = "")
     {
 
         $this->set_page_title("Incoming Liste");
     }
 
-    public function stammkunden()
+    public function stammkunden($action = "")
     {
 
         $this->set_page_title("Stammkunden Liste");
     }
 
-    public function mitarbeiter()
+    public function mitarbeiter($action = "")
     {
 
         $this->set_page_title("Mitarbeiter Liste");

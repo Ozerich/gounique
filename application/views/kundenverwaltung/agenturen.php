@@ -11,12 +11,14 @@
 <div id="agenturen-page" class="content kundenverwaltung-rasdel">
 
     <div class="left-block">
+        <?=form_open("kundenverwaltung/agenturen/search");?>
         <div class="search-block">
             <label for="search" class="header">agentur suchen</label>
-            <input type="text" id="search" name="search"/>
+            <input type="text" id="search" value="<?=$search_text?>" name="search_text"/>
             <button id="search-agentur" class="search-button">suchen</button>
             <br class="clear"/>
         </div>
+        </form>
 
         <a href="agenturen/new" class="new-button">agentur neu</a>
     </div>
@@ -26,7 +28,7 @@
 
         <div class="list">
 
-            <? foreach (Kunde::find_all_by_type('agenturen') as $client): ?>
+            <? foreach ($items as $client): ?>
 
             <div class="item">
                 <span class="text"><?=$client->k_num?> - <?=$client->name?></span>

@@ -9,6 +9,11 @@ class Formular extends ActiveRecord\Model
         return substr($this->zahlungsdatum, 0, 2) . "." . substr($this->zahlungsdatum, 2, 2) . "." . substr($this->zahlungsdatum, 4);
     }
 
+    public function get_plain_status()
+    {
+        return strtoupper($this->status[0]).substr($this->status, 1);
+    }
+
     public function get_kunde()
     {
         return Kunde::find_by_id($this->kunde_id);

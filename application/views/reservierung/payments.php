@@ -1,4 +1,16 @@
-<div id="payment-page">
+<div id="page-header-wr">
+    <div id="page-header">
+        <a href="dashboard" class="home-link"><img src="img/header-logo.jpg"/></a>
+        <ul class="page-path">
+            <li><span><?=$formular->kunde->plain_type;?> <?=$formular->kunde->k_num?></span></li>
+            </li>
+            <li><a href="reservierung/final/<?=$formular->id?>">formular <?=$formular->v_num?></a></li>
+            <li><span>payments</span></li>
+        </ul>
+    </div>
+</div>
+
+<div id="payment-page" class="content">
     <table class="payments-list">
         <caption>Payments for formular</caption>
         <thead>
@@ -28,15 +40,17 @@
             <? endif; ?>
         </tbody>
     </table>
-
-    <?=form_open("formular/payments/" . $formular->id);?>
+    <? if ($formular->status == "rechnung"): ?>
+    <?=form_open("reservierung/payments/" . $formular->id); ?>
     <div class="newpayment-block">
         <label for="payment-value">Amount: </label>
         <input type="text" maxlength="4" size="4" name="payment_value" id="payment-value"/>
-        <input type="submit" value="Add" class="btn btn-blue btn-small"/>
+        <input type="submit" value="Add" class="button-link"/>
         <br class="clear"/>
     </div>
     </form>
 
-    <a href="formular/<?=$formular->id?>" class="btn btn-blue btn-small">Back</a>
+    <? endif; ?>
+
+    <a href="reservierung/final/<?=$formular->id?>" class="button-link">Back</a>
 </div>

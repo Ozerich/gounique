@@ -21,12 +21,12 @@
         <h1>REISEANGEBOT</h1>
 
         <div class="vorgansnummer-wr">
-            <div class="left">
+            <div class="left-float">
                 <div class="header">Vorgangsnummer {$vorgansnummer}</div>
                 <br/>
                 <div class="nummer"><strong>Abreisedatum: {$abreisedatum}</strong></div>
             </div>
-            <div class="right">
+            <div class="right-float">
                 <div>Datum: {$today}</div>
                 <div>Sachbearbeiter: {$user.fullname}</div>
             </div>

@@ -70,6 +70,10 @@
     }
 }
 
+
+.left-float{float:left;}
+.right-float{float:right;}
+
 p.error{
     color: red;
 }
@@ -119,6 +123,12 @@ textarea{
 
 input[type=submit], button, a.button-link{
     .common-button;
+
+}
+
+a.button-link{
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 label{
@@ -269,205 +279,9 @@ label{
     text-decoration: none;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.bold {
-    font-weight: bold;
-}
-
-.input {
-    float: left;
-    margin-right: 20px;
-}
-
-.input label {
-    display: block;
-    font-weight: bold;
-}
-
-.input.personen {
-    display: block;
-    float: none;
-}
-
-.person span {
-    display: block;
-    float: left;
-    margin-right: 10px;
-    margin-top: 5px;
-}
-
-
-#date-wr label {
-    float: left;
-}
-
-#flightplan {
-    width: 415px;
-    height: 120px;
-}
-
-#hotelname {
-    font-size: 15px;
-}
-
-#page2, #page3 {
-    margin-top: 10px;
-}
-
-#resultpage .number {
-    margin: 0 8px 0 -20px;
-}
-
-#resultpage {
-    width: 800px;
-    margin: 0 auto;
-}
-
-#resultpage #flightplan-wr {
-    float: left;
-    width: 350px;
-    padding-left: 20px;
-}
-
-#resultpage #results-wr {
-    padding-left: 20px;
-    width: 780px;
-    margin-bottom: 10px;
-}
-
-#resultpage #topinfo {
-    width: 780px;
-    padding: 5px 10px;
-    margin-bottom: 10px;
-}
-
-#resultpage #topinfo .param {
-    font-weight: bold;
-}
-
-#resultpage .block {
-    border: 1px solid black;
-}
-
-#resultpage #results {
-    margin-bottom: 10px;
-    margin-top: -14px;
-}
-
-#resultpage .price_title {
-    display: inline-block;
-    width: 140px;
-}
-
-#resultpage #priceresult {
-    float: right;
-    border: 1px solid black;
-    width: 350px
-}
-
-#resultpage .personresult-wr {
-    margin-bottom: 10px;
-}
-
-.manuel-wr, .hotel-wr, .manuelhotel-wr {
-    margin-top: 20px;
-    padding-top: 20px;
-    border-top: 1px solid black;
-}
-
-#buttons, #hotel-buttons, #result-buttons {
-    margin-top: 10px;
-}
-
-#buttons button:focus, #hotel-buttons button:focus, #result-buttons button:focus, #final-buttons button:focus {
-    background-color: #3C84A1;
-}
-
-.hiddentext {
-    display: none;
-}
-
-
-.kundenverwaltung-new .kundeperson {
-    float: right;
-    width: 250px;
-}
-
-.kundenverwaltung-new .comment {
-    clear: both;
-    margin-top: 10px;
-}
-
-.kunde-view {
-    margin-bottom: 25px;
-}
-
-.kundenverwaltung-new .edit-button-wr {
-    float: right;
-    margin: 10px 2px 20px;
-}
-
-/* NEW STYLES!!! */
-
-.result-page .info-block {
-    border: 1px solid black;
-    margin-bottom: 15px;
-    padding: 4px;
-}
-
-.result-page .info-block .left-info {
-    float: left;
-    width: 50%;
-}
-
-.result-page .info-block .right-info {
-    float: right;
-    width: 50%;
-    text-align: left;
-}
-
-.result-page .info-block .param {
-    display: inline-block;
-    width: 125px;
-    font-weight: bold;
-}
+/*----------------------------------------------------------------------------------------------------------------
+    Result page
+----------------------------------------------------------------------------------------------------------------*/
 
 .result-page h3.block-header {
     margin-bottom: 8px;
@@ -484,6 +298,11 @@ label{
     margin-top: 15px;
 }
 
+.result-page .item-list .voucher-button{
+    float: right;
+
+}
+
 .result-page .item-list span.header {
     color: #444444;
     font-size: 12px;
@@ -491,7 +310,7 @@ label{
 }
 
 .result-page .item-list hr {
-    margin: 5px 0;
+    margin: 10px 0;
 }
 
 .result-page .flight-block {
@@ -506,7 +325,6 @@ label{
 
 .result-page .bottom-block .price-table {
     display: block;
-    float: right;
     border: 1px solid black;
 }
 
@@ -539,8 +357,22 @@ label{
     border-bottom: 1px solid black;
 }
 
-.result-page .bottom-block .left{
+.result-page .bottom-block .price-buttons{
+    margin-top: 15px;
+}
+
+.result-page .person .num{
+    display: block;
     float: left;
+}
+
+.result-page .person .input{
+    float: left;
+    margin-left: 10px;
+}
+
+.result-page .person .person-name{
+    width: 250px;
 }
 
 .result-page .comment-block{
@@ -566,8 +398,9 @@ label{
     margin-top: 15px;
 }
 
-.result-page #final-buttons{
-    margin-top: 15px;
+.result-page .mail-block .left{
+    display: inline-block;
+    width: 120px;
 }
 
 .result-page .anzahlung-block{
@@ -580,6 +413,14 @@ label{
     display: inline-block;
     margin-top: 10px;
 }
+
+.result-page .item-list .item{
+    margin-top: 10px;
+}
+
+/*----------------------------------------------------------------------------------------------------------------
+    Status page
+----------------------------------------------------------------------------------------------------------------*/
 
 #status-page{
     width: 500px;
@@ -662,9 +503,17 @@ label{
     float: right;
 }
 
+/*----------------------------------------------------------------------------------------------------------------
+    Payments page
+----------------------------------------------------------------------------------------------------------------*/
+
+#payment-page{
+    width: 500px;
+}
+
 #payment-page .payments-list{
     width: 500px;
-    margin: 0 auto;
+    margin: 0 auto 15px 0;
     border: 1px solid black;
     border-collapse: separate;
     padding: 4px;
@@ -689,8 +538,7 @@ label{
 
 #payment-page .newpayment-block{
     width: 500px;
-    margin: 0 auto;
-    margin-top: 10px;
+    margin: 0 auto 15px 0;
 }
 
 #payment-page .newpayment-block label{
@@ -969,7 +817,7 @@ label{
     width: 400px;
 }
 
-.reservierung-page #formular-buttons{
+.reservierung-page .formular-buttons{
     margin-top: 15px;
 }
 
@@ -981,6 +829,15 @@ label{
 /*--------------------------------------------------------------------------------------------
     Formular create
 --------------------------------------------------------------------------------------------*/
+
+#createformular-page .block-preview button{
+    float: right;
+}
+
+#createformular-page .block-preview p.text{
+    float: left;
+    width: 70%;
+}
 
 #createformular-page{
     width: 800px;
@@ -1024,7 +881,7 @@ label{
     height: 200px;
     left: 793px;
     position: absolute;
-    top: 219px;
+    top: 167px;
     width: 400px;
     display: none;
     overflow: scroll;
@@ -1040,10 +897,99 @@ label{
     margin-top: 20px;
 }
 
+#createformular-page .formular-content #intro-page{
+    margin-bottom: 20px;
+}
+
+#createformular-page .formular-content #intro-page .input{
+    width: 150px;
+    float: left;
+}
+
 #createformular-page #flugpage{
     margin-top: 20px;
 }
 
-#createformular-page #flugpage .buttons{
+#createformular-page #flugpage #flightplan{
+     height: 170px;
+     width: 680px;
+}
+
+#createformular-page #flugpage label{
     margin-top: 10px;
+}
+
+#createformular-page #item-list .hotel, #createformular-page #item-list .manuel{
+    margin-bottom: 15px;
+    border-bottom: 2px solid black;
+    padding: 15px 0;
+}
+
+
+/*-------------------------------------------------------------------------------------------------------
+    Final page
+-------------------------------------------------------------------------------------------------------*/
+
+#final-page .mail-block .mail{
+    margin-top: 10px;
+}
+
+/*-------------------------------------------------------------------------------------------------------
+   Kunde historie
+-------------------------------------------------------------------------------------------------------*/
+
+#kundenverwaltung-historie.content{
+    width: 700px;
+}
+
+#kundenverwaltung-historie .kunde-view .block{
+    border: 1px solid black;
+    padding: 5px;
+}
+
+#kundenverwaltung-historie .kunde-view .block .header{
+    display: block;
+    border-bottom: 1px dotted #888;
+    margin: 5px 0;
+    padding-bottom: 5px;
+    color: #666666;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+#kundenverwaltung-historie .kunde-view .address{
+    float: left;
+    width: 300px;
+}
+
+#kundenverwaltung-historie .kunde-view .kundeperson{
+    float: right;
+    width: 350px;
+}
+
+#kundenverwaltung-historie .kunde-view .provision{
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+#kundenverwaltung-historie .kunde-view .about{
+    margin: 15px 0;
+}
+
+#kundenverwaltung-historie .edit-button{
+    float: right;
+}
+
+#kundenverwaltung-historie .kunde-list{
+    width: 100%;
+    margin: 20px 0;
+}
+
+#kundenverwaltung-historie .kunde-list td{
+    border-bottom: 1px solid black;
+    padding: 5px 0;
+}
+
+#kundenverwaltung-historie .kunde-list .view-link{
+    color: #444444;
 }

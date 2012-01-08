@@ -1,31 +1,47 @@
-<div id="result-page" class="result-page">
-    <? echo form_open("formular/result/" . $formular->id, '', array("vorgan" => $formular->v_num, "paymentdate" => $formular->prepayment_date,
-    "formular_id" => $formular->id)); ?>
-    <div class="info-block">
-        <div class="left-info">
+<div id="page-header-wr">
+    <div id="page-header">
+        <a href="dashboard" class="home-link"><img src="img/header-logo.jpg"/></a>
+        <ul class="page-path">
+            <li><span><?=$formular->kunde->plain_type;?> <?=$formular->kunde->k_num?></span></li>
+            </li>
+            <li><span>formular <?=$formular->v_num?></span></li>
+        </ul>
+    </div>
+</div>
 
-            <span class="param">Vorgangsnummer: </span><span
-            class="value vorgan_value"><?=$formular->v_num?></span><br/>
+<div id="result-page" class="reservierung-page result-page content">
+    <?=form_open("reservierung/result/" . $formular->id);?>
+    <div class="formular-header">
 
-            <? if($formular->r_num): ?>
-            <span class="param">Rechnungsnummer: </span><span
-            class="value"><?=($formular->r_num) ? $formular->r_num : "none";?></span><br/>
-            <? endif; ?>
+        <div class="left-block">
 
-            <? if ($formular->prepayment_date): ?>
-            <span class="param">Abreisedatum: </span><span
-                class="value"><?=$formular->prepayment_date->format('d.m.Y')?></span><br/>
-            <? endif; ?>
+            <div class="param">
+                <span class="param-name">Kundensnummer:</span>
+                <a href="#"><?=$formular->kunde->k_num?></a>
+            </div>
+
+            <div class="param">
+                <span class="param-name">Type:</span>
+                <span class="param-value" id="formulartype-value"><?=$formular->type?></span>
+            </div>
+
+            <div class="param">
+                <span class="param-name">Vorgangsnummer:</span>
+                <span class="param-value" id="vorgangsnummer-value"><?=$formular->v_num?></span>
+            </div>
 
         </div>
 
-        <div class="right-info">
-            <span class="param">Datum: </span><span class="value"><?=mdate("%d.%m.%Y", time());?></span><br/>
-            <span class="param">Sachbearbeiter: </span><span
-            class="value"><?=$user->name . " " . $user->surname?></span><br/>
-        </div>
+        <div class="right-block">
 
+            <div class="param">
+                <span class="param-name">Status:</span>
+                <span class="param-value"><?=$formular->plain_status?></span>
+            </div>
+
+        </div>
         <br class="clear"/>
+
     </div>
     <div class="item-list">
         <h3 class="block-header">Leistung:</h3>
@@ -49,6 +65,7 @@
             <span class="text"><?=$manuel->plain_text; ?></span>
         </div>
         <? endforeach; ?>
+        <hr/>
     </div>
 
     <? if ($formular->flight_text != ""): ?>
@@ -62,7 +79,7 @@
     </div>
     <? endif; ?>
     <div class="bottom-block">
-        <div class="left">
+        <div class="left-float">
             <div id="persons-wr">
                 <?
                 if ($formular->persons)
@@ -79,14 +96,14 @@
                                     <option value="child" <? if ($person->sex == 'child') echo 'selected'; ?>>Kind
                                     </option>
                                     <option
-                                        value="child_less_2" <? if ($person->sex == 'child_less_2') echo 'selected'; ?>>
+                                            value="child_less_2" <? if ($person->sex == 'child_less_2') echo 'selected'; ?>>
                                         Kind < 2
                                     </option>
                                 </select>
                             </div>
                             <div class="input">
                                 <label>Nachname/Vorname</label>
-                                <input type="text" name="person_name[<?=$ind?>]" id="person_name"
+                                <input type="text" name="person_name[<?=$ind?>]" class="person-name"
                                        value="<?=$person->person_name?>" size="20"/>
                             </div>
                             <br class="clear"/>
@@ -108,7 +125,7 @@
                     </div>
                     <div class="input">
                         <label>Nachname/Vorname</label>
-                        <input type="text" name="person_name[<?=$i?>]" id="person_name" value="" size="20"/>
+                        <input type="text" name="person_name[<?=$i?>]" class="person-name" value="" size="20"/>
                     </div>
                     <br class="clear"/>
                 </div>
@@ -128,56 +145,58 @@
                 <div class="param-block">
                     <label for="prepayment_date">Anzahlung datum:</label>
                     <input type="text" name="preprepayment_date" size="8" maxlength="8"
-                           value="<?=$formular->prepayment_date ? $formular->prepayment_date->format('dmY') : ''?>"
+                           value="<?=$formular->prepayment_date ? $formular->prepayment_date->format('m/d/Y') : ''?>"
                            id="prepayment_date"/>
                 </div>
                 <div class="param-block">
                     <label for="departure_date">Abreisedatum</label>
                     <input type="text" name="departure_date" size="8" maxlength="8"
-                           value="<?=$formular->departure_date ? $formular->departure_date->format('dmY') : ''?>"
+                           value="<?=$formular->departure_date ? $formular->departure_date->format('m/d/Y') : ''?>"
                            id="departure_date"/>
                 </div>
                 <div class="param-block">
                     <label for="finalpayment_date">Restzahlung datum:</label>
                     <input type="text" name="finalpayment_date" size="8" maxlength="8" id="finalpayment_date"
-                           value="<?=$formular->finalpayment_date ? $formular->finalpayment_date : ''?>"/>
+                           value="<?=$formular->finalpayment_date ? $formular->finalpayment_date->format('m/d/Y')  : ''?>"/>
 
                 </div>
             </div>
         </div>
 
-        <table class="price-table">
-            <tr>
-                <td class="param">Preis Brutto/p.Person</td>
-                <td><?=$formular->price['person']?></td>
-            </tr>
-            <tr class="underline up">
-                <td class="param">Gesamtpreis</td>
-                <td id="brutto-value"><?=$formular->price['brutto']?></td>
-            </tr>
-            <? if ($formular->kunde->type == 'kunde'): ?>
-            <tr>
-                <td class="param">Provision <?=$formular->provision?>%</td>
-                <td><?=$formular->price['provision']?></td>
-            </tr>
-            <tr>
-                <td class="param">MWST auf Prov 19%</td>
-                <td><?=$formular->price['mwst']?></td>
-            </tr>
-            <tr>
-                <td class="param">Total Provision:</td>
-                <td><?=$formular->price['total_provision']?></td>
-            </tr>
-            <tr class="empty">
-                <td class="param">&nbsp;</td>
-                <td>&nbsp;</td>
-            </tr>
-            <tr class="up">
-                <td class="param">Endpreise Netto</td>
-                <td><?=$formular->price['netto']?></td>
-            </tr>
-            <? endif; ?>
-        </table>
+        <div class="right-float">
+            <table class="price-table">
+                <tr>
+                    <td class="param">Preis Brutto/p.Person</td>
+                    <td><?=$formular->price['person']?></td>
+                </tr>
+                <tr class="underline up">
+                    <td class="param">Gesamtpreis</td>
+                    <td id="brutto-value"><?=$formular->price['brutto']?></td>
+                </tr>
+                <? if ($formular->kunde->type == 'agenturen'): ?>
+                <tr>
+                    <td class="param">Provision <?=$formular->provision?>%</td>
+                    <td><?=$formular->price['provision']?></td>
+                </tr>
+                <tr>
+                    <td class="param">MWST auf Prov 19%</td>
+                    <td><?=$formular->price['mwst']?></td>
+                </tr>
+                <tr>
+                    <td class="param">Total Provision:</td>
+                    <td><?=$formular->price['total_provision']?></td>
+                </tr>
+                <tr class="empty">
+                    <td class="param">&nbsp;</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr class="up">
+                    <td class="param">Endpreise Netto</td>
+                    <td><?=$formular->price['netto']?></td>
+                </tr>
+                <? endif; ?>
+            </table>
+        </div>
         <br class="clear"/>
     </div>
 
@@ -187,9 +206,9 @@
     </div>
 
 
-    <div id="result-buttons">
-        <button class="btn btn-small btn-blue" id="back-button">Back</button>
-        <button class="btn btn-small btn-blue" id="next-button" name="submit">Save</button>
+    <div id="result-buttons" class="formular-buttons">
+        <a href="reservierung/edit/<?=$formular->id?>" class="button-link">Back</a>
+        <button name="submit">Save</button>
     </div>
 </div>
 </form>
