@@ -178,10 +178,13 @@ class MY_Loader extends CI_Loader
             $autoload_path = APPPATH.'config/autoload'.EXT;
         }
 
+
+
         if(! file_exists($autoload_path))
         {
             return FALSE;
         }
+
 
 		include($autoload_path);
 

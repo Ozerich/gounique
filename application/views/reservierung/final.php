@@ -64,8 +64,8 @@
     <div class="item">
         <span class="num"><?=($ind + 1)?></span>
         <span class="text"><?=$hotel->plain_text; ?></span>
-        <? if($formular->status == "freigabe"): ?>
-            <a href="pdf/<?=$hotel->voucher_name?>" class="voucher-button">Voucher</a>
+        <? if ($formular->status == "rechnung" || $formular->status == "freigabe"): ?>
+        <a href="pdf/<?=$hotel->voucher_name?>" target="_blank" class="voucher-button">Voucher</a>
         <? endif ?>
     </div>
     <? endforeach; ?>
@@ -78,8 +78,8 @@
     <div class="item">
         <span class="num"><?=($ind + 1)?></span>
         <span class="text"><?=$manuel->plain_text; ?></span>
-        <? if($formular->status == "freigabe"): ?>
-            <a href="#" class="voucher-button">Voucher</a>
+        <? if ($formular->status == "rechnung" || $formular->status == "freigabe"): ?>
+        <a href="pdf/<?=$manuel->voucher_name?>" class="voucher-button" target="_blank">Voucher</a>
         <? endif ?>
     </div>
     <? endforeach; ?>
@@ -163,8 +163,10 @@
         </table>
         <div class="price-buttons">
             <? if ($formular->status == "angebot"): ?>
-            <a href="reservierung/rechnung/<?=$formular->id?>" class="button-link">Make rechnung</a>
-            <? elseif ($formular->status == "rechnung"): ?>
+            <a href="reservierung/eingangsmitteilung/<?=$formular->id?>" class="button-link">Make Eingangsmitteilung</a>
+            <? elseif ($formular->status == "eingangsmitteilung"): ?>
+        <a <?if ($formular->can_rechnung) echo 'href="reservierung/rechnung/'.$formular->id.'"';?> class="button-link <?if (!$formular->can_rechnung) echo 'disabled'?>">Make rechnung</a>
+        <? elseif ($formular->status == "rechnung"): ?>
             <a href="reservierung/storeno/<?=$formular->id?>" class="button-link red">Storno</a>
             <? endif; ?>
         </div>
@@ -173,7 +175,7 @@
 </div>
 
 
-<? if (!$formular->canceled): ?>
+<? if ($formular->status != 'canceled'): ?>
 <div id="stage">
     <input type="radio" id="radio1" name="stage"
            value="1" <?if ($formular->r_num == 0) echo 'checked';?>/><label for="radio1">Angebot</label>
@@ -207,8 +209,9 @@
 <div id="final-buttons" class="formular-buttons">
     <? if ($formular->status == "angebot"): ?>
     <a href="reservierung/edit/<?=$formular->id?>" class="button-link">Edit Formular</a>
-    <? else: ?>
+    <? elseif ($formular->status == "eingangsmitteilung"): ?>
     <a href="reservierung/status/<?=$formular->id?>" class="button-link">Edit Statuses</a>
+    <? elseif ($formular->status == "rechnung"): ?>
     <a href="reservierung/payments/<?=$formular->id?>" class="button-link">Payments</a>
     <? endif; ?>
     <button id="addmail-button">Add mail</button>

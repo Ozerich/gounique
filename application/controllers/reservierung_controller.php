@@ -18,7 +18,7 @@ class Reservierung_Controller extends MY_Controller
         $view = "";
 
 
-        $pdf->Output("pdf/".$item->voucher_name, 'F');
+        $pdf->Output("pdf/" . $item->voucher_name, 'F');
     }
 
     private function write_to_pdf($formular_id, $type)
@@ -439,6 +439,9 @@ class Reservierung_Controller extends MY_Controller
             $this->write_to_pdf($id, 3);
             $this->write_to_pdf($id, 4);
 
+            foreach ($formular->hotels_and_manuels as $hotel)
+                $this->do_voucher($hotel);
+
             redirect('reservierung/final/' . $formular->id);
         }
 
@@ -507,6 +510,21 @@ class Reservierung_Controller extends MY_Controller
         $formular->r_num = $next_rnum->value++;
         $next_rnum->save();
 
+        $formular->save();
+
+        redirect("reservierung/final/" . $formular->id);
+    }
+
+    public function eingangsmitteilung($id = 0)
+    {
+        $formular = Formular::find_by_id($id);
+
+        if (!$formular) {
+            show_404();
+            return false;
+        }
+
+        $formular->status = "eingangsmitteilung";
         $formular->save();
 
         redirect("reservierung/final/" . $formular->id);
@@ -593,9 +611,6 @@ class Reservierung_Controller extends MY_Controller
 
             if ($formular->paid_amount > $formular->price['brutto']) {
                 $formular->status = "freigabe";
-
-                foreach ($formular->hotels_and_manuels as $hotel)
-                    $this->do_voucher($hotel);
 
                 $formular->save();
             }

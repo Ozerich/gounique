@@ -97,6 +97,12 @@ class Formular extends ActiveRecord\Model
         return $price_data;
     }
 
+    public function get_can_rechnung()
+    {
+        $noneok = FormularHotel::find('all', array('conditions' => array('formular_id = ? and status != ?', $this->id, 'ok')));
+        return $noneok == null;
+    }
+
 }
 
 ?>
