@@ -8,7 +8,15 @@ class Reservierung_Controller extends MY_Controller
 
     private function do_voucher($item)
     {
-        $pdf = new mPDF('utf-8', 'A4', '8', '', 4, 4, 25, 25, 0, 0);
+        $formular = Formular::find_by_id($item->formular_id);
+
+        if (!$formular)
+            return;
+
+        $this->view_data['formular'] = $formular;
+        $this->view_data['item'] = $item;
+
+        $pdf = new mPDF('utf-8', 'A4', '8', '', 0, 0, 0, 0, 0, 0);
         $pdf->SetImportUse();
         $pdf->AddPage();
         $pagecount = $pdf->SetSourceFile("voucher_blank.pdf");
@@ -17,7 +25,20 @@ class Reservierung_Controller extends MY_Controller
 
         $view = "";
 
+        if ($item->type == "hotel")
+            $view = "hotel";
+        else
+            $view = "manuel";
+
+        $html = $this->load->view("vouchers/" . $view, $this->view_data, TRUE);
+
+        $stylesheet = file_get_contents('css/voucher.css');
+        $pdf->WriteHTML($stylesheet, 1);
+        $pdf->list_indent_first_level = 0;
+        $pdf->WriteHTML($html, 2);
+
         $pdf->Output("pdf/" . $item->voucher_name, 'F');
+
     }
 
     private function write_pdf($formular_id)
@@ -145,7 +166,7 @@ class Reservierung_Controller extends MY_Controller
                         'flight_text' => $this->input->post('flightplan'),
                         'flight_price' => $this->input->post('flightprice'),
                         'person_count' => $this->input->post('personcount'),
-                        'sachbearbeiter' => $this->user->name." ".$this->user->surname,
+                        'sachbearbeiter' => $this->user->name . " " . $this->user->surname,
                         'prepayment_date' => time_to_mysqldate($this->get_prepayment_date())
                     )
                 );

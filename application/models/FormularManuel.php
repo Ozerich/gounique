@@ -52,6 +52,12 @@ class FormularManuel extends ActiveRecord\Model
 
     public function get_voucher_name()
     {
-        return "voucher_manuel_".$this->id."pdf";
+        return "voucher_manuel_".$this->id.".pdf";
+    }
+
+    public function get_infant_kunde()
+    {
+        $formular = Formular::find_by_id($this->formular_id);
+        return Kunde::find_by_id($formular->kunde_id);
     }
 }

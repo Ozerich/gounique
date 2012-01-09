@@ -1,0 +1,117 @@
+.clear{
+    clear:both;
+}
+.item{
+    width: 100%;
+    height: 276px;
+}
+
+#item2, #item3{
+    height: 277px;
+}
+
+.code{
+    margin-left: 585px;
+    font-size: 20px;
+    padding-top: 20px;
+    padding-bottom: 12px;
+}
+
+.left{
+    float: left;
+    width: 224px;
+    margin-left: 12px;
+}
+
+.left .hotelname{
+    margin-top: 20px;
+    text-transform: uppercase;
+    font-size: 15px;
+    height: 20px;
+}
+
+.left .infant{
+    width: 100%;
+    margin-top: 5px;
+    height: 50px;
+}
+
+.left .persons{
+    margin-top: 25px;
+    height: 67px;
+    margin-left: 4px;
+    width: 231px;
+}
+
+.left .persons .person{
+    font-size: 16px;
+}
+
+.center{
+    float: left;
+    width: 237px;
+    padding-top: 12px;
+}
+
+.center .count div{
+    float: left;
+    font-size: 17px;
+    text-align: right;
+}
+
+.center .adult{
+    width: 60px;
+}
+
+.center .child{
+    width: 75px;
+}
+
+.center .infant{
+    width: 75px;
+}
+
+.center .datestart, .center .dateend{
+    margin-left: 100px;
+    height: 20px;
+    width: 100px;
+}
+
+.center .datestart{
+    margin-top: 7px;
+}
+
+.center .dateend{
+    margin-top: 10px;
+}
+
+.center .remark{
+    margin: 5px 0 0 10px;
+    height: 88px;
+    width: 100%;
+}
+
+.right{
+    float: left;
+    margin: 12px 0 0 10px;
+    font-size: 14px;
+}
+
+.right .line{
+    margin: 2px 0;
+    height: 16px;
+}
+
+.right .line.empty{
+    height: 10px;
+}
+
+.right .bottom{
+    margin-top: 6px;
+}
+
+.right .text{
+    width: 98%;
+    height: 120px;
+    margin-top: 5px;
+}

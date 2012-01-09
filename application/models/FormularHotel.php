@@ -109,4 +109,33 @@ class FormularHotel extends ActiveRecord\Model
     {
         return "voucher_hotel_".$this->id.".pdf";
     }
+
+    public function get_plain_roomtype()
+    {
+        $type = RoomType::find_by_id($this->roomtype_id);
+        return $type->value;
+    }
+
+    public function get_plain_roomcapacity()
+    {
+        $capacity = RoomCapacity::find_by_id($this->roomcapacity_id);
+        return $capacity->value;
+    }
+
+    public function get_plain_hotelservice()
+    {
+        $service = HotelService::find_by_id($this->hotelservice_id);
+        return $service->value;
+    }
+
+    public function get_plain_transfer()
+    {
+        return strtoupper($this->transfer);
+    }
+
+    public function get_infant_kunde()
+    {
+        $formular = Formular::find_by_id($this->formular_id);
+        return Kunde::find_by_id($formular->kunde_id);
+    }
 }

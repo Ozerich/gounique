@@ -34,6 +34,21 @@ class Formular extends ActiveRecord\Model
         return FormularManuel::find_all_by_formular_id($this->id);
     }
 
+    public function get_adult_count()
+    {
+        return FormularPerson::count(array('conditions' => array('formular_id = ? and (sex = ? or sex = ?)', $this->id, 'herr', 'frau')));
+    }
+
+    public function get_child_count()
+    {
+        return FormularPerson::count(array('conditions' => array('formular_id = ? and sex = ?', $this->id, 'child')));
+    }
+
+    public function get_infant_count()
+    {
+        return FormularPerson::count(array('conditions' => array('formular_id = ? and sex = ?', $this->id, 'infant')));
+    }
+
     public function get_hotels_and_manuels()
     {
         $hotels = $this->get_hotels();
