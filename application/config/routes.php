@@ -67,11 +67,8 @@ $route['reservierung'] = 'reservierung_controller/create';
 $route['reservierung/final/(:num)'] = 'reservierung_controller/final_/$1';
 $route['reservierung/(:any)'] = 'reservierung_controller/$1';
 
-
-$route['settings'] = 'settings_controller';
-$route['settings'] = 'settings_controller/offers';
-$route['settings/(:any)'] = 'settings_controller/$1';
-
+$route['statistik'] = 'statistik_controller';
+$route['statistik/(:any)'] = 'statistik_controller/$1';
 
 $route['dashboard'] = 'dashboard_controller';
 $route['dashboard/(:any)'] = 'dashboard_controller/$1';

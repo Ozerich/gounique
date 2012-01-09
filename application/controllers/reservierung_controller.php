@@ -659,7 +659,7 @@ class Reservierung_Controller extends MY_Controller
                 "user_id" => $this->user->id,
             ));
 
-            if ($formular->paid_amount > $formular->price['brutto']) {
+            if ($formular->paid_amount >= $formular->price['brutto']) {
                 $formular->status = "freigabe";
 
                 $formular->save();

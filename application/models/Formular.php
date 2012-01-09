@@ -137,6 +137,22 @@ class Formular extends ActiveRecord\Model
         return $result;
     }
 
+    public function get_berater()
+    {
+        $name = explode(' ', $this->sachbearbeiter);
+        return strtoupper($name[1][0] . $name[0][0]);
+    }
+
+    public function get_plain_persons()
+    {
+        $persons = FormularPerson::find_all_by_formular_id($this->id);
+        $text = "";
+        if ($persons)
+            foreach ($persons as $person)
+                $text .= $person->name . " " . $person->surname . ", ";
+
+        return $text ? substr($text, 0, -2) : "";
+    }
 }
 
 ?>
