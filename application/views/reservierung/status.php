@@ -10,7 +10,44 @@
     </div>
 </div>
 
-<div id="status-page" class="content">
+<div id="status-page" class="reservierung-page content">
+    <div class="formular-header">
+        <div class="left-block">
+            <div class="param">
+                <span class="param-name">Kundensnummer:</span>
+                <a href="#"><?=$formular->kunde->k_num?></a>
+            </div>
+
+            <div class="param">
+                <span class="param-name">Type:</span>
+                <span class="param-value" id="formulartype-value"><?=$formular->type?></span>
+            </div>
+
+            <div class="param">
+                <span class="param-name">Vorgangsnummer:</span>
+                <span class="param-value" id="vorgangsnummer-value"><?=$formular->v_num?></span>
+            </div>
+
+        </div>
+
+        <div class="right-block">
+
+            <div class="param">
+                <span class="param-name">Status:</span>
+                <span class="param-value"><?=$formular->plain_status?></span>
+            </div>
+
+            <? if($formular->status == "rechnung" || $formular->status == "freigabe"): ?>
+            <div class="param">
+                <span class="param-name">Rechnungsnummer:</span>
+                <span class="param-value"><?=$formular->r_num?></span>
+            </div>
+            <? endif; ?>
+
+        </div>
+        <br class="clear"/>
+
+    </div>
     <input type="hidden" name="formular_id" value="<?=$formular->id?>"/>
     <? foreach ($formular->hotels_and_manuels as $ind => $hotel): ?>
     <div class="item">

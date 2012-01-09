@@ -11,7 +11,7 @@ class Formular extends ActiveRecord\Model
 
     public function get_plain_status()
     {
-        return strtoupper($this->status[0]).substr($this->status, 1);
+        return strtoupper($this->status[0]) . substr($this->status, 1);
     }
 
     public function get_kunde()
@@ -38,7 +38,7 @@ class Formular extends ActiveRecord\Model
     {
         $hotels = $this->get_hotels();
 
-        foreach($this->get_manuels() as $manuel)
+        foreach ($this->get_manuels() as $manuel)
             $hotels[] = $manuel;
 
         return $hotels;
@@ -54,7 +54,7 @@ class Formular extends ActiveRecord\Model
         $payments = $this->payments;
         $res = 0;
 
-        foreach($payments as $payment)
+        foreach ($payments as $payment)
             $res += $payment->value;
 
         return $res;
@@ -71,7 +71,7 @@ class Formular extends ActiveRecord\Model
         $manuel_price = 0;
         $manuels = FormularManuel::find_all_by_formular_id($this->id);
 
-        foreach($manuels as $manuel)
+        foreach ($manuels as $manuel)
             $manuel_price += $manuel->price;
 
         $price = $hotel_price;
@@ -101,6 +101,25 @@ class Formular extends ActiveRecord\Model
     {
         $noneok = FormularHotel::find('all', array('conditions' => array('formular_id = ? and status != ?', $this->id, 'ok')));
         return $noneok == null;
+    }
+
+    public function get_arrival_date()
+    {
+        $hotels = Formular::get_hotels_and_manuels();
+
+        if (!$hotels)
+            return null;
+
+        $current = 0;
+        $result = null;
+
+        foreach ($hotels as $ind => $hotel)
+            if ($hotel->date_end && mysqldate_to_timestamp($hotel->date_end->format('Y-m-d')) > $current) {
+                $current = mysqldate_to_timestamp($hotel->date_end->format('Y-m-d'));
+                $result = $hotel->date_end;
+            }
+
+        return $result;
     }
 
 }

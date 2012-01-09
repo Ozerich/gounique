@@ -12,11 +12,8 @@
 
 <div id="createformular-page" class="reservierung-page content">
 <? echo form_open("reservierung/edit/" . $formular->id); ?>
-
 <div class="formular-header">
-
     <div class="left-block">
-
         <div class="param">
             <span class="param-name">Kundensnummer:</span>
             <a href="#"><?=$formular->kunde->k_num?></a>
@@ -24,7 +21,7 @@
 
         <div class="param">
             <span class="param-name">Type:</span>
-            <a class="param-value" href="#" id="formulartype-value"><?=$formular->type?></a>
+            <span class="param-value" id="formulartype-value"><?=$formular->type?></span>
         </div>
 
         <div class="param">
@@ -38,17 +35,22 @@
 
         <div class="param">
             <span class="param-name">Status:</span>
-            <span class="param-value"><?=$formular->status?></span>
+            <span class="param-value"><?=$formular->plain_status?></span>
         </div>
+
+        <? if($formular->status == "rechnung" || $formular->status == "freigabe"): ?>
+        <div class="param">
+            <span class="param-name">Rechnungsnummer:</span>
+            <span class="param-value"><?=$formular->r_num?></span>
+        </div>
+        <? endif; ?>
 
     </div>
     <br class="clear"/>
-
     <div class="custom-block" id="flight-window">
         <h3 class="header">Flugplan: <span class="price"><?=$formular->flight_price?></span> &euro;</h3>
         <pre class="text"><?=$formular->flight_text?></pre>
     </div>
-
 </div>
 
 <div class="changetype-block" style="display:none">
@@ -202,6 +204,12 @@
                 <label class="param-name" for="remark">Remark</label>
                 <textarea id="remark" class="remark" name="remark[<?=($ind + 1)?>]"><?=$hotel->remark?></textarea>
             </div>
+
+            <div class="param">
+                <label class="param-name" for="voucher_remark">Voucher text</label>
+                <textarea id="voucher_remark" class="remark" name="voucher_remark[<?=($ind + 1)?>]"><?=$hotel->voucher_remark?></textarea>
+            </div>
+
         </div>
 
         <? else: ?>
@@ -281,6 +289,10 @@
                 <textarea id="remark" name="remark[<?=($ind + 1)?>]"><?=$hotel->remark?></textarea>
             </div>
 
+            <div class="param">
+                <label class="param-name" for="voucher_remark">Voucher text</label>
+                <textarea id="voucher_remark" class="remark" name="voucher_remark[<?=($ind + 1)?>]"><?=$hotel->voucher_remark?></textarea>
+            </div>
 
         </div>
 
@@ -333,6 +345,11 @@
                 <input id="price" type="text" size="4" name="manuel_price[<?=($ind + 1)?>]" value="<?=$manuel->price;?>"/>
             </div>
 
+            <div class="param">
+                <label class="param-name" for="voucher_remark">Voucher text</label>
+                <textarea id="voucher_remark" class="remark" name="manuel_voucher_remark[<?=($ind + 1)?>]"><?=$manuel->voucher_remark?></textarea>
+            </div>
+
         </div>
         <? else: ?>
 
@@ -346,6 +363,11 @@
             <div class="param">
                 <label class="param-name" for="price">Price &euro;</label>
                 <input id="price" type="text" size="4" name="manuel_price[<?=($ind + 1)?>]" value="<?=$manuel->price;?>"/>
+            </div>
+
+            <div class="param">
+                <label class="param-name" for="voucher_remark">Voucher text</label>
+                <textarea id="voucher_remark" class="remark" name="manuel_voucher_remark[<?=($ind + 1)?>]"><?=$manuel->voucher_remark?></textarea>
             </div>
         </div>
 
@@ -446,6 +468,11 @@
                     <textarea id="remark" class="remark" name="remark" disabled="disabled"></textarea>
                 </div>
 
+                <div class="param">
+                    <label class="param-name" for="voucher_remark">Voucher remark</label>
+                    <textarea id="voucher_remark" class="remark" name="voucher_remark" disabled="disabled"></textarea>
+                </div>
+
             </div>
 
             <div class="manuel-hotel" style="display:none">
@@ -517,6 +544,10 @@
                     <textarea id="remark" name="remark"></textarea>
                 </div>
 
+                <div class="param">
+                    <label class="param-name" for="voucher_remark">Voucher remark</label>
+                    <textarea id="voucher_remark" class="remark" name="voucher_remark"></textarea>
+                </div>
 
             </div>
 
@@ -578,6 +609,11 @@
                     <input id="price" type="text" size="4" name="manuel_price"/>
                 </div>
 
+                <div class="param">
+                    <label class="param-name" for="voucher_remark">Voucher remark</label>
+                    <textarea id="voucher_remark" class="remark" name="manuel_voucher_remark"></textarea>
+                </div>
+
             </div>
 
             <div class="manuel-nodate" style="display:none">
@@ -590,6 +626,11 @@
                 <div class="param">
                     <label class="param-name" for="price">Price &euro;</label>
                     <input id="price" type="text" size="4" name="manuel_price"/>
+                </div>
+
+                <div class="param">
+                    <label class="param-name" for="voucher_remark">Voucher remark</label>
+                    <textarea id="voucher_remark" class="remark" name="manuel_voucher_remark"></textarea>
                 </div>
             </div>
 
@@ -606,11 +647,11 @@
 
     <div class="input" id="flightplan-wr">
         <label for="flightplan">Flight plan</label>
-        <textarea id="flightplan"></textarea>
+        <textarea id="flightplan"><?=$formular->flight_text?></textarea>
     </div>
     <div class="input" id="flightprice-wr">
         <label for="flightprice">Preis of flight</label>
-        <input type="text" id="flightprice" size="5" value=""/>
+        <input type="text" id="flightprice" size="5" value="<?=$formular->flight_price?>"/>
     </div>
 
     <br class="clear"/>

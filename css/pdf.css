@@ -1,127 +1,206 @@
-#header{
-    width: 712px;
-    height: 190px;
-    padding: 0 30px;
+table, div, span, p, h1, h2, h3{
+    font-size: 14px;
+    font-family: "Arial";
 }
 
-#footer{
-    width: 792px;
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    font-size: 14px;
 }
 
-#content{
-    padding: 0 30px;
+.header{
     width: 712px;
-    font-size: 12px;
+    height: 180px;
+    padding: 0 30px;
+    margin: 0 auto;
 }
+
+.header .info{
+    padding-top: 120px;
+}
+
+
+.content{
+    width: 712px;
+    padding: 0 30px;
+    margin: 0 auto 0 auto;
+}
+
 h1{
-    font-size: 13px;
-    padding-left: 3px;
-}
-
-#page{
-    width: 760px;
-}
-
-#header .address{
-    margin-left: 25px;
-}
-
-.vorgansnummer-wr{
-    margin-top: 10px;
-    border: 1px solid black;
-    padding: 2px 3px 2px 5px;
-    width: 704px;
-}
-.vorgansnummer-wr .left{float: left;width: 300px;}
-.vorgansnummer-wr .left .header{float: left; width: 200px;}
-.vorgansnummer-wr .right{float:right;width: 220px;}
-.vorgansnummer-wr .right div{
-    text-align: right;
-}
-
-.mainblock{
-    width: 667px;
-    padding: 4px 5px 20px 40px;
-    border: 1px solid black;
-    margin-top: 12px;
-}
-.mainblock .header{
     display: block;
-    font-size: 15px;
-    text-decoration: underline;
+    text-align: center;
+    font-size: 14px;
+    margin: 0;
 }
-.mainblock .persons{
 
-    min-height: 90px;
-}
-.mainblock .persons h2{margin-bottom: 18px;}
-.mainblock .person{
-    margin-bottom: 3px;
-    clear: both;
-
-}
-.mainblock .person div{
-    float: left;
-}
-.mainblock .person .num{width: 35px;}
-.mainblock .person .sex{width: 50px;}
-
-.mainblock .tours{
-    min-height: 75px;
-    margin-top: 10px;
-}
-.mainblock .tours h2{margin-bottom: 3px;}
-.mainblock .tour .date{width: 140px;}
-.mainblock .tour div{float: left;}
-
-.mainblock .flugplan{
-    min-height: 210px;
-    margin-top: 10px;
-}
-.mainblock .flugplan h2{margin-bottom: 15px;}
-
-.mainblock .price-wr{
-    font-weight: bold;
-    margin-top: 10px;
-}
-.mainblock .price-wr .price{margin-left: 30px;}
-
-.commentblock{
-    width: 440px;
-    float: left;
-    padding-right: 20px;
-}
-.priceblock{
-    width: 200px;
-    float: right;
-    margin-top: 5px;
-    text-align: right;
-    text-decoration: underline;
-}
-.priceblock .price{
-    font-weight: bold;
-    margin-left: 4px;
-}
-.priceblock .price-item{
+h2{
     display: block;
-    padding-top: 6px;
+    text-align: center;
+    font-size: 13px;
+    margin:0;
 }
 
-.bottomblock{
-    clear: both;
+h3{
+    margin: 0;
     font-size: 13px;
-    margin-top: 20px;
+    padding: 0 0 3px 3px;
 }
-.bottomblock p{margin-bottom: 10px;}
-.bottomblock .signature{
+
+.top-block{
+    border: 1px solid black;
     width: 100%;
-    margin-bottom: 20px;
-}
-.bottomblock .signature .line{
-    float:right;
-    height: 1px;
-    border-bottom: 1px solid black;
-    margin: 13px 5px 0 0;
-    width: 200px;
+    margin-top: 5px;
 }
 
+.top-block .left-paramname{
+    width: 146px;
+}
+
+.top-block .left-paramvalue{
+    width: 111px;
+    background: #daedf3;
+    border-left: 1px solid black;
+    border-bottom: 1px solid black;
+    border-right: 1px solid black;
+}
+.top-block .left-paramvalue.last{border-bottom: 0;}
+
+.top-block .right-paramname{
+    padding-left: 96px;
+    width: 109px;
+}
+
+.top-block .right-paramvalue{
+    width: 155px;
+    border-left: 1px solid black;
+    border-bottom: 1px solid black;
+    background: #daedf3;
+}
+
+
+.main-block{
+    width: 710px;
+    border: 1px solid black;
+    padding: 2px 0 0 0;
+    margin: 20px 0;
+}
+
+.main-block .block{
+    margin-top: 5px;
+}
+.main-block .block.first{margin-top: 0;}
+
+.reiseteilnehmer-table{
+    width: 100%;
+}
+
+.reiseteilnehmer-table .num{
+    width: 77px;
+    text-align: right;
+}
+
+.reiseteilnehmer-table .sex{
+    width: 98px;
+    text-align:right;
+    text-transform: uppercase;
+}
+
+.reiseteilnehmer-table .person-name{
+    background: #dce6f0;
+    border-top: 1px solid black;
+    border-left: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+.reisezeitraum-table{
+    margin-left: 174px;
+}
+
+.reisezeitraum-table td{
+    background: #dce6f0;
+    width: 110px;
+    border: 1px solid black;
+}
+
+.reisezeitraum-table td.center{
+    text-align: center;
+}
+
+.liestung-table{
+    width: 100%;
+}
+
+.liestung-table .num{
+    padding-left: 67px;
+    width: 174px;
+}
+
+.liestung-table .text{
+    border-top: 1px solid black;
+    border-left: 1px solid black;
+    border-bottom: 1px solid black;
+    background: #dce6f0;
+}
+
+
+.flight-plan{
+    width: 100%;
+    background: #dce6f0;
+    border-top: 1px solid black;
+}
+
+.flight-plan pre{margin: 0;}
+
+
+.price-table{
+    float: right;
+    width: 301px;
+}
+
+.price-table table{
+    border: 1px solid black;
+}
+
+.price-table td{
+    background: #dce6f0;
+    text-align: right;
+    border-right: 1px solid black;
+}
+
+.price-table td.paramname{
+    width: 180px;
+}
+
+.price-table td.paramvalue{
+    width: 120px;
+}
+
+.price-table tr.bold td{
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.price-table tr.underline td{
+    border-bottom: 1px solid black;
+}
+
+.price-table tr.green td{
+    background: #daedf3;
+}
+
+.price-table tr.empty td{
+    background: #ffffff;
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+}
+
+
+.anzahlung-block{
+    float: left;
+    width: 400px;
+}
+
+.anzahlung-block p{
+    margin: 0 0 10px 0;
+}

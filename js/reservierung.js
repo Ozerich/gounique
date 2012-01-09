@@ -1,6 +1,5 @@
-function InputToTime(time)
-{
-    return time.substr(0, 2) + '/' + time.substr(2, 2) + '/' + time.substr(4);
+function InputToTime(time) {
+    return time.substr(0, 2) + '.' + time.substr(2, 2) + '.' + time.substr(4);
 }
 
 function update(param, hotel_block) {
@@ -28,10 +27,12 @@ function update(param, hotel_block) {
 
 function GetPreview(hotel_block, type) {
     if (type == 'hotel') {
-        return 'Hotel';
+        return InputToTime($(hotel_block).find('.datestart').val()) + " - " + InputToTime($(hotel_block).find(".dateend").val()) + "&nbsp;&nbsp;&nbsp;" + $(hotel_block).find("#hotelname").val();
     }
     else {
-        return 'Manuel';
+        var result = $(hotel_block).find('.datestart').length > 0 ?
+            InputToTime($(hotel_block).find('.datestart').val()) + " - " + InputToTime($(hotel_block).find(".dateend").val()) + '&nbsp;&nbsp;&nbsp;' : '';
+        return result + $(hotel_block).find("#manuel_text").val();
     }
 }
 
@@ -46,7 +47,7 @@ function BindHotelEvents() {
         var hotel_block = $(this).find('.database-hotel, .manuel-hotel').filter(':visible');
 
 
-        if(!hotel_block.length)
+        if (!hotel_block.length)
             hotel_block = $(this).find('.database-hotel, .manuel-hotel');
 
         $(this).find('#hoteltype input').click(function () {
@@ -376,7 +377,7 @@ function BindManuelEvents() {
         var date_block = $(this).find('.manuel-date');
         var ok_button = $(this).find('.buttons .add');
         var manuel_block = $(this).find('.manuel-date, .manuel-nodate').filter(':visible');
-        if(!manuel_block.length)
+        if (!manuel_block.length)
             manuel_block = $(this).find('.database-hotel, .manuel-hotel');
 
         $(this).find('.manueltype input').click(function () {
@@ -979,14 +980,13 @@ $(document).ready(function () {
     });
 
     $('#final-page #send-button').click(function () {
-        $('#final-page .mail-block .mail:visible').each(function(){
+        $('#final-page .mail-block .mail:visible').each(function () {
 
-            if($(this).find('.sended').val() == 1)
+            if ($(this).find('.sended').val() == 1)
                 return true;
 
             var mail = $(this).find('.email').val();
-            if(!validateEmail(mail))
-            {
+            if (!validateEmail(mail)) {
                 $(this).find('.status').html('incorrect email');
                 return true;
             }
@@ -996,13 +996,11 @@ $(document).ready(function () {
             var mail_block = $(this);
 
             $.ajax({
-               url:'reservierung/sendmail/' + $('input[name=formular_id]').val(),
-                type: 'post',
-                data: 'email=' + mail + '&type=' + $("#stage input:checked").val(),
-                success: function(data)
-                {
-                    if(data == "ok")
-                    {
+                url:'reservierung/sendmail/' + $('input[name=formular_id]').val(),
+                type:'post',
+                data:'email=' + mail + '&type=' + $("#stage input:checked").val(),
+                success:function (data) {
+                    if (data == "ok") {
                         $(mail_block).find('.sended').val(1);
                         $(mail_block).find('.email').attr('disabled', 'disabled');
                     }

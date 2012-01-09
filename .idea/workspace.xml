@@ -2,15 +2,29 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1eff6da6-54e6-4b19-a410-f3c1d995c642" name="Default" comment="">
-      <change type="DELETED" beforePath="Z:\home\localhost\www\gounique\application\views\agency\create.php" afterPath="" />
-      <change type="DELETED" beforePath="Z:\home\localhost\www\gounique\application\views\agency\edit.php" afterPath="" />
-      <change type="DELETED" beforePath="Z:\home\localhost\www\gounique\application\views\agency\index.php" afterPath="" />
-      <change type="DELETED" beforePath="Z:\home\localhost\www\gounique\application\views\agency\view.php" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test_pdf.html" />
+      <change type="DELETED" beforePath="Z:\home\localhost\www\gounique\application\views\pdf_reports\eingangsmitteilungen.php" afterPath="" />
+      <change type="DELETED" beforePath="Z:\home\localhost\www\gounique\application\views\pdf_reports\rechnungen.php" afterPath="" />
+      <change type="DELETED" beforePath="Z:\home\localhost\www\gounique\application\views\reservierung\open.php" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/controllers/reservierung_controller.php" afterPath="$PROJECT_DIR$/application/controllers/reservierung_controller.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/core/MY_Loader.php" afterPath="$PROJECT_DIR$/application/core/MY_Loader.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/models/Formular.php" afterPath="$PROJECT_DIR$/application/models/Formular.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/dashboard/index.php" afterPath="$PROJECT_DIR$/application/views/dashboard/index.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/layouts/application.php" afterPath="$PROJECT_DIR$/application/views/layouts/application.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/pdf_reports/angebot.php" afterPath="$PROJECT_DIR$/application/views/pdf_reports/angebot.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/pdf_reports/angebotK.php" afterPath="$PROJECT_DIR$/application/views/pdf_reports/angebotK.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/pdf_reports/rechnung.php" afterPath="$PROJECT_DIR$/application/views/pdf_reports/rechnung.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/pdf_reports/rechnungK.php" afterPath="$PROJECT_DIR$/application/views/pdf_reports/rechnungK.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/reservierung/create/kunde.php" afterPath="$PROJECT_DIR$/application/views/reservierung/create/kunde.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/reservierung/edit.php" afterPath="$PROJECT_DIR$/application/views/reservierung/edit.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/reservierung/final.php" afterPath="$PROJECT_DIR$/application/views/reservierung/final.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/reservierung/payments.php" afterPath="$PROJECT_DIR$/application/views/reservierung/payments.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/reservierung/result.php" afterPath="$PROJECT_DIR$/application/views/reservierung/result.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/reservierung/status.php" afterPath="$PROJECT_DIR$/application/views/reservierung/status.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/reservierung/storeno.php" afterPath="$PROJECT_DIR$/application/views/reservierung/storeno.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/css/main.less" afterPath="$PROJECT_DIR$/css/main.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/css/pdf.css" afterPath="$PROJECT_DIR$/css/pdf.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/reservierung.js" afterPath="$PROJECT_DIR$/js/reservierung.js" />
     </list>
     <list id="a972c9e9-6531-4e31-85fd-40e9f3562a82" name="Failed commit: Default" comment="Email work now and other fixes" />
     <ignored path="gounique.iws" />
@@ -37,19 +51,82 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="final.php" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="final.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/views/reservierung/final.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="81" column="31" selection-start="2758" selection-end="2758" vertical-scroll-proportion="0.5395514">
+            <state line="58" column="33" selection-start="1975" selection-end="1975" vertical-scroll-proportion="-14.384615">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Formular.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/models/Formular.php">
+      <file leaf-file-name="result.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/views/reservierung/result.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="2" column="28" selection-start="34" selection-end="35" vertical-scroll-proportion="-1.36">
+            <state line="135" column="109" selection-start="5309" selection-end="5309" vertical-scroll-proportion="-15.692307">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="edit.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/views/reservierung/edit.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="613" column="92" selection-start="27069" selection-end="27069" vertical-scroll-proportion="-1.4509804">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/views/dashboard/index.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="17" column="33" selection-start="596" selection-end="596" vertical-scroll-proportion="-11.115385">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="application.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/views/layouts/application.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="45" column="85" selection-start="1318" selection-end="1318" vertical-scroll-proportion="-11.423077">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="reservierung.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/js/reservierung.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="756" column="54" selection-start="31010" selection-end="31019" vertical-scroll-proportion="1.48">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main.less" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/css/main.less">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="459" column="21" selection-start="8648" selection-end="8648" vertical-scroll-proportion="-14.16">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="status.php" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/application/views/reservierung/status.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="12" column="47" selection-start="510" selection-end="510" vertical-scroll-proportion="-0.29708737">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="kunde.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/views/reservierung/create/kunde.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="358" column="92" selection-start="14256" selection-end="14256" vertical-scroll-proportion="-2.7105262">
               <folding />
             </state>
           </provider>
@@ -58,7 +135,7 @@
       <file leaf-file-name="reservierung_controller.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/controllers/reservierung_controller.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="440" column="0" selection-start="17401" selection-end="17401" vertical-scroll-proportion="-14.68">
+            <state line="439" column="59" selection-start="17395" selection-end="17406" vertical-scroll-proportion="-6.68">
               <folding />
             </state>
           </provider>
@@ -78,53 +155,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/application/views/kundenverwaltung/new/agenturen.php" />
-        <option value="$PROJECT_DIR$/application/models/Kunden.php" />
-        <option value="$PROJECT_DIR$/application/views/reservierung/create.php" />
-        <option value="$PROJECT_DIR$/application/views/reservierung/create/create.php" />
-        <option value="$PROJECT_DIR$/application/views/kundenverwaltung/vervalten/agenturen.php" />
-        <option value="$PROJECT_DIR$/application/views/reservierung/create/no_kunde.php" />
-        <option value="$PROJECT_DIR$/application/views/layouts/application.php" />
-        <option value="$PROJECT_DIR$/application/helpers/MY_date_helper.php" />
-        <option value="$PROJECT_DIR$/js/result.js" />
-        <option value="$PROJECT_DIR$/js/final.js" />
-        <option value="$PROJECT_DIR$/application/views/pdf_reports/angebotK.php" />
+        <option value="$PROJECT_DIR$/application/views/pdf_reports/rechnung.php" />
+        <option value="$PROJECT_DIR$/application/views/pdf_reports/rechnungK.php" />
+        <option value="$PROJECT_DIR$/css/pdf.css" />
         <option value="$PROJECT_DIR$/application/views/pdf_reports/angebot.php" />
-        <option value="$PROJECT_DIR$/application/views/reservierung/edit.php" />
-        <option value="$PROJECT_DIR$/application/views/kundenverwaltung/new/income.php" />
-        <option value="$PROJECT_DIR$/application/views/kundenverwaltung/new/mitarbeiter.php" />
-        <option value="$PROJECT_DIR$/application/views/kundenverwaltung/new/stammkunden.php" />
-        <option value="$PROJECT_DIR$/application/views/kundenverwaltung/vervalten.php" />
-        <option value="$PROJECT_DIR$/application/views/kundenverwaltung/historie.php" />
-        <option value="$PROJECT_DIR$/application/models/Kunde.php" />
-        <option value="$PROJECT_DIR$/application/views/kundenverwaltung/agenturen.php" />
-        <option value="$PROJECT_DIR$/application/controllers/kundenverwaltung_controller.php" />
-        <option value="$PROJECT_DIR$/application/views/reservierung/create/kunde.php" />
-        <option value="$PROJECT_DIR$/js/global.js" />
-        <option value="$PROJECT_DIR$/application/core/MY_Controller.php" />
-        <option value="$PROJECT_DIR$/application/config/routes.php" />
-        <option value="$PROJECT_DIR$/application/views/reservierung/status.php" />
+        <option value="$PROJECT_DIR$/application/views/reservierung/storeno.php" />
         <option value="$PROJECT_DIR$/application/views/reservierung/payments.php" />
-        <option value="$PROJECT_DIR$/css/main.less" />
-        <option value="$PROJECT_DIR$/application/views/reservierung/result.php" />
+        <option value="$PROJECT_DIR$/application/views/dashboard/index.php" />
+        <option value="$PROJECT_DIR$/application/views/layouts/application.php" />
         <option value="$PROJECT_DIR$/js/reservierung.js" />
-        <option value="$PROJECT_DIR$/application/models/FormularHotel.php" />
-        <option value="$PROJECT_DIR$/application/models/FormularManuel.php" />
-        <option value="$USER_HOME$/AppData/Local/Temp/fz3temp-17/database.php" />
-        <option value="$USER_HOME$/AppData/Local/Temp/fz3temp-17/index.php" />
-        <option value="$USER_HOME$/AppData/Local/Temp/fz3temp-17/Router.php" />
-        <option value="$USER_HOME$/AppData/Local/Temp/fz3temp-17/CodeIgniter.php" />
-        <option value="$USER_HOME$/AppData/Local/Temp/fz3temp-17/MY_Controller.php" />
-        <option value="$USER_HOME$/AppData/Local/Temp/fz3temp-17/config 2.php" />
-        <option value="$PROJECT_DIR$/system/core/Loader.php" />
-        <option value="$PROJECT_DIR$/application/config/config.php" />
-        <option value="$USER_HOME$/AppData/Local/Temp/fz3temp-17/Loader.php" />
-        <option value="$USER_HOME$/AppData/Local/Temp/fz3temp-17/Controller.php" />
-        <option value="$USER_HOME$/AppData/Local/Temp/fz3temp-17/MY_Loader.php" />
-        <option value="$PROJECT_DIR$/application/core/MY_Loader.php" />
-        <option value="$PROJECT_DIR$/application/models/Formular.php" />
+        <option value="$PROJECT_DIR$/application/views/reservierung/create/kunde.php" />
+        <option value="$PROJECT_DIR$/application/views/reservierung/edit.php" />
+        <option value="$PROJECT_DIR$/application/views/reservierung/result.php" />
         <option value="$PROJECT_DIR$/application/controllers/reservierung_controller.php" />
         <option value="$PROJECT_DIR$/application/views/reservierung/final.php" />
+        <option value="$PROJECT_DIR$/css/main.less" />
+        <option value="$PROJECT_DIR$/application/views/reservierung/status.php" />
       </list>
     </option>
   </component>
@@ -132,8 +178,8 @@
   <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
-    <option name="width" value="1936" />
-    <option name="height" value="1056" />
+    <option name="width" value="1382" />
+    <option name="height" value="744" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -161,6 +207,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -189,34 +236,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="tools" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="gounique" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="gounique" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="system" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="gounique" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="gounique" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="application" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -235,23 +254,45 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="models" />
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gounique" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gounique" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="application" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="reservierung" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="Favorites" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="recentsLimit" value="5" />
     <property name="options.lastSelected" value="editor.preferences.appearance" />
-    <property name="options.searchVisible" value="true" />
+    <property name="recentsLimit" value="5" />
+    <property name="DefaultHtmlFileTemplate" value="Html" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -277,13 +318,6 @@
         <option name="PhingTarget" enabled="false" />
       </method>
     </configuration>
-    <configuration default="true" type="JavascriptDebugSession" factoryName="Local">
-      <JSDebuggerConfigurationSettings>
-        <option name="engineId" value="embedded" />
-        <option name="fileUrl" />
-      </JSDebuggerConfigurationSettings>
-      <method />
-    </configuration>
     <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
       <method>
         <option name="FtpUpload" enabled="false">
@@ -292,6 +326,13 @@
         </option>
         <option name="PhingTarget" enabled="false" />
       </method>
+    </configuration>
+    <configuration default="true" type="JavascriptDebugSession" factoryName="Local">
+      <JSDebuggerConfigurationSettings>
+        <option name="engineId" value="embedded" />
+        <option name="fileUrl" />
+      </JSDebuggerConfigurationSettings>
+      <method />
     </configuration>
     <list size="1">
       <item index="0" class="java.lang.String" itemvalue="PHPUnit.gounique" />
@@ -346,14 +387,15 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="1" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32852808" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.29692832" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32935154" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32764506" sideWeight="0.0" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1736111" sideWeight="0.6714922" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17678301" sideWeight="0.67235494" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.12969284" sideWeight="0.49772382" order="11" side_tool="true" content_ui="tabs" />
@@ -363,7 +405,6 @@
       <window_info id="Phing Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32850778" sideWeight="0.0" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19112629" sideWeight="0.4969651" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -430,259 +471,114 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/application/views/reservierung/create/no_kunde.php">
+    <entry file="file://$PROJECT_DIR$/application/views/pdf_reports/rechnungK.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="36" selection-start="393" selection-end="393" vertical-scroll-proportion="0.33333334" />
+        <state line="8" column="0" selection-start="159" selection-end="183" vertical-scroll-proportion="-2.8076923">
+          <folding />
+        </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/agency.js">
+    <entry file="file://$PROJECT_DIR$/css/pdf.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-2.7272727" />
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/com/jetbrains/php/lang/psi/stubs/data/date.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="449" column="9" selection-start="12338" selection-end="12338" vertical-scroll-proportion="0.33211678" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/layouts/application.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="31" selection-start="624" selection-end="624" vertical-scroll-proportion="0.116883114" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/helpers/MY_date_helper.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="45" selection-start="636" selection-end="636" vertical-scroll-proportion="0.18213059" />
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/lib/JavascriptLanguage.jar!/com/intellij/lang/javascript/index/predefined/HTML5.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1834" column="19" selection-start="32308" selection-end="32308" vertical-scroll-proportion="0.84421533" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/pdf_reports/angebotK.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="13" selection-start="872" selection-end="872" vertical-scroll-proportion="-7.3846154" />
+        <state line="33" column="10" selection-start="460" selection-end="460" vertical-scroll-proportion="-3.64">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/application/views/pdf_reports/angebot.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="63" selection-start="1819" selection-end="1819" vertical-scroll-proportion="-26.0" />
+        <state line="17" column="42" selection-start="605" selection-end="605" vertical-scroll-proportion="-11.115385">
+          <folding />
+        </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/reservierung/edit.php">
+    <entry file="file://$PROJECT_DIR$/application/views/pdf_reports/rechnung.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="159" column="65" selection-start="6232" selection-end="6232" vertical-scroll-proportion="-37.666668" />
+        <state line="17" column="66" selection-start="630" selection-end="630" vertical-scroll-proportion="-11.115385">
+          <folding />
+        </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/kundenverwaltung/new/income.php">
+    <entry file="file://$PROJECT_DIR$/application/views/reservierung/storeno.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="63" column="14" selection-start="1941" selection-end="1941" vertical-scroll-proportion="-16.23077" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/kundenverwaltung/new/mitarbeiter.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="64" column="0" selection-start="1957" selection-end="1957" vertical-scroll-proportion="-18.961538" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/kundenverwaltung/new/stammkunden.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="36" selection-start="261" selection-end="272" vertical-scroll-proportion="0.100354195" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/models/Kunde.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="39" column="64" selection-start="1166" selection-end="1166" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/kundenverwaltung/vervalten.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="0" selection-start="577" selection-end="577" vertical-scroll-proportion="0.34" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/kundenverwaltung/historie.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="73" column="46" selection-start="2542" selection-end="2542" vertical-scroll-proportion="0.9415808" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/kundenverwaltung/agenturen.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="43" selection-start="958" selection-end="958" vertical-scroll-proportion="0.5218418" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/reservierung/create/kunde.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="55" column="40" selection-start="1524" selection-end="1524" vertical-scroll-proportion="-8.038462" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/global.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="21" selection-start="417" selection-end="417" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/core/MY_Controller.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="5" selection-start="5" selection-end="5" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/reservierung.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="81" column="23" selection-start="2812" selection-end="2812" vertical-scroll-proportion="-55.08" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/css/main.less">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="296" column="25" selection-start="5841" selection-end="5841" vertical-scroll-proportion="-11.28" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/reservierung/result.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="159" column="109" selection-start="6948" selection-end="6948" vertical-scroll-proportion="-2.372549" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/reservierung/status.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="73" selection-start="1352" selection-end="1353" vertical-scroll-proportion="-6.763158" />
+        <state line="11" column="48" selection-start="429" selection-end="429" vertical-scroll-proportion="-7.1923075">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/application/views/reservierung/payments.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="43" column="58" selection-start="1644" selection-end="1644" vertical-scroll-proportion="-24.192308" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/config/routes.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="72" column="53" selection-start="2934" selection-end="2934" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/models/FormularManuel.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="54" column="47" selection-start="1356" selection-end="1356" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Temp/fz3temp-17/Router.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="228" column="0" selection-start="5905" selection-end="5905" vertical-scroll-proportion="-2.8490567" />
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Temp/fz3temp-17/config.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Temp/fz3temp-17/init.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="31" selection-start="440" selection-end="440" vertical-scroll-proportion="0.25315005" />
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Temp/fz3temp-17/database.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="52" column="35" selection-start="2711" selection-end="2711" vertical-scroll-proportion="0.0">
+        <state line="12" column="48" selection-start="511" selection-end="511" vertical-scroll-proportion="-7.8461537">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Temp/fz3temp-17/CodeIgniter.php">
+    <entry file="file://$PROJECT_DIR$/application/views/dashboard/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="228" column="0" selection-start="6333" selection-end="6333" vertical-scroll-proportion="0.0">
+        <state line="17" column="33" selection-start="596" selection-end="596" vertical-scroll-proportion="-11.115385">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Temp/fz3temp-17/MY_Controller.php">
+    <entry file="file://$PROJECT_DIR$/js/reservierung.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="0" selection-start="291" selection-end="291" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Temp/fz3temp-17/config 2.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="182" column="27" selection-start="6121" selection-end="6122" vertical-scroll-proportion="0.019473081">
+        <state line="756" column="54" selection-start="31010" selection-end="31019" vertical-scroll-proportion="1.48">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Temp/fz3temp-17/index.php">
+    <entry file="file://$PROJECT_DIR$/application/views/reservierung/create/kunde.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="203" column="0" selection-start="6275" selection-end="6275" vertical-scroll-proportion="0.8052692" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/models/FormularHotel.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="109" column="48" selection-start="3540" selection-end="3540" vertical-scroll-proportion="0.82474226" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/system/core/Loader.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1128" column="0" selection-start="27899" selection-end="27899" vertical-scroll-proportion="0.019473081" />
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Temp/fz3temp-17/log-2012-01-09.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.045207955" />
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Temp/fz3temp-17/Controller.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="49" column="0" selection-start="1298" selection-end="1298" vertical-scroll-proportion="0.61053836" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/config/config.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="182" column="26" selection-start="6120" selection-end="6122" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/logs/log-2012-01-09.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="86" column="32" selection-start="5074" selection-end="5127" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Temp/fz3temp-17/MY_Loader.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="70" column="20" selection-start="1838" selection-end="1838" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Temp/fz3temp-17/Loader.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="153" column="14" selection-start="3264" selection-end="3270" vertical-scroll-proportion="0.019473081">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/core/MY_Loader.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="179" column="0" selection-start="4776" selection-end="4776" vertical-scroll-proportion="0.019473081">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/controllers/kundenverwaltung_controller.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="148" column="51" selection-start="4028" selection-end="4028" vertical-scroll-proportion="0.74684995">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/models/Formular.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="28" selection-start="34" selection-end="35" vertical-scroll-proportion="-1.36">
+        <state line="358" column="92" selection-start="14256" selection-end="14256" vertical-scroll-proportion="-2.7105262">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/application/controllers/reservierung_controller.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="440" column="0" selection-start="17401" selection-end="17401" vertical-scroll-proportion="-14.68">
+        <state line="439" column="59" selection-start="17395" selection-end="17406" vertical-scroll-proportion="-6.68">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/reservierung/result.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="135" column="109" selection-start="5309" selection-end="5309" vertical-scroll-proportion="-15.692307">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/application/views/reservierung/final.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="81" column="31" selection-start="2758" selection-end="2758" vertical-scroll-proportion="0.5395514">
+        <state line="58" column="33" selection-start="1975" selection-end="1975" vertical-scroll-proportion="-14.384615">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/layouts/application.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="45" column="85" selection-start="1318" selection-end="1318" vertical-scroll-proportion="-11.423077">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/reservierung/edit.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="613" column="92" selection-start="27069" selection-end="27069" vertical-scroll-proportion="-1.4509804">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/css/main.less">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="459" column="21" selection-start="8648" selection-end="8648" vertical-scroll-proportion="-14.16">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/reservierung/status.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="47" selection-start="510" selection-end="510" vertical-scroll-proportion="-0.29708737">
           <folding />
         </state>
       </provider>

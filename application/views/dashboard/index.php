@@ -5,17 +5,17 @@
             <div class="row">
                 <a href="reservierung">resevierung</a>
                 <a href="kundenverwaltung">kundenverwaltung</a>
-                <a class="last" href="product">product</a>
+                <a class="last disabled">product</a>
             </div>
 
             <div class="row">
-                <a href="versand">versand</a>
+                <a class="disabled">versand</a>
                 <a href="statistik">statistik</a>
-                <a class="last" href="buchhaltung">buchhaltung</a>
+                <a class="last disabled">buchhaltung</a>
             </div>
 
             <div class="row">
-                <a href="systemverwaltung" class="center">systemverwaltung</a>
+                <a class="center disabled">systemverwaltung</a>
             </div>
         </div>
 </div>

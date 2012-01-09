@@ -37,6 +37,13 @@
             <span class="param-value"><?=$formular->plain_status?></span>
         </div>
 
+        <? if($formular->status == "rechnung" || $formular->status == "freigabe"): ?>
+        <div class="param">
+            <span class="param-name">Rechnungsnummer:</span>
+            <span class="param-value"><?=$formular->r_num?></span>
+        </div>
+        <? endif; ?>
+
     </div>
     <br class="clear"/>
 
@@ -49,8 +56,8 @@
     foreach ($formular->persons as $ind => $person):?>
         <div class="person-item">
             <span class="num"><?=($ind + 1);?></span>
-            <span class="sex"><?=FormularPerson::$sex_map[$person->sex];?></span>
-                <span class="name"><?=$person->person_name;?>
+            <span class="sex"><?=$person->sex?></span>
+            <span class="name"><?=$person->name;?> / <?=$person->surname;?></span>
         </div>
         <? endforeach; ?>
 </div>
@@ -149,7 +156,7 @@
                 <td class="param">Endpreise Netto</td>
                 <td><?=$formular->price['netto']?></td>
             </tr>
-            <? if ($formular->status != 'angebot'): ?>
+            <? if ($formular->status == 'rechnung'): ?>
                 <tr>
                     <td class="param">Paid</td>
                     <td><?=$formular->paid_amount?></td>
@@ -165,8 +172,9 @@
             <? if ($formular->status == "angebot"): ?>
             <a href="reservierung/eingangsmitteilung/<?=$formular->id?>" class="button-link">Make Eingangsmitteilung</a>
             <? elseif ($formular->status == "eingangsmitteilung"): ?>
-        <a <?if ($formular->can_rechnung) echo 'href="reservierung/rechnung/'.$formular->id.'"';?> class="button-link <?if (!$formular->can_rechnung) echo 'disabled'?>">Make rechnung</a>
-        <? elseif ($formular->status == "rechnung"): ?>
+            <a <?if ($formular->can_rechnung) echo 'href="reservierung/rechnung/' . $formular->id . '"';?>
+                class="button-link <?if (!$formular->can_rechnung) echo 'disabled'?>">Make rechnung</a>
+            <? elseif ($formular->status == "rechnung"): ?>
             <a href="reservierung/storeno/<?=$formular->id?>" class="button-link red">Storno</a>
             <? endif; ?>
         </div>
@@ -178,15 +186,19 @@
 <? if ($formular->status != 'canceled'): ?>
 <div id="stage">
     <input type="radio" id="radio1" name="stage"
-           value="1" <?if ($formular->r_num == 0) echo 'checked';?>/><label for="radio1">Angebot</label>
+           value="1" <?if ($formular->status == "angebot" || $formular->status == "eingangsmitteilung") echo 'checked';?>/><label for="radio1">Angebot</label>
+    <? if ($formular->kunde->type == "agenturen"): ?>
     <input type="radio" id="radio2" name="stage"
            value="2"/><label for="radio2">Angebot
-    (Kundenkopie)</label>
-    <? if ($formular->r_num): ?>
-    <input type="radio" id="radio3" name="stage" value="3" checked/><label
-            for="radio3">Rechnung</label>
-    <input type="radio" id="radio4" name="stage" value="4"/><label for="radio4">Rechnung
         (Kundenkopie)</label>
+    <? endif; ?>
+    <? if ($formular->status == "rechnung" || $formular->status == "freigabe"): ?>
+    <input type="radio" id="radio3" name="stage" value="3" checked/><label
+        for="radio3">Rechnung</label>
+    <? if ($formular->kunde->type == "agenturen"): ?>
+        <input type="radio" id="radio4" name="stage" value="4"/><label for="radio4">Rechnung
+            (Kundenkopie)</label>
+        <? endif; ?>
     <? endif; ?>
 </div>
 

@@ -43,8 +43,8 @@
 
         <span class="username"> <?=$user->name . " - " . $user->surname?></span>
 
-        <span class="copyright">&copy; 2010 - 2012 Copyright <a href="#">goUnique</a>.
-    Powered by <a class="author-link" href="mailto:ozicoder@gmail.com">Vital Ozierski</a></span>
+        <span class="copyright">&copy; 2010 - 2012 Copyright <a href="#">goUnique</a>
+ <!--   Powered by <a class="author-link" href="mailto:ozicoder@gmail.com">Vital Ozierski</a></span> -->
 
     </div>
 

@@ -57,9 +57,9 @@
 
     <div id="type-radio">
         <input type="radio" name="formular-type" id="type_1" checked value="Pausschalreise"><label
-            for="type_1">Pauschalreise</label>
+        for="type_1">Pauschalreise</label>
         <input type="radio" name="formular-type" id="type_2" value="Bausteinreise"><label
-            for="type_2">Bausteinreise</label>
+        for="type_2">Bausteinreise</label>
         <input type="radio" name="formular-type" id="type_3" value="Nurflug"><label for="type_3">Nur flug</label>
     </div>
 
@@ -121,10 +121,10 @@
                 <div id="hoteltype">
                     <input type="radio" name="hoteltype" checked value="database" class="hoteltype-db"
                            id="hoteltype-db"/><label
-                        for="hoteltype-db">database</label>
+                    for="hoteltype-db">database</label>
                     <input type="radio" name="hoteltype" value="manuel" class="hoteltype-manuel"
                            id="hoteltype-manuel"/><label
-                        for="hoteltype-manuel">manuel</label>
+                    for="hoteltype-manuel">manuel</label>
                 </div>
 
             </div>
@@ -191,6 +191,12 @@
                     <label class="param-name" for="remark">Remark</label>
                     <textarea id="remark" class="remark" name="remark" disabled="disabled"></textarea>
                 </div>
+
+                <div class="param">
+                    <label class="param-name" for="voucher_remark">Voucher text</label>
+                    <textarea id="voucher_remark" class="remark" name="voucher_remark" disabled="disabled"></textarea>
+                </div>
+
 
             </div>
 
@@ -263,6 +269,11 @@
                     <textarea id="remark" name="remark"></textarea>
                 </div>
 
+                <div class="param">
+                    <label class="param-name" for="voucher_remark">Voucher text</label>
+                    <textarea id="voucher_remark" class="remark" name="voucher_remark"></textarea>
+                </div>
+
 
             </div>
 
@@ -290,10 +301,10 @@
                 <div class="manueltype" id="manueltype">
                     <input type="radio" name="manueltype" value="with-date" class="manueltype-date"
                            id="manueltype-date"/><label
-                        for="manueltype-date">with date</label>
+                    for="manueltype-date">with date</label>
                     <input type="radio" name="manueltype" value="no-date" class="manueltype-nodate"
                            id="manueltype-nodate"/><label
-                        for="manueltype-nodate">no date</label>
+                    for="manueltype-nodate">no date</label>
                 </div>
             </div>
 
@@ -324,6 +335,11 @@
                     <input id="price" type="text" size="4" name="manuel_price"/>
                 </div>
 
+                <div class="param">
+                    <label class="param-name" for="voucher_remark">Voucher text</label>
+                    <textarea id="voucher_remark" class="remark" name="manuel_voucher_remark"></textarea>
+                </div>
+
             </div>
 
             <div class="manuel-nodate" style="display:none">
@@ -337,6 +353,12 @@
                     <label class="param-name" for="price">Price &euro;</label>
                     <input id="price" type="text" size="4" name="manuel_price"/>
                 </div>
+
+                <div class="param">
+                    <label class="param-name" for="voucher_remark">Voucher text</label>
+                    <textarea id="voucher_remark" class="remark" name="manuel_voucher_remark"></textarea>
+                </div>
+
             </div>
 
             <div class="buttons">
