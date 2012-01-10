@@ -2,8 +2,8 @@
     <div id="page-header">
         <a href="dashboard" class="home-link"><img src="img/header-logo.jpg"/></a>
         <ul class="page-path">
-            <li><span><?=$formular->kunde->plain_type;?> <?=$formular->kunde->k_num?></span></li>
-            </li>
+            <li><a href="kundenverwaltung/historie/<?=$formular->kunde->id?>"><?=$formular->kunde->plain_type;?> <?=$formular->kunde->k_num?></a></li>
+             </li>
             <li><span>formular <?=$formular->v_num?></span></li>
         </ul>
     </div>
@@ -70,7 +70,7 @@
     <? foreach ($formular->hotels as $ind => $hotel): ?>
     <div class="item">
         <span class="num"><?=($ind + 1)?></span>
-        <span class="text"><?=$hotel->plain_text; ?></span>
+        <span class="text"><?=$hotel->plain_text. " - &nbsp;<b>" . $hotel->price . "&euro;</b>"; ?></span>
         <? if ($formular->status == "rechnung" || $formular->status == "freigabe"): ?>
         <a href="pdf/<?=$hotel->voucher_name?>" target="_blank" class="voucher-button">Voucher</a>
         <? endif ?>
@@ -119,10 +119,12 @@
         </div>
 
         <div class="anzahlung-block">
-            <p>Anzahlung sofort nach Erhalt de Rechnung: <?=$formular->price['anzahlung_value']?> &euro;</p>
+            <p>Anzahlung sofort nach Erhalt die Rechnung: <?=$formular->price['anzahlung_value']?> &euro;</p>
 
-            <p>Restzahlung fallig am: <?=$formular->finalpayment_date->format('d-M-y')?>
+            <? if($formular->finalpayment_date): ?>
+                <p>Restzahlung f&auml;llig am: <?=$formular->finalpayment_date->format('d-M-y')?>
                 &nbsp;&nbsp;<?=($formular->price['brutto'] - $formular->price['anzahlung_value'])?> &euro;</p>
+            <? endif; ?>
         </div>
     </div>
     <div class="right-float">
@@ -226,7 +228,7 @@
     <? elseif ($formular->status == "rechnung"): ?>
     <a href="reservierung/payments/<?=$formular->id?>" class="button-link">Payments</a>
     <? endif; ?>
-    <button id="addmail-button">E-Mail hinzuf?gen</button>
+    <button id="addmail-button">E-Mail hinzufuegen</button>
     <button id="druck-button">Druck</button>
     <button id="send-button" name="submit">Senden</button>
     <a href="#" class="button-link">Schliessen</a>

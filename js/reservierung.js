@@ -27,7 +27,9 @@ function update(param, hotel_block) {
 
 function GetPreview(hotel_block, type) {
     if (type == 'hotel') {
-        return InputToTime($(hotel_block).find('.datestart').val()) + " - " + InputToTime($(hotel_block).find(".dateend").val()) + "&nbsp;&nbsp;&nbsp;" + $(hotel_block).find("#hotelname").val();
+        return InputToTime($(hotel_block).find('.datestart').val()) + " - " + InputToTime($(hotel_block).find(".dateend").val()) + "&nbsp;" + $(hotel_block).find(".dayscount").val() + "N HOTEL: " +
+                $(hotel_block).find("#hotelname").val() + " / " + $(hotel_block).find("#roomcapacity option:selected").html() + " / " + $(hotel_block).find("#roomtype option:selected").html() + " / " +
+                $(hotel_block).find("#service option:selected").html() + " / " + $(hotel_block).find("#transfer option:selected").html() + " / " + $(hotel_block).find('#remark').val();
     }
     else {
         var result = $(hotel_block).find('.datestart').length > 0 ?

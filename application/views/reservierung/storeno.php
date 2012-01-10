@@ -2,8 +2,8 @@
     <div id="page-header">
         <a href="dashboard" class="home-link"><img src="img/header-logo.jpg"/></a>
         <ul class="page-path">
-            <li><span><?=$formular->kunde->plain_type;?> <?=$formular->kunde->k_num?></span></li>
-            </li>
+            <li><a href="kundenverwaltung/historie/<?=$formular->kunde->id?>"><?=$formular->kunde->plain_type;?> <?=$formular->kunde->k_num?></a></li>
+             </li>
             <li><span>formular <?=$formular->v_num?></span></li>
         </ul>
     </div>

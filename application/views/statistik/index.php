@@ -35,10 +35,10 @@
             <td class="v_num"><?=$formular->v_num?></td>
             <td class="r_num"><?=$formular->r_num?></td>
             <td class="date"><?=$formular->created_date->format('d.m.y')?></td>
-            <td class="date"><?=$formular->rechnung_date->format('d.m.y')?></td>
+            <td class="date"><?=$formular->rechnung_date ? $formular->rechnung_date->format('d.m.y') : ''?></td>
             <td class="kd-name"><?=$formular->plain_persons?></td>
-            <td class="date"><?=$formular->departure_date->format('d.m.y')?></td>
-            <td class="date"><?=$formular->arrival_date->format('d.m.y')?></td>
+            <td class="date"><?=$formular->departure_date ? $formular->departure_date->format('d.m.y') : ''?></td>
+            <td class="date"><?=$formular->arrival_date ? $formular->arrival_date->format('d.m.y') : ''?></td>
             <td class="brutto"><?=$formular->price['brutto']?></td>
         </tr>
             <? endforeach; ?>

@@ -2,8 +2,8 @@
     <div id="page-header">
         <a href="dashboard" class="home-link"><img src="img/header-logo.jpg"/></a>
         <ul class="page-path">
-            <li><span><?=$formular->kunde->plain_type;?> <?=$formular->kunde->k_num?></span></li>
-            </li>
+            <li><a href="kundenverwaltung/historie/<?=$formular->kunde->id?>"><?=$formular->kunde->plain_type;?> <?=$formular->kunde->k_num?></a></li>
+             </li>
             <li><span>formular <?=$formular->v_num?></span></li>
         </ul>
     </div>
@@ -56,7 +56,7 @@
     <? foreach ($formular->hotels as $ind => $hotel): ?>
     <div class="item">
         <span class="num"><?=($ind + 1)?></span>
-        <span class="text"><?=$hotel->plain_text; ?></span>
+        <span class="text"><?=$hotel->plain_text." - &nbsp;<b>" . $hotel->price . "&euro;</b>"; ?></span>
     </div>
     <? endforeach; ?>
 
@@ -216,7 +216,7 @@
 
 
 <div id="result-buttons" class="formular-buttons">
-    <a href="reservierung/edit/<?=$formular->id?>" class="button-link">Zur?ck</a>
+    <a href="reservierung/edit/<?=$formular->id?>" class="button-link">Zur&uuml;ck</a>
     <button name="submit">Speichern</button>
 </div>
 </div>

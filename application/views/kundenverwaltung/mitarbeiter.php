@@ -18,7 +18,7 @@
             <br class="clear"/>
         </div>
 
-        <a href="agenturen/new" class="new-button">mitarbeiter neu</a>
+        <a href="mitarbeiter/new" class="new-button">mitarbeiter neu</a>
     </div>
 
     <div class="list-block">
@@ -36,7 +36,7 @@
                     <li><a href="kundenverwaltung/verwalten/<?=$client->id?>">verwalten</a></li>
                     <li><a href="kundenverwaltung/historie/<?=$client->id?>">historie</a></li>
                     <li><a href="kundenverwaltung/buchen/<?=$client->id?>">buchen</a></li>
-                    <li><a href="kundenverwaltung/delete/<?=$client->id?>">loschen</a></li>
+                    <li><a href="kundenverwaltung/delete/<?=$client->id?>">loeschen</a></li>
                 </ul>
             </div>
 

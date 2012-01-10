@@ -18,7 +18,7 @@
             <br class="clear"/>
         </div>
 
-        <a href="agenturen/new" class="new-button">stammkunden neu</a>
+        <a href="stammkunden/new" class="new-button">stammkunden neu</a>
     </div>
 
     <div class="list-block">
@@ -26,7 +26,7 @@
 
         <div class="list">
 
-            <? foreach (Kunde::find_all_by_type('agenturen') as $client): ?>
+            <? foreach (Kunde::find_all_by_type('stammkunden') as $client): ?>
 
             <div class="item">
                 <span class="text"><?=$client->k_num?> - <?=$client->name?></span>
@@ -36,7 +36,7 @@
                     <li><a href="kundenverwaltung/verwalten/<?=$client->id?>">verwalten</a></li>
                     <li><a href="kundenverwaltung/historie/<?=$client->id?>">historie</a></li>
                     <li><a href="kundenverwaltung/buchen/<?=$client->id?>">buchen</a></li>
-                    <li><a href="kundenverwaltung/delete/<?=$client->id?>">loschen</a></li>
+                    <li><a href="kundenverwaltung/delete/<?=$client->id?>">loeschen</a></li>
                 </ul>
             </div>
 

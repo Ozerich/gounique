@@ -44,13 +44,13 @@
         </div>
 
         <div class="param">
-            <label for="email">E-Mail Adresse</label>
-            <input type="text" name="email"/>
+            <label for="contactperson">&nbsp;</label>
+            <input type="text" name="person_name"/>
         </div>
 
         <div class="param">
-            <label for="contactperson">Contact person:</label>
-            <input type="text" name="person_name"/>
+            <label for="email">E-Mail Adresse</label>
+            <input type="text" name="email"/>
         </div>
 
         <div class="param">

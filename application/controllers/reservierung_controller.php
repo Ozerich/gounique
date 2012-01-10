@@ -163,8 +163,8 @@ class Reservierung_Controller extends MY_Controller
                         'type' => $this->input->post('formular-type'),
                         'r_num' => 0,
                         'provision' => $this->input->post('provision'),
-                        'flight_text' => $this->input->post('flightplan'),
-                        'flight_price' => $this->input->post('flightprice'),
+                        'flight_text' => $this->input->post('flight-text'),
+                        'flight_price' => $this->input->post('flight-price'),
                         'person_count' => $this->input->post('personcount'),
                         'sachbearbeiter' => $this->user->name . " " . $this->user->surname,
                         'prepayment_date' => time_to_mysqldate($this->get_prepayment_date())
@@ -359,7 +359,7 @@ class Reservierung_Controller extends MY_Controller
                 if (!$hotel)
                     echo "NO FOUND";
                 else
-                    echo $hotel->name . " " . $hotel->stars . " *";
+                    echo $hotel->name;
 
                 return TRUE;
 

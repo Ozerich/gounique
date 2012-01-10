@@ -2,8 +2,8 @@
     <div id="page-header">
         <a href="dashboard" class="home-link"><img src="img/header-logo.jpg"/></a>
         <ul class="page-path">
-            <li><span><?=$kunde->plain_type;?> <?=$kunde->k_num?></span></li>
-            </li>
+            <li><a href="kundenverwaltung/historie/<?=$formular->kunde->id?>"><?=$formular->kunde->plain_type;?> <?=$formular->kunde->k_num?></a></li>
+             </li>
             <li><span>neu formular</span></li>
         </ul>
     </div>
@@ -390,7 +390,7 @@
 </div>
 
 <div class="formular-buttons buttons-block">
-    <button class="btn btn-small btn-blue" id="addhotel-button">Hotel hinzufugen</button>
+    <button class="btn btn-small btn-blue" id="addhotel-button">Hotel hinzuf&uuml;gen</button>
     <button class="btn btn-small btn-blue" id="addmanuel-button">Manuelle Leistung</button>
     <button class="btn btn-small btn-blue" id="flug-button">Flug</button>
     <button class="btn btn-small btn-blue" id="fertig-button" name="submit">Fertig</button>

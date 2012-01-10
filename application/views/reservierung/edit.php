@@ -2,7 +2,7 @@
     <div id="page-header">
         <a href="dashboard" class="home-link"><img src="img/header-logo.jpg"/></a>
         <ul class="page-path">
-            <li><span><?=$formular->kunde->plain_type;?> <?=$formular->kunde->k_num?></span></li>
+            <li><a href="kundenverwaltung/historie/<?=$formular->kunde->id?>"><?=$formular->kunde->plain_type;?> <?=$formular->kunde->k_num?></a></li>
             </li>
             <li><span>formular <?=$formular->v_num;?></span></li>
         </ul>
@@ -113,7 +113,7 @@
 <div class="hotel hotel-wr">
 
     <div class="hotel-preview block-preview">
-        <p class="text"><?=$hotel->date_start->format('d.m.Y') . ' - ' . $hotel->date_end->format('d.m.Y') . '&nbsp;&nbsp;&nbsp;' . $hotel->hotel_name;?></p>
+        <p class="text"><?=$hotel->plain_text?></p>
         <button class="edit">Edit</button>
         <br class="clear"/>
     </div>
@@ -663,7 +663,7 @@
 </div>
 
 <div class="formular-buttons buttons-block">
-    <button class="btn btn-small btn-blue" id="addhotel-button">Hotel hinzuf?gen</button>
+    <button class="btn btn-small btn-blue" id="addhotel-button">Hotel hinzuf&uuml;ggen</button>
     <button class="btn btn-small btn-blue" id="addmanuel-button">Manuelle Leistung</button>
     <button class="btn btn-small btn-blue" id="flug-button">Flug</button>
     <button class="btn btn-small btn-blue" id="fertig-button" name="submit">Fertig</button>

@@ -52,7 +52,7 @@ class FormularHotel extends ActiveRecord\Model
         $text .= RoomType::find_by_id($this->roomtype_id)->value . " / ";
         $text .= HotelService::find_by_id($this->hotelservice_id)->value . " / ";
         $text .= "TRANSFER " . strtoupper($this->transfer) . " / ";
-        $text .= $this->remark . " - &nbsp;<b>" . $this->price . "&euro;</b>";
+        $text .= $this->remark;
 
         return $text;
     }
