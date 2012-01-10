@@ -121,7 +121,6 @@ class Kundenverwaltung_Controller extends MY_Controller
     public function agenturen($action = "")
     {
         $this->view_data['search_text'] = '';
-
         if($action == "search")
         {
             if($_POST)
@@ -130,6 +129,7 @@ class Kundenverwaltung_Controller extends MY_Controller
                 $s = $this->input->post('search_text');
                 $this->view_data['items'] = Kunde::find('all', array('conditions' => array('k_num like "%'.$s.'%" OR name like "%'.$s.'%"')));
             }
+
         }
         else
             $this->view_data['items'] = Kunde::find_all_by_type('agenturen');
@@ -153,6 +153,14 @@ class Kundenverwaltung_Controller extends MY_Controller
     {
 
         $this->set_page_title("Mitarbeiter Liste");
+    }
+
+    public function delete($id = "")
+    {
+        $kunde = Kunde::find_by_id($id);
+        $kunde->delete();
+
+        redirect('kundenverwaltung/'.$kunde->type);
     }
 
 
