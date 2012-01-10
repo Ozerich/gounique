@@ -12,7 +12,7 @@
 
 <div id="edit-agenturen-page" class="kundenverwaltung-new content">
 
-    <? echo form_open("kundenverwaltung/vervalten/".$kunde->id) ?>
+    <? echo form_open("kundenverwaltung/verwalten/".$kunde->id) ?>
 
     <div class="new-block">
 
@@ -71,14 +71,14 @@
         <? endif; ?>
 
         <div class="param">
-            <label for="about">Comment</label>
+            <label for="about">Kommentar</label>
             <textarea name="about"><?=$kunde->about?></textarea>
         </div>
 
     </div>
 
     <div class="buttons">
-        <a href="agenturen" class="button-link">Cancel</a>
+        <a href="agenturen" class="button-link">Abbrechen</a>
         <input type="submit" name="edit_submit" class="" value="Apply"/>
     </div>
 

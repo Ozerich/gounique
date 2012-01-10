@@ -14,12 +14,12 @@
     <div class="formular-header">
         <div class="left-block">
             <div class="param">
-                <span class="param-name">Kundensnummer:</span>
+                <span class="param-name">Kundennummer:</span>
                 <a href="#"><?=$formular->kunde->k_num?></a>
             </div>
 
             <div class="param">
-                <span class="param-name">Type:</span>
+                <span class="param-name">Typ:</span>
                 <span class="param-value" id="formulartype-value"><?=$formular->type?></span>
             </div>
 
@@ -65,7 +65,7 @@
                 <span>Current status: <span class="value"><?=$hotel->plain_status?></span></span>
 
                 <div class="buttons">
-                    <button class="change-button btn btn-blue btn-small">Change</button>
+                    <button class="change-button btn btn-blue btn-small">?ndern</button>
                     <button class="openlog btn btn-blue btn-small">Log</button>
                 </div>
                 <br class="clear"/>
@@ -88,11 +88,11 @@
                 </div>
 
                 <div class="comment">
-                    <label for="comment" class="input-header">Comment:</label>
+                    <label for="comment" class="input-header">Kommentar:</label>
                     <textarea id="comment"></textarea>
                 </div>
 
-                <button class="cancel-button btn btn-blue btn-small">Cancel</button>
+                <button class="cancel-button btn btn-blue btn-small">Abbrechen</button>
                 <button class="ok-button btn btn-blue btn-small">OK</button>
                 <span class="error"></span>
             </div>

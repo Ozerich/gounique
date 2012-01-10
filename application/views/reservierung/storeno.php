@@ -13,12 +13,12 @@
     <div class="formular-header">
         <div class="left-block">
             <div class="param">
-                <span class="param-name">Kundensnummer:</span>
+                <span class="param-name">Kundennummer:</span>
                 <a href="#"><?=$formular->kunde->k_num?></a>
             </div>
 
             <div class="param">
-                <span class="param-name">Type:</span>
+                <span class="param-name">Typ:</span>
                 <span class="param-value" id="formulartype-value"><?=$formular->type?></span>
             </div>
 
@@ -64,7 +64,7 @@
         <textarea id="reason" name="reason"></textarea>
     </div>
 
-    <button class="btn btn-blue" id="cancel-storeno">Cancel</button>
+    <button class="btn btn-blue" id="cancel-storeno">Abbrechen</button>
     <input type="submit" class="btn btn-blue" value="Make Storeno"/>
 
     </form>

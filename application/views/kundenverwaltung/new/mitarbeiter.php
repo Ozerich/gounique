@@ -64,14 +64,14 @@
         </div>
 
         <div class="param">
-            <label for="about">Comment</label>
+            <label for="about">Kommentar</label>
             <textarea name="about"></textarea>
         </div>
 
     </div>
 
     <div class="buttons">
-        <a href="mitarbeiter" class="button-link">Cancel</a>
+        <a href="mitarbeiter" class="button-link">Abbrechen</a>
         <input type="submit" name="add_submit" class="" value="Apply"/>
     </div>
 

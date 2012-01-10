@@ -18,12 +18,12 @@
     <div class="left-block">
 
         <div class="param">
-            <span class="param-name">Kundensnummer:</span>
+            <span class="param-name">Kundennummer:</span>
             <a href="#"><?=$kunde->k_num?></a>
         </div>
 
         <div class="param">
-            <span class="param-name">Type:</span>
+            <span class="param-name">Typ:</span>
             <a class="param-value" href="#" id="formulartype-value"></a>
         </div>
 
@@ -53,7 +53,7 @@
 
 <div class="changetype-block">
 
-    <label>Choose formular type:</label>
+    <label>Formulartyp auswahlen:</label>
 
     <div id="type-radio">
         <input type="radio" name="formular-type" id="type_1" checked value="Pausschalreise"><label
@@ -70,16 +70,16 @@
             <input type="text" class="vnum-input" name="formular-vnum"/>
         </div>
 
-        <label for="flight-text">Flight plan</label>
+        <label for="flight-text">Flugplan</label>
         <textarea id="flight-text" name="flight-text"></textarea>
 
-        <label for="flight-price">Flight price &euro;</label>
+        <label for="flight-price">Flugpreis &euro;</label>
         <input type="text" name="flight-price" id="flight-price"/>
     </div>
 
     <div class="bottom-block">
         <p class="error" id="type-error"></p>
-        <button id="type-submit">Next</button>
+        <button id="type-submit">Weiter</button>
         <br class="clear"/>
     </div>
 
@@ -278,7 +278,7 @@
             </div>
 
             <div class="buttons">
-                <button class="cancel">Cancel</button>
+                <button class="cancel">Abbrechen</button>
                 <button class="add" disabled>Add</button>
             </div>
         </div>
@@ -362,7 +362,7 @@
             </div>
 
             <div class="buttons">
-                <button class="cancel">Cancel</button>
+                <button class="cancel">Abbrechen</button>
                 <button class="add">Add</button>
             </div>
 
@@ -373,7 +373,7 @@
 <div class="page" id="flugpage" style="display:none">
 
     <div class="input" id="flightplan-wr">
-        <label for="flightplan">Flight plan</label>
+        <label for="flightplan">Flugplan</label>
         <textarea id="flightplan"></textarea>
     </div>
     <div class="input" id="flightprice-wr">
@@ -390,8 +390,8 @@
 </div>
 
 <div class="formular-buttons buttons-block">
-    <button class="btn btn-small btn-blue" id="addhotel-button">Add hotel</button>
-    <button class="btn btn-small btn-blue" id="addmanuel-button">Add manuel</button>
+    <button class="btn btn-small btn-blue" id="addhotel-button">Hotel hinzufugen</button>
+    <button class="btn btn-small btn-blue" id="addmanuel-button">Manuelle Leistung</button>
     <button class="btn btn-small btn-blue" id="flug-button">Flug</button>
     <button class="btn btn-small btn-blue" id="fertig-button" name="submit">Fertig</button>
 </div>

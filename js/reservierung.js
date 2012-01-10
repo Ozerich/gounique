@@ -949,7 +949,7 @@ $(document).ready(function () {
     $('#final-page #addmail-button').click(
         function (event) {
             $('.mail:first').clone().appendTo('.mail-block').show();
-            $('.mail:last span:first').html("Mail " + ($('.mail').size() - 1));
+            $('.mail:last span:first').html("E-Mail " + ($('.mail').size() - 1));
             $('.mail:last input').attr("name", "email[" + ($('.mail').size() - 1) + "]");
             $('.mail:last input').focus();
 

@@ -39,14 +39,14 @@
         <div class="provision">Provision:  <?=$kunde->provision?>%</div>
 
         <div class="about block">
-            <span class="header">Comment</span>
+            <span class="header">Kommentar</span>
 
             <div class="kundeblock-content">
                 <pre><?=$kunde->about?></pre>
             </div>
         </div>
 
-        <a href="kundenverwaltung/vervalten/<?=$kunde->id?>" class="common-button edit-button">vervalten</a>
+        <a href="kundenverwaltung/verwalten/<?=$kunde->id?>" class="common-button edit-button">verwalten</a>
         <br class="clear"/>
 
     </div>

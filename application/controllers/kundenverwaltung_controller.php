@@ -52,7 +52,7 @@ class Kundenverwaltung_Controller extends MY_Controller
 
     }
 
-    public function vervalten($id = 0)
+    public function verwalten($id = 0)
     {
         $client = Kunde::find_by_id($id);
 

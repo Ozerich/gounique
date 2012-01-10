@@ -14,12 +14,12 @@
     <div class="formular-header">
         <div class="left-block">
             <div class="param">
-                <span class="param-name">Kundensnummer:</span>
+                <span class="param-name">Kundennummer:</span>
                 <a href="#"><?=$formular->kunde->k_num?></a>
             </div>
 
             <div class="param">
-                <span class="param-name">Type:</span>
+                <span class="param-name">Typ:</span>
                 <span class="param-value" id="formulartype-value"><?=$formular->type?></span>
             </div>
 

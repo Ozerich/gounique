@@ -14,12 +14,12 @@
 <div class="formular-header">
     <div class="left-block">
         <div class="param">
-            <span class="param-name">Kundensnummer:</span>
+            <span class="param-name">Kundennummer:</span>
             <a href="#"><?=$formular->kunde->k_num?></a>
         </div>
 
         <div class="param">
-            <span class="param-name">Type:</span>
+            <span class="param-name">Typ:</span>
             <span class="param-value" id="formulartype-value"><?=$formular->type?></span>
         </div>
 
@@ -79,7 +79,7 @@
 
     <hr/>
 
-    <span class="header">Manuels:</span>
+    <span class="header">Manuell:</span>
 
     <? foreach ($formular->manuels as $ind => $manuel): ?>
     <div class="item">
@@ -106,7 +106,7 @@
 <div class="bottom-block">
     <div class="left-float">
         <div class="comment-block">
-            <h3 class="block-header">Comment:</h3>
+            <h3 class="block-header">Kommentar:</h3>
 
             <p><?=$formular->comment;?></p>
         </div>
@@ -170,10 +170,10 @@
         </table>
         <div class="price-buttons">
             <? if ($formular->status == "angebot"): ?>
-            <a href="reservierung/eingangsmitteilung/<?=$formular->id?>" class="button-link">Make Eingangsmitteilung</a>
+            <a href="reservierung/eingangsmitteilung/<?=$formular->id?>" class="button-link">Als Eingangsmitteilung  speichern</a>
             <? elseif ($formular->status == "eingangsmitteilung"): ?>
             <a <?if ($formular->can_rechnung) echo 'href="reservierung/rechnung/' . $formular->id . '"';?>
-                class="button-link <?if (!$formular->can_rechnung) echo 'disabled'?>">Make rechnung</a>
+                class="button-link <?if (!$formular->can_rechnung) echo 'disabled'?>">Als Rechnung speichern</a>
             <? elseif ($formular->status == "rechnung"): ?>
             <a href="reservierung/storeno/<?=$formular->id?>" class="button-link red">Storno</a>
             <? endif; ?>
@@ -206,13 +206,13 @@
     <div class="mail" style="display:none">
         <span class="left">Mail</span>
         <input type="text" size="30" class="email"/>
-        <span class="status">not send</span>
+        <span class="status">noch nicht gesendet</span>
         <input type="hidden" class="sended" value="0"/>
     </div>
     <div class="mail">
-        <span class="left">admin mail</span>
+        <span class="left">Administrator E-Mail</span>
         <input type="text" disabled size="30" class="email" value="<?=$user->email?>"/>
-        <span class="status">not send</span>
+        <span class="status">noch nicht gesendet</span>
         <input type="hidden" class="sended" value="0"/>
     </div>
 
@@ -220,22 +220,22 @@
 
 <div id="final-buttons" class="formular-buttons">
     <? if ($formular->status == "angebot"): ?>
-    <a href="reservierung/edit/<?=$formular->id?>" class="button-link">Edit Formular</a>
+    <a href="reservierung/edit/<?=$formular->id?>" class="button-link">Formular editieren</a>
     <? elseif ($formular->status == "eingangsmitteilung"): ?>
-    <a href="reservierung/status/<?=$formular->id?>" class="button-link">Edit Statuses</a>
+    <a href="reservierung/status/<?=$formular->id?>" class="button-link">Status editieren</a>
     <? elseif ($formular->status == "rechnung"): ?>
     <a href="reservierung/payments/<?=$formular->id?>" class="button-link">Payments</a>
     <? endif; ?>
-    <button id="addmail-button">Add mail</button>
+    <button id="addmail-button">E-Mail hinzuf?gen</button>
     <button id="druck-button">Druck</button>
-    <button id="send-button" name="submit">Send</button>
-    <a href="#" class="button-link">Close</a>
+    <button id="send-button" name="submit">Senden</button>
+    <a href="#" class="button-link">Schliessen</a>
 </div>
 
     <? else: ?>
 <div id="final-buttons">
     <a href="kunde/<?=$formular->kunde_id?>" id="close-button"
-       name="submit">Close</a>
+       name="submit">Schliessen</a>
 </div>
     <? endif; ?>
 

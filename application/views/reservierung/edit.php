@@ -15,12 +15,12 @@
 <div class="formular-header">
     <div class="left-block">
         <div class="param">
-            <span class="param-name">Kundensnummer:</span>
+            <span class="param-name">Kundennummer:</span>
             <a href="#"><?=$formular->kunde->k_num?></a>
         </div>
 
         <div class="param">
-            <span class="param-name">Type:</span>
+            <span class="param-name">Typ:</span>
             <span class="param-value" id="formulartype-value"><?=$formular->type?></span>
         </div>
 
@@ -55,7 +55,7 @@
 
 <div class="changetype-block" style="display:none">
 
-    <label>Choose formular type:</label>
+    <label>Formulartyp ausw?hlen:</label>
 
     <div id="type-radio">
         <input type="radio" name="formular-type"
@@ -75,16 +75,16 @@
             <input type="text" class="vnum-input" name="formular-vnum" value="<?=$formular->v_num?>"/>
         </div>
 
-        <label for="flight-text">Flight plan</label>
+        <label for="flight-text">Flugplan</label>
         <textarea id="flight-text" name="flight-text"><?=$formular->flight_text?></textarea>
 
-        <label for="flight-price">Flight price &euro;</label>
+        <label for="flight-price">Flugpreis &euro;</label>
         <input type="text" name="flight-price" id="flight-price" value="<?=$formular->flight_price?>"/>
     </div>
 
     <div class="bottom-block">
         <p class="error" id="type-error"></p>
-        <button id="type-submit">Next</button>
+        <button id="type-submit">Weiter</button>
         <br class="clear"/>
     </div>
 
@@ -552,7 +552,7 @@
             </div>
 
             <div class="buttons">
-                <button class="cancel">Cancel</button>
+                <button class="cancel">Abbrechen</button>
                 <button class="add" disabled>Add</button>
             </div>
         </div>
@@ -635,7 +635,7 @@
             </div>
 
             <div class="buttons">
-                <button class="cancel">Cancel</button>
+                <button class="cancel">Abbrechen</button>
                 <button class="add">Add</button>
             </div>
 
@@ -646,7 +646,7 @@
 <div class="page" id="flugpage" style="display:none">
 
     <div class="input" id="flightplan-wr">
-        <label for="flightplan">Flight plan</label>
+        <label for="flightplan">Flugplan</label>
         <textarea id="flightplan"><?=$formular->flight_text?></textarea>
     </div>
     <div class="input" id="flightprice-wr">
@@ -663,8 +663,8 @@
 </div>
 
 <div class="formular-buttons buttons-block">
-    <button class="btn btn-small btn-blue" id="addhotel-button">Add hotel</button>
-    <button class="btn btn-small btn-blue" id="addmanuel-button">Add manuel</button>
+    <button class="btn btn-small btn-blue" id="addhotel-button">Hotel hinzuf?gen</button>
+    <button class="btn btn-small btn-blue" id="addmanuel-button">Manuelle Leistung</button>
     <button class="btn btn-small btn-blue" id="flug-button">Flug</button>
     <button class="btn btn-small btn-blue" id="fertig-button" name="submit">Fertig</button>
 </div>

@@ -14,12 +14,12 @@
 <div class="formular-header">
     <div class="left-block">
         <div class="param">
-            <span class="param-name">Kundensnummer:</span>
+            <span class="param-name">Kundennummer:</span>
             <a href="#"><?=$formular->kunde->k_num?></a>
         </div>
 
         <div class="param">
-            <span class="param-name">Type:</span>
+            <span class="param-name">Typ:</span>
             <span class="param-value" id="formulartype-value"><?=$formular->type?></span>
         </div>
 
@@ -62,7 +62,7 @@
 
     <hr/>
 
-    <span class="header">Manuels:</span>
+    <span class="header">Manuell:</span>
 
     <? foreach ($formular->manuels as $ind => $manuel): ?>
     <div class="item">
@@ -152,7 +152,7 @@
                 <span id="anzahlungsum">0</span> &euro;
             </div>
             <div class="param-block">
-                <label for="prepayment_date">Anzahlung datum:</label>
+                <label for="prepayment_date">Anzahlung Datum:</label>
                 <input type="text" name="preprepayment_date" size="8" maxlength="8"
                        value="<?=$formular->prepayment_date ? $formular->prepayment_date->format('m/d/Y') : ''?>"
                        id="prepayment_date"/>
@@ -164,7 +164,7 @@
                        id="departure_date"/>
             </div>
             <div class="param-block">
-                <label for="finalpayment_date">Restzahlung datum:</label>
+                <label for="finalpayment_date">Restzahlung Datum:</label>
                 <input type="text" name="finalpayment_date" size="8" maxlength="8" id="finalpayment_date"
                        value="<?=$formular->finalpayment_date ? $formular->finalpayment_date->format('m/d/Y') : ''?>"/>
 
@@ -210,14 +210,14 @@
 </div>
 
 <div class="comment-block">
-    <h3 class="block-header">Comment:</h3>
+    <h3 class="block-header">Kommentar:</h3>
     <textarea id="comment" name="bigcomment"><?=$formular->comment?></textarea>
 </div>
 
 
 <div id="result-buttons" class="formular-buttons">
-    <a href="reservierung/edit/<?=$formular->id?>" class="button-link">Back</a>
-    <button name="submit">Save</button>
+    <a href="reservierung/edit/<?=$formular->id?>" class="button-link">Zur?ck</a>
+    <button name="submit">Speichern</button>
 </div>
 </div>
 </form>
