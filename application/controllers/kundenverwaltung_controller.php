@@ -164,4 +164,14 @@ class Kundenverwaltung_Controller extends MY_Controller
     }
 
 
+    public function liveSearch($search_str = '')
+    {
+        $kundens = Kunde::find('all', array('conditions' => array('k_num like "%'.$search_str.'%" OR name like "%'.$search_str.'%"')));
+        $result = array();
+        foreach($kundens as $kunde)
+            $result[] = array("text" => "<b>".$kunde->k_num."</b> - ".$kunde->name, "value" => $kunde->k_num);
+        echo json_encode($result);
+        exit();
+    }
+
 }

@@ -10,8 +10,10 @@
 </div>
 
 <div id="storeno-page" class="reservierung-page content">
+
     <div class="formular-header">
         <div class="left-block">
+
             <div class="param">
                 <span class="param-name">Kundennummer:</span>
                 <a href="#"><?=$formular->kunde->k_num?></a>
@@ -45,8 +47,8 @@
 
         </div>
         <br class="clear"/>
-
     </div>
+
     <?=form_open("reservierung/storeno/" . $formular->id, null, array("formular_id" => $formular->id));?>
 
     <div class="form-param">

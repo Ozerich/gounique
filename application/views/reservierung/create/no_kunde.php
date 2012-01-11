@@ -13,7 +13,6 @@
         <label for="kundennumer">Kundenummer:</label>
         <input type="text" name="kunde_id" id="kunde_id"/>
         <input type="submit" name="kundennummer-submit" value="next" />
-
     </form>
 </div>
 

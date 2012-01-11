@@ -503,7 +503,7 @@ class Reservierung_Controller extends MY_Controller
 
         if ($_POST) {
             $item = ($this->input->post('item_type') == 'hotel') ? FormularHotel::find_by_id($this->input->post('item_id'))
-                : FormularManuel::find_by_id($this->input->post('item_id'));
+                    : FormularManuel::find_by_id($this->input->post('item_id'));
 
             FormularStatusLog::create(array(
                 'item_type' => $this->input->post('item_type'),
@@ -669,6 +669,27 @@ class Reservierung_Controller extends MY_Controller
         }
 
         $this->view_data['formular'] = $formular;
+    }
+
+    public function livesearch($type = "", $str = "")
+    {
+        $result = array();
+
+        switch ($type)
+        {
+            case "hotelcode":
+                $hotels = Hotel::find('all', array('conditions' => array('code like "%'.$str.'%"')));
+                foreach($hotels as $hotel)
+                    $result[] = array(
+                        "text" => "<b>".$hotel->code."</b> - ".$hotel->name,
+                        "value" => $hotel->code,
+                        "hotelname" => $hotel->name,
+                    );
+                break;
+        }
+
+        echo json_encode($result);
+        exit();
     }
 
 }

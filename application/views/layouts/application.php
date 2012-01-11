@@ -10,13 +10,17 @@
     <link rel="stylesheet/less" href="css/main.less" type="text/css"/>
     <link rel="stylesheet/less" href="css/arrows.css" type="text/css"/>
 
-
-    <link type="text/css" href="css/cupertino/jquery-ui-1.8.16.custom.css" rel="Stylesheet" />
+    <link type="text/css" href="css/cupertino/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
+    <link type="text/css" href="css/jquery-livesearch.css" rel="stylesheet" />
+    <link type="text/css" href="css/ui.jqgrid.css" rel="stylesheet"/>
 
     <script src="js/global.js"></script>
     <script src="js/jquery-1.7.1.min.js"></script>
     <script src="js/jquery-ui-1.8.16.custom.min.js"></script>
+    <script src="js/jquery-livesearch.js"></script>
     <script src="js/less-1.1.5.min.js"></script>
+    <script src="js/jquery.jqGrid.min.js"></script>
+    <script src="js/locale/grid.locale-ru.js"></script>
 
     <? if (isset($JS_files))
     foreach ($JS_files as $js): ?>

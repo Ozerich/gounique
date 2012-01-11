@@ -106,7 +106,13 @@ function BindHotelEvents() {
                     $(hotel_block).find("#roomtype").focus();
                     return false;
                 }
-            });
+            }).liveSearch({
+                    url: "reservierung/livesearch/hotelcode/",
+                    onSelect: function()
+                    {
+                        $(db_block).find('#hotelcode').keypress({enter:1});
+                    }
+                });
 
             $(db_block).find('#roomtype').keypress(function (event) {
                 if (event.keyCode == KEY_ENTER || event.keyCode == KEY_TAB) {
@@ -1014,5 +1020,10 @@ $(document).ready(function () {
 
         return false;
     });
+
+    $('#findkunde-page #kunde_id').liveSearch({
+        url: 'kundenverwaltung/livesearch/',
+        width: 400
+    })
 
 });

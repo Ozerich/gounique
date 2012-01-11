@@ -1,0 +1,22 @@
+#jquery-live-search{
+    border-color: #D9D9D9 #CCCCCC #CCCCCC;
+    border-right: 1px solid #CCCCCC;
+    border-style: solid;
+    border-width: 1px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    background: #fcfcfc;
+}
+
+#jquery-live-search ul{
+    margin-top: 5px;
+}
+
+#jquery-live-search ul li{
+    line-height: 22px;
+    padding: 0 7px;
+    cursor: pointer;
+}
+
+#jquery-live-search ul li:hover{
+    background: #e6e6e6;
+}
