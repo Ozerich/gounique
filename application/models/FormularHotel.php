@@ -18,7 +18,7 @@ class FormularHotel extends ActiveRecord\Model
             )
         );
 
-        foreach($room_types as $type)
+        foreach ($room_types as $type)
             $result['room_type'][] = RoomType::find_by_id($type->roomtype_id);
 
         $room_capacity = HotelOffer::find('all', array(
@@ -27,7 +27,7 @@ class FormularHotel extends ActiveRecord\Model
             )
         );
 
-        foreach($room_capacity as $type)
+        foreach ($room_capacity as $type)
             $result['room_capacity'][] = RoomCapacity::find_by_id($type->roomcapacity_id);
 
 
@@ -38,7 +38,7 @@ class FormularHotel extends ActiveRecord\Model
             )
         );
 
-        foreach($services as $type)
+        foreach ($services as $type)
             $result['hotel_service'][] = HotelService::find_by_id($type->hotelservice_id);
 
         return $result;
@@ -46,7 +46,7 @@ class FormularHotel extends ActiveRecord\Model
 
     public function get_plain_text()
     {
-        $text = $this->date_start->format('d.m.Y') . " - ".$this->date_end->format('d.m.Y') . " ";
+        $text = $this->date_start->format('d.m.Y') . " - " . $this->date_end->format('d.m.Y') . " ";
         $text .= $this->days_count . "N HOTEL: " . $this->hotel_name . " / ";
         $text .= RoomCapacity::find_by_id($this->roomcapacity_id)->value . " / ";
         $text .= RoomType::find_by_id($this->roomtype_id)->value . " / ";
@@ -76,7 +76,7 @@ class FormularHotel extends ActiveRecord\Model
 
     public function get_plain_status()
     {
-        switch($this->status)
+        switch ($this->status)
         {
             case 'rq':
                 return 'RQ';
@@ -107,7 +107,7 @@ class FormularHotel extends ActiveRecord\Model
 
     public function get_voucher_name()
     {
-        return "voucher_hotel_".$this->id.".pdf";
+        return "voucher_hotel_" . $this->id . ".pdf";
     }
 
     public function get_plain_roomtype()
@@ -133,9 +133,43 @@ class FormularHotel extends ActiveRecord\Model
         return strtoupper($this->transfer);
     }
 
-    public function get_infant_kunde()
+    public function get_childs_count()
     {
+        return FormularPerson::count(array('condition' => array('formular_id = ? AND sex = ?', $this->id, 'child')));
+    }
+
+    public function get_pdf_text()
+    {
+
         $formular = Formular::find_by_id($this->formular_id);
-        return Kunde::find_by_id($formular->kunde_id);
+        $room_capacity = RoomCapacity::find_by_id($this->roomcapacity_id)->value;
+
+        $last = substr($room_capacity, -1);
+        switch ($last) {
+            case "0":
+                $room_capacity = "DZ";
+                break;
+            case "1":
+                $room_capacity = "EZ";
+                break;
+            case "2":
+                $room_capacity = "DZ";
+                if($formular->child_count)
+                    $room_capacity .= " + Extra bed";
+                break;
+            case "3":
+                $room_capacity = "DZ + Extra bed";
+        }
+
+
+        $text = $this->date_start->format('d.m.Y') . " - " . $this->date_end->format('d.m.Y') . " ";
+        $text .= $this->days_count . "N HOTEL: " . $this->hotel_name . " / ";
+        $text .= $room_capacity . " / ";
+        $text .= RoomType::find_by_id($this->roomtype_id)->value . " / ";
+        $text .= HotelService::find_by_id($this->hotelservice_id)->value . " / ";
+        $text .= "TRANSFER " . strtoupper($this->transfer) . " / ";
+        $text .= $this->remark;
+
+        return $text;
     }
 }

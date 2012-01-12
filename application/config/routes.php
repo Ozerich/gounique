@@ -73,6 +73,9 @@ $route['statistik/(:any)'] = 'statistik_controller/$1';
 $route['dashboard'] = 'dashboard_controller';
 $route['dashboard/(:any)'] = 'dashboard_controller/$1';
 
+$route['settings/offers'] = 'settings_controller/offers';
+$route['settings/(:any)'] = 'settings_controller/$1';
+
 
 
 /* End of file routes.php */

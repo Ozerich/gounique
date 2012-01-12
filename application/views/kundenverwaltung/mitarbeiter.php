@@ -11,12 +11,14 @@
 <div id="mitarbeiter-page" class="content kundenverwaltung-rasdel">
 
     <div class="left-block">
-        <div class="search-block">
-            <label for="search" class="header">mitarbeiter suchen</label>
-            <input type="text" id="search" name="search"/>
-            <button id="search-mitarbeiter" class="search-button">suchen</button>
-            <br class="clear"/>
-        </div>
+        <?=form_open("kundenverwaltung/mitarbeiter/search");?>
+         <div class="search-block">
+             <label for="search" class="header">mitarbeiter suchen</label>
+             <input type="text" id="search" value="<?=$search_text?>" name="search_text"/>
+             <button id="search-agentur" class="search-button">suchen</button>
+             <br class="clear"/>
+         </div>
+         </form>
 
         <a href="mitarbeiter/new" class="new-button">mitarbeiter neu</a>
     </div>
@@ -26,7 +28,7 @@
 
         <div class="list">
 
-            <? foreach (Kunde::find_all_by_type('mitarbeiter') as $client): ?>
+            <? foreach ($items as $client): ?>
 
             <div class="item">
                 <span class="text"><?=$client->k_num?> - <?=$client->name?></span>

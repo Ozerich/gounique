@@ -72,12 +72,14 @@ class Kundenverwaltung_Controller extends MY_Controller
             $client->website = $this->input->post('website');
             $client->sex = $this->input->post('sex');
             $client->person_name = $this->input->post('person_name');
-            $client->person_surname = $this->input->post('person_surname');
             $client->email = $this->input->post('email');
             $client->phone = $this->input->post('phone');
             $client->fax = $this->input->post('fax');
             $client->provision = $this->input->post('provision');
             $client->about = $this->input->post('about');
+            $client->kurzel = $this->input->post('kurzel');
+
+            $client->k_num = $this->input->post('k_num');
 
             $client->save();
 
@@ -103,12 +105,13 @@ class Kundenverwaltung_Controller extends MY_Controller
                 "website" => $this->input->post("website"),
                 "sex" => $this->input->post("sex"),
                 "person_name" => $this->input->post("person_name"),
-                "person_surname" => $this->input->post("person_surname"),
                 "email" => $this->input->post("email"),
                 "phone" => $this->input->post("phone"),
                 "fax" => $this->input->post("fax"),
                 "provision" => $this->input->post("provision"),
-                "about" => $this->input->post("about"));
+                "about" => $this->input->post("about"),
+                "kurzel" => $this->input->post("kurzel")
+            );
 
             Kunde::create($params);
 
@@ -127,7 +130,7 @@ class Kundenverwaltung_Controller extends MY_Controller
             {
                 $this->view_data['search_text'] = $this->input->post('search_text');
                 $s = $this->input->post('search_text');
-                $this->view_data['items'] = Kunde::find('all', array('conditions' => array('k_num like "%'.$s.'%" OR name like "%'.$s.'%"')));
+                $this->view_data['items'] = Kunde::find('all', array('conditions' => array('k_num like "%'.$s.'%" OR name like "%'.$s.'%" AND type=?', 'agenturen')));
             }
 
         }
@@ -139,19 +142,55 @@ class Kundenverwaltung_Controller extends MY_Controller
 
     public function incoming($action = "")
     {
+        $this->view_data['search_text'] = '';
+        if($action == "search")
+        {
+            if($_POST)
+            {
+                $this->view_data['search_text'] = $this->input->post('search_text');
+                $s = $this->input->post('search_text');
+                $this->view_data['items'] = Kunde::find('all', array('conditions' => array('k_num like "%'.$s.'%" OR name like "%'.$s.'%" AND type=?', 'incoming')));
+            }
 
+        }
+        else
+            $this->view_data['items'] = Kunde::find_all_by_type('incoming');
         $this->set_page_title("Incoming Liste");
     }
 
     public function stammkunden($action = "")
     {
+        $this->view_data['search_text'] = '';
+        if($action == "search")
+        {
+            if($_POST)
+            {
+                $this->view_data['search_text'] = $this->input->post('search_text');
+                $s = $this->input->post('search_text');
+                $this->view_data['items'] = Kunde::find('all', array('conditions' => array('k_num like "%'.$s.'%" OR name like "%'.$s.'%" AND type=?', 'stammkunden')));
+            }
 
+        }
+        else
+            $this->view_data['items'] = Kunde::find_all_by_type('stammkunden');
         $this->set_page_title("Stammkunden Liste");
     }
 
     public function mitarbeiter($action = "")
     {
+        $this->view_data['search_text'] = '';
+        if($action == "search")
+        {
+            if($_POST)
+            {
+                $this->view_data['search_text'] = $this->input->post('search_text');
+                $s = $this->input->post('search_text');
+                $this->view_data['items'] = Kunde::find('all', array('conditions' => array('k_num like "%'.$s.'%" OR name like "%'.$s.'%" AND type=?', 'mitarbeiter')));
+            }
 
+        }
+        else
+            $this->view_data['items'] = Kunde::find_all_by_type('mitarbeiter');
         $this->set_page_title("Mitarbeiter Liste");
     }
 
@@ -166,7 +205,8 @@ class Kundenverwaltung_Controller extends MY_Controller
 
     public function liveSearch($search_str = '')
     {
-        $kundens = Kunde::find('all', array('conditions' => array('k_num like "%'.$search_str.'%" OR name like "%'.$search_str.'%"')));
+        $kundens = Kunde::find('all', array('conditions' => array('k_num like "%'.$search_str.'%" OR name like "%'.$search_str.'%"
+            AND (type = "agenturen" OR type = "stammkunden")')));
         $result = array();
         foreach($kundens as $kunde)
             $result[] = array("text" => "<b>".$kunde->k_num."</b> - ".$kunde->name, "value" => $kunde->k_num);

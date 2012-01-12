@@ -138,7 +138,7 @@
 
                 <div class="param">
                     <label class="param-name" for="hotelname">Hotel Name</label>
-                    <input type="text" size="8" disabled id="hotelname"/>
+                    <input type="text" size="8" id="hotelname"/>
                     <input type="hidden" name="hotelname" id="hotelname_hid"/>
                 </div>
 

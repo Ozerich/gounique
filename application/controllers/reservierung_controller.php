@@ -6,8 +6,21 @@ require_once APPPATH . "libraries/MPDF/mpdf.php";
 class Reservierung_Controller extends MY_Controller
 {
 
-    private function do_voucher($item)
+    public function create_voucher()
     {
+        $persons = explode(',', $this->input->post('persons'));
+        if (!$persons)
+            exit();
+
+        $url = $this->do_voucher($this->input->post('item_id'), $this->input->post('item_type'), $persons, $this->input->post('incoming_id'));
+
+        echo $url;
+        exit();
+    }
+
+    private function do_voucher($item_id, $item_type, $persons, $incoming_id)
+    {
+        $item = $item_type == "hotel" ? FormularHotel::find_by_id($item_id) : FormularManuel::find_by_id($item_id);
         $formular = Formular::find_by_id($item->formular_id);
 
         if (!$formular)
@@ -15,6 +28,10 @@ class Reservierung_Controller extends MY_Controller
 
         $this->view_data['formular'] = $formular;
         $this->view_data['item'] = $item;
+        $this->view_data['incoming'] = Kunde::find_by_id($incoming_id);
+        $this->view_data['persons'] = array();
+        foreach ($persons as $person_id)
+            $this->view_data['persons'][] = FormularPerson::find_by_id($person_id);
 
         $pdf = new mPDF('utf-8', 'A4', '8', '', 0, 0, 0, 0, 0, 0);
         $pdf->SetImportUse();
@@ -38,6 +55,7 @@ class Reservierung_Controller extends MY_Controller
         $pdf->WriteHTML($html, 2);
 
         $pdf->Output("pdf/" . $item->voucher_name, 'F');
+        return "pdf/" . $item->voucher_name;
 
     }
 
@@ -484,9 +502,6 @@ class Reservierung_Controller extends MY_Controller
 
             $this->write_pdf($formular->id);
 
-            foreach ($formular->hotels_and_manuels as $hotel)
-                $this->do_voucher($hotel);
-
             redirect('reservierung/final/' . $formular->id);
         }
 
@@ -503,7 +518,7 @@ class Reservierung_Controller extends MY_Controller
 
         if ($_POST) {
             $item = ($this->input->post('item_type') == 'hotel') ? FormularHotel::find_by_id($this->input->post('item_id'))
-                    : FormularManuel::find_by_id($this->input->post('item_id'));
+                : FormularManuel::find_by_id($this->input->post('item_id'));
 
             FormularStatusLog::create(array(
                 'item_type' => $this->input->post('item_type'),
@@ -612,6 +627,20 @@ class Reservierung_Controller extends MY_Controller
         $this->view_data['formular'] = $formular;
     }
 
+    public function vouchers($id = "")
+    {
+        $formular = Formular::find_by_id($id);
+
+        if (!$formular) {
+            show_404();
+            return false;
+        }
+
+        $this->view_data['formular'] = $formular;
+        $this->view_data['incoming'] = Kunde::find_all_by_type('incoming');
+
+    }
+
 
     public function sendmail($id)
     {
@@ -678,14 +707,24 @@ class Reservierung_Controller extends MY_Controller
         switch ($type)
         {
             case "hotelcode":
-                $hotels = Hotel::find('all', array('conditions' => array('code like "%'.$str.'%"')));
-                foreach($hotels as $hotel)
+                $hotels = Hotel::find('all', array('conditions' => array('code like "%' . $str . '%"')));
+                foreach ($hotels as $hotel)
                     $result[] = array(
-                        "text" => "<b>".$hotel->code."</b> - ".$hotel->name,
+                        "text" => "<b>" . $hotel->code . "</b> - " . $hotel->name,
                         "value" => $hotel->code,
-                        "hotelname" => $hotel->name,
+                        "data" => array("hotelname" => $hotel->name),
                     );
                 break;
+            case "hotelname":
+                $hotels = Hotel::find('all', array('conditions' => array('name like "%' . $str . '%"')));
+                foreach ($hotels as $hotel)
+                    $result[] = array(
+                        "text" => "<b>" . $hotel->code . "</b> - " . $hotel->name,
+                        "value" => $hotel->name,
+                        "data" => array("hotelcode" => $hotel->code),
+                    );
+                break;
+
         }
 
         echo json_encode($result);

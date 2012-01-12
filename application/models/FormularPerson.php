@@ -10,5 +10,9 @@ class FormularPerson extends ActiveRecord\Model
         "child" => "kind",
         "child_less_2" => "kind < 2"
     );
-    
+
+    public function get_plain_text()
+    {
+        return $this->name . " / " . $this->surname;
+    }
 }

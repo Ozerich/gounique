@@ -1,5 +1,4 @@
 <? for ($i = 1; $i <= 4; $i++): ?>
-
 <div class="item" id="item<?=$i?>">
     <div class="code"><?=$formular->r_num;?></div>
 
@@ -8,12 +7,12 @@
         <div class="hotelname"><?=$item->hotel_name?></div>
 
         <div class="infant">
-            <?=$item->infant_kunde->plain_text?>
+            <?=$incoming->plain_text?>
         </div>
 
         <div class="persons">
-            <? foreach ($formular->persons as $person): ?>
-            <div class="person"><?=$person->name . "/" . $person->surname?></div>
+            <? foreach ($persons as $person): ?>
+            <div class="person"><?=$person->name . " / " . $person->surname?></div>
             <? endforeach; ?>
         </div>
     </div>

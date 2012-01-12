@@ -1,4 +1,5 @@
 php_value set_time_limit 0
+AddDefaultCharset UTF-8
 
 <IfModule mod_rewrite.c>
     RewriteEngine On

@@ -17,6 +17,11 @@
     <div class="new-block">
 
         <div class="param">
+            <label for="k_num">Kundennummer:</label>
+            <input type="text" name="k_num" id="k_num" value="<?=$kunde->k_num?>" />
+        </div>
+
+        <div class="param">
             <label for="name">Firmenname</label>
             <input type="text" name="name" value="<?=$kunde->name?>"/>
         </div>
@@ -43,10 +48,17 @@
             <input type="radio" name="sex" value="frau" <? if ($kunde->sex == "frau") echo 'checked' ?>/>Frau
         </div>
 
+        <? if ($kunde->type == "mitarbeiter"): ?>
         <div class="param">
-            <label for="contactperson">&nbsp;</label>
+            <label for="kurzel">Kürzel</label>
+            <input type="text" name="kurzel" maxlength="2" value="<?=$kunde->kurzel?>"/>
+        </div>
+        <? else: ?>
+        <div class="param">
+            <label for="contactperson">Contact person:</label>
             <input type="text" name="person_name" value="<?=$kunde->person_name?>"/>
         </div>
+        <? endif; ?>
 
         <div class="param">
             <label for="email">E-Mail Adresse</label>

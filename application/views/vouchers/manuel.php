@@ -8,12 +8,12 @@
         <div class="hotelname">&nbsp;</div>
 
         <div class="infant">
-            <?=$item->infant_kunde->plain_text?>
+            <?=$incoming->plain_text?>
         </div>
 
         <div class="persons">
-            <? foreach ($formular->persons as $person): ?>
-            <div class="person"><?=$person->name . "/" . $person->surname?></div>
+            <? foreach ($persons as $person): ?>
+            <div class="person"><?=$person->name . " / " . $person->surname?></div>
             <? endforeach; ?>
         </div>
     </div>

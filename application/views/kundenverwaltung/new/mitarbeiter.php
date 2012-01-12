@@ -22,6 +22,10 @@
         </div>
 
         <div class="param">
+
+        </div>
+
+        <div class="param">
             <label for="address">Adresse</label>
             <input type="text" name="address"/>
         </div>
@@ -44,8 +48,8 @@
         </div>
 
         <div class="param">
-            <label for="contactperson">&nbsp;</label>
-            <input type="text" name="person_name"/>
+            <label for="kurzel">Kürzel</label>
+            <input type="text" maxlength="2" size="2" name="kurzel"/>
         </div>
 
         <div class="param">

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="content-type" content="text-html; charset=utf-8">
     <title><?if (isset($page_title)) echo $page_title;?> | Go Unique</title>
     <base href="<?=base_url()?>"/>
 
@@ -19,8 +19,8 @@
     <script src="js/jquery-ui-1.8.16.custom.min.js"></script>
     <script src="js/jquery-livesearch.js"></script>
     <script src="js/less-1.1.5.min.js"></script>
-    <script src="js/jquery.jqGrid.min.js"></script>
     <script src="js/locale/grid.locale-ru.js"></script>
+    <script src="js/jquery.jqGrid.min.js"></script>
 
     <? if (isset($JS_files))
     foreach ($JS_files as $js): ?>

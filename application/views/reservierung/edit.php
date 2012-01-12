@@ -131,7 +131,7 @@
 
             <div class="param">
                 <label class="param-name" for="hotelname">Hotel Name</label>
-                <input type="text" size="8" disabled id="hotelname" value="<?=$hotel->hotel_name?>"/>
+                <input type="text" size="8" id="hotelname" value="<?=$hotel->hotel_name?>"/>
                 <input type="hidden" name="hotelname[<?=($ind + 1)?>]" id="hotelname_hid"
                        value="<?=$hotel->hotel_name?>"/>
             </div>
@@ -414,7 +414,7 @@
 
                 <div class="param">
                     <label class="param-name" for="hotelname">Hotel Name</label>
-                    <input type="text" size="8" disabled id="hotelname"/>
+                    <input type="text" size="8" id="hotelname"/>
                     <input type="hidden" name="hotelname" id="hotelname_hid"/>
                 </div>
 

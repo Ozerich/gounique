@@ -96,15 +96,16 @@ jQuery.fn.liveSearch = function (conf) {
                                 var data = jQuery.parseJSON(data);
 
                                 var ind = 0;
+                                var data_array = [];
                                 for(var item in data)
                                 {
                                     if(ind++ >= config.maxCount)
                                         break;
-
+                                    data_array[ind] = data[item].data;
                                     $('<li value="' + data[item].value +'">' + data[item].text + '</li>').click(function(){
                                         hideLiveSearch();
                                         $(input).val(this.attributes['value'].value);
-                                        config.onSelect();
+                                        config.onSelect(data_array[$(this).index() + 1]);
                                     }).appendTo($(liveSearch).find('ul'));
                                 }
                                 showLiveSearch();

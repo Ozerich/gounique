@@ -65,7 +65,7 @@
                 <span>Current status: <span class="value"><?=$hotel->plain_status?></span></span>
 
                 <div class="buttons">
-                    <button class="change-button btn btn-blue btn-small">?ndern</button>
+                    <button class="change-button btn btn-blue btn-small">ändern</button>
                     <button class="openlog btn btn-blue btn-small">Log</button>
                 </div>
                 <br class="clear"/>

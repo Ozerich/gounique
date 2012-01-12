@@ -13,6 +13,15 @@ class FormularManuel extends ActiveRecord\Model
         return $text;
     }
 
+    public function get_pdf_text()
+    {
+        $text = '';
+        $text = ($this->date_start && $this->date_end) ? $this->date_start->format('d.m.Y') . " - " . $this->date_end->format('d.m.Y') . " " : '';
+        $text .=  $this->text . " - &nbsp;<b>" . $this->price . "&euro;</b>";
+
+        return $text;
+    }
+
     public function get_nodate_text()
     {
         $text = $this->text . " - &nbsp;<b>" . $this->price . "&euro;</b>";
@@ -55,9 +64,4 @@ class FormularManuel extends ActiveRecord\Model
         return "voucher_manuel_".$this->id.".pdf";
     }
 
-    public function get_infant_kunde()
-    {
-        $formular = Formular::find_by_id($this->formular_id);
-        return Kunde::find_by_id($formular->kunde_id);
-    }
 }

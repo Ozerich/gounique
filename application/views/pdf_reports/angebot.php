@@ -58,7 +58,7 @@
                 <? foreach ($formular->hotels_and_manuels as $ind => $item): ?>
                 <tr>
                     <td class="num"><?=($ind + 1)?></td>
-                    <td class="text"><?=$item->plain_text?></td>
+                    <td class="text"><?=$item->pdf_text?></td>
                 </tr>
                 <? endforeach; ?>
             </table>

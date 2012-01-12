@@ -8,42 +8,9 @@
 </div>
 
 <div id="statistik-page">
-    <table>
-        <thead>
-        <th>Lfdnr</th>
-        <th>Berater</th>
-        <th>Kundenummer</th>
-        <th>Name</th>
-        <th>Prov%</th>
-        <th>Vorg-NR</th>
-        <th>RG-Nr</th>
-        <th>Buc.Datum</th>
-        <th>RG-Datum</th>
-        <th>KD-Name</th>
-        <th>Abreise</th>
-        <th>Rückreise</th>
-        <th>Brutto</th>
-        </thead>
-        <tbody>
-        <? foreach ($formulars as $ind => $formular): ?>
-        <tr>
-            <td class="num"><?=($ind + 1)?></td>
-            <td class="berater"><?=$formular->berater?></td>
-            <td class="k_num"><?=$formular->kunde->k_num?></td>
-            <td class="name"><?=$formular->kunde->name?></td>
-            <td class="provision"><?=$formular->provision?></td>
-            <td class="v_num"><?=$formular->v_num?></td>
-            <td class="r_num"><?=$formular->r_num?></td>
-            <td class="date"><?=$formular->created_date->format('d.m.y')?></td>
-            <td class="date"><?=$formular->rechnung_date ? $formular->rechnung_date->format('d.m.y') : ''?></td>
-            <td class="kd-name"><?=$formular->plain_persons?></td>
-            <td class="date"><?=$formular->departure_date ? $formular->departure_date->format('d.m.y') : ''?></td>
-            <td class="date"><?=$formular->arrival_date ? $formular->arrival_date->format('d.m.y') : ''?></td>
-            <td class="brutto"><?=$formular->price['brutto']?></td>
-        </tr>
-            <? endforeach; ?>
-        </tbody>
+    <table id="statistik-table">
     </table>
+    <div id="statistik-pager"></div>
 
     <div id="brutto-count">
         <div class="input">

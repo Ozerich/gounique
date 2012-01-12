@@ -79,22 +79,9 @@ class Settings_Controller extends MY_Controller
 
     public function offers()
     {
-        if ($_POST) {
-            $config['upload_path'] = './uploads/csv';
-            $config['allowed_types'] = 'csv';
 
-            $this->load->library('upload', $config);
+                $this->save_data('csv/hotel.csv');
 
-            if (!$this->upload->do_upload('offers_file')) {
-                $this->view_data['upload_error'] = $this->upload->display_errors();
-            }
-            else
-            {
-                $file_data = $this->upload->data();
-                $this->view_data['upload_data'] = $file_data;
-                $this->save_data($file_data['full_path']);
-            }
-        }
         $this->view_data['page_title'] = 'Settings';
     }
 

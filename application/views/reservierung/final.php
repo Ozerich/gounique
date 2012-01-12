@@ -2,8 +2,10 @@
     <div id="page-header">
         <a href="dashboard" class="home-link"><img src="img/header-logo.jpg"/></a>
         <ul class="page-path">
-            <li><a href="kundenverwaltung/historie/<?=$formular->kunde->id?>"><?=$formular->kunde->plain_type;?> <?=$formular->kunde->k_num?></a></li>
-             </li>
+            <li><a
+                href="kundenverwaltung/historie/<?=$formular->kunde->id?>"><?=$formular->kunde->plain_type;?> <?=$formular->kunde->k_num?></a>
+            </li>
+            </li>
             <li><span>formular <?=$formular->v_num?></span></li>
         </ul>
     </div>
@@ -37,7 +39,7 @@
             <span class="param-value"><?=$formular->plain_status?></span>
         </div>
 
-        <? if($formular->status == "rechnung" || $formular->status == "freigabe"): ?>
+        <? if ($formular->status == "rechnung" || $formular->status == "freigabe"): ?>
         <div class="param">
             <span class="param-name">Rechnungsnummer:</span>
             <span class="param-value"><?=$formular->r_num?></span>
@@ -70,10 +72,7 @@
     <? foreach ($formular->hotels as $ind => $hotel): ?>
     <div class="item">
         <span class="num"><?=($ind + 1)?></span>
-        <span class="text"><?=$hotel->plain_text. " - &nbsp;<b>" . $hotel->price . "&euro;</b>"; ?></span>
-        <? if ($formular->status == "rechnung" || $formular->status == "freigabe"): ?>
-        <a href="pdf/<?=$hotel->voucher_name?>" target="_blank" class="voucher-button">Voucher</a>
-        <? endif ?>
+        <span class="text"><?=$hotel->plain_text . " - &nbsp;<b>" . $hotel->price . "&euro;</b>"; ?></span>
     </div>
     <? endforeach; ?>
 
@@ -85,9 +84,6 @@
     <div class="item">
         <span class="num"><?=($ind + 1)?></span>
         <span class="text"><?=$manuel->plain_text; ?></span>
-        <? if ($formular->status == "rechnung" || $formular->status == "freigabe"): ?>
-        <a href="pdf/<?=$manuel->voucher_name?>" class="voucher-button" target="_blank">Voucher</a>
-        <? endif ?>
     </div>
     <? endforeach; ?>
 
@@ -121,8 +117,8 @@
         <div class="anzahlung-block">
             <p>Anzahlung sofort nach Erhalt die Rechnung: <?=$formular->price['anzahlung_value']?> &euro;</p>
 
-            <? if($formular->finalpayment_date): ?>
-                <p>Restzahlung f&auml;llig am: <?=$formular->finalpayment_date->format('d-M-y')?>
+            <? if ($formular->finalpayment_date): ?>
+            <p>Restzahlung f&auml;llig am: <?=$formular->finalpayment_date->format('d-M-y')?>
                 &nbsp;&nbsp;<?=($formular->price['brutto'] - $formular->price['anzahlung_value'])?> &euro;</p>
             <? endif; ?>
         </div>
@@ -172,7 +168,8 @@
         </table>
         <div class="price-buttons">
             <? if ($formular->status == "angebot"): ?>
-            <a href="reservierung/eingangsmitteilung/<?=$formular->id?>" class="button-link">Als Eingangsmitteilung  speichern</a>
+            <a href="reservierung/eingangsmitteilung/<?=$formular->id?>" class="button-link">Als Eingangsmitteilung
+                speichern</a>
             <? elseif ($formular->status == "eingangsmitteilung"): ?>
             <a <?if ($formular->can_rechnung) echo 'href="reservierung/rechnung/' . $formular->id . '"';?>
                 class="button-link <?if (!$formular->can_rechnung) echo 'disabled'?>">Als Rechnung speichern</a>
@@ -188,7 +185,8 @@
 <? if ($formular->status != 'canceled'): ?>
 <div id="stage">
     <input type="radio" id="radio1" name="stage"
-           value="1" <?if ($formular->status == "angebot" || $formular->status == "eingangsmitteilung") echo 'checked';?>/><label for="radio1">Angebot</label>
+           value="1" <?if ($formular->status == "angebot" || $formular->status == "eingangsmitteilung") echo 'checked';?>/><label
+    for="radio1">Angebot</label>
     <? if ($formular->kunde->type == "agenturen"): ?>
     <input type="radio" id="radio2" name="stage"
            value="2"/><label for="radio2">Angebot
@@ -227,6 +225,9 @@
     <a href="reservierung/status/<?=$formular->id?>" class="button-link">Status editieren</a>
     <? elseif ($formular->status == "rechnung"): ?>
     <a href="reservierung/payments/<?=$formular->id?>" class="button-link">Payments</a>
+    <? endif; ?>
+    <? if ($formular->status == "rechnung" || $formular->status == "freigabe"): ?>
+    <a href="reservierung/vouchers/<?=$formular->id?>" class="button-link">Vouchers</a>
     <? endif; ?>
     <button id="addmail-button">E-Mail hinzufuegen</button>
     <button id="druck-button">Druck</button>
