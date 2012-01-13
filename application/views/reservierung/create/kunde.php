@@ -2,7 +2,7 @@
     <div id="page-header">
         <a href="dashboard" class="home-link"><img src="img/header-logo.jpg"/></a>
         <ul class="page-path">
-            <li><a href="kundenverwaltung/historie/<?=$formular->kunde->id?>"><?=$formular->kunde->plain_type;?> <?=$formular->kunde->k_num?></a></li>
+            <li><a href="kundenverwaltung/historie/<?=$kunde->id?>"><?=$kunde->plain_type;?> <?=$kunde->k_num?></a></li>
              </li>
             <li><span>neu formular</span></li>
         </ul>
@@ -67,7 +67,7 @@
 
         <div class="vorgansnummer-wr">
             <label for="vorgangsnummer">Vorgangsnummer:</label>
-            <input type="text" class="vnum-input" name="formular-vnum"/>
+            <input type="text" maxlength="6" class="vnum-input" name="formular-vnum"/>
         </div>
 
         <label for="flight-text">Flugplan</label>
@@ -95,7 +95,7 @@
     </div>
     <div class="input" id="personcount-wr">
         <label for="personcount">Personen:</label>
-        <input type="text" id="personcount" value="" name="personcount"
+        <input type="text" id="personcount" maxlength="2" value="" name="personcount"
                size="2"/>
     </div>
     <br class="clear"/>
@@ -133,7 +133,7 @@
 
                 <div class="param">
                     <label class="param-name" for="hotelcode">Hotel Code</label>
-                    <input type="text" name="hotelcode" size="8" id="hotelcode"/>
+                    <input type="text" name="hotelcode" size="8" maxlength="8" id="hotelcode"/>
                 </div>
 
                 <div class="param">

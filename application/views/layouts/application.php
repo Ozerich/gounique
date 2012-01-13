@@ -21,6 +21,8 @@
     <script src="js/less-1.1.5.min.js"></script>
     <script src="js/locale/grid.locale-ru.js"></script>
     <script src="js/jquery.jqGrid.min.js"></script>
+    <script src="js/jquery-validator.js"></script>
+    <script src="js/validator-settings.js"></script>
 
     <? if (isset($JS_files))
     foreach ($JS_files as $js): ?>

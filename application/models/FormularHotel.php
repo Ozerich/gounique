@@ -122,6 +122,30 @@ class FormularHotel extends ActiveRecord\Model
         return $capacity->value;
     }
 
+    public function get_file_roomcapacity()
+    {
+        $formular = Formular::find_by_id($this->formular_id);
+        $room_capacity = RoomCapacity::find_by_id($this->roomcapacity_id)->value;
+
+        $last = substr($room_capacity, -1);
+        switch ($last) {
+            case "0":
+                $room_capacity = "DZ";
+                break;
+            case "1":
+                $room_capacity = "EZ";
+                break;
+            case "2":
+                $room_capacity = "DZ";
+                if ($formular->child_count)
+                    $room_capacity .= " + Extra bed";
+                break;
+            case "3":
+                $room_capacity = "DZ + Extra bed";
+        }
+        return $room_capacity;
+    }
+
     public function get_plain_hotelservice()
     {
         $service = HotelService::find_by_id($this->hotelservice_id);
@@ -140,31 +164,9 @@ class FormularHotel extends ActiveRecord\Model
 
     public function get_pdf_text()
     {
-
-        $formular = Formular::find_by_id($this->formular_id);
-        $room_capacity = RoomCapacity::find_by_id($this->roomcapacity_id)->value;
-
-        $last = substr($room_capacity, -1);
-        switch ($last) {
-            case "0":
-                $room_capacity = "DZ";
-                break;
-            case "1":
-                $room_capacity = "EZ";
-                break;
-            case "2":
-                $room_capacity = "DZ";
-                if($formular->child_count)
-                    $room_capacity .= " + Extra bed";
-                break;
-            case "3":
-                $room_capacity = "DZ + Extra bed";
-        }
-
-
         $text = $this->date_start->format('d.m.Y') . " - " . $this->date_end->format('d.m.Y') . " ";
         $text .= $this->days_count . "N HOTEL: " . $this->hotel_name . " / ";
-        $text .= $room_capacity . " / ";
+        $text .= $this->file_roomcapacity . " / ";
         $text .= RoomType::find_by_id($this->roomtype_id)->value . " / ";
         $text .= HotelService::find_by_id($this->hotelservice_id)->value . " / ";
         $text .= "TRANSFER " . strtoupper($this->transfer) . " / ";

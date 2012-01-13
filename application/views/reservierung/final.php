@@ -173,8 +173,6 @@
             <? elseif ($formular->status == "eingangsmitteilung"): ?>
             <a <?if ($formular->can_rechnung) echo 'href="reservierung/rechnung/' . $formular->id . '"';?>
                 class="button-link <?if (!$formular->can_rechnung) echo 'disabled'?>">Als Rechnung speichern</a>
-            <? elseif ($formular->status == "rechnung"): ?>
-            <a href="reservierung/storeno/<?=$formular->id?>" class="button-link red">Storno</a>
             <? endif; ?>
         </div>
     </div>
