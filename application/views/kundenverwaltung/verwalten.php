@@ -55,7 +55,7 @@
         </div>
         <? else: ?>
         <div class="param">
-            <label for="contactperson">Contact person:</label>
+            <label for="contactperson">&nbsp;</label>
             <input type="text" name="person_name" value="<?=$kunde->person_name?>"/>
         </div>
         <? endif; ?>
