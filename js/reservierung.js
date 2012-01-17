@@ -992,9 +992,9 @@ $(document).ready(function () {
     $('#final-page #stage').buttonset();
 
 
-    $('#final-page #druck-button').click(function () {
-        window.location = "pdf/" + $('input[name=formular_id]').val() + "_" + $("#stage input:checked").val() + ".pdf";
-        return false;
+    $('#final-page #druck-link').click(function () {
+        $(this).attr('href', "pdf/" + $('input[name=formular_id]').val() + "_" + $("#stage input:checked").val() + ".pdf");
+        return true;
     });
 
     $('#final-page #send-button').click(function () {

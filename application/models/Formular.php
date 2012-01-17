@@ -89,13 +89,13 @@ class Formular extends ActiveRecord\Model
         foreach ($manuels as $manuel)
             $manuel_price += $manuel->price;
 
-        $price = $hotel_price;
+        $price = $hotel_price + $manuel_price;
         $price += $this->flight_price;
         $price = $price * $this->person_count;
 
         $price_data = array();
 
-        $price_data['brutto'] = $price + $manuel_price;
+        $price_data['brutto'] = $price;
 
         $price_data['person'] = $this->person_count == 0 ? 0 : $price_data['brutto'] / $this->person_count;
 
@@ -108,6 +108,7 @@ class Formular extends ActiveRecord\Model
 
         $price_data['anzahlung'] = $this->prepayment;
         $price_data['anzahlung_value'] = round($price_data['brutto'] / 100 * $this->prepayment);
+
 
         return $price_data;
     }

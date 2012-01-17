@@ -17,7 +17,7 @@ class FormularManuel extends ActiveRecord\Model
     {
         $text = '';
         $text = ($this->date_start && $this->date_end) ? $this->date_start->format('d.m.Y') . " - " . $this->date_end->format('d.m.Y') . " " : '';
-        $text .=  $this->text . " - &nbsp;<b>" . $this->price . "&euro;</b>";
+        $text .=  $this->text;
 
         return $text;
     }

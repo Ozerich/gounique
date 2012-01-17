@@ -230,7 +230,7 @@
     <a href="reservierung/vouchers/<?=$formular->id?>" class="button-link">Vouchers</a>
     <? endif; ?>
     <button id="addmail-button">E-Mail hinzufuegen</button>
-    <button id="druck-button">Druck</button>
+    <a id="druck-link" href="#" class="button-link" target="_blank">Druck</a>
     <button id="send-button" name="submit">Senden</button>
     <a href="#" class="button-link">Schliessen</a>
 </div>
