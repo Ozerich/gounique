@@ -12,38 +12,57 @@ class Kundenverwaltung_Controller extends MY_Controller
         $this->set_page_title("Kundenverwaltung");
     }
 
-    private function get_knum($type)
+    private function add_zero($kunde_num)
+    {
+        if($kunde_num < 10)
+            return "000".$kunde_num;
+        else if($kunde_num < 100)
+            return "00".$kunde_num;
+        else if($kunde_num < 1000)
+            return "0".$kunde_num;
+        return $kunde_num;
+    }
+
+    private function get_first_letter($type)
     {
         switch($type)
         {
-            case 'agenturen':
-                return 'A0001';
-
-            case 'incoming':
-                return 'I0001';
-
-            case 'mitarbeiter':
-                return 'M0001';
-
-            case 'stammkunden':
-                return 'S0001';
+            case "agenturen":
+                return "A";
+            case "stammkunden":
+                return "S";
+            case "incoming":
+                return "I";
+            case "mitarbeiter":
+                return "M";
         }
-
         return "";
+    }
+
+    private function get_knum($type)
+    {
+        $kunde = Kunde::find(array(
+            'conditions' => array('type=?', $type),
+            'order' => 'k_num desc',
+            'limit' => 1));
+
+        $kunde_num = $kunde ? $this->add_zero(substr($kunde->k_num, 1) + 1) : $this->get_first_letter($type)."0001";
+
+        return $kunde ? substr($kunde->k_num, 0, 1).$kunde_num : $kunde_num;
+
     }
 
 
     public function buchen($id = 0)
     {
-        redirect("reservierung/create/".$id);
+        redirect("reservierung/create/" . $id);
     }
 
     public function historie($id = 0)
     {
         $client = Kunde::find_by_id($id);
 
-        if(!$client)
-        {
+        if (!$client) {
             show_404();
             return false;
         }
@@ -56,14 +75,12 @@ class Kundenverwaltung_Controller extends MY_Controller
     {
         $client = Kunde::find_by_id($id);
 
-        if(!$client)
-        {
+        if (!$client) {
             show_404();
             return false;
         }
 
-        if($_POST)
-        {
+        if ($_POST) {
 
             $client->name = $this->input->post('name');
             $client->address = $this->input->post('address');
@@ -83,7 +100,7 @@ class Kundenverwaltung_Controller extends MY_Controller
 
             $client->save();
 
-            redirect('/'.$client->type);
+            redirect('/' . $client->type);
         }
 
         $this->view_data['kunde'] = $client;
@@ -92,8 +109,7 @@ class Kundenverwaltung_Controller extends MY_Controller
     public function new_($type = "")
     {
 
-        if($_POST)
-        {
+        if ($_POST) {
             $params = array(
                 "k_num" => $this->get_knum($type),
                 "type" => $type,
@@ -115,7 +131,7 @@ class Kundenverwaltung_Controller extends MY_Controller
 
             Kunde::create($params);
 
-            redirect('/'.$type);
+            redirect('/' . $type);
         }
 
         $this->set_page_tpl($type);
@@ -124,13 +140,11 @@ class Kundenverwaltung_Controller extends MY_Controller
     public function agenturen($action = "")
     {
         $this->view_data['search_text'] = '';
-        if($action == "search")
-        {
-            if($_POST)
-            {
+        if ($action == "search") {
+            if ($_POST) {
                 $this->view_data['search_text'] = $this->input->post('search_text');
                 $s = $this->input->post('search_text');
-                $this->view_data['items'] = Kunde::find('all', array('conditions' => array('k_num like "%'.$s.'%" OR name like "%'.$s.'%" AND type=?', 'agenturen')));
+                $this->view_data['items'] = Kunde::find('all', array('conditions' => array('k_num like "%' . $s . '%" OR name like "%' . $s . '%" AND type=?', 'agenturen')));
             }
 
         }
@@ -143,13 +157,11 @@ class Kundenverwaltung_Controller extends MY_Controller
     public function incoming($action = "")
     {
         $this->view_data['search_text'] = '';
-        if($action == "search")
-        {
-            if($_POST)
-            {
+        if ($action == "search") {
+            if ($_POST) {
                 $this->view_data['search_text'] = $this->input->post('search_text');
                 $s = $this->input->post('search_text');
-                $this->view_data['items'] = Kunde::find('all', array('conditions' => array('k_num like "%'.$s.'%" OR name like "%'.$s.'%" AND type=?', 'incoming')));
+                $this->view_data['items'] = Kunde::find('all', array('conditions' => array('k_num like "%' . $s . '%" OR name like "%' . $s . '%" AND type=?', 'incoming')));
             }
 
         }
@@ -161,13 +173,11 @@ class Kundenverwaltung_Controller extends MY_Controller
     public function stammkunden($action = "")
     {
         $this->view_data['search_text'] = '';
-        if($action == "search")
-        {
-            if($_POST)
-            {
+        if ($action == "search") {
+            if ($_POST) {
                 $this->view_data['search_text'] = $this->input->post('search_text');
                 $s = $this->input->post('search_text');
-                $this->view_data['items'] = Kunde::find('all', array('conditions' => array('k_num like "%'.$s.'%" OR name like "%'.$s.'%" AND type=?', 'stammkunden')));
+                $this->view_data['items'] = Kunde::find('all', array('conditions' => array('k_num like "%' . $s . '%" OR name like "%' . $s . '%" AND type=?', 'stammkunden')));
             }
 
         }
@@ -179,13 +189,11 @@ class Kundenverwaltung_Controller extends MY_Controller
     public function mitarbeiter($action = "")
     {
         $this->view_data['search_text'] = '';
-        if($action == "search")
-        {
-            if($_POST)
-            {
+        if ($action == "search") {
+            if ($_POST) {
                 $this->view_data['search_text'] = $this->input->post('search_text');
                 $s = $this->input->post('search_text');
-                $this->view_data['items'] = Kunde::find('all', array('conditions' => array('k_num like "%'.$s.'%" OR name like "%'.$s.'%" AND type=?', 'mitarbeiter')));
+                $this->view_data['items'] = Kunde::find('all', array('conditions' => array('k_num like "%' . $s . '%" OR name like "%' . $s . '%" AND type=?', 'mitarbeiter')));
             }
 
         }
@@ -199,17 +207,17 @@ class Kundenverwaltung_Controller extends MY_Controller
         $kunde = Kunde::find_by_id($id);
         $kunde->delete();
 
-        redirect('kundenverwaltung/'.$kunde->type);
+        redirect('kundenverwaltung/' . $kunde->type);
     }
 
 
     public function liveSearch($search_str = '')
     {
-        $kundens = Kunde::find('all', array('conditions' => array('k_num like "%'.$search_str.'%" OR name like "%'.$search_str.'%"
+        $kundens = Kunde::find('all', array('conditions' => array('k_num like "%' . $search_str . '%" OR name like "%' . $search_str . '%"
             AND (type = "agenturen" OR type = "stammkunden")')));
         $result = array();
-        foreach($kundens as $kunde)
-            $result[] = array("text" => "<b>".$kunde->k_num."</b> - ".$kunde->name, "value" => $kunde->k_num);
+        foreach ($kundens as $kunde)
+            $result[] = array("text" => "<b>" . $kunde->k_num . "</b> - " . $kunde->name, "value" => $kunde->k_num);
         echo json_encode($result);
         exit();
     }

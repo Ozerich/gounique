@@ -7,12 +7,22 @@
     </div>
 </div>
 
-<div id="findkunde-page" class="reservierung-page content">
+<div id="createstart-page" class="reservierung-page content">
     <? echo form_open("reservierung/create/"); ?>
-        <p class="error"><?=$error?></p>
-        <label for="kundennumer">Kundenummer:</label>
-        <input type="text" name="kunde_id" id="kunde_id"/>
-        <input type="submit" name="kundennummer-submit" value="next" />
+    <p class="error"><?=$error?></p>
+    <label for="kunde_id">Kundenummer:</label>
+    <input type="text" name="kunde_id" id="kunde_id"/>
+    <input type="submit" name="kundennummer-submit" value="Create"/>
+    </form>
+    <br/><br/>
+    <? echo form_open("reservierung/open"); ?>
+    <label for="v_num">Vorgangsnummer:</label>
+    <input type="text" maxlength="6" name="v_num" id="v_num"/>
+    <input type="submit" name="view-vnum" value="Open"/>
+    <br/><br/>
+    <label for="r_num">Rechnungsnummer:</label>
+    <input type="text" maxlength="6" name="r_num" id="r_num"/>
+    <input type="submit" name="view-rnum" value="Open"/>
     </form>
 </div>
 

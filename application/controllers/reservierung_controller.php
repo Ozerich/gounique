@@ -341,13 +341,6 @@ class Reservierung_Controller extends MY_Controller
 
     }
 
-    public function open()
-    {
-        if ($_POST) {
-            redirect('reservierung/view/' . $_POST['vorgan']);
-        }
-    }
-
     public function find($mode = "")
     {
         $this->layout_view = '';
@@ -725,10 +718,38 @@ class Reservierung_Controller extends MY_Controller
                     );
                 break;
 
+            case "vnum":
+                $formulars = Formular::find('all', array('conditions' => array('v_num like "%' . $str . '%"')));
+                foreach ($formulars as $formular)
+                    $result[] = array(
+                        "text" => $formular->status . ": <b>" . $formular->v_num . "</b>",
+                        "value" => $formular->v_num
+                    );
+                break;
+            case "rnum":
+                $formulars = Formular::find('all', array('conditions' => array('r_num like "%' . $str . '%"')));
+                foreach ($formulars as $formular)
+                    $result[] = array(
+                        "text" => $formular->status . ": <b>" . $formular->r_num . "</b> (".$formular->v_num.")",
+                        "value" => $formular->r_num
+                    );
+                break;
+
         }
 
         echo json_encode($result);
         exit();
     }
 
+    public function open()
+    {
+        if ($_POST) {
+            if (isset($_POST['view-vnum']))
+                $formular = Formular::find_by_v_num($_POST['v_num']);
+            elseif (isset($_POST['view-rnum']))
+                $formular = Formular::find_by_r_num($_POST['r_num']);
+
+            redirect("reservierung/final/" . $formular->id);
+        }
+    }
 }

@@ -33,7 +33,7 @@
         <div class="line"><?=$item->days_count." Nights ".$item->hotel_name?></div>
         <div class="line"><?=$item->plain_roomtype?></div>
         <div class="line empty">&nbsp;</div>
-        <div class="line"><?=$item->plain_roomcapacity.' / '.$item->plain_hotelservice?></div>
+        <div class="line"><?=$item->file_roomcapacity.' / '.$item->plain_hotelservice?></div>
         <div class="line">inkl. Transfer <?=$item->plain_transfer?></div>
         <div class="line empty">&nbsp;</div>
         <div class="bottom">Unique World GmbH</div>
