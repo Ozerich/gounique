@@ -115,7 +115,7 @@
         </div>
 
         <div class="anzahlung-block">
-            <p>Anzahlung sofort nach Erhalt die Rechnung: <?=$formular->price['anzahlung_value']?> &euro;</p>
+            <p>Anzahlung sofort nach Erhalt der Rechnung: <?=$formular->price['anzahlung_value']?> &euro;</p>
 
             <? if ($formular->finalpayment_date): ?>
             <p>Restzahlung f&auml;llig am: <?=$formular->finalpayment_date->format('d-M-y')?>
@@ -173,6 +173,8 @@
             <? elseif ($formular->status == "eingangsmitteilung"): ?>
             <a <?if ($formular->can_rechnung) echo 'href="reservierung/rechnung/' . $formular->id . '"';?>
                 class="button-link <?if (!$formular->can_rechnung) echo 'disabled'?>">Als Rechnung speichern</a>
+			<? elseif ($formular->status == "rechnung"): ?>
+		            <a href="reservierung/storeno/<?=$formular->id?>" class="button-link">Storno</a>
             <? endif; ?>
         </div>
     </div>
@@ -198,6 +200,7 @@
             (Kundenkopie)</label>
         <? endif; ?>
     <? endif; ?>
+
 </div>
 
 <div class="mail-block">

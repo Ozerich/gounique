@@ -127,8 +127,8 @@
                     <select name="person_sex[<?=$i?>]" id="sex">
                         <option value="herr">Herr</option>
                         <option value="frau">Frau</option>
-                        <option value="child">Child</option>
-                        <option value="infant">Infant</option>
+                        <option value="child">Kind</option>
+                        <option value="infant">Baby</option>
                     </select>
                 </div>
                 <div class="input">

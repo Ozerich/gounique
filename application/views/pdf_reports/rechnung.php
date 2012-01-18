@@ -76,7 +76,7 @@
     </div>
 
     <div class="anzahlung-block">
-        <p>Anzahlung sofort nach Erhalt die Rechnung: <?=$formular->price['anzahlung_value']?> &euro;</p>
+        <p>Anzahlung sofort nach Erhalt der Rechnung: <?=$formular->price['anzahlung_value']?> &euro;</p>
 
         <p>Restzahlung f&auml;llig am: <?=$formular->finalpayment_date->format('d-M-y')?>
             &nbsp;&nbsp;<?=($formular->price['brutto'] - $formular->price['anzahlung_value'])?> &euro;</p>

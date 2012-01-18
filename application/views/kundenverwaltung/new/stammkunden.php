@@ -17,7 +17,13 @@
     <div class="new-block">
 
         <div class="param">
-            <label for="name">Firmenname</label>
+            <label>Ansprechpartner</label>
+            <input type="radio" name="sex" value="herr" checked/>Herr&nbsp;
+            <input type="radio" name="sex" value="frau"/>Frau
+        </div>
+		
+        <div class="param">
+            <label for="name">Kundenname</label>
             <input type="text" name="name"/>
         </div>
 
@@ -38,24 +44,21 @@
         </div>
 
         <div class="param">
-            <label>Ansprechpartner</label>
-            <input type="radio" name="sex" value="herr" checked/>Herr&nbsp;
-            <input type="radio" name="sex" value="frau"/>Frau
-        </div>
-
-        <div class="param">
-            <label for="contactperson">&nbsp;</label>
-            <input type="text" name="person_name"/>
-        </div>
-
-        <div class="param">
             <label for="email">E-Mail Adresse</label>
             <input type="text" name="email"/>
         </div>
+		
         <div class="param">
             <label for="phone">Telefon</label>
             <input type="text" name="phone"/>
         </div>
+		
+		<div class="param">
+            <label for="mobile">Mobile</label>
+            <input type="text" name="mobile"/>
+        </div>
+		
+		
 
         <div class="param">
             <label for="fax">Fax</label>

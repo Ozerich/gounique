@@ -93,6 +93,7 @@ h3{
 
 .reiseteilnehmer-table{
     width: 100%;
+	text-transform: uppercase;
 }
 
 .reiseteilnehmer-table .num{
