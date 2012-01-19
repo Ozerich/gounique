@@ -4,7 +4,7 @@
     </div>
 </div>
 <div class="content">
-    <h1>BUCHUNGSBESÄTIGUNG</h1>
+    <h1>ANGEBOT</h1>
 
     <table class="top-block">
         <tr>
@@ -108,4 +108,10 @@
             <? endif?>
         </table>
     </div>
+
+    <div class="signature">
+        <div class="text">Bei Buchungswunsch bitte unterschrieben zurückfaxen</div>
+        <div class="line"></div>
+    </div>
+
 </div>

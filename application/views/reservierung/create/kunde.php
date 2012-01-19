@@ -3,7 +3,7 @@
         <a href="dashboard" class="home-link"><img src="img/header-logo.jpg"/></a>
         <ul class="page-path">
             <li><a href="kundenverwaltung/historie/<?=$kunde->id?>"><?=$kunde->plain_type;?> <?=$kunde->k_num?></a></li>
-             </li>
+            </li>
             <li><span>neu formular</span></li>
         </ul>
     </div>
@@ -86,13 +86,15 @@
 </div>
 
 <div class="formular-content" style="display:none">
-
 <div id="intro-page">
+    <? if ($kunde->type == 'agenturen'): ?>
     <div class="input" id="provision-wr">
         <label for="provision">Provision %:</label>
         <input type="text" id="provision" name="provision"
-               value="11" size="3"/>
+               value="<?=$kunde->provision?>" maxlength="2" size="2"/>
     </div>
+    <? endif; ?>
+
     <div class="input" id="personcount-wr">
         <label for="personcount">Personen:</label>
         <input type="text" id="personcount" maxlength="2" value="" name="personcount"
@@ -173,6 +175,11 @@
                 </div>
 
                 <div class="param">
+                    <label class="param-name" for="price">Price &euro;</label>
+                    <input id="price" class="price" type="text" size="4" name="price" disabled="disabled"/>
+                </div>
+
+                <div class="param">
                     <label class="param-name" for="transfer">Transfer</label>
                     <select id="transfer" class="transfer" name="transfer" disabled="disabled">
                         <option value="kein">KEIN TRANSFER</option>
@@ -183,8 +190,8 @@
                 </div>
 
                 <div class="param">
-                    <label class="param-name" for="price">Price &euro;</label>
-                    <input id="price" class="price" type="text" size="4" name="price" disabled="disabled"/>
+                    <label class="param-name" for="transfer_price">Transfer Price &euro;</label>
+                    <input type="text" name="transfer_price" class="transfer-price" disabled="disabled"/>
                 </div>
 
                 <div class="param">
@@ -193,10 +200,14 @@
                 </div>
 
                 <div class="param">
+                    <label class="param-name" for="city_tour">City tour</label>
+                    <textarea id="city_tour" class="city-tour" name="city_tour" disabled="disabled"></textarea>
+                </div>
+
+                <div class="param">
                     <label class="param-name" for="voucher_remark">Voucher text</label>
                     <textarea id="voucher_remark" class="remark" name="voucher_remark" disabled="disabled"></textarea>
                 </div>
-
 
             </div>
 
@@ -209,19 +220,16 @@
 
                 <div class="param">
                     <label class="param-name" for="roomtype">Room type</label>
-                    <select name="roomtype" id="roomtype">
-                        <? foreach (RoomType::all() as $type): ?>
-                        <option value=<?=$type->id?>><?=$type->value?></option>
-                        <? endforeach; ?>
-                    </select>
+                    <input type="text" id="roomtype" name="roomtype" />
                 </div>
 
                 <div class="param">
                     <label class="param-name" for="roomcapacity">Capacity</label>
                     <select name="roomcapacity" id="roomcapacity">
-                        <? foreach (RoomCapacity::all() as $type): ?>
-                        <option value=<?=$type->id?>><?=$type->value?></option>
-                        <? endforeach; ?>
+                        <option value="EZ">EZ</option>
+                        <option value="DZ0">DZ0</option>
+                        <option value="DZ2">DZ2</option>
+                        <option value="DZ3">DZ3</option>
                     </select>
                 </div>
 
@@ -250,6 +258,11 @@
                 </div>
 
                 <div class="param">
+                    <label class="param-name" for="price">Price &euro;</label>
+                    <input id="price" size="4" type="text" name="price"/>
+                </div>
+
+                <div class="param">
                     <label class="param-name" for="transfer">Transfer</label>
                     <select id="transfer" name="transfer">
                         <option value="kein">KEIN TRANSFER</option>
@@ -260,10 +273,10 @@
                 </div>
 
                 <div class="param">
-                    <label class="param-name" for="price">Price &euro;</label>
-                    <input id="price" size="4" type="text" name="price"/>
+                    <label class="param-name" for="transfer_price">Transfer Price &euro;</label>
+                    <input type="text" class="transfer-price" id="transfer_price" name="transfer_price"/>
                 </div>
-
+                
                 <div class="param">
                     <label class="param-name" for="remark">Remark</label>
                     <textarea id="remark" name="remark"></textarea>

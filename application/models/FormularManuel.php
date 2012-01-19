@@ -3,7 +3,7 @@
 class FormularManuel extends ActiveRecord\Model
 {
     static $table_name = "formular_manuels";
-    
+
     public function get_plain_text()
     {
         $text = '';

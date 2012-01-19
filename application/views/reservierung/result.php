@@ -56,7 +56,7 @@
     <? foreach ($formular->hotels as $ind => $hotel): ?>
     <div class="item">
         <span class="num"><?=($ind + 1)?></span>
-        <span class="text"><?=$hotel->plain_text." - &nbsp;<b>" . $hotel->price . "&euro;</b>"; ?></span>
+        <span class="text"><?=$hotel->plain_text." - &nbsp;<b>" . $hotel->all_price . "&euro;</b>"; ?></span>
     </div>
     <? endforeach; ?>
 

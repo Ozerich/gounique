@@ -83,6 +83,12 @@
                            id="status<?=($ind + 1)?>_wl" <?if ($hotel->status == 'wl') echo 'checked';?>
                            value="wl"><label for="status<?=($ind + 1)?>_wl">WL</label>
                     <input type="radio" name="status"
+                                              id="status<?=($ind + 1)?>_cl" <?if ($hotel->status == 'cl') echo 'checked';?>
+                                              value="cl"><label for="status<?=($ind + 1)?>_cl">CL</label>
+                    <input type="radio" name="status"
+                                              id="status<?=($ind + 1)?>_fb" <?if ($hotel->status == 'fb') echo 'checked';?>
+                                              value="fb"><label for="status<?=($ind + 1)?>_fb">FB</label>
+                    <input type="radio" name="status"
                            id="status<?=($ind + 1)?>_ok" <?if ($hotel->status == 'ok') echo 'checked';?>
                            value="ok"><label for="status<?=($ind + 1)?>_ok">OK</label>
                 </div>

@@ -68,6 +68,10 @@
     &:disabled{
         background: #cfcfcf;
     }
+
+    &:focus{
+        background: #1aaccc;
+    }
 }
 
 
@@ -123,7 +127,6 @@ textarea{
 
 input[type=submit], button, a.button-link{
     .common-button;
-
 }
 
 a.button-link{
@@ -195,13 +198,25 @@ label{
     padding-top: 6px;
 }
 
-#footer .username{
+#footer .username-block{
     position: absolute;
-    right: 10px;
-    top: 4px;
+    right: 5px;
+    top: 2px;
+}
+
+#footer .username{
     font-size: 18px;
     text-transform: uppercase;
     color: #fff;
+    float: left;
+    margin-right: 5px;
+    padding-top: 2px;
+}
+
+#footer .username .logout{
+    padding-top: 3px;
+    display: block;
+    float: left;
 }
 
 /*-------------------------------------------------------------------------------------------------

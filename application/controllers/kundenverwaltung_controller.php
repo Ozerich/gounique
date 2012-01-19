@@ -91,6 +91,7 @@ class Kundenverwaltung_Controller extends MY_Controller
             $client->person_name = $this->input->post('person_name');
             $client->email = $this->input->post('email');
             $client->phone = $this->input->post('phone');
+            $client->mobile = $this->input->post('mobile');
             $client->fax = $this->input->post('fax');
             $client->provision = $this->input->post('provision');
             $client->about = $this->input->post('about');
@@ -104,6 +105,7 @@ class Kundenverwaltung_Controller extends MY_Controller
         }
 
         $this->view_data['kunde'] = $client;
+        $this->set_page_tpl($client->type);
     }
 
     public function new_($type = "")

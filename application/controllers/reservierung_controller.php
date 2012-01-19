@@ -201,16 +201,18 @@ class Reservierung_Controller extends MY_Controller
                             'status' => 'none',
                             'hotel_id' => $hotel_id,
                             'hotel_name' => $hotel_name,
-                            'roomcapacity_id' => $_POST['roomcapacity'][$ind],
-                            'roomtype_id' => $_POST['roomtype'][$ind],
+                            'roomcapacity' => $_POST['roomcapacity'][$ind],
+                            'roomtype' => $_POST['roomtype'][$ind],
                             'hotelservice_id' => $_POST['service'][$ind],
                             'date_start' => inputdate_to_mysqldate($_POST['datestart'][$ind]),
                             'date_end' => inputdate_to_mysqldate($_POST['dateend'][$ind]),
                             'price' => $_POST['price'][$ind],
                             'days_count' => $_POST['dayscount'][$ind],
                             'transfer' => $_POST['transfer'][$ind],
+                            'transfer_price' => $_POST['transfer_price'][$ind],
                             'remark' => $_POST['remark'][$ind],
                             'voucher_remark' => $_POST['voucher_remark'][$ind],
+                            'city_tour' => $_POST['city_tour'][$ind],
                         ));
                     }
 
@@ -249,7 +251,6 @@ class Reservierung_Controller extends MY_Controller
         }
         if ($_POST) {
 
-
             $formular->provision = $this->input->post('provision');
             $formular->flight_text = $this->input->post('flight-text');
             $formular->flight_price = $this->input->post('flight-price');
@@ -267,18 +268,20 @@ class Reservierung_Controller extends MY_Controller
                     if (isset($_POST['formular_hotel_id'][$ind])) {
                         $hotel = FormularHotel::find_by_id($_POST['formular_hotel_id'][$ind]);
 
-                        $hotel->roomcapacity_id = $_POST['roomcapacity'][$ind];
-                        $hotel->roomtype_id = $_POST['roomtype'][$ind];
+                        $hotel->roomcapacity = $_POST['roomcapacity'][$ind];
+                        $hotel->roomtype = $_POST['roomtype'][$ind];
                         $hotel->hotelservice_id = $_POST['service'][$ind];
                         $hotel->date_start = inputdate_to_mysqldate($_POST['datestart'][$ind]);
                         $hotel->date_end = inputdate_to_mysqldate($_POST['dateend'][$ind]);
                         $hotel->days_count = $_POST['dayscount'][$ind];
                         $hotel->price = $_POST['price'][$ind];
                         $hotel->transfer = $_POST['transfer'][$ind];
+                        $hotel->transfer_price = $_POST['transfer_price'][$ind];
                         $hotel->remark = $_POST['remark'][$ind];
                         $hotel->hotel_id = $hotel_id;
                         $hotel->hotel_name = $_POST['hotelname'][$ind];
                         $hotel->voucher_remark = $_POST['voucher_remark'][$ind];
+                        $hotel->city_tour = $_POST['city_tour'][$ind];
 
                         $hotel->save();
                     }
@@ -289,16 +292,18 @@ class Reservierung_Controller extends MY_Controller
                             'status' => 'none',
                             'hotel_id' => $hotel_id,
                             'hotel_name' => $hotel_name,
-                            'roomcapacity_id' => $_POST['roomcapacity'][$ind],
-                            'roomtype_id' => $_POST['roomtype'][$ind],
+                            'roomcapacity' => $_POST['roomcapacity'][$ind],
+                            'roomtype' => $_POST['roomtype'][$ind],
                             'hotelservice_id' => $_POST['service'][$ind],
                             'date_start' => inputdate_to_mysqldate($_POST['datestart'][$ind]),
                             'date_end' => inputdate_to_mysqldate($_POST['dateend'][$ind]),
                             'price' => $_POST['price'][$ind],
                             'days_count' => $_POST['dayscount'][$ind],
                             'transfer' => $_POST['transfer'][$ind],
+                            'transfer_price' => $_POST['transfer_price'][$ind],
                             'remark' => $_POST['remark'][$ind],
                             'voucher_remark' => $_POST['voucher_remark'][$ind],
+                            'city_tour' => $_POST['city_tour'][$ind],
                         ));
                     }
                 }
@@ -376,12 +381,12 @@ class Reservierung_Controller extends MY_Controller
 
             case "room_type":
                 $sql_options = array('conditions' => array('hotel_id = ?', Hotel::find_by_code($hotel_code)->id),
-                    'select' => 'DISTINCT roomtype_id');
+                    'select' => 'DISTINCT roomtype');
                 $room_type = HotelOffer::all($sql_options);
                 $result = array();
                 foreach ($room_type as $type)
                 {
-                    $type = RoomType::find_by_id($type->roomtype_id);
+                    $type = RoomType::find_by_id($type->roomtype);
                     $result[] = array("id" => $type->id, "value" => $type->value);
                 }
 
@@ -389,14 +394,14 @@ class Reservierung_Controller extends MY_Controller
                 break;
 
             case "room_capacity":
-                $sql_options = array('conditions' => array('hotel_id = ? AND roomtype_id = ?', Hotel::find_by_code($hotel_code)->id, $room_type),
-                    'select' => 'DISTINCT roomcapacity_id');
+                $sql_options = array('conditions' => array('hotel_id = ? AND roomtype = ?', Hotel::find_by_code($hotel_code)->id, $room_type),
+                    'select' => 'DISTINCT roomcapacity');
 
                 $room_type = HotelOffer::all($sql_options);
                 $result = array();
                 foreach ($room_type as $type)
                 {
-                    $type = RoomCapacity::find_by_id($type->roomcapacity_id);
+                    $type = RoomCapacity::find_by_id($type->roomcapacity);
                     $result[] = array("id" => $type->id, "value" => $type->value);
                 }
 
@@ -404,7 +409,7 @@ class Reservierung_Controller extends MY_Controller
                 break;
 
             case "hotel_service":
-                $sql_options = array('conditions' => array('hotel_id = ? AND roomtype_id = ? AND roomcapacity_id = ?',
+                $sql_options = array('conditions' => array('hotel_id = ? AND roomtype = ? AND roomcapacity = ?',
                     Hotel::find_by_code($hotel_code)->id, $room_type, $room_capacity),
                     'select' => 'DISTINCT hotelservice_id');
                 $hotel_service = HotelOffer::all($sql_options);
@@ -426,7 +431,7 @@ class Reservierung_Controller extends MY_Controller
                 while ($date_start <= $date_end)
                 {
 
-                    $sql_options = array('conditions' => array('hotel_id = ? AND roomtype_id = ? AND roomcapacity_id = ? AND hotelservice_id = ?
+                    $sql_options = array('conditions' => array('hotel_id = ? AND roomtype = ? AND roomcapacity = ? AND hotelservice_id = ?
                         AND date = ?', Hotel::find_by_code($hotel_code)->id, $room_type, $room_capacity, $hotel_service, time_to_mysqldate($date_start)),
                         'select' => 'price');
 
@@ -654,7 +659,15 @@ class Reservierung_Controller extends MY_Controller
         $this->email->from($this->user->email, $this->user->name . " " . $this->user->surname . " <" . $this->user->email . ">");
         $this->email->to($email);
 
-        $this->email->subject('Subject');
+        $this->email->subject($formular->type == 'angebot' ? 'Angebot: Ihre Reiseanfrage '.$formular->v_num : 'Rechnung: Vielen Dank für Ihre Buchung '.$formular->r_num);
+        $this->email->message('Sehr geehrte Damen und Herren,
+
+        herzlichen Dank für Ihre Reiseanfrage und dem damit verbundenen Interesse an unserem Produkt!
+        Anbei erhalten Sie das gewünschte Angebot. Bei Fragen und Wünschen sind wir gerne für Sie da.
+
+        Beste Grüße,
+        Expedient');
+
         $this->email->attach('pdf/' . $formular->id . "_" . $pdf . ".pdf");
         if (!$this->email->send())
             echo "error sending";

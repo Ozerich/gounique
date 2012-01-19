@@ -205,3 +205,22 @@ h3{
 .anzahlung-block p{
     margin: 0 0 10px 0;
 }
+
+
+.signature{
+    margin: 60px 0 0 0;
+    clear: both;
+}
+
+.signature .text{
+    float: left;
+    width: 355px;
+}
+
+.signature .line{
+    border-bottom: 1px solid black;
+    height: 2px;
+    float: left;
+    padding-top: 14px;
+    width: 180px;
+}

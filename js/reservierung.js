@@ -28,8 +28,11 @@ function update(param, hotel_block) {
 function GetPreview(hotel_block, type) {
     if (type == 'hotel') {
         return InputToTime($(hotel_block).find('.datestart').val()) + " - " + InputToTime($(hotel_block).find(".dateend").val()) + "&nbsp;" + $(hotel_block).find(".dayscount").val() + "N HOTEL: " +
-            $(hotel_block).find("#hotelname").val() + " / " + $(hotel_block).find("#roomcapacity option:selected").html() + " / " + $(hotel_block).find("#roomtype option:selected").html() + " / " +
-            $(hotel_block).find("#service option:selected").html() + " / " + $(hotel_block).find("#transfer option:selected").html() + " / " + $(hotel_block).find('#remark').val();
+            $(hotel_block).find("#hotelname").val() + " / " + $(hotel_block).find("#roomcapacity option:selected").html() + " / " +
+            ($(hotel_block).find("#roomtype option:selected").length > 0 ? $(hotel_block).find("#roomtype option:selected").html() : $(hotel_block).find("#roomtype").val()) + " / " +
+            $(hotel_block).find("#service option:selected").html() + " / " + $(hotel_block).find("#transfer option:selected").html() + " / " + $(hotel_block).find('#remark').val() +
+            $(hotel_block).find("#city_tour").val();
+
     }
     else {
         var result = $(hotel_block).find('.datestart').length > 0 ?
@@ -300,10 +303,8 @@ function BindHotelEvents() {
 
             $(db_block).find('.price').bind('keypress', function(event) {
                 if (event.keyCode == KEY_ENTER || event.keyCode == KEY_TAB) {
-                    $(this).parents('.param').nextAll().find('input, textarea, select').attr('disabled', 'disabled');
+                    $(this).parents('.param').nextAll().find('input, textarea, select').removeAttr('disabled');
                     $(ok_button).removeAttr('disabled').focus();
-                    if (isInt($(this).val()))
-                        $(hotel_block).find(".remark").removeAttr('disabled').first().focus();
 
                     return false;
                 }
@@ -989,7 +990,7 @@ $(document).ready(function () {
                     $('#addmail-button').focus();
             });
             return false;
-        }).click();
+        });
 
     $('#final-page #stage').buttonset();
 

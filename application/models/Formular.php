@@ -81,7 +81,9 @@ class Formular extends ActiveRecord\Model
         $hotels = FormularHotel::find_all_by_formular_id($this->id);
 
         foreach ($hotels as $hotel)
-            $hotel_price += $hotel->price;
+            $hotel_price += $hotel->all_price;
+
+
 
         $manuel_price = 0;
         $manuels = FormularManuel::find_all_by_formular_id($this->id);
@@ -108,6 +110,9 @@ class Formular extends ActiveRecord\Model
 
         $price_data['anzahlung'] = $this->prepayment;
         $price_data['anzahlung_value'] = round($price_data['brutto'] / 100 * $this->prepayment);
+
+        foreach($price_data as &$val)
+            $val = number_format($val, 2, ',', ' ');
 
 
         return $price_data;

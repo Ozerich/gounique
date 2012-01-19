@@ -4,7 +4,7 @@
     </div>
 </div>
 <div class="content">
-    <h1>BUCHUNGSBESÄTIGUNG</h1>
+    <h1>BUCHUNGSBESÄTIGUNG / RECHNUNG</h1>
 
     <h2>Kundenkopie</h2>
     <table class="top-block">

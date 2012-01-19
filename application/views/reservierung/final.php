@@ -72,7 +72,7 @@
     <? foreach ($formular->hotels as $ind => $hotel): ?>
     <div class="item">
         <span class="num"><?=($ind + 1)?></span>
-        <span class="text"><?=$hotel->plain_text . " - &nbsp;<b>" . $hotel->price . "&euro;</b>"; ?></span>
+        <span class="text"><?=$hotel->plain_text . " - &nbsp;<b>" . $hotel->all_price . "&euro;</b>"; ?></span>
     </div>
     <? endforeach; ?>
 
@@ -213,6 +213,13 @@
     <div class="mail">
         <span class="left">Administrator E-Mail</span>
         <input type="text" disabled size="30" class="email" value="<?=$user->email?>"/>
+        <span class="status">noch nicht gesendet</span>
+        <input type="hidden" class="sended" value="0"/>
+    </div>
+
+    <div class="mail">
+        <span class="left">Kunde E-Mail</span>
+        <input type="text" disabled size="30" class="email" value="<?=$formular->kunde->email?>"/>
         <span class="status">noch nicht gesendet</span>
         <input type="hidden" class="sended" value="0"/>
     </div>

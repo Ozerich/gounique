@@ -4,6 +4,7 @@ class FormularHotel extends ActiveRecord\Model
 {
     static $table_name = "formular_hotels";
 
+
     public function get_all_params()
     {
         $result = array(
@@ -14,26 +15,26 @@ class FormularHotel extends ActiveRecord\Model
 
         $room_types = HotelOffer::find('all', array(
                 'conditions' => array('hotel_id = ?', $this->hotel_id),
-                'select' => 'DISTINCT roomtype_id'
+                'select' => 'DISTINCT roomtype'
             )
         );
 
         foreach ($room_types as $type)
-            $result['room_type'][] = RoomType::find_by_id($type->roomtype_id);
+            $result['room_type'][] = RoomType::find_by_id($type->roomtype);
 
         $room_capacity = HotelOffer::find('all', array(
-                'conditions' => array('hotel_id = ? AND roomtype_id = ?', $this->hotel_id, $this->roomtype_id),
-                'select' => 'DISTINCT roomcapacity_id'
+                'conditions' => array('hotel_id = ? AND roomtype = ?', $this->hotel_id, $this->roomtype),
+                'select' => 'DISTINCT roomcapacity'
             )
         );
 
         foreach ($room_capacity as $type)
-            $result['room_capacity'][] = RoomCapacity::find_by_id($type->roomcapacity_id);
+            $result['room_capacity'][] = RoomCapacity::find_by_id($type->roomcapacity);
 
 
         $services = HotelOffer::find('all', array(
-                'conditions' => array('hotel_id = ? AND roomtype_id = ? AND roomcapacity_id = ?',
-                    $this->hotel_id, $this->roomtype_id, $this->roomcapacity_id),
+                'conditions' => array('hotel_id = ? AND roomtype = ? AND roomcapacity = ?',
+                    $this->hotel_id, $this->roomtype, $this->roomcapacity),
                 'select' => 'DISTINCT hotelservice_id'
             )
         );
@@ -44,15 +45,20 @@ class FormularHotel extends ActiveRecord\Model
         return $result;
     }
 
+    public function get_is_manuel()
+    {
+        return $this->hotel_id == 0;
+    }
+
     public function get_plain_text()
     {
         $text = $this->date_start->format('d.m.Y') . " - " . $this->date_end->format('d.m.Y') . " ";
         $text .= $this->days_count . "N HOTEL: " . $this->hotel_name . " / ";
-        $text .= RoomCapacity::find_by_id($this->roomcapacity_id)->value . " / ";
-        $text .= RoomType::find_by_id($this->roomtype_id)->value . " / ";
+        $text .= ($this->is_manuel ? $this->roomcapacity : RoomCapacity::find_by_id($this->roomcapacity)->value) . " / ";
+        $text .= ($this->is_manuel ? $this->roomtype : RoomType::find_by_id($this->roomtype)->value) . " / ";
         $text .= HotelService::find_by_id($this->hotelservice_id)->value . " / ";
-        $text .= "TRANSFER " . strtoupper($this->transfer) . " / ";
-        $text .= $this->remark;
+        $text .= "TRANSFER " . strtoupper($this->transfer);
+        $text .= ($this->remark ? ' / ' . $this->remark : '') . ($this->city_tour ? ' / ' . $this->city_tour : '');
 
         return $text;
     }
@@ -60,13 +66,26 @@ class FormularHotel extends ActiveRecord\Model
     public function get_nodate_text()
     {
         $text = $this->days_count . "N HOTEL: " . $this->hotel_name . " / ";
-        $text .= RoomCapacity::find_by_id($this->roomcapacity_id)->value . " / ";
-        $text .= RoomType::find_by_id($this->roomtype_id)->value . " / ";
+        $text .= ($this->is_manuel ? $this->roomcapacity : RoomCapacity::find_by_id($this->roomcapacity)->value) . " / ";
+        $text .= ($this->is_manuel ? $this->roomtype : RoomType::find_by_id($this->roomtype)->value) . " / ";
         $text .= HotelService::find_by_id($this->hotelservice_id)->value . " / ";
-        $text .= "TRANSFER " . strtoupper($this->transfer) . " / ";
-        $text .= $this->remark . " - &nbsp;<b>" . $this->price . "&euro;</b>";
+        $text .= "TRANSFER " . strtoupper($this->transfer);
+        $text .= ($this->remark ? ' / ' . $this->remark : '') . " - &nbsp;<b>" . $this->all_price . "&euro;</b>";
 
         return $text;
+    }
+
+
+
+    public function get_people_count()
+    {
+        $num = substr($this->plain_roomcapacity, -1);
+        return $num == 0 ? 2 : $num;
+    }
+
+    public function get_all_price()
+    {
+        return ($this->price + $this->transfer_price) * $this->people_count;
     }
 
     public function get_status_logs()
@@ -84,8 +103,14 @@ class FormularHotel extends ActiveRecord\Model
                 return 'WL';
             case 'ok':
                 return 'OK';
-            default:
+            case 'cl':
+                return 'CL';
+            case 'fb':
+                return 'FB';
+            case 'none':
                 return 'No status';
+            default:
+                return 'Unknown';
         }
     }
 
@@ -112,20 +137,18 @@ class FormularHotel extends ActiveRecord\Model
 
     public function get_plain_roomtype()
     {
-        $type = RoomType::find_by_id($this->roomtype_id);
-        return $type->value;
+        return $this->is_manuel ? $this->roomtype : RoomType::find_by_id($this->roomtype)->value;
     }
 
     public function get_plain_roomcapacity()
     {
-        $capacity = RoomCapacity::find_by_id($this->roomcapacity_id);
-        return $capacity->value;
+        return $this->is_manuel ? $this->roomcapacity : RoomCapacity::find_by_id($this->roomcapacity)->value;
     }
 
     public function get_file_roomcapacity()
     {
         $formular = Formular::find_by_id($this->formular_id);
-        $room_capacity = RoomCapacity::find_by_id($this->roomcapacity_id)->value;
+        $room_capacity = $this->is_manuel ? $this->roomcapacity : RoomType::find_by_id($this->roomtype)->value;
 
         $last = substr($room_capacity, -1);
         switch ($last) {
@@ -167,10 +190,10 @@ class FormularHotel extends ActiveRecord\Model
         $text = $this->date_start->format('d.m.Y') . " - " . $this->date_end->format('d.m.Y') . " ";
         $text .= $this->days_count . "N HOTEL: " . $this->hotel_name . " / ";
         $text .= $this->file_roomcapacity . " / ";
-        $text .= RoomType::find_by_id($this->roomtype_id)->value . " / ";
+        $text .= ($this->is_manuel ? $this->roomtype : RoomType::find_by_id($this->roomtype)->value) . " / ";
         $text .= HotelService::find_by_id($this->hotelservice_id)->value . " / ";
-        $text .= "TRANSFER " . strtoupper($this->transfer) . " / ";
-        $text .= $this->remark;
+        $text .= "TRANSFER " . strtoupper($this->transfer);
+        $text .= ($this->remark ? ' / ' . $this->remark : '') . ($this->city_tour ? ' / ' . $this->city_tour : '');
 
         return $text;
     }

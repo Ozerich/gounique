@@ -4,7 +4,7 @@
     </div>
 </div>
 <div class="content">
-    <h1>BUCHUNGSBESÄTIGUNG</h1>
+    <h1>ANGEBOT</h1>
 
     <h2>Kundenkopie</h2>
     <table class="top-block">
@@ -87,5 +87,10 @@
                 <td class="paramvalue"><?=$formular->price['brutto']?></td>
             </tr>
         </table>
+    </div>
+
+    <div class="signature">
+        <div class="text">Bei Buchungswunsch bitte unterschrieben zurückfaxen</div>
+        <div class="line"></div>
     </div>
 </div>
