@@ -1,7 +1,3 @@
-function InputToTime(time) {
-    return time.substr(0, 2) + '.' + time.substr(2, 2) + '.' + time.substr(4);
-}
-
 function update(param, hotel_block) {
     ret_data = "";
 
@@ -11,7 +7,6 @@ function update(param, hotel_block) {
         "&service=" + $(hotel_block).find("#service").val() +
         "&datestart=" + $(hotel_block).find(".datestart").val() +
         "&dateend=" + $(hotel_block).find(".dateend").val();
-    "&transfer=" + $(hotel_block).find("#transfer").val();
 
     $.ajax({
         url:"reservierung/find/" + param,
@@ -41,348 +36,446 @@ function GetPreview(hotel_block, type) {
     }
 }
 
-function BindHotelEvents() {
-    $('.hotel:visible').each(function () {
-        var hotel_wrapper = $(this);
-        var hotel_preview = $(hotel_wrapper).find('.hotel-preview');
-        var hotel_editcontent = $(hotel_wrapper).find('.hotel-editcontent');
-        var db_block = $(this).find('.database-hotel');
-        var manuel_block = $(this).find('.manuel-hotel');
-        var ok_button = $(this).find('.buttons .add');
-        var hotel_block = $(this).find('.database-hotel, .manuel-hotel').filter(':visible');
+function BindDateEvents(hotel_block) {
 
+    old1 = $(hotel_block).find('.datestart').val();
+    old2 = $(hotel_block).find('.dateend').val();
 
-        if (!hotel_block.length)
-            hotel_block = $(this).find('.database-hotel, .manuel-hotel');
+    $(hotel_block).find(".datestart, .dateend").datepicker().
+        datepicker("option", "showAnim", "blind").
+        datepicker("option", "dateFormat", 'ddmmyy').
+        bind('change',
+        function (event) {
 
-        $(this).find('#hoteltype input').click(function () {
-            if ($(this).hasClass('hoteltype-db')) {
-                $(db_block).show();
-                $(manuel_block).hide();
-                $(ok_button).attr('disabled', 'disabled');
-            }
-            else {
-                $(db_block).hide();
-                $(manuel_block).show();
-                $(ok_button).removeAttr('disabled');
-            }
+            var a = $(hotel_block).find('.datestart').val();
+            var b = $(hotel_block).find('.dateend').val();
 
-            $(hotel_block).find('.database-hotel, .manuel-hotel').filter(':visible').find('input, select, textarea').each(function () {
-                var name = $(this).attr('name');
-                if (name[0] == '_')
-                    $(this).attr('name', name.substr(1));
-            });
+            if (!a || !b)
+                return false;
 
+            a = new Date(a.substr(4, 4), a.substr(2, 2), a.substr(0, 2));
+            b = new Date(b.substr(4, 4), b.substr(2, 2), b.substr(0, 2));
 
-            $(hotel_block).find('.database-hotel, .manuel-hotel').filter(':hidden').find('input, select, textarea').each(function () {
-                var name = $(this).attr('name');
-                if (name[0] != '_')
-                    $(this).attr('name', '_' + name);
-            });
-
-            $(hotel_wrapper).find('#hoteltype input').removeAttr('checked');
-            $(this).attr('checked', 'checked');
-            return false;
+            $(hotel_block).find('.dayscount').val(Math.round((b - a) / 1000 / 3600 / 24));
         });
 
-        if (hotel_block.length > 0) {
+    $(hotel_block).find('.datestart').val(old1);
+    $(hotel_block).find('.dateend').val(old2);
 
-            $(db_block).find('#hotelcode').keypress(
-                function (event) {
+
+    $(hotel_block).find(".datestart").change(
+        function () {
+            if ($(this).val() != "")
+                $(hotel_block).find(".dateend").change();
+        }).datepicker({
+            onSelect:function (date, inst) {
+                $(hotel_block).find(".dateend").removeAttr("disabled").datepicker("option", "minDate", $(hotel_block).find('.datestart').val());
+                $(hotel_block).find(".dayscount").removeAttr("disabled");
+                $(hotel_block).find(".datestart").change();
+                return true;
+            },
+            onClose:function () {
+                $(this).focus();
+            }
+        }).bind('keypress', function (event) {
+            if (event.keyCode == KEY_ENTER || event.keyCode == KEY_TAB) {
+                $(hotel_block).find('.dateend').focus();
+                return false;
+            }
+        });
+
+
+    $(this).find(".dateend").datepicker({
+        onSelect:function (date, inst) {
+            $(hotel_block).find(".dateend").change();
+            return true;
+        },
+        onClose:function () {
+            $(this).focus();
+        }
+    }).bind('keypress', function (event) {
+            if (event.keyCode == KEY_ENTER || event.keyCode == KEY_TAB) {
+                $(hotel_block).find('.dayscount').focus();
+                $('#ui-datepicker-div').hide();
+                return false;
+            }
+            else if (event.keyCode == KEY_ESC) {
+                $(hotel_block).find('.datestart').focus();
+                return false;
+            }
+        });
+
+    $(hotel_block).find('.dayscount').bind('keyup',
+        function () {
+            $(this).change();
+        }).change(function () {
+
+            if (isInt($(this).val()) && parseInt($(this).val()) > 0) {
+                var a = $(hotel_block).find('.datestart').val();
+                a = new Date(a.substr(4, 4), parseInt(a.substr(2, 2)) - 1, a.substr(0, 2));
+                a.setDate(a.getDate() + parseInt($(this).val()));
+                $(hotel_block).find('.dateend').val((a.getDate() < 10 ? "0" + a.getDate() : a.getDate()) + "" + (a.getMonth() < 9 ? "0" + (a.getMonth() + 1) : (a.getMonth() + 1)) + "" + a.getFullYear());
+            }
+        });
+
+}
+
+function BindHotelEvents() {
+    $('.hotel:visible').each(function () {
+            var hotel_wrapper = $(this);
+            var hotel_preview = $(hotel_wrapper).find('.hotel-preview');
+            var hotel_editcontent = $(hotel_wrapper).find('.hotel-editcontent');
+            var db_block = $(this).find('.database-hotel');
+            var manuel_block = $(this).find('.manuel-hotel');
+            var ok_button = $(this).find('.buttons .add');
+            var hotel_block = $(this).find('.database-hotel, .manuel-hotel').filter(':visible');
+
+
+            if (!hotel_block.length)
+                hotel_block = $(this).find('.database-hotel, .manuel-hotel');
+
+            $(this).find('#hoteltype input').click(function () {
+                if ($(this).hasClass('hoteltype-db')) {
+                    $(db_block).show();
+                    $(manuel_block).hide();
+                    $(ok_button).attr('disabled', 'disabled');
+                }
+                else {
+                    $(db_block).hide();
+                    $(manuel_block).show();
+                    $(ok_button).removeAttr('disabled');
+                }
+
+                $(hotel_block).find('.database-hotel, .manuel-hotel').filter(':visible').find('input, select, textarea').each(function () {
+                    var name = $(this).attr('name');
+                    if (name[0] == '_')
+                        $(this).attr('name', name.substr(1));
+                });
+
+
+                $(hotel_block).find('.database-hotel, .manuel-hotel').filter(':hidden').find('input, select, textarea').each(function () {
+                    var name = $(this).attr('name');
+                    if (name[0] != '_')
+                        $(this).attr('name', '_' + name);
+                });
+
+                $(hotel_wrapper).find('#hoteltype input').removeAttr('checked');
+                $(this).attr('checked', 'checked');
+                return false;
+            });
+
+            if (hotel_block.length > 0) {
+
+                BindDateEvents(db_block);
+                BindDateEvents(manuel_block);
+
+                $(db_block).find('#hotelcode').keypress(
+                    function (event) {
+                        if (event.keyCode == KEY_ENTER || event.keyCode == KEY_TAB) {
+                            $(this).parents('.param').nextAll().find('input, textarea, select').not('#hotelname').attr('disabled', 'disabled');
+                            $(ok_button).attr('disabled', 'disabled');
+
+                            data = update("name", hotel_block);
+                            if (data.length > 0) {
+                                $(hotel_block).find('#hotelname, #hotelname_hid').val(data);
+                                data = update("room_type", hotel_block);
+                                $(hotel_block).find('#hotelname_hid').removeAttr('disabled');
+                                $(hotel_block).find('#roomtype').empty().removeAttr('disabled');
+                                data = jQuery.parseJSON(data);
+                                if (data.length == 0)return;
+                                for (var i = 0; i < data.length; i++)
+                                    $('<option value="' + data[i].id + '">' + data[i].value + '</option>').appendTo($(hotel_block).find("#roomtype"));
+                            }
+                            else
+                                $(hotel_block).find('#hotelname').val('NO FOUND');
+                            $(hotel_block).find("#roomtype").focus();
+                            return false;
+                        }
+                    }).liveSearch({
+                        url:"reservierung/livesearch/hotelcode/",
+                        onSelect:function (data) {
+                            $(db_block).find('#hotelname').val(data.hotelname);
+                            $(db_block).find('#hotelcode').trigger(jQuery.Event("keypress", { keyCode:KEY_ENTER }));
+                        }
+                    });
+
+                $(db_block).find('#hotelname')
+                    .liveSearch({
+                        url:"reservierung/livesearch/hotelname/",
+                        onSelect:function (data) {
+                            $(db_block).find('#hotelcode').val(data.hotelcode);
+                            $(db_block).find('#hotelcode').trigger(jQuery.Event("keypress", { keyCode:KEY_ENTER }));
+                        }
+                    });
+
+
+                $(db_block).find('#roomtype').bind('keypress', function (event) {
                     if (event.keyCode == KEY_ENTER || event.keyCode == KEY_TAB) {
-                        $(this).parents('.param').nextAll().find('input, textarea, select').not('#hotelname').attr('disabled', 'disabled');
+                        $(this).parents('.param').nextAll().find('input, textarea, select').attr('disabled', 'disabled');
                         $(ok_button).attr('disabled', 'disabled');
 
-                        data = update("name", hotel_block);
-                        if (data.length > 0) {
-                            $(hotel_block).find('#hotelname, #hotelname_hid').val(data);
-                            data = update("room_type", hotel_block);
-                            $(hotel_block).find('#hotelname_hid').removeAttr('disabled');
-                            $(hotel_block).find('#roomtype').empty().removeAttr('disabled');
-                            data = jQuery.parseJSON(data);
-                            if (data.length == 0)return;
-                            for (var i = 0; i < data.length; i++)
-                                $('<option value="' + data[i].id + '">' + data[i].value + '</option>').appendTo($(hotel_block).find("#roomtype"));
-                        }
-                        else
-                            $(hotel_block).find('#hotelname').val('NO FOUND');
-                        $(hotel_block).find("#roomtype").focus();
-                        return false;
-                    }
-                }).liveSearch({
-                    url:"reservierung/livesearch/hotelcode/",
-                    onSelect:function (data) {
-                        $(db_block).find('#hotelname').val(data.hotelname);
-                        $(db_block).find('#hotelcode').trigger(jQuery.Event("keypress", { keyCode: KEY_ENTER }));
-                    }
-                });
-
-            $(db_block).find('#hotelname')
-                .liveSearch({
-                    url:"reservierung/livesearch/hotelname/",
-                    onSelect:function (data) {
-                        $(db_block).find('#hotelcode').val(data.hotelcode);
-                        $(db_block).find('#hotelcode').trigger(jQuery.Event("keypress", { keyCode: KEY_ENTER }));
-                    }
-                });
-
-
-            $(db_block).find('#roomtype').bind('keypress', function(event) {
-                if (event.keyCode == KEY_ENTER || event.keyCode == KEY_TAB) {
-                    $(this).parents('.param').nextAll().find('input, textarea, select').attr('disabled', 'disabled');
-                    $(ok_button).attr('disabled', 'disabled');
-
-                    data = update("room_capacity", hotel_block);
-                    $(hotel_block).find('#roomcapacity').empty().removeAttr('disabled');
-                    data = jQuery.parseJSON(data);
-                    for (var i = 0; i < data.length; i++)
-                        $('<option value="' + data[i].id + '">' + data[i].value + '</option>').appendTo($(hotel_block).find("#roomcapacity"));
-                    $(hotel_block).find('#roomcapacity').focus();
-                    return false;
-                }
-                else if (event.keyCode == KEY_ESC) {
-                    $(hotel_block).find('#hotelcode').focus();
-                    return false;
-                }
-            });
-
-            $(db_block).find('#roomcapacity').bind('keypress', function(event) {
-                if (event.keyCode == KEY_ENTER || event.keyCode == KEY_TAB) {
-                    $(this).parents('.param').nextAll().find('input, textarea, select').attr('disabled', 'disabled');
-                    $(ok_button).attr('disabled', 'disabled');
-
-                    data = update("hotel_service", hotel_block);
-                    $(hotel_block).find('#service').empty().removeAttr('disabled');
-                    data = jQuery.parseJSON(data);
-                    for (var i = 0; i < data.length; i++)
-                        $('<option value="' + data[i].id + '">' + data[i].value + '</option>').appendTo($(hotel_block).find("#service"));
-
-                    $(hotel_block).find('#service').focus();
-                    return false;
-                }
-                else if (event.keyCode == KEY_ESC) {
-                    $(hotel_block).find('#roomtype').focus();
-                    return false;
-                }
-            });
-
-            $(db_block).find('#service').bind('keypress', function(event) {
-                $(this).parents('.param').nextAll().find('input, textarea, select').attr('disabled', 'disabled');
-                $(ok_button).attr('disabled', 'disabled');
-                if (event.keyCode == KEY_ENTER || event.keyCode == KEY_TAB) {
-                    $(hotel_block).find('#date-wr input').val('');
-                    $(hotel_block).find('.datestart, .dateend, .dayscount, .transfer').removeAttr('disabled');
-                    $(hotel_block).find('.datestart').focus();
-                    return false;
-                }
-
-                else if (event.keyCode == KEY_ESC) {
-                    $(hotel_block).find('#roomtype').focus();
-                    return false;
-                }
-            });
-
-            $(this).find(".datestart").change(function () {
-                if ($(this).val() != "")
-                    $(hotel_block).find(".dateend").change();
-            });
-
-            $(this).find(".datestart").datepicker({
-                onSelect:function (date, inst) {
-                    $(hotel_block).find(".dateend").removeAttr("disabled").datepicker("option", "minDate", $(hotel_block).find('.datestart').val());
-                    $(hotel_block).find(".dayscount").removeAttr("disabled");
-                }
-            }).bind('keypress', function(event) {
-                    if (event.keyCode == KEY_ENTER || event.keyCode == KEY_TAB) {
-                        $(hotel_block).find('.dateend').focus();
+                        data = update("room_capacity", hotel_block);
+                        $(hotel_block).find('#roomcapacity').empty().removeAttr('disabled');
+                        data = jQuery.parseJSON(data);
+                        for (var i = 0; i < data.length; i++)
+                            $('<option value="' + data[i].id + '">' + data[i].value + '</option>').appendTo($(hotel_block).find("#roomcapacity"));
+                        $(hotel_block).find('#roomcapacity').focus();
                         return false;
                     }
                     else if (event.keyCode == KEY_ESC) {
+                        $(hotel_block).find('#hotelcode').focus();
+                        return false;
+                    }
+                });
+
+                $(db_block).find('#roomcapacity').bind('keypress', function (event) {
+                    if (event.keyCode == KEY_ENTER || event.keyCode == KEY_TAB) {
+                        $(this).parents('.param').nextAll().find('input, textarea, select').attr('disabled', 'disabled');
+                        $(ok_button).attr('disabled', 'disabled');
+
+                        data = update("hotel_service", hotel_block);
+                        $(hotel_block).find('#service').empty().removeAttr('disabled');
+                        data = jQuery.parseJSON(data);
+                        for (var i = 0; i < data.length; i++)
+                            $('<option value="' + data[i].id + '">' + data[i].value + '</option>').appendTo($(hotel_block).find("#service"));
+
                         $(hotel_block).find('#service').focus();
                         return false;
                     }
-                });
-
-            $(this).find(".dateend").change(function (event) {
-                var a = $(hotel_block).find('.datestart').val();
-                a = new Date(a.substr(4, 4), a.substr(2, 2), a.substr(0, 2));
-                var b = $(hotel_block).find('.dateend').val();
-                b = new Date(b.substr(4, 4), b.substr(2, 2), b.substr(0, 2));
-                $(hotel_block).find('.dayscount').val(Math.round((b - a) / 1000 / 3600 / 24));
-            });
-
-            $(this).find(".dateend").datepicker({
-                onSelect:function (date, inst) {
-                    $(hotel_block).find(".dateend").change();
-                    return true;
-                },
-                onClose:function () {
-                    $(this).focus();
-                }
-            }).bind('keypress', function(event) {
-                    if (event.keyCode == KEY_ENTER || event.keyCode == KEY_TAB) {
-                        $(hotel_block).find('.dayscount').focus();
-                        $('#ui-datepicker-div').hide();
+                    else if (event.keyCode == KEY_ESC) {
+                        $(hotel_block).find('#roomtype').focus();
                         return false;
                     }
-                    else if (event.keyCode == KEY_ESC) {
+                });
+
+                $(db_block).find('#service').bind('keypress', function (event) {
+                    $(this).parents('.param').nextAll().find('input, textarea, select').attr('disabled', 'disabled');
+                    $(ok_button).attr('disabled', 'disabled');
+                    if (event.keyCode == KEY_ENTER || event.keyCode == KEY_TAB) {
+                        $(hotel_block).find('#date-wr input').val('');
+                        $(hotel_block).find('.datestart, .dateend, .dayscount').removeAttr('disabled');
                         $(hotel_block).find('.datestart').focus();
                         return false;
                     }
-                });
-            old1 = $(this).find('.datestart').val();
-            old2 = $(this).find('.dateend').val();
-            $(this).find(".datestart, .dateend").datepicker("option", "showAnim", "blind").
-                datepicker("option", "dateFormat", 'ddmmyy');
-            $(this).find('.datestart').val(old1);
-            $(this).find('.dateend').val(old2);
 
-            $(this).find('.dayscount').bind('keyup',
-                function () {
-                    $(this).change();
-                }).change(function () {
-
-                    if (isInt($(this).val()) && parseInt($(this).val()) > 0) {
-                        var a = $(hotel_block).find('.datestart').val();
-                        a = new Date(a.substr(4, 4), parseInt(a.substr(2, 2)) - 1, a.substr(0, 2));
-                        a.setDate(a.getDate() + parseInt($(this).val()));
-                        $(hotel_block).find('.dateend').val((a.getDate() < 10 ? "0" + a.getDate() : a.getDate()) + "" + (a.getMonth() < 9 ? "0" + (a.getMonth() + 1) : (a.getMonth() + 1)) + "" + a.getFullYear());
+                    else if (event.keyCode == KEY_ESC) {
+                        $(hotel_block).find('#roomtype').focus();
+                        return false;
                     }
                 });
 
 
-            $(db_block).find('.dayscount').bind('keypress', function(event) {
+                $(db_block).find('.dayscount').bind('keypress', function (event) {
 
-                if (event.keyCode == KEY_ENTER || event.keyCode == KEY_TAB) {
-                    $(this).change();
-                    if ($(hotel_block).hasClass('hotel-wr')) {
-                        data = update("price", hotel_block);
-                        if (data != 0) {
-                            $(hotel_block).find('#transfer-wr').show().find('#transfer').focus();
-                            $(hotel_block).find("#price-wr" + ",#hotels-page #buttons").hide();
-                            $(hotel_block).find("#price").val(data);
-                            $(hotel_block).find("#nohotel").hide();
-                        }
-                        else {
-                            $(hotel_block).find('#transfer-wr').hide();
-                            $(hotel_block).find("#price").focus();
-                        }
+                    if (event.keyCode == KEY_ENTER || event.keyCode == KEY_TAB) {
+                        $(this).change();
+                        $(this).parents('.param').nextAll().find('input, textarea, select').attr('disabled', 'disabled');
+                        $(ok_button).attr('disabled', 'disabled');
+
+                        var price = update("price", hotel_block);
+
+                        if (price > 0)
+                            $(hotel_block).find('.price').removeAttr('disabled').val(price).focus();
+                        else
+                            $(hotel_block).find('.price').attr('disabled', 'disabled').val('-');
+
+                        return false;
                     }
-                    else
-                        $(hotel_block).find('#transfer').focus();
-                    return false;
-                }
-                else if (event.keyCode == KEY_ESC) {
-                    $(this).change();
-                    $(hotel_block).find(".dateend").focus();
-                    return false;
-                }
+                    else if (event.keyCode == KEY_ESC) {
+                        $(this).change();
+                        $(hotel_block).find(".dateend").focus();
+                        return false;
+                    }
+                });
+
+
+                $(db_block).find('.price').bind('keypress', function (event) {
+                    if (event.keyCode == KEY_ENTER || event.keyCode == KEY_TAB) {
+                        $(this).parents('.param').nextAll().find('input, textarea, select').attr('disabled', 'disabled');
+                        $(hotel_block).find('.transfer').removeAttr("disabled").focus();
+
+                        return false;
+                    }
+                    else if (event.keyCode == KEY_ESC) {
+                        $(hotel_block).find(".dayscount").focus();
+                        return false;
+                    }
+                });
+
+                $(db_block).find('.transfer').bind('keypress', function (event) {
+                    if (event.keyCode == KEY_ENTER || event.keyCode == KEY_TAB) {
+                        $(this).parents('.param').nextAll().find('input, textarea, select').attr('disabled', 'disabled');
+                        $(ok_button).attr('disabled', 'disabled');
+                        $(hotel_block).find('.transfer-price').removeAttr("disabled").focus();
+
+                        return false;
+                    }
+                    else if (event.keyCode == KEY_ESC) {
+                        $(hotel_block).find(".transfer").focus();
+                        return false;
+                    }
+                });
+
+                $(db_block).find('.transfer-price').bind('keypress', function (event) {
+                    if (event.keyCode == KEY_ENTER || event.keyCode == KEY_TAB) {
+                        $(this).parents('.param').nextAll().find('input, textarea, select').attr('disabled', 'disabled');
+                        $(ok_button).attr('disabled', 'disabled');
+                        $(hotel_block).find('.remark').removeAttr("disabled").focus();
+
+                        return false;
+                    }
+                    else if (event.keyCode == KEY_ESC) {
+                        $(hotel_block).find(".transfer").focus();
+                        return false;
+                    }
+                });
+
+                $(db_block).find('.remark').bind('keypress', function (event) {
+                    if (event.keyCode == KEY_TAB) {
+                        $(this).parents('.param').nextAll().find('input, textarea, select').attr('disabled', 'disabled');
+                        $(ok_button).attr('disabled', 'disabled');
+                        $(hotel_block).find('.city-tour').removeAttr("disabled").focus();
+                        return false;
+                    }
+                    else if (event.keyCode == KEY_ESC) {
+                        $(hotel_block).find(".transfer-price").focus();
+                        return false;
+                    }
+                });
+
+                $(db_block).find('.city-tour').bind('keypress', function (event) {
+                    if (event.keyCode == KEY_TAB) {
+                        $(this).parents('.param').nextAll().find('input, textarea, select').attr('disabled', 'disabled');
+                        $(ok_button).attr('disabled', 'disabled');
+                        $(hotel_block).find('.voucher-text').removeAttr("disabled").focus();
+                        return false;
+                    }
+                    else if (event.keyCode == KEY_ESC) {
+                        $(hotel_block).find(".remark").focus();
+                        return false;
+                    }
+                });
+
+                $(db_block).find('.voucher-text').bind('keypress', function (event) {
+                    if (event.keyCode == KEY_TAB) {
+                        $(ok_button).removeAttr('disabled').focus();
+                        return false;
+                    }
+                    else if (event.keyCode == KEY_ESC) {
+                        $(hotel_block).find(".city-tour").focus();
+                        return false;
+                    }
+                });
+
+                $(manuel_block).find('#hotelname').bind('keypress', function (event) {
+                    if (event.keyCode == KEY_ENTER || event.keyCode == KEY_TAB) {
+                        $(manuel_block).find('#roomtype').focus();
+                        return false;
+                    }
+                    else if (event.keyCode == KEY_ESC) {
+                        $(hotel_wrapper).find(".close_button").focus();
+                        return false;
+                    }
+                });
+
+                $(manuel_block).find('#roomtype').bind('keypress', function (event) {
+                    if (event.keyCode == KEY_ENTER || event.keyCode == KEY_TAB) {
+                        $(manuel_block).find('#roomcapacity').focus();
+                        return false;
+                    }
+                    else if (event.keyCode == KEY_ESC) {
+                        $(manuel_block).find("#hotelname").focus();
+                        return false;
+                    }
+                });
+
+                $(manuel_block).find('#roomcapacity').bind('keypress', function (event) {
+                    if (event.keyCode == KEY_ENTER || event.keyCode == KEY_TAB) {
+                        $(manuel_block).find('#service').focus();
+                        return false;
+                    }
+                    else if (event.keyCode == KEY_ESC) {
+                        $(manuel_block).find("#roomtype").focus();
+                        return false;
+                    }
+                });
+
+                $(manuel_block).find('#service').bind('keypress', function (event) {
+                    if (event.keyCode == KEY_ENTER || event.keyCode == KEY_TAB) {
+                        $(manuel_block).find('.datestart').focus();
+                        return false;
+                    }
+                    else if (event.keyCode == KEY_ESC) {
+                        $(manuel_block).find("#roomcapacity").focus();
+                        return false;
+                    }
+                });
+
+            }
+
+            $(this).find('button.add').click(function () {
+
+                $(hotel_wrapper).find('.hoteltype-wr').hide();
+                $(hotel_wrapper).find('.database-hotel, .manuel-hotel').filter(':hidden').remove();
+                $(hotel_wrapper).find('.buttons').empty().append('<button class="close-button">Close</button>').click(
+                    function () {
+
+                        $(hotel_wrapper).find('.hotel-editcontent').hide();
+                        $('.reservierung-page .formular-buttons').show();
+                        $('#flight-window').hide();
+
+                        $(hotel_wrapper).find('.hotel-preview').show().find('.text').html(GetPreview(hotel_wrapper, "hotel"));
+
+                        return false;
+                    }).click();
+
+                $(hotel_wrapper).appendTo($('#item-list'));
+
+                return false;
             });
 
-            $(db_block).find('.transfer').bind('keypress', function(event) {
+            $(hotel_wrapper).find('.buttons .close-button').click(function () {
+                $(hotel_wrapper).find('.hotel-editcontent').hide();
+                $('.reservierung-page .formular-buttons').show();
+                $('#flight-window').hide();
 
-                if (event.keyCode == KEY_ENTER || event.keyCode == KEY_TAB) {
+                $(hotel_wrapper).find('.hotel-preview').show().find('.text').html(GetPreview(hotel_wrapper, "hotel"));
 
-                    $(this).parents('.param').nextAll().find('input, textarea, select').attr('disabled', 'disabled');
-                    $(ok_button).attr('disabled', 'disabled');
-
-                    var price = update("price", hotel_block);
-
-                    if (price > 0)
-                        $(hotel_block).find('.price').removeAttr('disabled').val(price).focus();
-                    else
-                        $(hotel_block).find('.price').attr('disabled', 'disabled').val('-');
-
-                    return false;
-                }
-                else if (event.keyCode == KEY_ESC) {
-                    $(hotel_block).find(".dayscount").focus();
-                    return false;
-                }
+                return false;
             });
 
-            $(db_block).find('.price').bind('keypress', function(event) {
-                if (event.keyCode == KEY_ENTER || event.keyCode == KEY_TAB) {
-                    $(this).parents('.param').nextAll().find('input, textarea, select').removeAttr('disabled');
-                    $(ok_button).removeAttr('disabled').focus();
 
-                    return false;
-                }
-                else if (event.keyCode == KEY_ESC) {
-                    $(hotel_block).find(".transfer").focus();
-                    return false;
-                }
+            $(this).find('button.cancel').click(function () {
+                $(hotel_wrapper).find('input, textarea').html('');
+                $(hotel_wrapper).find('select option:first').attr('selected', 'selected');
+
+                $(hotel_wrapper).remove();
+
+                $('.reservierung-page .formular-buttons').show();
+
+                $('#flight-window').hide();
+
+                return false;
             });
 
-            $(db_block).find('.remark').bind('keypress', function(event) {
+            $(this).find('.hotel-preview button.edit').click(function () {
 
-                if (event.keyCode == KEY_TAB) {
-                    $(ok_button).removeAttr('disabled').focus();
-                    return false;
-                }
-                else if (event.keyCode == KEY_ESC) {
-                    $(hotel_block).find(".price").focus();
-                    return false;
-                }
+                $(hotel_preview).hide();
+
+                $(hotel_editcontent).show();
+                $('#flight-window').show();
+
+                return false;
             });
+
+            $(this).find('.hotel-preview button.delete').click(function(){
+                $(hotel_wrapper).remove();
+                return false;
+            });
+
         }
-
-        $(this).find('button.add').click(function () {
-
-            $(hotel_wrapper).find('.hoteltype-wr').hide();
-            $(hotel_wrapper).find('.database-hotel, .manuel-hotel').filter(':hidden').remove();
-            $(hotel_wrapper).find('.buttons').empty().append('<button class="close-button">Close</button>').click(
-                function () {
-
-                    $(hotel_wrapper).find('.hotel-editcontent').hide();
-                    $('.reservierung-page .formular-buttons').show();
-                    $('#flight-window').hide();
-
-                    $(hotel_wrapper).find('.hotel-preview').show().find('.text').html(GetPreview(hotel_wrapper, "hotel"));
-
-                    return false;
-                }).click();
-
-            $(hotel_wrapper).appendTo($('#item-list'));
-
-            return false;
-        });
-
-        $(hotel_wrapper).find('.buttons .close-button').click(function () {
-            $(hotel_wrapper).find('.hotel-editcontent').hide();
-            $('.reservierung-page .formular-buttons').show();
-            $('#flight-window').hide();
-
-            $(hotel_wrapper).find('.hotel-preview').show().find('.text').html(GetPreview(hotel_wrapper, "hotel"));
-
-            return false;
-        });
-
-
-        $(this).find('button.cancel').click(function () {
-            $(hotel_wrapper).find('input, textarea').html('');
-            $(hotel_wrapper).find('select option:first').attr('selected', 'selected');
-
-            $(hotel_wrapper).remove();
-
-            $('.reservierung-page .formular-buttons').show();
-
-            $('#flight-window').hide();
-
-            return false;
-        });
-
-        $(this).find('.hotel-preview button.edit').click(function () {
-
-            $(hotel_preview).hide();
-
-            $(hotel_editcontent).show();
-            $('#flight-window').show();
-
-            return false;
-        });
-
-    });
+    )
+    ;
 
 }
 
@@ -427,7 +520,7 @@ function BindManuelEvents() {
         });
 
 
-        $(this).find("#text").bind('keypress', function(event) {
+        $(this).find("#text").bind('keypress', function (event) {
 
             if (event.keyCode == KEY_ENTER || event.keyCode == KEY_TAB) {
                 if ($(this).val() != "")
@@ -447,93 +540,9 @@ function BindManuelEvents() {
                 $(manuel_block).find(".datend").change();
         });
 
-        $(this).find(".datestart").datepicker({
-            onClose:function (date, inst) {
-                $(manuel_block).find(".datestart").focus();
-            },
-            onSelect:function (date, inst) {
-                $(manuel_block).find(".dateend").removeAttr("disabled").datepicker("option", "minDate", $(manuel_block).find('.datestart').val());
-                $(manuel_block).find(".dayscount").removeAttr("disabled");
-            }
-        }).bind('keypress', function(event) {
-                if (event.keyCode == KEY_ENTER || event.keyCode == KEY_TAB) {
-                    $(manuel_block).find('.dateend').focus();
-                    return false;
-                }
-                else if (event.keyCode == KEY_ESC) {
-                    $(manuel_block).find('#text').focus();
-                    return false;
-                }
-            });
+        BindDateEvents(manuel_block);
 
-        $(this).find(".dateend").change(function (event) {
-
-            var a = $(manuel_block).find('.datestart').val();
-            a = new Date(a.substr(4, 4), a.substr(2, 2), a.substr(0, 2));
-            var b = $(manuel_block).find('.dateend').val();
-            b = new Date(b.substr(4, 4), b.substr(2, 2), b.substr(0, 2));
-            $(manuel_block).find('.dayscount').val(Math.round((b - a) / 1000 / 3600 / 24));
-        });
-
-        $(this).find(".dateend").datepicker({
-            onSelect:function (date, inst) {
-
-                $(manuel_block).find(".dateend").change();
-                return true;
-            },
-            onClose:function () {
-                $(this).focus();
-            }
-        }).bind('keypress', function(event) {
-
-                if (event.keyCode == KEY_ENTER || event.keyCode == KEY_TAB) {
-                    $(manuel_block).find('.dayscount').focus();
-                    $('#ui-datepicker-div').hide();
-                    return false;
-                }
-                else if (event.keyCode == KEY_ESC) {
-                    $(manuel_block).find('.datestart').focus();
-                    return false;
-                }
-            });
-
-        old1 = $(this).find('.datestart').val();
-        old2 = $(this).find('.dateend').val();
-        $(this).find(".datestart, .dateend").datepicker("option", "showAnim", "blind").
-            datepicker("option", "dateFormat", 'ddmmyy');
-        $(this).find('.datestart').val(old1);
-        $(this).find('.dateend').val(old2);
-
-
-        $(this).find('.dayscount').bind('keyup',
-            function () {
-                $(this).change();
-            }).change(function () {
-
-                if (isInt($(this).val()) && parseInt($(this).val()) > 0) {
-                    var a = $(manuel_block).find('.datestart').val();
-                    a = new Date(a.substr(4, 4), parseInt(a.substr(2, 2)) - 1, a.substr(0, 2));
-                    a.setDate(a.getDate() + parseInt($(this).val()));
-                    $(manuel_block).find('.dateend').val((a.getDate() < 10 ? "0" + a.getDate() : a.getDate()) + "" + (a.getMonth() < 9 ? "0" + (a.getMonth() + 1) : (a.getMonth() + 1)) + "" + a.getFullYear());
-                }
-            });
-
-        $(this).find('.dayscount').bind('keypress', function(event) {
-
-            if (event.keyCode == KEY_ENTER || event.keyCode == KEY_TAB) {
-                if (isInt($(this).val())) {
-                    $(this).change();
-                    $(manuel_block).find('#price').focus();
-                }
-                return false;
-            }
-            else if (event.keyCode == KEY_ESC) {
-                $(manuel_block).find(".dateend").focus();
-                return false;
-            }
-        });
-
-        $(this).find('#price').bind('keypress', function(event) {
+        $(this).find('#price').bind('keypress', function (event) {
 
             if (event.keyCode == KEY_ENTER || event.keyCode == KEY_TAB) {
                 if (isInt($(this).val())) {
@@ -600,6 +609,11 @@ function BindManuelEvents() {
             return false;
         });
 
+        $(this).find('.manuel-preview button.delete').click(function(){
+            $(manuel_wrapper).remove();
+            return false;
+        });
+
 
     });
 }
@@ -614,7 +628,7 @@ $(document).ready(function () {
         return true;
     })
 
-    $('.reservierung-page button').bind('keypress', function(event) {
+    $('.reservierung-page button').bind('keypress', function (event) {
         if (event.keyCode == KEY_ENTER || event.keyCode == KEY_TAB) {
             $(this).click();
             return false;
@@ -721,7 +735,7 @@ $(document).ready(function () {
      Formular buttons
      ------------------------------------------------------------------------------------------*/
 
-    $('.reservierung-page .formular-buttons button').bind('keypress', function(event) {
+    $('.reservierung-page .formular-buttons button').bind('keypress', function (event) {
         if (event.keyCode == KEY_LEFT) {
             if ($(this).index('button:visible') == 0)
                 $('#buttons button:visible:last').focus();
@@ -747,7 +761,7 @@ $(document).ready(function () {
 
         $('#hotels .hotel-wr:first').clone().appendTo("#hotels").attr('id', 'hotel_' + hotel_id).show();
 
-        $(hotel_div).find('#hotelcode').setValidator({symbolic : false});
+        $(hotel_div).find('#hotelcode').setValidator({symbolic:false});
 
         $(hotel_div).find('input[type=text], input[type=radio], select, input[type=hidden], textarea').each(function () {
             $(this).attr('name', $(this).attr('name') + '[' + hotel_id + ']');
@@ -835,7 +849,7 @@ $(document).ready(function () {
         return false;
     });
 
-    $('.reservierung-page #flugpage #flightplan').bind('keypress', function(event) {
+    $('.reservierung-page #flugpage #flightplan').bind('keypress', function (event) {
         if (event.keyCode == KEY_TAB) {
             $('#flugpage #flightprice').focus();
             return false;
@@ -847,7 +861,7 @@ $(document).ready(function () {
         }
     });
 
-    $('.reservierung-page #flugpage #flightprice').bind('keypress', function(event) {
+    $('.reservierung-page #flugpage #flightprice').bind('keypress', function (event) {
         if (event.keyCode == KEY_ENTER || event.keyCode == KEY_TAB) {
             if (isInt($(this).val())) {
                 $('#flugpage').hide();
@@ -936,36 +950,48 @@ $(document).ready(function () {
      Result page
      ----------------------------------------------------------------------------------------------------------*/
 
-    $('#result-page #anzahlung').keyup(
+
+    /*------------------------------------------------------------------------------------------------------------
+     Final page
+     ------------------------------------------------------------------------------------------------------------*/
+    $('.reservierung-page').find('#prepayment_date,#departure_date, #finalpayment_date').datepicker({
+        onSelect:function () {
+            $(this).change();
+            return false;
+        }
+    }).datepicker("option", "showAnim", "blind").datepicker("option", "dateFormat", 'ddmmyy').datepicker("option", "minDate", new Date());
+
+    $('.reservierung-page #departure_date').change(function () {
+        var val = $(this).val();
+        var departure = new Date(val.substr(4, 4), parseInt(val.substr(2, 2)) - 1, val.substr(0, 2));
+        var prepayment = new Date(departure - new Date(35 * ONE_DAY));
+        var today = new Date();
+
+        $('.reservierung-page #finalpayment_date,.reservierung-page #prepayment_date').datepicker("option", "maxDate", new Date(departure - ONE_DAY));
+
+        if (prepayment < today) {
+            $('.reservierung-page .prepayment-block').hide();
+            prepayment = today;
+            prepayment.setDate(prepayment.getDate() + 2);
+            $('.reservierung-page #anzahlung, #prepayment_date, #finalpayment_date').val('');
+        }
+        else {
+            $('.reservierung-page #prepayment_date').datepicker("option", "maxDate", new Date(prepayment - ONE_DAY));
+            $('.reservierung-page .prepayment-block').show();
+            $('.reservierung-page #finalpayment_date').val(DateToInput(prepayment));
+        }
+        return false;
+    }).change();
+
+    $('.reservierung-page #anzahlung').keyup(
         function () {
             $(this).change();
         }).change(
         function () {
             var val = $(this).val() != "" ? parseInt($(this).val()) : 0;
-            $("#result-page #anzahlungsum").html((parseFloat($("#result-page #brutto-value").text()) / 100 * val).toFixed(2));
+            $(".reservierung-page #anzahlungsum").html((parseFloat($("input#brutto_price").val().split(' ').join('')) / 100 * val).toFixed(2));
         }).change();
 
-    $('#result-page #prepayment_date, #result-page #departure_date, #result-page #finalpayment_date').datepicker({
-        onSelect:function () {
-            $(this).change();
-            return false;
-        }
-    }).datepicker("option", "showAnim", "blind").datepicker("option", "dateFormat", 'ddmmyy');
-
-    $('#result-page #departure_date').change(function () {
-        var val = $(this).val();
-
-        var a = new Date(val.substr(4, 4), parseInt(val.substr(2, 2)) - 1, val.substr(0, 2));
-
-        a.setDate(a.getDate() - 35);
-        $('#finalpayment_date').val((a.getDate() < 10 ? "0" + a.getDate() : a.getDate()) + "" + (a.getMonth() < 9 ? "0" + (a.getMonth() + 1) : (a.getMonth() + 1)) + "" + a.getFullYear());
-
-        return false;
-    });
-
-    /*------------------------------------------------------------------------------------------------------------
-     Final page
-     ------------------------------------------------------------------------------------------------------------*/
 
     $('#final-page #addmail-button').click(
         function (event) {
@@ -974,7 +1000,7 @@ $(document).ready(function () {
             $('.mail:last input').attr("name", "email[" + ($('.mail').size() - 1) + "]");
             $('.mail:last input').focus();
 
-            $('.mail input').bind('keypress', function(event) {
+            $('.mail input').bind('keypress', function (event) {
                 if (event.keyCode == KEY_ENTER || event.keyCode == KEY_TAB && $(this).val != "") {
                     $(this).parent().next().find('input').focus();
                     return false;
@@ -985,7 +1011,7 @@ $(document).ready(function () {
                     return false;
                 }
             });
-            $('.mail:last input').bind('keypress', function(event) {
+            $('.mail:last input').bind('keypress', function (event) {
                 if (event.keyCode == KEY_ENTER || event.keyCode == KEY_TAB)
                     $('#addmail-button').focus();
             });
@@ -1040,63 +1066,65 @@ $(document).ready(function () {
     });
 
     $('#createstart-page #r_num').liveSearch({
-        url: 'reservierung/livesearch/rnum/',
-        width: 400
+        url:'reservierung/livesearch/rnum/',
+        width:400
     });
 
     $('#createstart-page #v_num').liveSearch({
-        url: 'reservierung/livesearch/vnum/',
-        width: 400
+        url:'reservierung/livesearch/vnum/',
+        width:400
+    });
+
+    $('#createstart-page #kunde_name').liveSearch({
+        url:'reservierung/livesearch/kundename/',
+        width:400,
+        onSelect:function (data) {
+            $('#createstart-page input[name=formular_id]').val(data.formular_id);
+        }
     });
 
 
-
-
     /*----------------------------------------------------------------------------------------------------------
-        Vouchers page
-    */
+     Vouchers page
+     */
 
-    $('#vouchers-page .openclose-button').click(function()
-    {
+    $('#vouchers-page .openclose-button').click(function () {
         var voucher_block = $(this).parents('.voucher');
         var voucher_content = $(voucher_block).find('.voucher-content');
-        if($(voucher_content).is(':visible'))
-        {
+        if ($(voucher_content).is(':visible')) {
             $(voucher_content).hide();
             $(this).html('Print');
         }
-        else
-        {
+        else {
             $(voucher_content).show();
             $(this).html('Close');
         }
         return false;
     });
 
-    $('#vouchers-page .print-button').click(function(){
+    $('#vouchers-page .print-button').click(function () {
         var voucher_block = $(this).parents('.voucher');
         var status = $(voucher_block).find('.status');
         var selected = $(voucher_block).find('input[type=checkbox]:checked');
 
-        if(selected.length == 0)
-        {
+        if (selected.length == 0) {
             $(status).html('No selected');
             return false;
         }
 
         var selected_array = [];
-        $(selected).each(function(){
+        $(selected).each(function () {
             selected_array.push($(this).val());
         });
 
         $(status).html('Generating...');
 
         $.ajax({
-            url: 'reservierung/create_voucher',
-            type: 'post',
-            data: 'persons=' + selected_array + '&item_id=' + $(voucher_block).attr('id').substr(8) + "&item_type=" +
+            url:'reservierung/create_voucher',
+            type:'post',
+            data:'persons=' + selected_array + '&item_id=' + $(voucher_block).attr('id').substr(8) + "&item_type=" +
                 $(voucher_block).find('input[name=item-type]').val() + "&incoming_id=" + $(voucher_block).find('#incoming option:selected').val(),
-            success: function(data){
+            success:function (data) {
                 window.open(data);
                 $(status).html('ok');
             }
@@ -1105,5 +1133,11 @@ $(document).ready(function () {
         return false;
     });
 
+/*------------------------------------------------------------------------------------------------------------
+    Storeno Page
+------------------------------------------------------------------------------------------------------------*/
+    $('#storeno-page #who-radio').buttonset();
+
+    $('#storeno-page #date').datepicker().datepicker("option", "showAnim", "blind").datepicker("option", "dateFormat", 'ddmmyy');
 
 });

@@ -93,7 +93,7 @@ h3{
 
 .reiseteilnehmer-table{
     width: 100%;
-	text-transform: uppercase;
+
 }
 
 .reiseteilnehmer-table .num{
@@ -196,6 +196,24 @@ h3{
     border-top: 1px solid black;
 }
 
+.storeno-price-table{
+    float: right;
+    width: 400px;
+}
+
+.storeno-price-table td{
+    width: 200px;
+}
+
+.storeno-price-table td.paramname{
+    text-align: left;
+}
+
+.storeno-price-table td.paramvalue{
+    text-align: center;
+    border: 1px solid black;
+    background: #dce6f0;
+}
 
 .anzahlung-block{
     float: left;
@@ -206,6 +224,10 @@ h3{
     margin: 0 0 10px 0;
 }
 
+.bottom-text{
+    clear: both;
+    margin-top: 20px;
+}
 
 .signature{
     margin: 60px 0 0 0;

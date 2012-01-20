@@ -2,14 +2,21 @@
     <div id="page-header">
         <a href="dashboard" class="home-link"><img src="img/header-logo.jpg"/></a>
         <ul class="page-path">
-            <li><a href="kundenverwaltung/historie/<?=$formular->kunde->id?>"><?=$formular->kunde->plain_type;?> <?=$formular->kunde->k_num?></a></li>
-             </li>
+            <li><a
+                href="kundenverwaltung/historie/<?=$formular->kunde->id?>"><?=$formular->kunde->plain_type;?> <?=$formular->kunde->k_num?></a>
+            </li>
+            </li>
             <li><span>formular <?=$formular->v_num?></span></li>
         </ul>
     </div>
 </div>
 
 <div id="result-page" class="reservierung-page result-page content">
+<?if ($formular->status == 'rechnung'): ?>
+<div class="alert-block">
+    <p>Это рехнунг, 30 евро редактирование стоит! Не стоит этого делать!!!</p>
+</div>
+    <? endif;?>
 <?=form_open("reservierung/result/" . $formular->id);?>
 <div class="formular-header">
     <div class="left-block">
@@ -37,7 +44,7 @@
             <span class="param-value"><?=$formular->plain_status?></span>
         </div>
 
-        <? if($formular->status == "rechnung" || $formular->status == "freigabe"): ?>
+        <? if ($formular->status == "rechnung" || $formular->status == "freigabe"): ?>
         <div class="param">
             <span class="param-name">Rechnungsnummer:</span>
             <span class="param-value"><?=$formular->r_num?></span>
@@ -56,7 +63,7 @@
     <? foreach ($formular->hotels as $ind => $hotel): ?>
     <div class="item">
         <span class="num"><?=($ind + 1)?></span>
-        <span class="text"><?=$hotel->plain_text." - &nbsp;<b>" . $hotel->all_price . "&euro;</b>"; ?></span>
+        <span class="text"><?=$hotel->plain_text . " - &nbsp;<b>" . $hotel->all_price . "&euro;</b>"; ?></span>
     </div>
     <? endforeach; ?>
 
@@ -95,7 +102,8 @@
                         <div class="input">
                             <label for="sex">Herr/Frau</label>
                             <select name="person_sex[<?=$ind?>]" id="sex">
-                                <option value="herr" <? if ($person->sex == 'herr') echo 'selected'; ?>>Herr</option>
+                                <option value="herr" <? if ($person->sex == 'herr') echo 'selected'; ?>>Herr
+                                </option>
                                 <option value="frau" <? if ($person->sex == 'frau') echo 'selected'; ?>>Frau
                                 </option>
                                 <option value="child" <? if ($person->sex == 'child') echo 'selected'; ?>>Kind
@@ -142,34 +150,6 @@
         </div>
 
 
-        <div class="anzahlung-block">
-
-            <div class="param-block">
-                <label for="anzahlung">Anzahlung %</label>
-                <input type="text" name="prepayment" size="3" maxlength="3"
-                       value="<?=$formular->prepayment ? $formular->prepayment : '25'?>"
-                       id="anzahlung"/>
-                <span id="anzahlungsum">0</span> &euro;
-            </div>
-            <div class="param-block">
-                <label for="prepayment_date">Anzahlung Datum:</label>
-                <input type="text" name="preprepayment_date" size="8" maxlength="8"
-                       value="<?=$formular->prepayment_date ? $formular->prepayment_date->format('m/d/Y') : ''?>"
-                       id="prepayment_date"/>
-            </div>
-            <div class="param-block">
-                <label for="departure_date">Abreisedatum</label>
-                <input type="text" name="departure_date" size="8" maxlength="8"
-                       value="<?=$formular->departure_date ? $formular->departure_date->format('m/d/Y') : ''?>"
-                       id="departure_date"/>
-            </div>
-            <div class="param-block">
-                <label for="finalpayment_date">Restzahlung Datum:</label>
-                <input type="text" name="finalpayment_date" size="8" maxlength="8" id="finalpayment_date"
-                       value="<?=$formular->finalpayment_date ? $formular->finalpayment_date->format('m/d/Y') : ''?>"/>
-
-            </div>
-        </div>
     </div>
 
     <div class="right-float">
@@ -208,17 +188,52 @@
     </div>
     <br class="clear"/>
 </div>
+<div class="anzahlung-block">
+    <input type="hidden" value="<?=$formular->price['brutto']?>" name="brutto_price" id="brutto_price"/>
 
-<div class="comment-block">
-    <h3 class="block-header">Kommentar:</h3>
-    <textarea id="comment" name="bigcomment"><?=$formular->comment?></textarea>
-</div>
+    <div class="param-block">
+        <label for="departure_date">Abreisedatum</label>
+        <input type="text" name="departure_date" size="8" maxlength="8"
+               value="<?=$formular->departure_date ? $formular->departure_date->format('m/d/Y') : ''?>"
+               id="departure_date"/>
+    </div>
+
+    <? if($formular->status == "rechnung"): ?>
+    <div class="prepayment-block" <? if(!$formular->finalpayment_date) echo 'style="display:none"' ?>>
+
+        <div class="param-block">
+            <label for="anzahlung" class="anzahlung">Anzahlung %</label>
+            <input type="text" name="prepayment" size="3" maxlength="3"
+                   value="<?=$formular->prepayment ? $formular->prepayment : '25'?>"
+                   id="anzahlung"/>
+            <span id="anzahlungsum">0</span> &euro;
+        </div>
+
+        <div class="param-block">
+            <label for="prepayment_date">Anzahlung Datum:</label>
+            <input type="text" name="preprepayment_date" size="8" maxlength="8"
+                   value="<?=$formular->prepayment_date ? $formular->prepayment_date->format('m/d/Y') : ''?>"
+                   id="prepayment_date"/>
+        </div>
+
+        <div class="param-block">
+            <label for="finalpayment_date">Restzahlung Datum:</label>
+            <input type="text" name="finalpayment_date" size="8" maxlength="8" id="finalpayment_date"
+                   value="<?=$formular->finalpayment_date ? $formular->finalpayment_date->format('m/d/Y') : ''?>"/>
+        </div>
+    </div>
+    <? endif; ?>
+
+    <div class="comment-block">
+        <h3 class="block-header">Kommentar:</h3>
+        <textarea id="comment" name="bigcomment"><?=$formular->comment?></textarea>
+    </div>
 
 
-<div id="result-buttons" class="formular-buttons">
-    <a href="reservierung/edit/<?=$formular->id?>" class="button-link">Zur&uuml;ck</a>
-    <button name="submit">Speichern</button>
-</div>
+    <div id="result-buttons" class="formular-buttons">
+        <a href="reservierung/edit/<?=$formular->id?>" class="button-link">Zur&uuml;ck</a>
+        <button name="submit">Speichern</button>
+    </div>
 </div>
 </form>
 </div>

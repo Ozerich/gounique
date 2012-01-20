@@ -15,25 +15,25 @@ class FormularHotel extends ActiveRecord\Model
 
         $room_types = HotelOffer::find('all', array(
                 'conditions' => array('hotel_id = ?', $this->hotel_id),
-                'select' => 'DISTINCT roomtype'
+                'select' => 'DISTINCT roomtype_id'
             )
         );
 
         foreach ($room_types as $type)
-            $result['room_type'][] = RoomType::find_by_id($type->roomtype);
+            $result['room_type'][] = RoomType::find_by_id($type->roomtype_id);
 
         $room_capacity = HotelOffer::find('all', array(
-                'conditions' => array('hotel_id = ? AND roomtype = ?', $this->hotel_id, $this->roomtype),
-                'select' => 'DISTINCT roomcapacity'
+                'conditions' => array('hotel_id = ? AND roomtype_id = ?', $this->hotel_id, $this->roomtype),
+                'select' => 'DISTINCT roomcapacity_id'
             )
         );
 
         foreach ($room_capacity as $type)
-            $result['room_capacity'][] = RoomCapacity::find_by_id($type->roomcapacity);
+            $result['room_capacity'][] = RoomCapacity::find_by_id($type->roomcapacity_id);
 
 
         $services = HotelOffer::find('all', array(
-                'conditions' => array('hotel_id = ? AND roomtype = ? AND roomcapacity = ?',
+                'conditions' => array('hotel_id = ? AND roomtype_id = ? AND roomcapacity_id = ?',
                     $this->hotel_id, $this->roomtype, $this->roomcapacity),
                 'select' => 'DISTINCT hotelservice_id'
             )
@@ -52,6 +52,7 @@ class FormularHotel extends ActiveRecord\Model
 
     public function get_plain_text()
     {
+
         $text = $this->date_start->format('d.m.Y') . " - " . $this->date_end->format('d.m.Y') . " ";
         $text .= $this->days_count . "N HOTEL: " . $this->hotel_name . " / ";
         $text .= ($this->is_manuel ? $this->roomcapacity : RoomCapacity::find_by_id($this->roomcapacity)->value) . " / ";

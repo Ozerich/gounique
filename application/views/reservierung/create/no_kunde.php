@@ -22,7 +22,8 @@
     <br/><br/>
 	<label for="v_num">Kundenname:</label>
     <input type="text" name="kunde_name" id="kunde_name"/>
-    <input type="submit" name="kundename-vnum" value="Open"/>
+    <input type="hidden" name="formular_id"/>
+    <input type="submit" name="view-kundename" value="Open"/>
     <br/><br/>
     <label for="r_num">Rechnungsnummer:</label>
     <input type="text" maxlength="6" name="r_num" id="r_num"/>

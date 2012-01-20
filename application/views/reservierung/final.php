@@ -12,7 +12,6 @@
 </div>
 
 <div id="final-page" class="reservierung-page result-page content">
-<?=form_open("reservierung/sendmail/" . $formular->id, null, array("formular_id" => $formular->id)); ?>
 <div class="formular-header">
     <div class="left-block">
         <div class="param">
@@ -114,12 +113,15 @@
             <p><?=$formular->kunde->plain_text;?></p>
         </div>
 
-        <div class="anzahlung-block">
-            <p>Anzahlung sofort nach Erhalt der Rechnung: <?=$formular->price['anzahlung_value']?> &euro;</p>
-
+        <div class="anzahlung-text">
+            <? if ($formular->status == "rechnung"): ?>
             <? if ($formular->finalpayment_date): ?>
-            <p>Restzahlung f&auml;llig am: <?=$formular->finalpayment_date->format('d-M-y')?>
-                &nbsp;&nbsp;<?=($formular->price['brutto'] - $formular->price['anzahlung_value'])?> &euro;</p>
+                <p>Anzahlung sofort nach Erhalt der Rechnung: <?=$formular->price['anzahlung_value']?> &euro;</p>
+                <p>Restzahlung fällig am: <?=$formular->finalpayment_date->format('d-M-y')?>
+                    &nbsp;&nbsp;<?=$formular->price['restzahlung']?> &euro;</p>
+                <? else: ?>
+                <p>Zahlung sofort nach Erhalt de Rechnung</p>
+                <? endif; ?>
             <? endif; ?>
         </div>
     </div>
@@ -157,24 +159,70 @@
             <? if ($formular->status == 'rechnung'): ?>
                 <tr>
                     <td class="param">Paid</td>
-                    <td><?=$formular->paid_amount?></td>
+                    <td><?=$formular->price['paid']?></td>
                 </tr>
                 <tr>
                     <td class="param">Need to paid</td>
-                    <td><?=($formular->price['brutto'] - $formular->paid_amount)?></td>
+                    <td><?=$formular->price['need_to_pay']?></td>
                 </tr>
                 <? endif; ?>
             <? endif; ?>
         </table>
+
+
         <div class="price-buttons">
             <? if ($formular->status == "angebot"): ?>
             <a href="reservierung/eingangsmitteilung/<?=$formular->id?>" class="button-link">Als Eingangsmitteilung
                 speichern</a>
             <? elseif ($formular->status == "eingangsmitteilung"): ?>
-            <a <?if ($formular->can_rechnung) echo 'href="reservierung/rechnung/' . $formular->id . '"';?>
-                class="button-link <?if (!$formular->can_rechnung) echo 'disabled'?>">Als Rechnung speichern</a>
-			<? elseif ($formular->status == "rechnung"): ?>
-		            <a href="reservierung/storeno/<?=$formular->id?>" class="button-link">Storno</a>
+
+            <?=
+            form_open("reservierung/do_rechnung/" . $formular->id)
+            ; ?>
+            <div class="anzahlung-block">
+                <input type="hidden" value="<?=$formular->price['brutto']?>" name="brutto_price" id="brutto_price"/>
+
+                <div class="param-block">
+                    <label for="departure_date">Abreisedatum</label>
+                    <input type="text" name="departure_date" size="8" maxlength="8"
+                           value="<?=$formular->departure_date ? $formular->departure_date->format('m/d/Y') : ''?>"
+                           id="departure_date"/>
+                </div>
+
+                <div class="prepayment-block" <? if (!$formular->finalpayment_date) echo 'style="display:none"' ?>>
+
+                    <div class="param-block">
+                        <label for="anzahlung" class="anzahlung">Anzahlung %</label>
+                        <input type="text" name="prepayment" size="3" maxlength="3"
+                               value="<?=$formular->prepayment ? $formular->prepayment : '25'?>"
+                               id="anzahlung"/>
+                        <span id="anzahlungsum">0</span> &euro;
+                    </div>
+
+                    <div class="param-block">
+                        <label for="prepayment_date">Anzahlung Datum:</label>
+                        <input type="text" name="preprepayment_date" size="8" maxlength="8"
+                               value="<?=$formular->prepayment_date ? $formular->prepayment_date->format('m/d/Y') : ''?>"
+                               id="prepayment_date"/>
+                    </div>
+
+                    <div class="param-block">
+                        <label for="finalpayment_date">Restzahlung Datum:</label>
+                        <input type="text" name="finalpayment_date" size="8" maxlength="8" id="finalpayment_date"
+                               value="<?=$formular->finalpayment_date ? $formular->finalpayment_date->format('m/d/Y') : ''?>"/>
+                    </div>
+                </div>
+            </div>
+
+            <? if ($formular->can_rechnung): ?>
+                <button>Als Rechnung speichern</button>
+                <? else: ?>
+                <a class="button-link disabled">Als Rechnung speichern</a>
+                <?endif; ?>
+            </form>
+
+            <? elseif ($formular->status == "rechnung"): ?>
+            <a href="reservierung/storeno/<?=$formular->id?>" class="button-link">Storno</a>
             <? endif; ?>
         </div>
     </div>
@@ -182,27 +230,39 @@
 </div>
 
 
-<? if ($formular->status != 'canceled'): ?>
+
 <div id="stage">
-    <input type="radio" id="radio1" name="stage"
-           value="1" <?if ($formular->status == "angebot" || $formular->status == "eingangsmitteilung") echo 'checked';?>/><label
-    for="radio1">Angebot</label>
+<? if ($formular->status != 'storeno'): ?>
+
+    <input type="radio" id="radio1" name="stage" value="1"
+        <?if ($formular->status == "angebot" || $formular->status == "eingangsmitteilung") echo 'checked';?>/>
+    <label for="radio1">Angebot</label>
+
     <? if ($formular->kunde->type == "agenturen"): ?>
-    <input type="radio" id="radio2" name="stage"
-           value="2"/><label for="radio2">Angebot
-        (Kundenkopie)</label>
-    <? endif; ?>
-    <? if ($formular->status == "rechnung" || $formular->status == "freigabe"): ?>
-    <input type="radio" id="radio3" name="stage" value="3" checked/><label
-        for="radio3">Rechnung</label>
-    <? if ($formular->kunde->type == "agenturen"): ?>
-        <input type="radio" id="radio4" name="stage" value="4"/><label for="radio4">Rechnung
+        <input type="radio" id="radio2" name="stage"
+               value="2"/><label for="radio2">Angebot
             (Kundenkopie)</label>
+        <? endif; ?>
+
+    <? if ($formular->status == "rechnung" || $formular->status == "freigabe"): ?>
+        <input type="radio" id="radio3" name="stage" value="3" checked/><label for="radio3">Rechnung</label>
+        <? if ($formular->kunde->type == "agenturen"): ?>
+            <input type="radio" id="radio4" name="stage" value="4"/><label for="radio4">Rechnung
+                (Kundenkopie)</label>
         <? endif; ?>
     <? endif; ?>
 
-</div>
+<? else: ?>
+        <? if ($formular->kunde->type == "agenturen"): ?>
+            <input type="radio" id="radio1" name="stage" checked value="5"/><label for="radio1">Storeno</label>
+        <? endif; ?>
+        <input type="radio" id="radio2" name="stage" value="6"/><label for="radio2">Storeno(Kundenkopie)</label>
+<? endif; ?>
 
+</div>
+    <?=
+    form_open("reservierung/sendmail/" . $formular->id, null, array("formular_id" => $formular->id))
+    ; ?>
 <div class="mail-block">
     <div class="mail" style="display:none">
         <span class="left">Mail</span>
@@ -223,11 +283,11 @@
         <span class="status">noch nicht gesendet</span>
         <input type="hidden" class="sended" value="0"/>
     </div>
-
 </div>
+</form>
 
 <div id="final-buttons" class="formular-buttons">
-    <? if ($formular->status == "angebot"): ?>
+    <? if ($formular->status == "angebot" || $formular->status == 'rechnung'): ?>
     <a href="reservierung/edit/<?=$formular->id?>" class="button-link">Formular editieren</a>
     <? elseif ($formular->status == "eingangsmitteilung"): ?>
     <a href="reservierung/status/<?=$formular->id?>" class="button-link">Status editieren</a>
@@ -242,14 +302,5 @@
     <button id="send-button" name="submit">Senden</button>
     <a href="#" class="button-link">Schliessen</a>
 </div>
-
-    <? else: ?>
-<div id="final-buttons">
-    <a href="kunde/<?=$formular->kunde_id?>" id="close-button"
-       name="submit">Schliessen</a>
-</div>
-    <? endif; ?>
-
-</form>
 
 </div>

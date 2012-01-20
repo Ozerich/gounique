@@ -35,7 +35,7 @@
                 <? foreach ($formular->persons as $ind => $person): ?>
                 <tr>
                     <td class="num"><?=($ind + 1)?></td>
-                    <td class="sex"><?=$person->sex?></td>
+                    <td class="sex"><?=$person->plain_sex?></td>
                     <td class="person-name"><?=$person->name . "/" . $person->surname?></td>
                 </tr>
                 <? endforeach; ?>
@@ -77,10 +77,15 @@
     </div>
 
     <div class="anzahlung-block">
-        <p>Anzahlung sofort nach Erhalt der Rechnung: <?=$formular->price['anzahlung_value']?> &euro;</p>
-
-        <p>Restzahlung f&auml;llig am: <?=$formular->finalpayment_date->format('d-M-y')?>
-            &nbsp;&nbsp;<?=($formular->price['brutto'] - $formular->price['anzahlung_value'])?> &euro;</p>
+        <? if ($formular->status == "rechnung"): ?>
+        <? if ($formular->finalpayment_date): ?>
+            <p>Anzahlung sofort nach Erhalt der Rechnung: <?=$formular->price['anzahlung_value']?> &euro;</p>
+            <p>Restzahlung f&auml;llig am: <?=$formular->finalpayment_date->format('d-M-y')?>
+                &nbsp;&nbsp;<?=($formular->price['brutto'] - $formular->price['anzahlung_value'])?> &euro;</p>
+            <? else: ?>
+            <p>Zahlung sofort nach Erhalt de Rechnung</p>
+            <? endif; ?>
+        <? endif; ?>
     </div>
 
     <div class="price-table">
