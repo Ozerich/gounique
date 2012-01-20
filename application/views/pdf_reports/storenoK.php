@@ -4,18 +4,19 @@
     </div>
 </div>
 <div class="content">
-    <h1>BUCHUNGSBESÄTIGUNG / RECHNUNG</h1>
+    <h1>STORNORECHNUNG</h1>
+    <h2>Kundenkopie</h2>
 
     <table class="top-block">
         <tr>
             <td class="left-paramname">Vorgangsnummer:</td>
             <td class="left-paramvalue"><?=$formular->v_num?></td>
             <td class="right-paramname">Datum:</td>
-            <td class="right-paramvalue"><?=$formular->rechnung_date->format("d. M. Y")?></td>
+            <td class="right-paramvalue"><?=$formular->created_date->format("d. M. Y")?></td>
         </tr>
         <tr>
             <td class="left-paramname">Rechnungsnummer:</td>
-            <td class="left-paramvalue"><?=$formular->r_num?></td>
+            <td class="left-paramvalue">-</td>
             <td class="right-paramname">Sachbearbeiter:</td>
             <td class="right-paramvalue"><?=$formular->sachbearbeiter?></td>
         </tr>
@@ -45,7 +46,7 @@
             <h3>Reisezeitraum:</h3>
             <table class="reisezeitraum-table">
                 <tr>
-                    <td><?=$formular->departure_date->format('d. M. y')?></td>
+                    <td><?=($formular->departure_date) ? $formular->departure_date->format('d. M. y') : ''?></td>
                     <td class="center">bis</td>
                     <td><?=($formular->arrival_date) ? $formular->arrival_date->format('d. M. y') : ''?></td>
                 </tr>
@@ -75,49 +76,32 @@
         <? endif; ?>
     </div>
 
-    <div class="anzahlung-block">
-        <? if ($formular->status == "rechnung"): ?>
-        <? if ($formular->finalpayment_date): ?>
-            <p>Anzahlung sofort nach Erhalt der Rechnung: <?=$formular->price['anzahlung_value']?> &euro;</p>
-            <p>Restzahlung f&auml;llig am: <?=$formular->finalpayment_date->format('d-M-y')?>
-                &nbsp;&nbsp;<?=($formular->price['brutto'] - $formular->price['anzahlung_value'])?> &euro;</p>
-            <? else: ?>
-            <p>Zahlung sofort nach Erhalt de Rechnung</p>
-            <? endif; ?>
-        <? endif; ?>
-    </div>
-
-    <div class="price-table">
+    <div class="storeno-price-table">
         <table>
             <tr>
-                <td class="paramname">Preis Brutto/p.Person</td>
-                <td class="paramvalue"><?=$formular->price['person']?></td>
+                <td class="paramname">Preis p.P.:</td>
+                <td class="paramvalue"><?=$formular->price['person']?>&euro;</td>
             </tr>
-            <tr class="bold underline">
-                <td class="paramname">Gesamtpreis</td>
-                <td class="paramvalue"><?=$formular->price['brutto']?></td>
+            <tr>
+                <td class="paramname">Gesamtpreis:</td>
+                <td class="paramvalue"><?=$formular->price['brutto']?>&euro;</td>
             </tr>
-            <? if ($formular->kunde->type == 'agenturen'): ?>
-            <tr class="green">
-                <td class="paramname">Provision <?=$formular->provision?>%</td>
-                <td class="paramvalue"><?=$formular->price['provision']?></td>
+            <tr>
+                <td class="paramname">Stornogebühr lt. AGB´s <?=$formular->storeno->percent?>% </td>
+                <td class="paramvalue"><?=$formular->price['storeno_sum']?>&euro;</td>
             </tr>
-            <tr class="green">
-                <td class="paramname">MWST auf Prov 19%</td>
-                <td class="paramvalue"><?=$formular->price['mwst']?></td>
+            <tr>
+                <td class="paramname">Gutschriftsbetrag</td>
+                <td class="paramvalue"><?=$formular->price['gutschriftsbetrag']?>&euro;</td>
             </tr>
-            <tr class="green">
-                <td class="paramname">Total Provision:</td>
-                <td class="paramvalue"><?=$formular->price['total_provision']?></td>
-            </tr>
-            <tr class="empty">
-                <td colspan="2">&nbsp;</td>
-            </tr>
-            <tr class="bold">
-                <td class="paramname">Endpreise Netto</td>
-                <td class="paramvalue"><?=$formular->price['netto']?></td>
-            </tr>
-            <? endif?>
         </table>
     </div>
+
+    <div class="bottom-text">
+        <p>Achtung! Reise wurde am <?=$formular->storeno->date->format('d.m.Y')?> durch Kunde storniert.</p>
+        Mit freundlichen Grüßen, <br/>
+        Ihr Unique World Team
+    </div>
+
+
 </div>

@@ -63,8 +63,8 @@ class Settings_Controller extends MY_Controller
 
             HotelOffer::create(array(
                'hotel_id' => $hotel->id,
-               'roomcapacity_id' => $room_capacity->id,
-               'roomtype_id' => $room_type->id,
+               'roomcapacity' => $room_capacity->id,
+               'roomtype' => $room_type->id,
                'hotelservice_id' => $hotel_service->id,
                'date' => $date,
                'price' => $price,

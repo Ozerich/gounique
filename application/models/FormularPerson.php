@@ -15,4 +15,9 @@ class FormularPerson extends ActiveRecord\Model
     {
         return $this->name . " / " . $this->surname;
     }
+
+    public function get_plain_sex()
+    {
+        return strtoupper($this->sex);
+    }
 }

@@ -10,8 +10,8 @@
     <link rel="stylesheet/less" href="css/main.less" type="text/css"/>
     <link rel="stylesheet/less" href="css/arrows.css" type="text/css"/>
 
-    <link type="text/css" href="css/cupertino/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
-    <link type="text/css" href="css/jquery-livesearch.css" rel="stylesheet" />
+    <link type="text/css" href="css/cupertino/jquery-ui-1.8.16.custom.css" rel="stylesheet"/>
+    <link type="text/css" href="css/jquery-livesearch.css" rel="stylesheet"/>
     <link type="text/css" href="css/ui.jqgrid.css" rel="stylesheet"/>
 
     <script src="js/global.js"></script>
@@ -47,9 +47,13 @@
 
     <div id="footer">
 
-        <span class="username"> <?=$user->name . " - " . $user->surname?></span>
+        <div class="username-block">
+            <div class="username"> <?=$user->name . " - " . $user->surname?></div>
+            <a href="logout" alt="Log out"><img src="img/logout.png"/></a>
+            <br class="clear"/>
+        </div>
 
-        <span class="copyright">&copy; 2010 - 2012 Copyright <a href="#">goUnique</a> 1.0
+        <span class="copyright">&copy; 2010 - 2012 Copyright <a href="#">goUnique</a> 1.1
  <!--   Powered by <a class="author-link" href="mailto:ozicoder@gmail.com">Vital Ozierski</a></span> -->
 
     </div>

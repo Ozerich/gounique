@@ -81,17 +81,17 @@ class Formular extends ActiveRecord\Model
         $hotels = FormularHotel::find_all_by_formular_id($this->id);
 
         foreach ($hotels as $hotel)
-            $hotel_price += $hotel->price;
+            $hotel_price += $hotel->all_price;
 
         $manuel_price = 0;
         $manuels = FormularManuel::find_all_by_formular_id($this->id);
 
         foreach ($manuels as $manuel)
-            $manuel_price += $manuel->price;
+            $manuel_price += $manuel->price * $this->person_count;
 
-        $price = $hotel_price + $manuel_price;
-        $price += $this->flight_price;
-        $price = $price * $this->person_count;
+        $flight_price = $this->flight_price * $this->person_count;
+
+        $price = $hotel_price + $manuel_price + $flight_price;
 
         $price_data = array();
 
@@ -99,6 +99,12 @@ class Formular extends ActiveRecord\Model
 
         $price_data['person'] = $this->person_count == 0 ? 0 : $price_data['brutto'] / $this->person_count;
 
+        foreach($hotels as $hotel)
+            if($hotel->people_count < $this->person_count)
+            {
+                $price_data['person'] = 0;
+                break;
+            }
 
         $price_data['provision'] = round($price_data['brutto'] * $this->provision / 100, 2);
         $price_data['mwst'] = round($price_data['provision'] * 0.019, 2);
@@ -108,6 +114,26 @@ class Formular extends ActiveRecord\Model
 
         $price_data['anzahlung'] = $this->prepayment;
         $price_data['anzahlung_value'] = round($price_data['brutto'] / 100 * $this->prepayment);
+        $price_data['restzahlung'] = $price_data['brutto']  - $price_data['anzahlung_value'];
+
+
+        $price_data['paid'] = $this->paid_amount;
+        $price_data['need_to_pay'] = $price_data['brutto'] - $price_data['paid'];
+
+        if($this->status == "storeno")
+        {
+            $price_data['storeno_sum'] = $this->storeno->percent / 100 * $price_data['brutto'];
+            $price_data['gutschriftsbetrag'] = $price_data['brutto'] - $price_data['storeno_sum'];
+            if($this->kunde->type == "agenturen")
+            {
+                $price_data['storeno_provision'] = $this->kunde->provision / 100 * $price_data['storeno_sum'];
+                $price_data['storeno_mwst'] = $price_data['storeno_provision'] * 0.19;
+                $price_data['gesamtprovision'] = $price_data['storeno_mwst'] + $price_data['storeno_provision'] ;
+            }
+        }
+
+        foreach($price_data as &$val)
+            $val = number_format($val, 2, ',', ' ');
 
 
         return $price_data;
@@ -117,6 +143,14 @@ class Formular extends ActiveRecord\Model
     {
         $noneok = FormularHotel::find('all', array('conditions' => array('formular_id = ? and status != ?', $this->id, 'ok')));
         return $noneok == null;
+    }
+
+    public function get_storeno()
+    {
+        if($this->status != "storeno")
+            return NULL;
+
+        return FormularStorno::find_by_formular_id($this->id);
     }
 
     public function get_arrival_date()

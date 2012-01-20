@@ -81,7 +81,6 @@ class Reservierung_Controller extends MY_Controller
 
         $this->view_data['formular'] = $formular;
 
-
         $pdf = new mPDF('utf-8', 'A4', '8', '', 4, 4, 25, 25, 0, 0);
         $pdf->SetImportUse();
         $pdf->AddPage();
@@ -98,6 +97,10 @@ class Reservierung_Controller extends MY_Controller
             $view = "rechnung";
         elseif ($type == 4)
             $view = "rechnungK";
+        elseif ($type == 5)
+            $view = "storeno";
+        elseif ($type == 6)
+            $view = "storenoK";
 
         $html = $this->load->view("pdf_reports/" . $view, $this->view_data, TRUE);
 
@@ -201,16 +204,18 @@ class Reservierung_Controller extends MY_Controller
                             'status' => 'none',
                             'hotel_id' => $hotel_id,
                             'hotel_name' => $hotel_name,
-                            'roomcapacity_id' => $_POST['roomcapacity'][$ind],
-                            'roomtype_id' => $_POST['roomtype'][$ind],
+                            'roomcapacity' => $_POST['roomcapacity'][$ind],
+                            'roomtype' => $_POST['roomtype'][$ind],
                             'hotelservice_id' => $_POST['service'][$ind],
                             'date_start' => inputdate_to_mysqldate($_POST['datestart'][$ind]),
                             'date_end' => inputdate_to_mysqldate($_POST['dateend'][$ind]),
                             'price' => $_POST['price'][$ind],
                             'days_count' => $_POST['dayscount'][$ind],
                             'transfer' => $_POST['transfer'][$ind],
+                            'transfer_price' => $_POST['transfer_price'][$ind],
                             'remark' => $_POST['remark'][$ind],
                             'voucher_remark' => $_POST['voucher_remark'][$ind],
+                            'city_tour' => $_POST['city_tour'][$ind],
                         ));
                     }
 
@@ -249,13 +254,16 @@ class Reservierung_Controller extends MY_Controller
         }
         if ($_POST) {
 
-
             $formular->provision = $this->input->post('provision');
             $formular->flight_text = $this->input->post('flight-text');
             $formular->flight_price = $this->input->post('flight-price');
             $formular->person_count = $this->input->post('personcount');
 
             $formular->save();
+
+            $formular_exist = array();
+            foreach ($formular->hotels_and_manuels as $item)
+                $formular_exist[$item->id] = array("type" => $item->type, "value" => 0);
 
             if (isset($_POST['hotelname']) && is_array($_POST['hotelname']))
                 foreach ($_POST['hotelname'] as $ind => $hotel_name)
@@ -267,20 +275,24 @@ class Reservierung_Controller extends MY_Controller
                     if (isset($_POST['formular_hotel_id'][$ind])) {
                         $hotel = FormularHotel::find_by_id($_POST['formular_hotel_id'][$ind]);
 
-                        $hotel->roomcapacity_id = $_POST['roomcapacity'][$ind];
-                        $hotel->roomtype_id = $_POST['roomtype'][$ind];
+                        $hotel->roomcapacity = $_POST['roomcapacity'][$ind];
+                        $hotel->roomtype = $_POST['roomtype'][$ind];
                         $hotel->hotelservice_id = $_POST['service'][$ind];
                         $hotel->date_start = inputdate_to_mysqldate($_POST['datestart'][$ind]);
                         $hotel->date_end = inputdate_to_mysqldate($_POST['dateend'][$ind]);
                         $hotel->days_count = $_POST['dayscount'][$ind];
                         $hotel->price = $_POST['price'][$ind];
                         $hotel->transfer = $_POST['transfer'][$ind];
+                        $hotel->transfer_price = $_POST['transfer_price'][$ind];
                         $hotel->remark = $_POST['remark'][$ind];
                         $hotel->hotel_id = $hotel_id;
                         $hotel->hotel_name = $_POST['hotelname'][$ind];
                         $hotel->voucher_remark = $_POST['voucher_remark'][$ind];
+                        $hotel->city_tour = $_POST['city_tour'][$ind];
 
                         $hotel->save();
+
+                        $formular_exist[$hotel->id]['value'] = 1;
                     }
                     else
                     {
@@ -289,16 +301,18 @@ class Reservierung_Controller extends MY_Controller
                             'status' => 'none',
                             'hotel_id' => $hotel_id,
                             'hotel_name' => $hotel_name,
-                            'roomcapacity_id' => $_POST['roomcapacity'][$ind],
-                            'roomtype_id' => $_POST['roomtype'][$ind],
+                            'roomcapacity' => $_POST['roomcapacity'][$ind],
+                            'roomtype' => $_POST['roomtype'][$ind],
                             'hotelservice_id' => $_POST['service'][$ind],
                             'date_start' => inputdate_to_mysqldate($_POST['datestart'][$ind]),
                             'date_end' => inputdate_to_mysqldate($_POST['dateend'][$ind]),
                             'price' => $_POST['price'][$ind],
                             'days_count' => $_POST['dayscount'][$ind],
                             'transfer' => $_POST['transfer'][$ind],
+                            'transfer_price' => $_POST['transfer_price'][$ind],
                             'remark' => $_POST['remark'][$ind],
                             'voucher_remark' => $_POST['voucher_remark'][$ind],
+                            'city_tour' => $_POST['city_tour'][$ind],
                         ));
                     }
                 }
@@ -317,6 +331,8 @@ class Reservierung_Controller extends MY_Controller
                         $manuel->voucher_remark = $_POST['manuel_voucher_remark'][$ind];
 
                         $manuel->save();
+
+                        $formular_exist[$manuel->id]['value'] = 1;
                     }
                     else
                     {
@@ -331,6 +347,11 @@ class Reservierung_Controller extends MY_Controller
                             'voucher_remark' => $_POST['manuel_voucher_remark'][$ind]
                         ));
                     }
+                }
+            foreach ($formular_exist as $item_id => $val)
+                if ($val['value'] == 0) {
+                    $item = ($val['type'] == "manuel") ? FormularManuel::find_by_id($item_id) : FormularHotel::find_by_id($item_id);
+                    $item->delete();
                 }
 
             redirect('reservierung/result/' . $formular->id);
@@ -378,6 +399,7 @@ class Reservierung_Controller extends MY_Controller
                 $sql_options = array('conditions' => array('hotel_id = ?', Hotel::find_by_code($hotel_code)->id),
                     'select' => 'DISTINCT roomtype_id');
                 $room_type = HotelOffer::all($sql_options);
+
                 $result = array();
                 foreach ($room_type as $type)
                 {
@@ -485,11 +507,12 @@ class Reservierung_Controller extends MY_Controller
 
             $formular->comment = $this->input->post("bigcomment");
 
-            $formular->prepayment = $this->input->post("prepayment");
-
-            $formular->prepayment_date = inputdate_to_mysqldate($this->input->post("preprepayment_date"));
-            $formular->finalpayment_date = inputdate_to_mysqldate($this->input->post("finalpayment_date"));
-            $formular->departure_date = inputdate_to_mysqldate($this->input->post("departure_date"));
+            if ($formular->status == "rechnung") {
+                $formular->prepayment = $this->input->post("prepayment");
+                $formular->prepayment_date = inputdate_to_mysqldate($this->input->post("preprepayment_date"));
+                $formular->finalpayment_date = inputdate_to_mysqldate($this->input->post("finalpayment_date"));
+                $formular->departure_date = inputdate_to_mysqldate($this->input->post("departure_date"));
+            }
 
             $formular->save();
 
@@ -548,7 +571,7 @@ class Reservierung_Controller extends MY_Controller
     }
 
 
-    public function rechnung($id = 0)
+    public function do_rechnung($id = 0)
     {
         $formular = Formular::find_by_id($id);
 
@@ -557,16 +580,22 @@ class Reservierung_Controller extends MY_Controller
             return false;
         }
 
+
+        $formular->prepayment = $this->input->post("prepayment");
+        $formular->prepayment_date = inputdate_to_mysqldate($this->input->post("preprepayment_date"));
+        $formular->finalpayment_date = inputdate_to_mysqldate($this->input->post("finalpayment_date"));
+        $formular->departure_date = inputdate_to_mysqldate($this->input->post("departure_date"));
+
+
         $next_rnum = Config::find_by_param('next_rnum');
         $formular->status = "rechnung";
 
-        $formular->r_num = $next_rnum->value++;
+        $formular->r_num = "201100/" . $next_rnum->value++;
         $next_rnum->save();
 
         $formular->rechnung_date = time_to_mysqldate(time());
 
         $formular->save();
-
         $this->write_to_pdf($formular->id, 3);
         $this->write_to_pdf($formular->id, 4);
 
@@ -585,6 +614,9 @@ class Reservierung_Controller extends MY_Controller
         $formular->status = "eingangsmitteilung";
         $formular->save();
 
+        $this->write_to_pdf($formular->id, 1);
+        $this->write_to_pdf($formular->id, 2);
+
         redirect("reservierung/final/" . $formular->id);
     }
 
@@ -598,21 +630,24 @@ class Reservierung_Controller extends MY_Controller
         }
 
         if ($_POST) {
-            $formular->canceled = 1;
+            $formular->status = 'storeno';
 
             $this->load->library('session');
             $user_session = $this->session->all_userdata();
 
-            FormularCancellation::create(array(
+            FormularStorno::create(array(
                 'formular_id' => $formular->id,
-                'client_percent' => $this->input->post('client_percent'),
-                'provision' => $this->input->post('provision'),
-                'reason' => $this->input->post('reason'),
+                'canceled_by' => $this->input->post('who'),
+                'percent' => $this->input->post('percent'),
                 'user_id' => $user_session['user_id'],
-                'datetime' => time_to_mysqldatetime(time()),
+                'date' => time_to_mysqldate(time()),
             ));
 
             $formular->save();
+
+            $this->write_to_pdf($formular->id, 6);
+            if ($formular->kunde->type == "agenturen")
+                $this->write_to_pdf($formular->id, 5);
 
             redirect("reservierung/final/" . $formular->id);
         }
@@ -654,12 +689,30 @@ class Reservierung_Controller extends MY_Controller
         $this->email->from($this->user->email, $this->user->name . " " . $this->user->surname . " <" . $this->user->email . ">");
         $this->email->to($email);
 
-        $this->email->subject('Subject');
+        $this->email->subject($formular->type == 'angebot' ? 'Angebot: Ihre Reiseanfrage ' . $formular->v_num : 'Rechnung: Vielen Dank für Ihre Buchung ' . $formular->r_num);
+
+        $text = '';
+        if($pdf == "angebot")
+            $text = Config::find_by_param("emailtext_angebot")->value;
+        else if($formular->status == "eingangsmitteilung")
+            $text = Config::find_by_param("emailtext_eingangsmitteilung")->value;
+        else if($formular->status == "rechnung" || $formular->status == "freigabe")
+            $text = Config::find_by_param("emailtext_rechnung")->value;
+
+        $this->email->message($text);
         $this->email->attach('pdf/' . $formular->id . "_" . $pdf . ".pdf");
+
+        if($formular->status == "rechnung" || $formular->status == "freigabe")
+        {
+            $this->email->attach('attachments/Reisebedingungen_UniqueWorld.pdf');
+            $this->email->attach('attachments/Sicherungsschein_UniqueWorld.pdf');
+        }
+
         if (!$this->email->send())
             echo "error sending";
         else
             echo "ok";
+
         exit();
     }
 
@@ -730,11 +783,24 @@ class Reservierung_Controller extends MY_Controller
                 $formulars = Formular::find('all', array('conditions' => array('r_num like "%' . $str . '%"')));
                 foreach ($formulars as $formular)
                     $result[] = array(
-                        "text" => $formular->status . ": <b>" . $formular->r_num . "</b> (".$formular->v_num.")",
+                        "text" => $formular->status . ": <b>" . $formular->r_num . "</b> (" . $formular->v_num . ")",
                         "value" => $formular->r_num
                     );
                 break;
+            case "kundename":
+                $persons = FormularPerson::find('all', array(
+                    'conditions' => array('name like "%' . $str . '%" OR surname like "%' . $str . '%"')));
 
+                foreach ($persons as $person)
+                {
+                    $formular = Formular::find_by_id($person->formular_id);
+                    $result[] = array(
+                        "text" => $formular->status . ": " . $formular->v_num . " <b>" . $person->name . " " . $person->surname . "</b>",
+                        "value" => $person->name . " " . $person->surname,
+                        "data" => array("formular_id" => $formular->id),
+                    );
+                }
+                break;
         }
 
         echo json_encode($result);
@@ -748,6 +814,13 @@ class Reservierung_Controller extends MY_Controller
                 $formular = Formular::find_by_v_num($_POST['v_num']);
             elseif (isset($_POST['view-rnum']))
                 $formular = Formular::find_by_r_num($_POST['r_num']);
+            elseif (isset($_POST['view-kundename']))
+            {
+                $formular_id = $this->input->post("formular_id");
+
+                if ($formular_id)
+                    $formular = Formular::find_by_id($_POST['formular_id']);
+            }
 
             redirect("reservierung/final/" . $formular->id);
         }

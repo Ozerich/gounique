@@ -2,9 +2,12 @@
     <div id="page-header">
         <a href="dashboard" class="home-link"><img src="img/header-logo.jpg"/></a>
         <ul class="page-path">
-            <li><a href="kundenverwaltung/historie/<?=$formular->kunde->id?>"><?=$formular->kunde->plain_type;?> <?=$formular->kunde->k_num?></a></li>
-             </li>
-            <li><span>formular <?=$formular->v_num?></span></li>
+            <li><a
+                href="kundenverwaltung/historie/<?=$formular->kunde->id?>"><?=$formular->kunde->plain_type;?> <?=$formular->kunde->k_num?></a>
+            </li>
+            </li>
+            <li><a href="reservierung/final/<?=$formular->id?>">formular <?=$formular->v_num?></a></li>
+            <li><span>storno formular</span></li>
         </ul>
     </div>
 </div>
@@ -49,25 +52,31 @@
         <br class="clear"/>
     </div>
 
-    <?=form_open("reservierung/storeno/" . $formular->id, null, array("formular_id" => $formular->id));?>
+    <div class="storeno-content">
+        <?=form_open("reservierung/storeno/" . $formular->id, null, array("formular_id" => $formular->id));?>
 
-    <div class="form-param">
-        <label for="percent">% Client</label>
-        <input type="text" id="percent" name="client_percent" length="2" maxlength="2"/>
+        <div class="form-param">
+            <label for="percent">Stornogebühr lt. AGB´s %</label>
+            <input type="text" id="percent" name="percent" length="3" maxlength="3"/>
+        </div>
+
+        <div class="form-param">
+            <label for="provision">Date</label>
+            <input type="text" id="date" name="date" length="8" maxlength="8"/>
+        </div>
+
+        <label>Who</label>
+
+        <div id="who-radio">
+            <input type="radio" name="who" id="type_1" <?=$formular->kunde->type == "agenturen" ? 'checked' : 'disabled'?> value="agenturen"><label
+            for="type_1">Agenturen</label>
+            <input type="radio" name="who" id="type_2" <?=$formular->kunde->type != "agenturen" ? 'checked' : ''?> value="Bausteinreise"><label
+            for="type_2">Stammkunden</label>
+        </div>
+        <div class="buttons">
+            <a href="reservierung/final/<?=$formular->id?>" class="button-link">Abbrechen</a>
+            <input type="submit" value="Make Storeno"/>
+        </div>
+        </form>
     </div>
-
-    <div class="form-param">
-        <label for="provision">Provision</label>
-        <input type="text" id="provision" name="provision" length="2" maxlength="2"/>
-    </div>
-
-    <div class="form-param">
-        <label for="reason">Reason</label>
-        <textarea id="reason" name="reason"></textarea>
-    </div>
-
-    <button class="btn btn-blue" id="cancel-storeno">Abbrechen</button>
-    <input type="submit" class="btn btn-blue" value="Make Storeno"/>
-
-    </form>
 </div>

@@ -48,17 +48,10 @@
             <input type="radio" name="sex" value="frau" <? if ($kunde->sex == "frau") echo 'checked' ?>/>Frau
         </div>
 
-        <? if ($kunde->type == "mitarbeiter"): ?>
-        <div class="param">
-            <label for="kurzel">Kürzel</label>
-            <input type="text" name="kurzel" maxlength="2" value="<?=$kunde->kurzel?>"/>
-        </div>
-        <? else: ?>
         <div class="param">
             <label for="contactperson">&nbsp;</label>
             <input type="text" name="person_name" value="<?=$kunde->person_name?>"/>
         </div>
-        <? endif; ?>
 
         <div class="param">
             <label for="email">E-Mail Adresse</label>
@@ -75,12 +68,10 @@
             <input type="text" name="fax" value="<?=$kunde->fax?>"/>
         </div>
 
-        <? if ($kunde->type == "agenturen"): ?>
         <div class="param" id="provision-wr">
             <label for="provision">Provision Prozent</label>
             <input type="text" name="provision" value="<?=$kunde->provision?>"/>
         </div>
-        <? endif; ?>
 
         <div class="param">
             <label for="about">Kommentar</label>

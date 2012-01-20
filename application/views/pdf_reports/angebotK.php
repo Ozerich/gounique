@@ -4,7 +4,7 @@
     </div>
 </div>
 <div class="content">
-    <h1>BUCHUNGSBESÄTIGUNG</h1>
+    <h1>ANGEBOT</h1>
 
     <h2>Kundenkopie</h2>
     <table class="top-block">
@@ -35,7 +35,7 @@
                 <? foreach ($formular->persons as $ind => $person): ?>
                 <tr>
                     <td class="num"><?=($ind + 1)?></td>
-                    <td class="sex"><?=$person->sex?></td>
+                    <td class="sex"><?=$person->plain_sex?></td>
                     <td class="person-name"><?=$person->name . "/" . $person->surname?></td>
                 </tr>
                 <? endforeach; ?>
@@ -46,7 +46,7 @@
             <h3>Reisezeitraum:</h3>
             <table class="reisezeitraum-table">
                 <tr>
-                    <td><?=$formular->departure_date->format('d. M. y')?></td>
+                    <td><?=($formular->departure_date) ? $formular->departure_date->format('d. M. y') : ''?></td>
                     <td class="center">bis</td>
                     <td><?=($formular->arrival_date) ? $formular->arrival_date->format('d. M. y') : ''?></td>
                 </tr>
@@ -87,5 +87,10 @@
                 <td class="paramvalue"><?=$formular->price['brutto']?></td>
             </tr>
         </table>
+    </div>
+
+    <div class="signature">
+        <div class="text">Bei Buchungswunsch bitte unterschrieben zurückfaxen</div>
+        <div class="line"></div>
     </div>
 </div>

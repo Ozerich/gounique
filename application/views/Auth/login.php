@@ -17,13 +17,13 @@
             <div class="login_fields">
                 <div class="field">
                     <label for="email">Email</label>
-                    <input type="text" name="email" value="" id="email" tabindex="1" placeholder="admin@admin"/>
+                    <input type="text" name="email" value="" id="email" tabindex="1"/>
                 </div>
 
                 <div class="field">
                     <label for="password">Password
                     </label>
-                    <input type="password" name="password" value="" id="password" tabindex="2" placeholder="admin"/>
+                    <input type="password" name="password" value="" id="password" tabindex="2"/>
                 </div>
             </div>
             <div class="login_actions">

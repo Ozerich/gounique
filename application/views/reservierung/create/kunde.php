@@ -3,7 +3,7 @@
         <a href="dashboard" class="home-link"><img src="img/header-logo.jpg"/></a>
         <ul class="page-path">
             <li><a href="kundenverwaltung/historie/<?=$kunde->id?>"><?=$kunde->plain_type;?> <?=$kunde->k_num?></a></li>
-             </li>
+            </li>
             <li><span>neu formular</span></li>
         </ul>
     </div>
@@ -86,13 +86,15 @@
 </div>
 
 <div class="formular-content" style="display:none">
-
 <div id="intro-page">
+    <? if ($kunde->type == 'agenturen'): ?>
     <div class="input" id="provision-wr">
         <label for="provision">Provision %:</label>
         <input type="text" id="provision" name="provision"
-               value="11" size="3"/>
+               value="<?=$kunde->provision?>" maxlength="2" size="2"/>
     </div>
+    <? endif; ?>
+
     <div class="input" id="personcount-wr">
         <label for="personcount">Personen:</label>
         <input type="text" id="personcount" maxlength="2" value="" name="personcount"
@@ -111,6 +113,7 @@
         <div class="hotel-preview block-preview" style="display:none">
             <p class="text"></p>
             <button class="edit">Edit</button>
+            <button class="delete">Delete</button>
             <br class="clear"/>
         </div>
 
@@ -159,17 +162,22 @@
 
                 <div class="param">
                     <label class="param-name" for="datestart">Von</label>
-                    <input type="text" name="datestart" class="datestart" value="" size="10" disabled="disabled"/>
+                    <input type="text" name="datestart" class="datestart" value="" maxlength="8" size="10" disabled="disabled"/>
                 </div>
 
                 <div class="param">
                     <label class="param-name" for="dateend">Bis&nbsp;</label>
-                    <input type="text" name="dateend" class="dateend" value="" size="10" disabled="disabled"/>
+                    <input type="text" name="dateend" class="dateend" value="" maxlength="8" size="10" disabled="disabled"/>
                 </div>
 
                 <div class="param">
                     <label class="param-name" for="dayscount">Days Count</label>
-                    <input type="text" name="dayscount" class="dayscount" value="0" size="3" disabled="disabled"/>
+                    <input type="text" name="dayscount" class="dayscount" maxlength="3" value="0" size="3" disabled="disabled"/>
+                </div>
+
+                <div class="param">
+                    <label class="param-name" for="price">Price &euro;</label>
+                    <input id="price" class="price" type="text" size="4" name="price" disabled="disabled"/>
                 </div>
 
                 <div class="param">
@@ -183,8 +191,8 @@
                 </div>
 
                 <div class="param">
-                    <label class="param-name" for="price">Price &euro;</label>
-                    <input id="price" class="price" type="text" size="4" name="price" disabled="disabled"/>
+                    <label class="param-name" for="transfer_price">Transfer Price &euro;</label>
+                    <input type="text" name="transfer_price" class="transfer-price" disabled="disabled"/>
                 </div>
 
                 <div class="param">
@@ -193,10 +201,14 @@
                 </div>
 
                 <div class="param">
-                    <label class="param-name" for="voucher_remark">Voucher text</label>
-                    <textarea id="voucher_remark" class="remark" name="voucher_remark" disabled="disabled"></textarea>
+                    <label class="param-name" for="city_tour">City tour</label>
+                    <textarea id="city_tour" class="city-tour" name="city_tour" disabled="disabled"></textarea>
                 </div>
 
+                <div class="param">
+                    <label class="param-name" for="voucher_remark">Voucher text</label>
+                    <textarea id="voucher_remark" class="voucher-text" name="voucher_remark" disabled="disabled"></textarea>
+                </div>
 
             </div>
 
@@ -209,19 +221,16 @@
 
                 <div class="param">
                     <label class="param-name" for="roomtype">Room type</label>
-                    <select name="roomtype" id="roomtype">
-                        <? foreach (RoomType::all() as $type): ?>
-                        <option value=<?=$type->id?>><?=$type->value?></option>
-                        <? endforeach; ?>
-                    </select>
+                    <input type="text" id="roomtype" name="roomtype" />
                 </div>
 
                 <div class="param">
                     <label class="param-name" for="roomcapacity">Capacity</label>
                     <select name="roomcapacity" id="roomcapacity">
-                        <? foreach (RoomCapacity::all() as $type): ?>
-                        <option value=<?=$type->id?>><?=$type->value?></option>
-                        <? endforeach; ?>
+                        <option value="EZ">EZ</option>
+                        <option value="DZ0">DZ0</option>
+                        <option value="DZ2">DZ2</option>
+                        <option value="DZ3">DZ3</option>
                     </select>
                 </div>
 
@@ -236,17 +245,22 @@
 
                 <div class="param">
                     <label class="param-name" for="datestart">Von</label>
-                    <input type="text" name="datestart" class="datestart" value="" size="10"/>
+                    <input type="text" name="datestart" class="datestart" maxlength="8" value="" size="10"/>
                 </div>
 
                 <div class="param">
                     <label class="param-name" for="dateend">Bis&nbsp;</label>
-                    <input type="text" name="dateend" class="dateend" value="" size="10"/>
+                    <input type="text" name="dateend" class="dateend" maxlength="8" value="" size="10"/>
                 </div>
 
                 <div class="param">
                     <label class="param-name" for="dayscount">Days Count</label>
-                    <input type="text" name="dayscount" class="dayscount" value="0" size="3"/>
+                    <input type="text" name="dayscount" class="dayscount" maxlength="3" value="0" size="3"/>
+                </div>
+
+                <div class="param">
+                    <label class="param-name" for="price">Price &euro;</label>
+                    <input id="price" size="4" type="text" name="price"/>
                 </div>
 
                 <div class="param">
@@ -260,10 +274,10 @@
                 </div>
 
                 <div class="param">
-                    <label class="param-name" for="price">Price &euro;</label>
-                    <input id="price" size="4" type="text" name="price"/>
+                    <label class="param-name" for="transfer_price">Transfer Price &euro;</label>
+                    <input type="text" class="transfer-price" id="transfer_price" name="transfer_price"/>
                 </div>
-
+                
                 <div class="param">
                     <label class="param-name" for="remark">Remark</label>
                     <textarea id="remark" name="remark"></textarea>
@@ -271,7 +285,7 @@
 
                 <div class="param">
                     <label class="param-name" for="voucher_remark">Voucher text</label>
-                    <textarea id="voucher_remark" class="remark" name="voucher_remark"></textarea>
+                    <textarea id="voucher_remark" class="voucher-text" name="voucher_remark"></textarea>
                 </div>
 
 
@@ -291,6 +305,7 @@
         <div class="manuel-preview block-preview" style="display:none">
             <p class="text"></p>
             <button class="edit">Edit</button>
+            <button class="delete">Delete</button>
             <br class="clear"/>
         </div>
 
@@ -317,17 +332,17 @@
 
                 <div class="param">
                     <label class="param-name" for="datestart">Von</label>
-                    <input type="text" name="manuel_datestart" class="datestart" value="" size="10"/>
+                    <input type="text" name="manuel_datestart" class="datestart" maxlength="8" value="" size="10"/>
                 </div>
 
                 <div class="param">
                     <label class="param-name" for="dateend">Bis&nbsp;</label>
-                    <input type="text" name="manuel_dateend" class="dateend" value="" size="10"/>
+                    <input type="text" name="manuel_dateend" class="dateend" maxlength="8" value="" size="10"/>
                 </div>
 
                 <div class="param">
                     <label class="param-name" for="dayscount">Days Count</label>
-                    <input type="text" name="manuel_dayscount" class="dayscount" value="0" size="3"/>
+                    <input type="text" name="manuel_dayscount" class="dayscount" maxlength="3" value="0" size="3"/>
                 </div>
 
                 <div class="param">
@@ -337,7 +352,7 @@
 
                 <div class="param">
                     <label class="param-name" for="voucher_remark">Voucher text</label>
-                    <textarea id="voucher_remark" class="remark" name="manuel_voucher_remark"></textarea>
+                    <textarea id="voucher_remark" class="voucher-text" name="manuel_voucher_remark"></textarea>
                 </div>
 
             </div>
@@ -356,7 +371,7 @@
 
                 <div class="param">
                     <label class="param-name" for="voucher_remark">Voucher text</label>
-                    <textarea id="voucher_remark" class="remark" name="manuel_voucher_remark"></textarea>
+                    <textarea id="voucher_remark" class="voucher-text" name="manuel_voucher_remark"></textarea>
                 </div>
 
             </div>
