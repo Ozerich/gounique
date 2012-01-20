@@ -4,7 +4,7 @@ var KEY_RIGHT = 39;
 var KEY_LEFT = 37;
 var KEY_TAB = 9;
 
-var ONE_DAY = 1000*60*60*24;
+var ONE_DAY = 1000 * 60 * 60 * 24;
 
 function InputToTime(time) {
     return time.substr(0, 2) + '.' + time.substr(2, 2) + '.' + time.substr(4);
@@ -32,5 +32,12 @@ function validateEmail(email) {
         return false;
     var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
     return reg.test(email);
+}
 
+function isValidDate(d)
+{
+    if (Object.prototype.toString.call(d) === "[object Date]")
+        return !isNaN(d.getTime());
+    else
+        return false;
 }

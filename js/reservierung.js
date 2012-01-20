@@ -963,7 +963,11 @@ $(document).ready(function () {
 
     $('.reservierung-page #departure_date').change(function () {
         var val = $(this).val();
+
         var departure = new Date(val.substr(4, 4), parseInt(val.substr(2, 2)) - 1, val.substr(0, 2));
+        if(!isValidDate(departure))
+            return false;
+
         var prepayment = new Date(departure - new Date(35 * ONE_DAY));
         var today = new Date();
 

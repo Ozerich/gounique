@@ -11,7 +11,7 @@ table {
 
 .header{
     width: 712px;
-    height: 180px;
+    height: 220px;
     padding: 0 30px;
     margin: 0 auto;
 }
@@ -230,7 +230,7 @@ h3{
 }
 
 .signature{
-    margin: 60px 0 0 0;
+    margin: 40px 0 0 0;
     clear: both;
 }
 
@@ -245,4 +245,10 @@ h3{
     float: left;
     padding-top: 14px;
     width: 180px;
+}
+
+.bottom-agreements{
+    margin-top: 10px;
+    font-size: 12px;
+    clear: both;
 }
