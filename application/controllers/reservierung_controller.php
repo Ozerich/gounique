@@ -614,6 +614,9 @@ class Reservierung_Controller extends MY_Controller
         $formular->status = "eingangsmitteilung";
         $formular->save();
 
+        $this->write_to_pdf($formular->id, 1);
+        $this->write_to_pdf($formular->id, 2);
+
         redirect("reservierung/final/" . $formular->id);
     }
 
@@ -687,19 +690,29 @@ class Reservierung_Controller extends MY_Controller
         $this->email->to($email);
 
         $this->email->subject($formular->type == 'angebot' ? 'Angebot: Ihre Reiseanfrage ' . $formular->v_num : 'Rechnung: Vielen Dank für Ihre Buchung ' . $formular->r_num);
-        $this->email->message('Sehr geehrte Damen und Herren,
 
-        herzlichen Dank für Ihre Reiseanfrage und dem damit verbundenen Interesse an unserem Produkt!
-        Anbei erhalten Sie das gewünschte Angebot. Bei Fragen und Wünschen sind wir gerne für Sie da.
+        $text = '';
+        if($pdf == "angebot")
+            $text = Config::find_by_param("emailtext_angebot")->value;
+        else if($formular->status == "eingangsmitteilung")
+            $text = Config::find_by_param("emailtext_eingangsmitteilung")->value;
+        else if($formular->status == "rechnung" || $formular->status == "freigabe")
+            $text = Config::find_by_param("emailtext_rechnung")->value;
 
-        Beste Grüße,
-        Expedient');
-
+        $this->email->message($text);
         $this->email->attach('pdf/' . $formular->id . "_" . $pdf . ".pdf");
+
+        if($formular->status == "rechnung" || $formular->status == "freigabe")
+        {
+            $this->email->attach('attachments/Reisebedingungen_UniqueWorld.pdf');
+            $this->email->attach('attachments/Sicherungsschein_UniqueWorld.pdf');
+        }
+
         if (!$this->email->send())
             echo "error sending";
         else
             echo "ok";
+
         exit();
     }
 

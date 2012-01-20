@@ -31,7 +31,6 @@ class FormularHotel extends ActiveRecord\Model
         foreach ($room_capacity as $type)
             $result['room_capacity'][] = RoomCapacity::find_by_id($type->roomcapacity_id);
 
-
         $services = HotelOffer::find('all', array(
                 'conditions' => array('hotel_id = ? AND roomtype_id = ? AND roomcapacity_id = ?',
                     $this->hotel_id, $this->roomtype, $this->roomcapacity),
@@ -52,13 +51,12 @@ class FormularHotel extends ActiveRecord\Model
 
     public function get_plain_text()
     {
-
         $text = $this->date_start->format('d.m.Y') . " - " . $this->date_end->format('d.m.Y') . " ";
         $text .= $this->days_count . "N HOTEL: " . $this->hotel_name . " / ";
         $text .= ($this->is_manuel ? $this->roomcapacity : RoomCapacity::find_by_id($this->roomcapacity)->value) . " / ";
         $text .= ($this->is_manuel ? $this->roomtype : RoomType::find_by_id($this->roomtype)->value) . " / ";
         $text .= HotelService::find_by_id($this->hotelservice_id)->value . " / ";
-        $text .= "TRANSFER " . strtoupper($this->transfer);
+        $text .= ($this->transfer == "kein") ? '' :  " / TRANSFER " . strtoupper($this->transfer);
         $text .= ($this->remark ? ' / ' . $this->remark : '') . ($this->city_tour ? ' / ' . $this->city_tour : '');
 
         return $text;
@@ -70,13 +68,11 @@ class FormularHotel extends ActiveRecord\Model
         $text .= ($this->is_manuel ? $this->roomcapacity : RoomCapacity::find_by_id($this->roomcapacity)->value) . " / ";
         $text .= ($this->is_manuel ? $this->roomtype : RoomType::find_by_id($this->roomtype)->value) . " / ";
         $text .= HotelService::find_by_id($this->hotelservice_id)->value . " / ";
-        $text .= "TRANSFER " . strtoupper($this->transfer);
+        $text .= ($this->transfer == "kein") ? '' : " / TRANSFER " . strtoupper($this->transfer);
         $text .= ($this->remark ? ' / ' . $this->remark : '') . " - &nbsp;<b>" . $this->all_price . "&euro;</b>";
 
         return $text;
     }
-
-
 
     public function get_people_count()
     {
@@ -192,8 +188,8 @@ class FormularHotel extends ActiveRecord\Model
         $text .= $this->days_count . "N HOTEL: " . $this->hotel_name . " / ";
         $text .= $this->file_roomcapacity . " / ";
         $text .= ($this->is_manuel ? $this->roomtype : RoomType::find_by_id($this->roomtype)->value) . " / ";
-        $text .= HotelService::find_by_id($this->hotelservice_id)->value . " / ";
-        $text .= "TRANSFER " . strtoupper($this->transfer);
+        $text .= HotelService::find_by_id($this->hotelservice_id)->value;
+        $text .= ($this->transfer == "kein") ? '' : " / TRANSFER " . strtoupper($this->transfer);
         $text .= ($this->remark ? ' / ' . $this->remark : '') . ($this->city_tour ? ' / ' . $this->city_tour : '');
 
         return $text;
