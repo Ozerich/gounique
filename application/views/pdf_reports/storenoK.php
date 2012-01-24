@@ -80,19 +80,19 @@
         <table>
             <tr>
                 <td class="paramname">Preis p.P.:</td>
-                <td class="paramvalue"><?=$formular->price['person']?>&euro;</td>
+                <td class="paramvalue"><?=$formular->price['person']?> &euro;</td>
             </tr>
             <tr>
                 <td class="paramname">Gesamtpreis:</td>
-                <td class="paramvalue"><?=$formular->price['brutto']?>&euro;</td>
+                <td class="paramvalue"><?=$formular->price['brutto']?> &euro;</td>
             </tr>
             <tr>
                 <td class="paramname">Stornogebühr lt. AGB´s <?=$formular->storeno->percent?>% </td>
-                <td class="paramvalue"><?=$formular->price['storeno_sum']?>&euro;</td>
+                <td class="paramvalue"><?=$formular->price['storeno_sum']?> &euro;</td>
             </tr>
             <tr>
                 <td class="paramname">Gutschriftsbetrag</td>
-                <td class="paramvalue"><?=$formular->price['gutschriftsbetrag']?>&euro;</td>
+                <td class="paramvalue"><?=$formular->price['gutschriftsbetrag']?> &euro;</td>
             </tr>
         </table>
     </div>

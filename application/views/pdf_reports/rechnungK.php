@@ -81,7 +81,7 @@
         <? if ($formular->finalpayment_date): ?>
             <p>Anzahlung sofort nach Erhalt der Rechnung: <?=$formular->price['anzahlung_value']?> &euro;</p>
             <p>Restzahlung f&auml;llig am: <?=$formular->finalpayment_date->format('d-M-y')?>
-                &nbsp;&nbsp;<?=($formular->price['brutto'] - $formular->price['anzahlung_value'])?> &euro;</p>
+                &nbsp;&nbsp;<?=$formular->price['restzahlung']?> &euro;</p>
             <? else: ?>
             <p>Zahlung sofort nach Erhalt de Rechnung</p>
             <? endif; ?>
@@ -92,11 +92,11 @@
         <table>
             <tr>
                 <td class="paramname">Preis Brutto/p.Person</td>
-                <td class="paramvalue"><?=$formular->price['person']?></td>
+                <td class="paramvalue"><?=$formular->price['person']?> &euro;</td>
             </tr>
             <tr class="bold underline">
                 <td class="paramname">Gesamtpreis</td>
-                <td class="paramvalue"><?=$formular->price['brutto']?></td>
+                <td class="paramvalue"><?=$formular->price['brutto']?> &euro;</td>
             </tr>
         </table>
     </div>

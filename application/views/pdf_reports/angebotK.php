@@ -80,11 +80,11 @@
         <table>
             <tr>
                 <td class="paramname">Preis Brutto/p.Person</td>
-                <td class="paramvalue"><?=$formular->price['person']?></td>
+                <td class="paramvalue"><?=$formular->price['person']?> &euro;</td>
             </tr>
             <tr class="bold underline">
                 <td class="paramname">Gesamtpreis</td>
-                <td class="paramvalue"><?=$formular->price['brutto']?></td>
+                <td class="paramvalue"><?=$formular->price['brutto']?> &euro;</td>
             </tr>
         </table>
     </div>

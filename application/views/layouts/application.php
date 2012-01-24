@@ -5,11 +5,11 @@
     <title><?if (isset($page_title)) echo $page_title;?> | Go Unique</title>
     <base href="<?=base_url()?>"/>
 
-    <link rel="stylesheet" href="css/reset.css" type="text/css" media="screen" title="no title"/>
+    <link rel="shortcut icon" href="img/favicon.png" />
 
+    <link rel="stylesheet" href="css/reset.css" type="text/css" media="screen" title="no title"/>
     <link rel="stylesheet/less" href="css/main.less" type="text/css"/>
     <link rel="stylesheet/less" href="css/arrows.css" type="text/css"/>
-
     <link type="text/css" href="css/cupertino/jquery-ui-1.8.16.custom.css" rel="stylesheet"/>
     <link type="text/css" href="css/jquery-livesearch.css" rel="stylesheet"/>
     <link type="text/css" href="css/ui.jqgrid.css" rel="stylesheet"/>

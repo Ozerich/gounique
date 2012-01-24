@@ -279,7 +279,7 @@
 
     <div class="mail">
         <span class="left">Kunde E-Mail</span>
-        <input type="text" disabled size="30" class="email" value="<?=$formular->kunde->email?>"/>
+        <input type="text" size="30" class="email" value="<?=$formular->kunde->email?>"/>
         <span class="status">noch nicht gesendet</span>
         <input type="hidden" class="sended" value="0"/>
     </div>
@@ -287,9 +287,10 @@
 </form>
 
 <div id="final-buttons" class="formular-buttons">
-    <? if ($formular->status == "angebot" || $formular->status == 'rechnung'): ?>
+    <? if ($formular->status != "storeno"): ?>
     <a href="reservierung/edit/<?=$formular->id?>" class="button-link">Formular editieren</a>
-    <? elseif ($formular->status == "eingangsmitteilung"): ?>
+    <? endif; ?>
+    <? if ($formular->status == "eingangsmitteilung"): ?>
     <a href="reservierung/status/<?=$formular->id?>" class="button-link">Status editieren</a>
     <? elseif ($formular->status == "rechnung"): ?>
     <a href="reservierung/payments/<?=$formular->id?>" class="button-link">Payments</a>

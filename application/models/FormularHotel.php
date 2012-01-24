@@ -76,6 +76,8 @@ class FormularHotel extends ActiveRecord\Model
 
     public function get_people_count()
     {
+        if($this->plain_roomcapacity == "EZ")
+            return 1;
         $num = substr($this->plain_roomcapacity, -1);
         return $num == 0 ? 2 : $num;
     }

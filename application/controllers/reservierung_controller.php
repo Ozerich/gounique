@@ -506,12 +506,12 @@ class Reservierung_Controller extends MY_Controller
                 }
 
             $formular->comment = $this->input->post("bigcomment");
-
+            
+			$formular->departure_date = inputdate_to_mysqldate($this->input->post("departure_date"));
             if ($formular->status == "rechnung") {
                 $formular->prepayment = $this->input->post("prepayment");
                 $formular->prepayment_date = inputdate_to_mysqldate($this->input->post("preprepayment_date"));
                 $formular->finalpayment_date = inputdate_to_mysqldate($this->input->post("finalpayment_date"));
-                $formular->departure_date = inputdate_to_mysqldate($this->input->post("departure_date"));
             }
 
             $formular->save();
@@ -689,10 +689,18 @@ class Reservierung_Controller extends MY_Controller
         $this->email->from($this->user->email, $this->user->name . " " . $this->user->surname . " <" . $this->user->email . ">");
         $this->email->to($email);
 
+        $subject = '';
+        if($formular->type == 'angebot')
+            $subject = 'Angebot: Ihre Reiseanfrage ' . $formular->v_num;
+        else if($formular->type == 'rechnung' || $formular->status == 'freigabe')
+            $subject = 'Rechnung: Vielen Dank für Ihre Buchung ' . $formular->r_num;
+        else if($formular->status ==  'eingangsmitteilung')
+            $subject = 'Rechnung: Vielen Dank für Ihre Buchung ' . $formular->v_num;
+
         $this->email->subject($formular->type == 'angebot' ? 'Angebot: Ihre Reiseanfrage ' . $formular->v_num : 'Rechnung: Vielen Dank für Ihre Buchung ' . $formular->r_num);
 
         $text = '';
-        if($pdf == "angebot")
+        if($formular->status == "angebot")
             $text = Config::find_by_param("emailtext_angebot")->value;
         else if($formular->status == "eingangsmitteilung")
             $text = Config::find_by_param("emailtext_eingangsmitteilung")->value;

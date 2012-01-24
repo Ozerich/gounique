@@ -79,31 +79,31 @@
         <table>
             <tr>
                 <td class="paramname">Preis Brutto/p.Person</td>
-                <td class="paramvalue"><?=$formular->price['person']?></td>
+                <td class="paramvalue"><?=$formular->price['person']?> &euro;</td>
             </tr>
             <tr class="bold underline">
                 <td class="paramname">Gesamtpreis</td>
-                <td class="paramvalue"><?=$formular->price['brutto']?></td>
+                <td class="paramvalue"><?=$formular->price['brutto']?> &euro;</td>
             </tr>
             <? if ($formular->kunde->type == 'agenturen'): ?>
             <tr class="green">
                 <td class="paramname">Provision <?=$formular->provision?>%</td>
-                <td class="paramvalue"><?=$formular->price['provision']?></td>
+                <td class="paramvalue"><?=$formular->price['provision']?> &euro;</td>
             </tr>
             <tr class="green">
                 <td class="paramname">MWST auf Prov 19%</td>
-                <td class="paramvalue"><?=$formular->price['mwst']?></td>
+                <td class="paramvalue"><?=$formular->price['mwst']?> &euro;</td>
             </tr>
             <tr class="green">
                 <td class="paramname">Total Provision:</td>
-                <td class="paramvalue"><?=$formular->price['total_provision']?></td>
+                <td class="paramvalue"><?=$formular->price['total_provision']?> &euro;</td>
             </tr>
             <tr class="empty">
                 <td colspan="2">&nbsp;</td>
             </tr>
             <tr class="bold">
                 <td class="paramname">Endpreise Netto</td>
-                <td class="paramvalue"><?=$formular->price['netto']?></td>
+                <td class="paramvalue"><?=$formular->price['netto']?> &euro;</td>
             </tr>
             <? endif?>
         </table>

@@ -81,23 +81,23 @@
         <table>
             <tr>
                 <td class="paramname">Gesamtreisepreis:</td>
-                <td class="paramvalue"><?=$formular->price['brutto']?>&euro;</td>
+                <td class="paramvalue"><?=$formular->price['brutto']?> &euro;</td>
             </tr>
             <tr>
                 <td class="paramname">Stornogebühr lt. AGB´s <?=$formular->storeno->percent?>%</td>
-                <td class="paramvalue"><?=$formular->price['storeno_sum']?>&euro;</td>
+                <td class="paramvalue"><?=$formular->price['storeno_sum']?> &euro;</td>
             </tr>
             <tr>
                 <td class="paramname"><?=$formular->kunde->provision?>% Provision auf Storno</td>
-                <td class="paramvalue"><?=$formular->price['storeno_provision']?>&euro;</td>
+                <td class="paramvalue"><?=$formular->price['storeno_provision']?> &euro;</td>
             </tr>
             <tr>
                 <td class="paramname">19% MwSt.</td>
-                <td class="paramvalue"><?=$formular->price['storeno_mwst']?>&euro;</td>
+                <td class="paramvalue"><?=$formular->price['storeno_mwst']?> &euro;</td>
             </tr>
             <tr>
                 <td class="paramname">Gesamtprovision</td>
-                <td class="paramvalue"><?=$formular->price['gesamtprovision']?>&euro;</td>
+                <td class="paramvalue"><?=$formular->price['gesamtprovision']?> &euro;</td>
             </tr>
         </table>
     </div>
