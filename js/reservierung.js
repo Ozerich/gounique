@@ -53,8 +53,8 @@ function BindDateEvents(hotel_block) {
             if (!a || !b)
                 return false;
 
-            a = new Date(a.substr(4, 4), a.substr(2, 2), a.substr(0, 2));
-            b = new Date(b.substr(4, 4), b.substr(2, 2), b.substr(0, 2));
+            a = new Date(a.substr(4, 4), a.substr(2, 2) - 1, a.substr(0, 2));
+            b = new Date(b.substr(4, 4), b.substr(2, 2) - 1, b.substr(0, 2));
 
             $(hotel_block).find('.dayscount').val(Math.round((b - a) / 1000 / 3600 / 24));
         });
@@ -112,7 +112,7 @@ function BindDateEvents(hotel_block) {
 
             if (isInt($(this).val()) && parseInt($(this).val()) > 0) {
                 var a = $(hotel_block).find('.datestart').val();
-                a = new Date(a.substr(4, 4), parseInt(a.substr(2, 2)) - 1, a.substr(0, 2));
+                a = new Date(a.substr(4, 4), parseInt(a.substr(2, 2) - 1), a.substr(0, 2));
                 a.setDate(a.getDate() + parseInt($(this).val()));
                 $(hotel_block).find('.dateend').val((a.getDate() < 10 ? "0" + a.getDate() : a.getDate()) + "" + (a.getMonth() < 9 ? "0" + (a.getMonth() + 1) : (a.getMonth() + 1)) + "" + a.getFullYear());
             }
