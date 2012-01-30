@@ -6,4 +6,6 @@ $(document).ready(function () {
     $('#createformular-page #flight-price, #createformular-page .param #price').setValidator({only_digits : true});
 
     $('#createformular-page #personcount').setValidator({only_digits: true});
+
+    $('.only-digits').setValidator({only_digits: true});
 });

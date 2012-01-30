@@ -109,7 +109,23 @@ class Reservierung_Controller extends MY_Controller
         $pdf->list_indent_first_level = 0;
         $pdf->WriteHTML($html, 2);
 
-        $pdf->Output("pdf/" . $formular_id . "_" . $type . '.pdf', 'F');
+        $pdf->Output('pdf/' . $formular->id . "_" . $type . ".pdf", 'F');
+    }
+
+    public function get_pdf_name($formular_id)
+    {
+        $formular = Formular::find_by_id($formular_id);
+        if (!$formular)
+            return "NONAME";
+
+        switch ($formular->status) {
+            case "angebot":
+                return "Angebot-" . ($formular->persons ? $formular->persons[0]->surname : '') . "-UniqueWorld";
+            case "rechnung":
+                return "Rechnung-" . str_replace('/', '', $formular->r_num) . "-UniqueWorld";
+            case "storno":
+                return "Storno-" . str_replace('/', '', $formular->r_num) . "-UniqueWorld";
+        }
     }
 
 
@@ -506,8 +522,8 @@ class Reservierung_Controller extends MY_Controller
                 }
 
             $formular->comment = $this->input->post("bigcomment");
-            
-			$formular->departure_date = inputdate_to_mysqldate($this->input->post("departure_date"));
+
+            $formular->departure_date = inputdate_to_mysqldate($this->input->post("departure_date"));
             if ($formular->status == "rechnung") {
                 $formular->prepayment = $this->input->post("prepayment");
                 $formular->prepayment_date = inputdate_to_mysqldate($this->input->post("preprepayment_date"));
@@ -690,28 +706,33 @@ class Reservierung_Controller extends MY_Controller
         $this->email->to($email);
 
         $subject = '';
-        if($formular->type == 'angebot')
+        if ($formular->type == 'angebot')
             $subject = 'Angebot: Ihre Reiseanfrage ' . $formular->v_num;
-        else if($formular->type == 'rechnung' || $formular->status == 'freigabe')
+        else if ($formular->type == 'rechnung' || $formular->status == 'freigabe')
             $subject = 'Rechnung: Vielen Dank für Ihre Buchung ' . $formular->r_num;
-        else if($formular->status ==  'eingangsmitteilung')
+        else if ($formular->status == 'eingangsmitteilung')
             $subject = 'Rechnung: Vielen Dank für Ihre Buchung ' . $formular->v_num;
 
-        $this->email->subject($formular->type == 'angebot' ? 'Angebot: Ihre Reiseanfrage ' . $formular->v_num : 'Rechnung: Vielen Dank für Ihre Buchung ' . $formular->r_num);
+        $this->email->subject($subject);
 
         $text = '';
-        if($formular->status == "angebot")
+        if ($formular->status == "angebot")
             $text = Config::find_by_param("emailtext_angebot")->value;
-        else if($formular->status == "eingangsmitteilung")
+        else if ($formular->status == "eingangsmitteilung")
             $text = Config::find_by_param("emailtext_eingangsmitteilung")->value;
-        else if($formular->status == "rechnung" || $formular->status == "freigabe")
+        else if ($formular->status == "rechnung" || $formular->status == "freigabe")
             $text = Config::find_by_param("emailtext_rechnung")->value;
 
-        $this->email->message($text);
-        $this->email->attach('pdf/' . $formular->id . "_" . $pdf . ".pdf");
+        $filename = 'pdf/' . $this->get_pdf_name($formular->id) . ".pdf";
 
-        if($formular->status == "rechnung" || $formular->status == "freigabe")
-        {
+        $source_file = 'pdf/' . $formular->id . "_" . $pdf . ".pdf";
+
+        @copy($source_file, $filename);
+
+        $this->email->message($text);
+        $this->email->attach($filename);
+
+        if ($formular->status == "rechnung" || $formular->status == "freigabe") {
             $this->email->attach('attachments/Reisebedingungen_UniqueWorld.pdf');
             $this->email->attach('attachments/Sicherungsschein_UniqueWorld.pdf');
         }
@@ -720,6 +741,8 @@ class Reservierung_Controller extends MY_Controller
             echo "error sending";
         else
             echo "ok";
+
+        @unlink($filename);
 
         exit();
     }
@@ -825,7 +848,6 @@ class Reservierung_Controller extends MY_Controller
             elseif (isset($_POST['view-kundename']))
             {
                 $formular_id = $this->input->post("formular_id");
-
                 if ($formular_id)
                     $formular = Formular::find_by_id($_POST['formular_id']);
             }

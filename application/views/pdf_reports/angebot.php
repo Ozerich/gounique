@@ -20,7 +20,7 @@
             <td class="right-paramvalue"><?=$formular->sachbearbeiter?></td>
         </tr>
         <tr>
-            <td class="left-paramname">Agenturnummer:</td>
+            <td class="left-paramname">Kundennummer:</td>
             <td class="left-paramvalue"><?=$formular->kunde->k_num?></td>
             <td class="right-paramname" colspan="2"></td>
         </tr>
@@ -110,7 +110,9 @@
     </div>
 
     <div class="signature">
-        <div class="text">Bei Buchungswunsch bitte unterschrieben zurückfaxen</div>
+        <div class="text">Bei Buchungswunsch bitte unterschrieben zurückfaxen:</div>
+        Name:
+        Unterschrift
         <div class="line"></div>
     </div>
 

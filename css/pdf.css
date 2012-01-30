@@ -12,18 +12,17 @@ table {
 .header{
     width: 712px;
     height: 220px;
-    padding: 0 30px;
+    padding: 0 0 0 54px;
     margin: 0 auto;
 }
 
 .header .info{
-    padding-top: 120px;
+    padding: 120px 0 0 0;
 }
-
 
 .content{
     width: 712px;
-    padding: 0 30px;
+    padding: 0 5px 0 55px;
     margin: 0 auto 0 auto;
 }
 
@@ -219,6 +218,18 @@ h3{
     float: left;
     width: 400px;
 }
+
+.anzahlung-block .bank-block{
+    margin-top: 10px;
+    font-size: 12px;
+}
+
+.anzahlung-block .bank-block .param{
+    margin-top: 4px;
+    font-size: 12px;
+}
+
+
 
 .anzahlung-block p{
     margin: 0 0 10px 0;

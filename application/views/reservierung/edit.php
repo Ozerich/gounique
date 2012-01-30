@@ -24,7 +24,7 @@
     <div class="left-block">
         <div class="param">
             <span class="param-name">Kundennummer:</span>
-            <a href="#"><?=$formular->kunde->k_num?></a>
+            <a href="kundenverwaltung/historie/<?=$formular->kunde->id?>"><?=$formular->kunde->k_num?></a>
         </div>
 
         <div class="param">

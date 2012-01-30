@@ -41,3 +41,8 @@ function isValidDate(d)
     else
         return false;
 }
+
+$(document).ready(function()
+{
+    $('.buttonset').buttonset();
+});

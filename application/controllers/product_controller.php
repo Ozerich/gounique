@@ -1,6 +1,6 @@
 <?php
 
-class Dashboard_Controller extends MY_Controller
+class Product_Controller extends MY_Controller
 {
     public function __construct()
     {
@@ -12,6 +12,7 @@ class Dashboard_Controller extends MY_Controller
 
     public function index()
     {
-        $this->view_data['page_title'] = 'Dashboard';
+        $this->view_data['page_title'] = 'Product';
     }
+
 }

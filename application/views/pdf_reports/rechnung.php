@@ -4,7 +4,7 @@
     </div>
 </div>
 <div class="content">
-    <h1>BUCHUNGSBESÄTIGUNG / RECHNUNG</h1>
+    <h1>BUCHUNGSBESTÄTIGUNG / RECHNUNG</h1>
 
     <table class="top-block">
         <tr>
@@ -20,7 +20,7 @@
             <td class="right-paramvalue"><?=$formular->sachbearbeiter?></td>
         </tr>
         <tr>
-            <td class="left-paramname">Agenturnummer:</td>
+            <td class="left-paramname">Kundennummer:</td>
             <td class="left-paramvalue"><?=$formular->kunde->k_num?></td>
             <td class="right-paramname" colspan="2"></td>
         </tr>
@@ -85,6 +85,14 @@
             <p>Zahlung sofort nach Erhalt de Rechnung</p>
             <? endif; ?>
         <? endif; ?>
+
+        <div class="bank-block">
+            Bitte überweisen Sie den Rechnungsbetrag auf unser Geschäftskonto:<br>
+            <div class="param"><b>Commerzbank AG</b></div>
+            <div class="param"><b>Kto.: 420 131 500</b></div>
+            <div class="param"><b>BLZ: 200 400 00</b></div>
+            <div class="param"><b>Zweck: <?=$formular->r_num?></b> (Bitte unbedingt angeben!)</div>
+        </div>
     </div>
 
     <div class="price-table">

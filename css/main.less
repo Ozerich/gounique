@@ -9,10 +9,10 @@
     filter: e(%("progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=%d,endColorstr=%d)", @color1, @color3));
 }
 
-.border-radius (@radius) {
-  border-radius: @radius;
-  -moz-border-radius: @radius;
-  -webkit-border-radius: @radius;
+.border-radius(@radius1:0px, @radius2:0px, @radius3:0px, @radius4:0px) {
+   border-radius: @radius1 @radius2 @radius3 @radius4;
+  -moz-border-radius: @radius1 @radius2 @radius3 @radius4;
+  -webkit-border-radius: @radius1 @radius2 @radius3 @radius4;
 }
 
 .buttonset-height (@height){
@@ -36,7 +36,7 @@
     font-size: 22px;
 
     .linearGradient(0, #fff, 100%, #b9e8fa);
-    .border-radius(7px);
+    .border-radius(7px, 7px, 7px, 7px);
 
     height: 40px;
     line-height: 40px;
@@ -61,7 +61,7 @@
     text-align: center;
     padding: 4px 15px;
 
-    .border-radius(7px);
+    .border-radius(7px, 7px, 7px, 7px);
 
     color: #fff;
     font-size: 16px;
@@ -86,6 +86,7 @@
 
 .left-float{float:left;}
 .right-float{float:right;}
+.high-letters{text-transform: uppercase;}
 
 p.error{
     color: red;
@@ -94,6 +95,7 @@ p.error{
 
 input[type=text]:focus, textarea:focus, select:focus {
     border: 1px solid red !important;
+    background: #f9ffb9;
 }
 
 
@@ -249,7 +251,7 @@ label{
     font-size: 22px;
 
     .linearGradient(0, #fff, 100%, #b9e8fa);
-    .border-radius(7px);
+    .border-radius(7px, 7px, 7px, 7px);
 
     height: 40px;
     line-height: 40px;
@@ -300,7 +302,7 @@ label{
     font-size: 22px;
 
     .linearGradient(0, #fff, 100%, #b9e8fa);
-    .border-radius(7px);
+    .border-radius(7px, 7px, 7px, 7px);
 
     height: 40px;
     line-height: 40px;
@@ -580,11 +582,12 @@ label{
     Dashboard
 -------------------------------------------------------------------------------------------------------------*/
 
-#dashboard-page #header-logo
+#header-logo
 {
     background: url('img/header-logo.jpg');
     width: 395px;
     height: 146px;
+    display: block;
     margin: 50px auto 0 auto;
 }
 
@@ -798,7 +801,7 @@ label{
 -------------------------------------------------------------------------------------------*/
 
 .reservierung-page .formular-header{
-    .border-radius(4px);
+    .border-radius(4px, 4px, 4px, 4px);
     background: #f5f5f5;
     border: 1px solid #d3d3d3;
     padding: 7px 15px;
@@ -1139,4 +1142,109 @@ label{
 }
 
 
+/*------------------------------------------------------------------------------------------------------------
+    Product create page
+------------------------------------------------------------------------------------------------------------*/
 
+.product-create .param{
+    display: block;
+    margin-bottom: 8px;
+    clear: both;
+}
+
+.product-create .param input[type=text], .product-create .param textarea, .product-create .param select{
+    width: 100%;
+}
+
+.product-create .param .left{
+    float: left;
+    width: 47%;
+}
+
+.product-create .param .right{
+    float: right;
+    width: 47%;
+}
+
+.product-create .submit{
+    clear: both;
+    float: right;
+    margin-top: 10px;
+}
+
+
+
+#zimmercreate-page{
+    width: 400px;
+}
+
+#verpflegungscreate-page{
+    width: 300px;
+}
+
+#hotelcreate-page{
+    width: 400px;
+}
+
+#hotelcreate-page ul#tabs{
+    border-bottom: 1px solid #DDDDDD;
+    margin-bottom: 15px;
+    padding: 2px 0 0 10px;
+}
+
+#hotelcreate-page ul#tabs li{
+    display: inline-block;
+}
+
+#hotelcreate-page ul#tabs li span{
+    background-color: #FFFFFF;
+    border-left: 1px solid #DDDDDD;
+    border-right: 1px solid #DDDDDD;
+    border-top: 1px solid #DDDDDD;
+    color: #666666;
+    display: inline-block;
+    margin-bottom: -1px;
+    padding: 8px 12px;
+    text-decoration: none;
+    .border-radius(3px, 3px, 0, 0);
+    cursor: pointer;
+}
+
+#hotelcreate-page ul#tabs li.active span{
+    border-bottom: 1px solid #FFFFFF;
+    font-weight: bold;
+}
+
+#hotelcreate-page .param.radios{
+    margin-top: 15px;
+}
+
+#hotelcreate-page .checkbox-block .checkbox{
+    margin-top: 5px;
+}
+
+#hotelcreate-page .checkbox-block .checkbox span{
+    padding-left: 5px;
+}
+
+#hotelcreate-page .zimmer-block .zimmer-new input{
+    width: 75%;
+    float: left;
+}
+
+#hotelcreate-page .zimmer-block .zimmer-new button{
+    margin-left: 10px;
+}
+
+#hotelcreate-page .zimmer-block .zimmer-list .item{
+    padding: 4px 0;
+    border-bottom: 1px solid #aaaaaa;
+}
+
+#hotelcreate-page .zimmer-block .zimmer-list .zimmer-delete{
+    width: 16px;
+    height: 16px;
+    background: url('img/delete-icon.png') no-repeat;
+    display: block;
+    float: right;
+}
