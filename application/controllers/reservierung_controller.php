@@ -706,9 +706,9 @@ class Reservierung_Controller extends MY_Controller
         $this->email->to($email);
 
         $subject = '';
-        if ($formular->type == 'angebot')
+        if ($formular->status == 'angebot')
             $subject = 'Angebot: Ihre Reiseanfrage ' . $formular->v_num;
-        else if ($formular->type == 'rechnung' || $formular->status == 'freigabe')
+        else if ($formular->status == 'rechnung' || $formular->status == 'freigabe')
             $subject = 'Rechnung: Vielen Dank für Ihre Buchung ' . $formular->r_num;
         else if ($formular->status == 'eingangsmitteilung')
             $subject = 'Rechnung: Vielen Dank für Ihre Buchung ' . $formular->v_num;
@@ -733,6 +733,7 @@ class Reservierung_Controller extends MY_Controller
         $this->email->attach($filename);
 
         if ($formular->status == "rechnung" || $formular->status == "freigabe") {
+
             $this->email->attach('attachments/Reisebedingungen_UniqueWorld.pdf');
             $this->email->attach('attachments/Sicherungsschein_UniqueWorld.pdf');
         }
@@ -810,6 +811,7 @@ class Reservierung_Controller extends MY_Controller
                         "value" => $formular->v_num
                     );
                 break;
+
             case "rnum":
                 $formulars = Formular::find('all', array('conditions' => array('r_num like "%' . $str . '%"')));
                 foreach ($formulars as $formular)
@@ -818,6 +820,7 @@ class Reservierung_Controller extends MY_Controller
                         "value" => $formular->r_num
                     );
                 break;
+
             case "kundename":
                 $persons = FormularPerson::find('all', array(
                     'conditions' => array('name like "%' . $str . '%" OR surname like "%' . $str . '%"')));

@@ -87,6 +87,13 @@
 .left-float{float:left;}
 .right-float{float:right;}
 .high-letters{text-transform: uppercase;}
+.delete-icon{
+    width: 16px;
+    height: 16px;
+    background: url('img/delete-icon.png') no-repeat;
+    display: block;
+    float: right;
+}
 
 p.error{
     color: red;
@@ -101,6 +108,7 @@ input[type=text]:focus, textarea:focus, select:focus {
 
 * {
     margin: 0;
+    font-family: Tahoma, sans-serif;
 }
 
 html, body {
@@ -1183,7 +1191,12 @@ label{
 }
 
 #hotelcreate-page{
-    width: 400px;
+    width: 500px;
+}
+
+#hotelcreate-page .page{
+    padding-bottom: 10px;
+    border-bottom: 5px dotted #b8b8b8;
 }
 
 #hotelcreate-page ul#tabs{
@@ -1246,5 +1259,123 @@ label{
     height: 16px;
     background: url('img/delete-icon.png') no-repeat;
     display: block;
+    float: right;
+}
+
+#hotelcreate-page #klassen-page .klassen-list{
+    margin: 20px 0;
+}
+
+#hotelcreate-page .empty{
+    display: block;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+#hotelcreate-page #klassen-page .klassen-item, #hotelcreate-page #klassen-page .minimum-item{
+    border-bottom: 1px solid #888888;
+    padding: 10px 0;
+    margin-bottom: 10px;
+}
+
+#hotelcreate-page #klassen-page .param-header{
+    margin-bottom: 10px;
+}
+
+#hotelcreate-page #klassen-page .param-header label{
+    display: inline-block;
+    margin-right: 10px;
+}
+
+#hotelcreate-page #klassen-page .param-header #caption{
+    width: 250px;
+    display: inline-block;
+}
+
+#hotelcreate-page #klassen-page #new-klassen, #hotelcreate-page #klassen-page #new-minimum, #hotelcreate-page #bonusnew-open{
+    float: right;
+    margin-top: 10px;
+}
+
+#hotelcreate-page #klassen-page .klassen-block{
+    border-bottom: 1px solid #aaaaaa;
+    padding-bottom: 5px;
+}
+
+#hotelcreate-page .period-param label{
+    display: inline-block;
+    width: auto;
+    padding-right: 20px;
+}
+
+#hotelcreate-page .period-param input{
+    display: inline-block;
+    width: 100px;
+    margin-right: 32px;
+}
+
+#hotelcreate-page .minimum-block{
+    padding: 20px 0;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #aaaaaa;
+}
+
+#hotelcreate-page .minimum-block label{
+    width: 80px;
+}
+
+#klassen-page .block-header{
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+#bonus-page .buttons{
+    margin: 15px 0;
+    float: right;
+}
+
+#bonus-page #bonusnew-open{
+    margin-top: 20px;
+}
+
+#bonus-page .bonus-preview p {
+    float: left;
+    padding-left: 15px;
+    width: 329px;
+}
+
+#bonus-page .preview-buttons{
+    float: right;
+}
+
+#bonus-page .bonus-blocks .bonus-block{
+    border: 1px solid #aaaaaa;
+    padding: 5px;
+    width: 45%;
+    height: 130px;
+}
+
+#bonus-page .bonus-blocks .bonus-block .radio{
+    margin-bottom: 4px;
+}
+
+#bonus-page .bonus-blocks .bonus-block .radio label{
+    display: inline-block;
+    font-weight: normal;
+    padding-left: 4px;
+}
+
+#bonus-page .bonus-item{
+    margin: 15px 0;
+}
+
+
+
+#bonus-page .bonus-blocks #bonus_1_block{
+    float: left;
+}
+
+#bonus-page .bonus-blocks #bonus_2_block{
     float: right;
 }

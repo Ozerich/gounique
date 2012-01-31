@@ -40,10 +40,6 @@ input[type="checkbox"] {
     vertical-align: bottom;
 }
 
-input[type="radio"] {
-    vertical-align: text-bottom;
-}
-
 sub {
     vertical-align: sub;
     font-size: smaller;

@@ -102,11 +102,13 @@
 <div class="formular-content">
 
 <div id="intro-page">
+    <? if($formular->kunde->type == "agenturen"): ?>
     <div class="input" id="provision-wr">
         <label for="provision">Provision %:</label>
         <input type="text" id="provision" name="provision"
                value="<?=$formular->provision?>" size="3"/>
     </div>
+    <? endif; ?>
     <div class="input" id="personcount-wr">
         <label for="personcount">Personen:</label>
         <input type="text" id="personcount" value="<?=$formular->person_count?>" name="personcount"

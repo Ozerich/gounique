@@ -17,6 +17,23 @@ class ProductHotel_Controller extends MY_Controller
         $this->view_data['page_title'] = 'Hotels';
     }
 
+    public function livesearch($action = '', $str = '')
+    {
+        if ($action == "room") {
+            $rooms = ProductRoom::find('all', array('conditions' => array('code like "%' . $str . '%" OR name like "%' . $str . '%"')));
+            foreach ($rooms as $room)
+                $result[] = array(
+                    "text" => "<b>" . $room->code . "</b> - " . $room->name,
+                    "value" => $room->name,
+                    "data" => array("room_id" => $room->id),
+                );
+
+        }
+
+        echo json_encode($result);
+        exit();
+    }
+
     public function room($action = "", $room_id = "")
     {
         if ($action == "") {

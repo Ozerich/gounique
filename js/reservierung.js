@@ -959,7 +959,7 @@ $(document).ready(function () {
             $(this).change();
             return false;
         }
-    }).datepicker("option", "showAnim", "blind").datepicker("option", "dateFormat", 'ddmmyy').datepicker("option", "minDate", new Date());
+    }).datepicker("option", "showAnim", "blind").datepicker("option", "dateFormat", 'ddmmyy');
 
     $('.reservierung-page #departure_date').change(function () {
         var val = $(this).val();
