@@ -70,6 +70,7 @@ class Reservierung_Controller extends MY_Controller
             $this->write_to_pdf($formular_id, 3);
             $this->write_to_pdf($formular_id, 4);
         }
+
     }
 
     private function write_to_pdf($formular_id, $type)
@@ -110,6 +111,7 @@ class Reservierung_Controller extends MY_Controller
         $pdf->WriteHTML($html, 2);
 
         $pdf->Output('pdf/' . $formular->id . "_" . $type . ".pdf", 'F');
+
     }
 
     public function get_pdf_name($formular_id)
@@ -120,7 +122,7 @@ class Reservierung_Controller extends MY_Controller
 
         switch ($formular->status) {
             case "angebot":
-                return "Angebot-" . ($formular->persons ? $formular->persons[0]->surname : '') . "-UniqueWorld";
+                return "Angebot-" . ($formular->persons ? $formular->persons[0]->name : '') . "-UniqueWorld";
             case "rechnung":
                 return "Rechnung-" . str_replace('/', '', $formular->r_num) . "-UniqueWorld";
             case "storno":
@@ -632,6 +634,7 @@ class Reservierung_Controller extends MY_Controller
 
         $this->write_to_pdf($formular->id, 1);
         $this->write_to_pdf($formular->id, 2);
+
 
         redirect("reservierung/final/" . $formular->id);
     }

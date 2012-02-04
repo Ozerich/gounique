@@ -53,8 +53,8 @@ class FormularHotel extends ActiveRecord\Model
     {
         $text = $this->date_start->format('d.m.Y') . " - " . $this->date_end->format('d.m.Y') . " ";
         $text .= $this->days_count . "N HOTEL: " . $this->hotel_name . " / ";
-        $text .= ($this->is_manuel ? $this->roomcapacity : RoomCapacity::find_by_id($this->roomcapacity)->value) . " / ";
-        $text .= ($this->is_manuel ? $this->roomtype : RoomType::find_by_id($this->roomtype)->value) . " / ";
+        $text .= $this->roomcapacity  . " / ";
+        $text .= $this->roomtype . " / ";
         $text .= HotelService::find_by_id($this->hotelservice_id)->value . " / ";
         $text .= ($this->transfer == "kein") ? '' :  " / TRANSFER " . strtoupper($this->transfer);
         $text .= ($this->remark ? ' / ' . $this->remark : '') . ($this->city_tour ? ' / ' . $this->city_tour : '');
@@ -65,8 +65,8 @@ class FormularHotel extends ActiveRecord\Model
     public function get_nodate_text()
     {
         $text = $this->days_count . "N HOTEL: " . $this->hotel_name . " / ";
-        $text .= ($this->is_manuel ? $this->roomcapacity : RoomCapacity::find_by_id($this->roomcapacity)->value) . " / ";
-        $text .= ($this->is_manuel ? $this->roomtype : RoomType::find_by_id($this->roomtype)->value) . " / ";
+        $text .= $this->roomcapacity. " / ";
+        $text .= $this->roomtype. " / ";
         $text .= HotelService::find_by_id($this->hotelservice_id)->value . " / ";
         $text .= ($this->transfer == "kein") ? '' : " / TRANSFER " . strtoupper($this->transfer);
         $text .= ($this->remark ? ' / ' . $this->remark : '') . " - &nbsp;<b>" . $this->all_price . "&euro;</b>";
@@ -136,18 +136,18 @@ class FormularHotel extends ActiveRecord\Model
 
     public function get_plain_roomtype()
     {
-        return $this->is_manuel ? $this->roomtype : RoomType::find_by_id($this->roomtype)->value;
+        return $this->roomtype;
     }
 
     public function get_plain_roomcapacity()
     {
-        return $this->is_manuel ? $this->roomcapacity : RoomCapacity::find_by_id($this->roomcapacity)->value;
+        return $this->roomcapacity;
     }
 
     public function get_file_roomcapacity()
     {
         $formular = Formular::find_by_id($this->formular_id);
-        $room_capacity = $this->is_manuel ? $this->roomcapacity : RoomType::find_by_id($this->roomtype)->value;
+        $room_capacity = $this->roomcapacity;
 
         $last = substr($room_capacity, -1);
         switch ($last) {

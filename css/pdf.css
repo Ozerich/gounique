@@ -40,10 +40,12 @@ h2{
     margin:0;
 }
 
-h3{
+.block-header{
     margin: 0;
     font-size: 13px;
     padding: 0 0 3px 3px;
+    width: 171px;
+    font-weight: bold;
 }
 
 .top-block{
@@ -91,19 +93,17 @@ h3{
 .main-block .block.first{margin-top: 0;}
 
 .reiseteilnehmer-table{
+    margin: -20px 0 0 135px;
+    display: block;
     width: 100%;
-
-}
-
-.reiseteilnehmer-table .num{
-    width: 77px;
-    text-align: right;
 }
 
 .reiseteilnehmer-table .sex{
-    width: 98px;
     text-align:right;
+    display: block;
+    width: 40px;
     text-transform: uppercase;
+    padding-right: 5px;
 }
 
 .reiseteilnehmer-table .person-name{
@@ -114,12 +114,12 @@ h3{
 }
 
 .reisezeitraum-table{
-    margin-left: 174px;
+    margin: -20px 0 0 174px;
 }
 
 .reisezeitraum-table td{
     background: #dce6f0;
-    width: 110px;
+    width: 130px;
     border: 1px solid black;
 }
 
@@ -129,11 +129,7 @@ h3{
 
 .liestung-table{
     width: 100%;
-}
-
-.liestung-table .num{
-    padding-left: 67px;
-    width: 174px;
+    margin: -20px 0 0 174px;
 }
 
 .liestung-table .text{
@@ -145,8 +141,11 @@ h3{
 
 
 .flight-plan{
-    width: 100%;
+    width: 536px;
+    margin-left: 174px;
+    margin: -20px 0 0 174px;
     background: #dce6f0;
+    border-left: 1px solid black;
     border-top: 1px solid black;
 }
 
@@ -217,6 +216,7 @@ h3{
 .anzahlung-block{
     float: left;
     width: 400px;
+    font-size: 12px;
 }
 
 .anzahlung-block .bank-block{
@@ -229,10 +229,9 @@ h3{
     font-size: 12px;
 }
 
-
-
 .anzahlung-block p{
-    margin: 0 0 10px 0;
+    margin: 0 0 5px 0;
+    font-size: 11px;
 }
 
 .bottom-text{
@@ -241,16 +240,26 @@ h3{
 }
 
 .signature{
-    margin: 40px 0 0 0;
+    margin: 20px 0 0 0;
     clear: both;
 }
 
 .signature .text{
-    float: left;
     width: 355px;
+    clear: both;
 }
 
-.signature .line{
+.signature .signature-space{
+    padding: 20px 0;
+}
+
+.signature .text .param-name{
+    float: left;
+    margin-right: 10px;
+    width: 150px;
+}
+
+.signature .text .line{
     border-bottom: 1px solid black;
     height: 2px;
     float: left;

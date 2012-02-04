@@ -76,14 +76,8 @@ $route['dashboard/(:any)'] = 'dashboard_controller/$1';
 $route['settings/offers'] = 'settings_controller/offers';
 $route['settings/(:any)'] = 'settings_controller/$1';
 
-$route['product/hotels/main'] = 'producthotel_controller/main';
-$route['product/hotels/room'] = 'producthotel_controller/room';
-$route['product/hotels/room/(:any)'] = 'producthotel_controller/room/$1';
-$route['product/hotels/service'] = 'producthotel_controller/service';
-$route['product/hotels/service/(:any)'] = 'producthotel_controller/service/$1';
-$route['product/hotels/livesearch/(:any)'] = 'producthotel_controller/livesearch/$1';
-$route['product/hotels'] = 'producthotel_controller/hotels';
-$route['product/hotels/(:any)'] = 'producthotel_controller/hotel/$1';
+$route['product/hotel'] = 'producthotel_controller';
+$route['product/hotel/(:any)'] = 'producthotel_controller/$1';
 
 $route['product'] = 'product_controller';
 $route['product/(:any)'] = 'product_controller/$1';

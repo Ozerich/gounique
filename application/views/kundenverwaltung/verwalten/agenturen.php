@@ -78,6 +78,11 @@
             <textarea name="about"><?=$kunde->about?></textarea>
         </div>
 
+        <div class="param">
+            <label for="ausland">Ausland</label>
+            <input type="checkbox" name="ausland" id="ausland" value="1" <?if($kunde->ausland)echo 'checked'?>/>
+        </div>
+
     </div>
 
     <div class="buttons">

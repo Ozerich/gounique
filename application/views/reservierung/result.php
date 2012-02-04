@@ -167,10 +167,12 @@
                 <td class="param">Provision <?=$formular->provision?>%</td>
                 <td><?=$formular->price['provision']?></td>
             </tr>
+            <? if(!$formular->kunde->ausland): ?>
             <tr>
                 <td class="param">MWST auf Prov 19%</td>
                 <td><?=$formular->price['mwst']?></td>
             </tr>
+                <? endif; ?>
             <tr>
                 <td class="param">Total Provision:</td>
                 <td><?=$formular->price['total_provision']?></td>

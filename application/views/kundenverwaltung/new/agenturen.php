@@ -73,6 +73,11 @@
             <textarea name="about"></textarea>
         </div>
 
+        <div class="param">
+            <label for="ausland">Ausland</label>
+            <input type="checkbox" name="ausland" id="ausland" value="1"/>
+        </div>
+
     </div>
 
     <div class="buttons">

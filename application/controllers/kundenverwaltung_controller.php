@@ -96,6 +96,7 @@ class Kundenverwaltung_Controller extends MY_Controller
             $client->provision = $this->input->post('provision');
             $client->about = $this->input->post('about');
             $client->kurzel = $this->input->post('kurzel');
+            $client->ausland = $this->input->post('ausland');
 
             $client->k_num = $this->input->post('k_num');
 
@@ -128,6 +129,7 @@ class Kundenverwaltung_Controller extends MY_Controller
                 "fax" => $this->input->post("fax"),
                 "provision" => $this->input->post("provision"),
                 "about" => $this->input->post("about"),
+                "ausland" => $this->input->post("ausland"),
                 "kurzel" => $this->input->post("kurzel")
             );
 

@@ -3,8 +3,8 @@
         <a href="dashboard" class="home-link"><img src="img/header-logo.jpg"/></a>
         <ul class="page-path">
             <li><a href="product">product</a></li>
-            <li><a href="product/hotels/main">hotelverwaltung</a></li>
-            <li><a href="product/hotels">hoteldaten</a></li>
+            <li><a href="product/hotel">hotelverwaltung</a></li>
+            <li><span>neueu hotel</span></li>
         </ul>
     </div>
 </div>
@@ -14,7 +14,7 @@
 
 <ul id="tabs">
     <li class="active"><span for="crs-page">CRS Daten</span></li>
-    <li><span for="klassen-page">Klassen & Extras</span></li>
+    <li><span for="klassen-page">Childs & Extras</span></li>
     <li><span for="bonus-page">Bonuses</span></li>
     <li><span for="kontakt-page">Kontaktdaten</span></li>
 </ul>
@@ -24,6 +24,7 @@
         <label for="code">Hotelcode</label>
         <input name="code" class="high-letters" type="text" id="code" maxlength="10"/>
     </div>
+
     <div class="param">
         <label for="name">Hotelname</label>
         <input name="name" type="text" id="name"/>
@@ -54,56 +55,13 @@
         <input name="land" type="text" id="land"/>
     </div>
 
-    <div class="param">
-        <div class="left">
-            <label for="min_auf">Min.Auf.</label>
-            <input name="min_auf" type="text" id="min_auf"/>
-        </div>
-        <div class="right">
-            <label for="max_auf">Max.Auf.</label>
-            <input type="text" name="max_auf" id="max_auf"/>
-        </div>
-        <br class="clear"/>
-    </div>
-
-    <div class="param">
-        <label for="service">Hotel Verpflegungs</label>
-
-        <div class="checkbox-block">
-            <? foreach (ProductService::all() as $service): ?>
-            <div class="checkbox">
-                <input type="checkbox" name="service" value="<?=$service->id?>"/><span><?=$service->name?><span>
-            </div>
-            <? endforeach; ?>
-        </div>
-    </div>
-
-    <div class="param zimmer-block">
-        <label for="zimmer">Hotelzimmer</label>
-
-        <div class="zimmer-new">
-            <input type="text" id="zimmer-value"/>
-            <button id="zimmer-add">Add</button>
-            <input type="hidden" id="zimmer_id"/>
-        </div>
-
-        <div class="zimmer-list">
-            <div class="item example" style="display:none">
-                <span class="zimmer-name"></span>
-                <a href="#" class="zimmer-delete"></a>
-                <input type="hidden" class="room_id"/>
-            </div>
-
-        </div>
-    </div>
-
     <div class="param radios">
         <div class="left">
             <label for="flugbindung">Flugbindung</label>
 
             <div class="buttonset">
-                <input type="radio" value="on" id="flug-on" name="flugbindung"/><label for="flug-on">On</label>
-                <input type="radio" value="off" id="flug-off" name="flugbindung" checked/><label
+                <input type="radio" value="1" id="flug-on" name="flugbindung"/><label for="flug-on">On</label>
+                <input type="radio" value="0" id="flug-off" name="flugbindung" checked/><label
                 for="flug-off">Off</label>
             </div>
         </div>
@@ -111,8 +69,8 @@
             <label for="crs">CRS Status</label>
 
             <div class="buttonset">
-                <input type="radio" value="on" id="crs-on" name="crs"/><label for="crs-on">On</label>
-                <input type="radio" value="off" id="crs-off" name="crs" checked/><label for="crs-off">Off</label>
+                <input type="radio" value="1" id="crs-on" name="crs"/><label for="crs-on">On</label>
+                <input type="radio" value="0" id="crs-off" name="crs" checked/><label for="crs-off">Off</label>
             </div>
         </div>
         <br class="clear"/>
@@ -120,30 +78,97 @@
 </div>
 
 <div class="page" id="klassen-page" style="display: none">
-    <div class="klassen-block">
-        <span class="block-header">Klassen:</span>
+    <div class="child-block">
 
-        <div class="klassen-list">
-            <span class="empty">No klassen</span>
-
-            <div class="klassen-item example" style="display:none">
-                <div class="param">
-                    <div class="param-header">
-                        <label for="caption">Caption</label>
-                        <input type="text" id="caption"/>
-                        <a href="#" class="delete-icon klassen-delete"></a>
-                    </div>
-                    <div class="period-param param">
-                        <label for="von">von</label>
-                        <input type="text" id="von" maxlength="2"/>
-                        <label for="bis">bis</label>
-                        <input type="text" id="bis" maxlength="2"/>
-                    </div>
-                </div>
+        <div class="child-cat">
+            <div class="child-preview">
+                <span>Teen</span>
+                <input type="checkbox" name="teenblock_active"/>
+            </div>
+            <div class="child-content">
+                <table>
+                    <thead>
+                    <th class="active">&nbsp;</th>
+                    <th class="age">von</th>
+                    <th class="age">bis</th>
+                    </thead>
+                    <tbody>
+                    <tr class="example">
+                        <td class="active"><input type="checkbox" for-name="teen-active" checked></td>
+                        <td class="age">
+                            <input type="text" maxlength="2" value="12"/>
+                            <input type="hidden" for-name="teen-von"/>
+                        </td>
+                        <td class="age">
+                            <input type="text" maxlength="2" value="18"/>
+                            <input type="hidden" for-name="teen-bis"/>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <button class="child-new">New</button>
+            </div>
+        </div>
+        <div class="child-cat">
+            <div class="child-preview">
+                <span>Kind / Child</span>
+                <input type="checkbox" name="childblock_active"/>
+            </div>
+            <div class="child-content">
+                <table>
+                    <thead>
+                    <th class="active">&nbsp;</th>
+                    <th class="age">von</th>
+                    <th class="age">bis</th>
+                    </thead>
+                    <tbody>
+                    <tr class="example">
+                        <td class="active"><input type="checkbox" for-name="child-active" checked></td>
+                        <td class="age">
+                            <input type="text" maxlength="2" value="2"/>
+                            <input type="hidden" for-name="child-von"/>
+                        </td>
+                        <td class="age">
+                            <input type="text" maxlength="2" value="12"/>
+                            <input type="hidden" for-name="child-bis"/>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <button class="child-new">New</button>
+            </div>
+        </div>
+        <div class="child-cat">
+            <div class="child-preview">
+                <span>Baby / Infant</span>
+                <input type="checkbox" name="infantblock_active"/>
+            </div>
+            <div class="child-content">
+                <table>
+                    <thead>
+                    <th class="active">&nbsp;</th>
+                    <th class="age">von</th>
+                    <th class="age">bis</th>
+                    </thead>
+                    <tbody>
+                    <tr class="example">
+                        <td class="active"><input type="checkbox" for-name="infant-active" checked></td>
+                        <td class="age">
+                            <input type="text" maxlength="2" value="0"/>
+                            <input type="hidden" for-name="infant-von"/>
+                        </td>
+                        <td class="age">
+                            <input type="text" maxlength="2" value="2"/>
+                            <input type="hidden" for-name="infant-bis"/>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <button class="child-new">New</button>
             </div>
         </div>
 
-        <button id="new-klassen">Neueu klassen</button>
+
         <br class="clear"/>
     </div>
     <div class="minimum-block">
@@ -163,7 +188,7 @@
                 </div>
                 <div class="period-param param">
                     <label for="nachte_max">Nachte:</label>
-                    <input type="text" id="nachte_max"/>
+                    <input type="text" id="nachte_max" class="minimum-nights"/>
                 </div>
 
             </div>
@@ -206,9 +231,9 @@
                 <label for="optionsbuchung">Optionsbuchung</label>
 
                 <div class="buttonset">
-                    <input type="radio" value="on" id="optionsbuchung-on" name="optionsbuchung"/><label
+                    <input type="radio" value="1" id="optionsbuchung-on" name="optionsbuchung"/><label
                     for="optionsbuchung-on">On</label>
-                    <input type="radio" value="off" id="optionsbuchung-off" name="optionsbuchung" checked/><label
+                    <input type="radio" value="0" id="optionsbuchung-off" name="optionsbuchung" checked/><label
                     for="optionsbuchung-off">Off</label>
                 </div>
             </div>
@@ -216,8 +241,8 @@
                 <label for="rq_buchung">RQ Buchung</label>
 
                 <div class="buttonset">
-                    <input type="radio" value="on" id="rq_buchung-on" name="crs"/><label for="rq_buchung-on">On</label>
-                    <input type="radio" value="off" id="rq_buchung-off" name="crs" checked/><label for="rq_buchung-off">Off</label>
+                    <input type="radio" value="1" id="rq_buchung-on" name="rq_buchung"/><label for="rq_buchung-on">On</label>
+                    <input type="radio" value="0" id="rq_buchung-off" name="rq_buchung" checked/><label for="rq_buchung-off">Off</label>
                 </div>
             </div>
             <br class="clear"/>
@@ -304,43 +329,43 @@
 <div class="page" id="kontakt-page" style="display:none">
     <div class="param">
         <label for="vorname">Vorname</label>
-        <input type="text" name="vorname" id="vorname"/>
+        <input type="text" name="kontakt_vorname" id="vorname"/>
     </div>
     <div class="param">
         <label for="nachname">Nachname</label>
-        <input type="text" name="nachname" id="nachname"/>
+        <input type="text" name="kontakt_nachname" id="nachname"/>
     </div>
     <div class="param">
         <label for="strasse">Strasse</label>
-        <input type="text" name="strasse" id="strasse"/>
+        <input type="text" name="kontakt_strasse" id="strasse"/>
     </div>
     <div class="param">
         <label for="postleitzahl">Postleitzahl</label>
-        <input type="text" name="postleitzahl" id="postleitzahl"/>
+        <input type="text" name="kontakt_postleitzahl" id="postleitzahl"/>
     </div>
     <div class="param">
         <label for="ort">Ort</label>
-        <input type="text" name="ort" id="ort"/>
+        <input type="text" name="kontakt_ort" id="ort"/>
     </div>
     <div class="param">
         <label for="land">Land</label>
-        <input type="text" name="land" id="land"/>
+        <input type="text" name="kontakt_land" id="land"/>
     </div>
     <div class="param">
         <label for="phone">Tel. Nr.</label>
-        <input type="text" name="phone" id="phone"/>
+        <input type="text" name="kontakt_phone" id="phone"/>
     </div>
     <div class="param">
         <label for="fax">Fax Nr.</label>
-        <input type="text" name="fax" id="fax"/>
+        <input type="text" name="kontakt_fax" id="fax"/>
     </div>
     <div class="param">
         <label for="email">E-Mail</label>
-        <input type="text" name="email" id="email"/>
+        <input type="text" name="kontakt_email" id="email"/>
     </div>
     <div class="param">
         <label for="homepage">Homepage</label>
-        <input type="text" name="homepage" id="homepage"/>
+        <input type="text" name="kontakt_homepage" id="homepage"/>
     </div>
 
 </div>

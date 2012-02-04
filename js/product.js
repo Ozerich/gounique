@@ -43,38 +43,56 @@ $(document).ready(function () {
         return false;
     });
 
-    $('#hotelcreate-page #new-klassen').click(function () {
+    $('#hotelcreate-page .child-preview input[type=checkbox]').click(function () {
+        if ($(this).is(':checked'))
+            $(this).parents('.child-cat').find('.child-content').show();
+        else
+            $(this).parents('.child-cat').find('.child-content').hide();
+    });
 
-        var new_item = $('.klassen-item.example').clone().removeClass('example').appendTo('.klassen-list').show();
-        $(new_item).find('input').attr('name', $(this).attr('id') + '[' + ($('.klassen-item').size() - 1) + ']');
-        $('#hotelcreate-page .klassen-list .empty').hide();
+    $('#hotelcreate-page .child-content input[type=checkbox]').click(function () {
+        if (!$(this).is(':checked'))
+            $(this).parents('tr').find('input[type=text]').attr('disabled', 'disabled');
+        else
+            $(this).parents('tr').find('input[type=text]').removeAttr('disabled');
+    });
 
-        $(new_item).find('.klassen-delete').click(function () {
-            $(this).parents('.klassen-item').remove();
+    $('#hotelcreate-page .child-cat .child-new').click(function () {
+        var block = $(this).parents('.child-cat');
 
-            if ($('#hotelcreate-page .klassen-item').size() < 2)
-                $('#hotelcreate-page .klassen-list .empty').show();
+        var row = $(block).find('tr.example').clone().removeClass('example').appendTo($(block).find('table')).show().
+            find('input').each(
+            function () {
+                if ($(this).attr('for-name'))
+                    $(this).attr('name', $(this).attr('for-name') + '[' + ($(block).find('.child-content tr').size() - 2) + ']');
+            }).find('input[type=text]').keyup(
+            function () {
+                $(this).next().val($(this).val());
+            });
 
-            return false;
+        $(block).find('.child-content input[type=checkbox]').click(function () {
+            if (!$(this).is(':checked'))
+                $(this).parents('tr').find('input[type=text]').attr('disabled', 'disabled');
+            else
+                $(this).parents('tr').find('input[type=text]').removeAttr('disabled');
         });
+
 
         return false;
     });
 
-    $('#hotelcreate-page .klassen-delete').click(function () {
-        $(this).parents('.klassen-item').remove();
-
-        if ($('#hotelcreate-page .klassen-item').size() < 2)
-            $('#hotelcreate-page .klassen-list .empty').show();
-
-        return false;
+    $('#hotelcreate-page .child-cat .child-content input[type=text]').keyup(function () {
+        $(this).next().val($(this).val());
     });
 
     $('#hotelcreate-page #new-minimum').click(function () {
 
         var new_item = $('.minimum-item.example').clone().removeClass('example').appendTo('.minimum-list').show();
-        $(new_item).find('.minimum-von').attr('name', $(this).attr('.minumum-von') + '[' + ($('.minimum-item').size() - 1) + ']');
-        $(new_item).find('.minimum-bis').attr('name', $(this).attr('.minumum-bis') + '[' + ($('.minimum-item').size() - 1) + ']');
+
+        $(new_item).find('.minimum-von').attr('name', 'minimum_von[' + ($('.minimum-item').size() - 1) + ']');
+        $(new_item).find('.minimum-bis').attr('name', 'minimum_bis[' + ($('.minimum-item').size() - 1) + ']');
+        $(new_item).find('.minimum-nights').attr('name', 'minimum_nights[' + ($('.minimum-item').size() - 1) + ']');
+
         $('#hotelcreate-page .minimum-list .empty').hide();
 
         $(new_item).find('.minimum-delete').click(function () {
@@ -95,10 +113,11 @@ $(document).ready(function () {
         return false;
     });
 
-    $('#hotelcreate-page .minimum-von, #hotelcreate-page .minimum-bis').filter(':visible').
-        datepicker().
-        datepicker("option", "showAnim", "blind").
-        datepicker("option", "dateFormat", 'ddmmyy');
+    $('#hotelcreate-page .minimum-item').not('.example').find('.minimum-von, .minimum-bis').each(function () {
+        var a = $(this).val();
+        $(this).datepicker().datepicker("option", "showAnim", "blind").datepicker("option", "dateFormat", 'ddmmyy');
+        $(this).val(a);
+    });
 
     $('#hotelcreate-page .minimum-delete').click(function () {
         $(this).parents('.minimum-item').remove();
@@ -135,6 +154,10 @@ $(document).ready(function () {
         $(bonus_block).show().find('.bonus-preview').hide();
         $(bonus_block).find('.bonus-content').show();
 
+        $(bonus_block).find('input').each(function () {
+            $(this).attr('name', $(this).attr('for') + '[' + $('.bonus-item:visible').size() + ']');
+        });
+
         $(bonus_block).find('.bonusadd-cancel').click(function () {
             if ($(bonus_block).find('.bonus-preview p').html() == '')
                 $(this).parents('.bonus-item').remove();
@@ -155,7 +178,7 @@ $(document).ready(function () {
 
         $(bonus_block).find('.bonus-delete').click(function () {
             $(this).parents('.bonus-item').remove();
-            if($('#hotelcreate-page #bonus-page .bonus-item:visible').size() == 0)
+            if ($('#hotelcreate-page #bonus-page .bonus-item:visible').size() == 0)
                 $('#hotelcreate-page #bonus-page .empty').show();
             return false;
         });
@@ -241,7 +264,39 @@ $(document).ready(function () {
     $('#hotelcreate-page .bonus-item:visible').find('.bonus-von, .bonus-bis').datepicker().
         datepicker("option", "showAnim", "blind").
         datepicker("option", "dateFormat", 'ddmmyy');
-    // $('#hotelcreate-page .bonus-item:visible').find('.bonus-type').buttonset();
 
+
+    $('.room-page #persons-page .delete-icon').click(function () {
+        $(this).parents('tr').remove();
+        return false;
+    });
+
+    $('.room-page #persons-page #add-difference').click(function () {
+
+        var row = $('.room-page #persons-page table tr.example').clone().removeClass('example').
+            appendTo($('.room-page #persons-page table')).show();
+
+        $(row).find('.delete-icon').click(function () {
+            $(this).parents('tr').remove();
+            return false;
+        });
+
+        $(row).find('input').each(function () {
+            $(this).attr('name', $(this).attr('for-name') + '[' + ($(this).parents('table').find('tr').size() - 2) + ']');
+        });
+
+        return false;
+    });
+
+    $('.room-page #room-subtabs li').click(function () {
+
+        $('.room-page #room-subtabs li').removeClass('active').each(function () {
+            $('#' + $(this).attr('for-page')).hide();
+        });
+
+        $('#' + $(this).attr('for-page')).show();
+        $(this).addClass("active");
+        return false;
+    });
 
 });

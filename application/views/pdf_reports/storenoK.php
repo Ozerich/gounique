@@ -34,7 +34,6 @@
             <table class="reiseteilnehmer-table">
                 <? foreach ($formular->persons as $ind => $person): ?>
                 <tr>
-                    <td class="num"><?=($ind + 1)?></td>
                     <td class="sex"><?=$person->plain_sex?></td>
                     <td class="person-name"><?=$person->name . "/" . $person->surname?></td>
                 </tr>
@@ -46,9 +45,9 @@
             <h3>Reisezeitraum:</h3>
             <table class="reisezeitraum-table">
                 <tr>
-                    <td><?=($formular->departure_date) ? $formular->departure_date->format('d. M. y') : ''?></td>
+                    <td><?=($formular->departure_date) ? $formular->departure_date->format('d. F. Y') : ''?></td>
                     <td class="center">bis</td>
-                    <td><?=($formular->arrival_date) ? $formular->arrival_date->format('d. M. y') : ''?></td>
+                    <td><?=($formular->arrival_date) ? $formular->arrival_date->format('d. F. Y') : ''?></td>
                 </tr>
             </table>
         </div>
@@ -58,7 +57,6 @@
             <table class="liestung-table">
                 <? foreach ($formular->hotels_and_manuels as $ind => $item): ?>
                 <tr>
-                    <td class="num"><?=($ind + 1)?></td>
                     <td class="text"><?=$item->pdf_text?></td>
                 </tr>
                 <? endforeach; ?>

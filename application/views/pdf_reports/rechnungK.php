@@ -34,7 +34,6 @@
             <table class="reiseteilnehmer-table">
                 <? foreach ($formular->persons as $ind => $person): ?>
                 <tr>
-                    <td class="num"><?=($ind + 1)?></td>
                     <td class="sex"><?=$person->plain_sex?></td>
                     <td class="person-name"><?=$person->name . "/" . $person->surname?></td>
                 </tr>
@@ -46,9 +45,9 @@
             <h3>Reisezeitraum:</h3>
             <table class="reisezeitraum-table">
                 <tr>
-                    <td><?=$formular->departure_date->format('d. M. y')?></td>
+                    <td><?=$formular->departure_date->format('d. F. Y')?></td>
                     <td class="center">bis</td>
-                    <td><?=($formular->arrival_date) ? $formular->arrival_date->format('d. M. y') : ''?></td>
+                    <td><?=($formular->arrival_date) ? $formular->arrival_date->format('d. F. Y') : ''?></td>
                 </tr>
             </table>
         </div>
@@ -58,7 +57,6 @@
             <table class="liestung-table">
                 <? foreach ($formular->hotels_and_manuels as $ind => $item): ?>
                 <tr>
-                    <td class="num"><?=($ind + 1)?></td>
                     <td class="text"><?=$item->pdf_text?></td>
                 </tr>
                 <? endforeach; ?>
@@ -79,11 +77,10 @@
     <div class="anzahlung-block">
         <? if ($formular->status == "rechnung"): ?>
         <? if ($formular->finalpayment_date): ?>
-            <p>Anzahlung sofort nach Erhalt der Rechnung: <?=$formular->price['anzahlung_value']?> &euro;</p>
-            <p>Restzahlung f&auml;llig am: <?=$formular->finalpayment_date->format('d-M-y')?>
-                &nbsp;&nbsp;<?=$formular->price['restzahlung']?> &euro;</p>
+            <p>Die Anzahlung beträgt EUR <?=$formular->price['anzahlung_value']?> und ist fällig am <?=$formular->prepayment_date->format('d.m.y')?>.</p>
+            <p>Die Restzahlung beträgt EUR <?=$formular->price['restzahlung']?> und ist fällig am <?=$formular->finalpayment_date->format('d.m.y')?>.</p>
             <? else: ?>
-            <p>Zahlung sofort nach Erhalt de Rechnung</p>
+            <p>Zahlung sofort nach Erhalt der Rechnung</p>
             <? endif; ?>
         <? endif; ?>
 
@@ -92,7 +89,7 @@
             <div class="param"><b>Commerzbank AG</b></div>
             <div class="param"><b>Kto.: 420 131 500</b></div>
             <div class="param"><b>BLZ: 200 400 00</b></div>
-            <div class="param"><b>Zweck: <?=$formular->r_num?></b> (Bitte ubedingt angeben!)</div>
+            <div class="param"><b>Verwendungszweck: <?=$formular->r_num?></b> (Bitte ubedingt angeben!)</div>
         </div>
     </div>
 

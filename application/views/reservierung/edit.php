@@ -5,7 +5,6 @@
             <li><a
                 href="kundenverwaltung/historie/<?=$formular->kunde->id?>"><?=$formular->kunde->plain_type;?> <?=$formular->kunde->k_num?></a>
             </li>
-            </li>
             <li><span>formular <?=$formular->v_num;?></span></li>
         </ul>
     </div>
@@ -15,7 +14,7 @@
 <div id="createformular-page" class="reservierung-page content">
 <?if ($formular->status == 'rechnung'): ?>
 <div class="alert-block">
-    <p>Это рехнунг, 30 евро редактирование стоит! Не стоит этого делать!!!</p>
+    <p>Diese rehnung, 30 € wert Bearbeitung! Tun Sie das nicht!</p>
 </div>
     <? endif;?>
 

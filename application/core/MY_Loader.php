@@ -109,6 +109,7 @@ class MY_Loader extends CI_Loader
         }
 
         # Check that it exists. CI Doesn't check package existence by itself
+
         if(!file_exists($spark_path))
         {
             show_error("Cannot find spark path at $spark_path");
