@@ -40,7 +40,8 @@ class Hotel extends ActiveRecord\Model
 
         foreach ($this->rooms as $room)
             foreach (HotelRoomType::find_all_by_room_id($room->id) as $room_type)
-                $result[] = $room_type;
+                if($room_type->active)
+                    $result[] = $room_type;
 
         return $result;
     }
@@ -65,6 +66,12 @@ class Hotel extends ActiveRecord\Model
                     $result[] = $infant;
 
         return $result;
+    }
+
+    public function get_bonuses()
+    {
+        $data = HotelBonus::find_all_by_hotel_id($this->id);
+        return $data ? $data : array();
     }
 }
 

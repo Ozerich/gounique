@@ -39,6 +39,11 @@ class HotelRoomType extends ActiveRecord\Model
     {
         return HotelRoom::find_by_id($this->room_id);
     }
+
+    public function get_periods()
+    {
+        return RoomPeriod::find_all_by_room_id($this->id);
+    }
 }
 
 ?>

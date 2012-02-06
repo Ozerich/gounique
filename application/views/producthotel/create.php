@@ -10,7 +10,7 @@
 </div>
 
 <div id="hotelcreate-page" class="content product-create">
-<?=form_open("product/hotels/create")?>
+<?=form_open("product/hotel/create")?>
 
 <ul id="tabs">
     <li class="active"><span for="crs-page">CRS Daten</span></li>
@@ -278,37 +278,69 @@
 
                 <div class="period-param param">
                     <label for="von">Period von</label>
-                    <input type="text" class="bonus-von" maxlength="8"/>
+                    <input type="text" for-name="bonus_von" class="bonus-von" maxlength="8"/>
                     <label for="bis">bis</label>
-                    <input type="text" class="bonus-bis" maxlength="8"/>
+                    <input type="text" for-name="bonus_bis" class="bonus-bis" maxlength="8"/>
                 </div>
 
                 <div class="bonus-blocks">
+
                     <div id="bonus_1_block" class="bonus-block">
                         <div class="radio">
-                            <input type="radio" class="bonustype" value="1" checked/><label>Nachte bonus</label>
+                            <input type="radio" for-name="bonus_type" class="bonustype" value="night_bonus" checked/><label>Nachte bonus</label>
                         </div>
 
                         <div class="param">
                             <label>Nachte</label>
-                            <input type="text" maxlength="2" id="from"/> = <input type="text" maxlength="2" id="to"/>
+                            <input type="text" for-name="from_nights" maxlength="2" id="from"/> = <input type="text" for-name="to_nights" maxlength="2" id="to"/>
                         </div>
                     </div>
 
                     <div id="bonus_2_block" class="bonus-block">
                         <div class="radio">
-                            <input type="radio" class="bonustype" value="2"/><label>EarlyBird</label>
+                            <input type="radio" for-name="bonustype" class="bonustype" value="earlybird_days"/><label>EarlyBird(days)</label>
                         </div>
 
                         <div class="param">
                             <label>Days before</label>
-                            <input type="text" id="days" maxlength="2"/>
+                            <input type="text" for-name="days_before" id="days" maxlength="2"/>
                         </div>
                         <div class="param">
                             <label>Discount %</label>
-                            <input type="text" id="percent" maxlength="2"/>
+                            <input type="text" for-name="discount1" id="percent" maxlength="2"/>
                         </div>
                     </div>
+
+                    <div id="bonus_3_block" class="bonus-block">
+                        <div class="radio">
+                            <input type="radio" for-name="bonustype" class="bonustype" value="earlybird_date"/><label>EarlyBird(date)</label>
+                        </div>
+
+                        <div class="param">
+                            <label>Booking till</label>
+                            <input type="text" for-name="booking_till" id="booking_till" maxlength="2"/>
+                        </div>
+                        <div class="param">
+                            <label>Discount %</label>
+                            <input type="text" for-name="discount2" id="discount2" maxlength="2"/>
+                        </div>
+                    </div>
+
+                    <div id="bonus_4_block" class="bonus-block">
+                        <div class="radio">
+                            <input type="radio" for-name="bonustype" class="bonustype" value="long_stay"/><label>Longstay</label>
+                        </div>
+
+                        <div class="param">
+                            <label>Days count</label>
+                            <input type="text" for-name="days_count" id="days_count" maxlength="2"/>
+                        </div>
+                        <div class="param">
+                            <label>Discount %</label>
+                            <input type="text" id="discount3" for-name="discount3" maxlength="2"/>
+                        </div>
+                    </div>
+
                     <br class="clear"/>
                 </div>
 

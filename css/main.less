@@ -9,6 +9,16 @@
     filter: e(%("progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=%d,endColorstr=%d)", @color1, @color3));
 }
 
+.verticalGradient(@stop1:0, @color1:#ccc, @stop2:100%, @color2:#ddd){
+    background:@color2;
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(@stop1, @color1), color-stop(@stop2, @color2));
+    background:-moz-linear-gradient(top, @color1 @stop1, @color2 @stop2);
+    background:-ms-linear-gradient(top, @color1 @stop1, @color2 @stop2);
+    background:-o-linear-gradient(top, @color1 @stop1, @color2 @stop2);
+    background:linear-gradient(top, @color1 @stop1, @color2 @stop2);
+    filter: e(%("progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=%d,endColorstr=%d)", @color1, @color2));
+}
+
 .border-radius(@radius1:0px, @radius2:0px, @radius3:0px, @radius4:0px) {
    border-radius: @radius1 @radius2 @radius3 @radius4;
   -moz-border-radius: @radius1 @radius2 @radius3 @radius4;
@@ -387,37 +397,37 @@ label{
     padding-top: 15px;
 }
 
-.result-page .bottom-block .price-table {
+.result-page .bottom-block .price-input {
     border: 1px solid black;
     margin-bottom: 10px;
 }
 
-.result-page .bottom-block .price-table tr{
+.result-page .bottom-block .price-input tr{
     height: 15px;
 }
 
-.result-page .bottom-block .price-table td {
+.result-page .bottom-block .price-input td {
     width: 75px;
     text-align: right;
     padding: 1px 3px;
     font-size: 13px;
 }
 
-.result-page .bottom-block .price-table td.param{
+.result-page .bottom-block .price-input td.param{
     border-right: 1px solid black;
     width: 150px;
 }
 
-.result-page .bottom-block .price-table tr.underline{
+.result-page .bottom-block .price-input tr.underline{
     border-bottom: 1px solid black;
 }
 
-.result-page .bottom-block .price-table tr.up td{
+.result-page .bottom-block .price-input tr.up td{
     font-weight: bold;
     font-size: 15px;
 }
 
-.result-page .bottom-block .price-table tr.empty td{
+.result-page .bottom-block .price-input tr.empty td{
     border-bottom: 1px solid black;
 }
 
@@ -1218,7 +1228,7 @@ label{
 }
 
 #hotelcreate-page{
-    width: 500px;
+    width: 550px;
 }
 
 #hotelcreate-page .page{
@@ -1236,7 +1246,7 @@ label{
     display: inline-block;
 }
 
-#hotelcreate-page ul#tabs li span{
+#hotelcreate-page ul#tabs li span, #hotelcreate-page ul#tabs li a{
     background-color: #FFFFFF;
     border-left: 1px solid #DDDDDD;
     border-right: 1px solid #DDDDDD;
@@ -1413,7 +1423,7 @@ label{
 #bonus-page .bonus-blocks .bonus-block{
     border: 1px solid #aaaaaa;
     padding: 5px;
-    width: 45%;
+    width: 110px;
     height: 130px;
     float: left;
     margin: 0 10px 10px 0;
@@ -1444,6 +1454,12 @@ label{
 
 .room-mainoptions .room-checkboxes{
     margin-top: 15px;
+}
+
+.room-mainoptions .room-checkboxes .block-header{
+    padding: 5px 2px;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 3px;
 }
 
 .room-mainoptions .checkbox-block{
@@ -1562,6 +1578,12 @@ label{
     color: #287fc3;
 }
 
+.room-page .hotel-name a:hover{
+    text-decoration: none;
+}
+
+.room-page .room-mainoptions{margin-top: 15px;}
+
 .room-page #persons-page .persons-list .name{
     width: 100px;
     text-align: center;
@@ -1592,11 +1614,12 @@ label{
     margin-top: -20px;
 }
 
-
-.room-page #price-page .datum-block{
-    width: 240px;
+.room-page #price-page .datum-block-wr{
+    float: left;
+    width: 265px;
     margin-right: 10px;
 }
+
 
 .room-page #price-page .datum-block .param{
     width: 110px;
@@ -1610,32 +1633,49 @@ label{
     width: 70px;
 }
 
-.room-page #price-page .price-table input{
+.room-page #price-page .right-line{
+    padding-right: 22px !important;
+    border-right: 1px solid #aaa;
+}
+
+.room-page #price-page .right-line + td, .room-page #price-page .right-line + th{
+    padding-left: 22px !important;
+}
+
+.room-page #price-page .price-input input{
     text-align: center;
 }
 
-.room-page #price-page .price-table .name{
+.room-page #price-page .price-input .name{
     width: 80px;
 }
 
-.room-page #price-page .price-table{
+.room-page #price-page .price-input{
     margin: 0 auto;
 }
 
-.room-page #price-page .price-table td, .room-page #price-page .price-table th{
+.room-page #price-page .price-input td, .room-page #price-page .price-input th{
     padding:10px 10px 0 0;
     text-align: center;
 }
 
-.room-page #price-page .price-table .price{width: 45px;}
-.room-page #price-page .price-table .price input{width: 45px;}
+.room-page #price-page .price-input .price{width: 45px;}
+.room-page #price-page .price-input .price input{width: 45px;}
 
-.room-page #price-page .price-table .percent{width: 23px;}
-.room-page #price-page .price-table .percent.top{font-weight: bold}
-.room-page #price-page .price-table .percent input{width: 23px;}
+.room-page #price-page .price-input .percent{width: 30px;}
+.room-page #price-page .price-input .percent.top{font-weight: normal; vertical-align: bottom}
+.room-page #price-page .price-input .percent input{width: 28px;}
 
-.room-page #price-page .price-table .meal{width: 30px;}
-.room-page #price-page .price-table .meal input{width: 30px;}
+.room-page #price-page .price-input .meal{width: 30px;}
+.room-page #price-page .price-input .meal input{width: 30px;}
+.room-page #price-page td span.erm{
+    display: block;
+    font-size: 10px;
+    margin-bottom: -4px;
+    margin-top: -10px;
+}
+
+.room-page #price-page tr.header-second td{vertical-align: bottom}
 
 .room-page #price-page fieldset{
     float: left;
@@ -1662,4 +1702,51 @@ label{
     float: right;
     text-align: right;
     margin-right: 0;
+}
+
+.room-page #price-page #save-price{
+    margin: 10px auto;
+}
+
+.room-page #price-page #price-table{
+    margin: 20px auto;
+    background: #f7f7f7;
+}
+
+.room-page #price-page #price-table th{
+    .verticalGradient(0, #FFFFFF, 100%, #E1E1E1);
+    font-size: 12px;
+    font-weight: normal;
+    padding: 5px 10px;
+}
+
+.room-page #price-page #price-table td{
+    text-align: center;
+    padding: 5px 5px;
+    border-bottom: 1px solid #aaa;
+}
+
+.room-page #price-page #price-table tr:hover{
+    cursor: pointer;
+}
+
+.room-page #price-page #price-table tr:nth-child(even){background: #effcff;}
+.room-page #price-page #price-table tr:nth-child(even):hover{background: #e8f5f7;}
+
+.room-page #price-page #price-table tr:nth-child(odd){background: #fafafa;}
+.room-page #price-page #price-table tr:nth-child(odd):hover{background: #ebebeb;}
+
+.room-page #price-page #price-table tr.current, .room-page #price-page #price-table tr.current:hover{
+    background: #4bffa9 !important;
+}
+
+.room-page #price-page #price-loader{
+    width: 100%;
+}
+
+.room-page #price-page #price-loader #loader{
+    background: url('img/price-loader.gif') no-repeat;
+    width: 128px;
+    height: 15px;
+    margin: 0 auto;
 }

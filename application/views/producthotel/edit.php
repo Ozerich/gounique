@@ -10,13 +10,14 @@
 </div>
 
 <div id="hotelcreate-page" class="content product-create">
-<?=form_open("product/hotel/edit/".$hotel->id)?>
+<?=form_open("product/hotel/edit/" . $hotel->id)?>
 
 <ul id="tabs">
     <li class="active"><span for="crs-page">CRS Daten</span></li>
     <li><span for="klassen-page">Childs & Extras</span></li>
     <li><span for="bonus-page">Bonuses</span></li>
     <li><span for="kontakt-page">Kontaktdaten</span></li>
+    <li><a href="product/hotel/rooms/<?=$hotel->id?>">Zimmerdaten</a></li>
 </ul>
 
 <div class="page" id="crs-page">
@@ -89,7 +90,7 @@
             <span>Teen</span>
             <input type="checkbox" name="teenblock_active" <?if ($hotel->teenblock_active) echo 'checked'?>/>
         </div>
-        <div class="child-content" <?if($hotel->teenblock_active) echo 'style="display:block"'?>>
+        <div class="child-content" <?if ($hotel->teenblock_active) echo 'style="display:block"'?>>
             <table>
                 <thead>
                 <th class="active">&nbsp;</th>
@@ -104,11 +105,13 @@
                     <td class="active"><input type="checkbox"
                                               name="teen-active[<?=$ind?>]" <?if ($teen->active) echo 'checked';?>></td>
                     <td class="age">
-                        <input type="text" maxlength="2" value="<?=$teen->von?>" <?if(!$teen->active) echo 'disabled'?>/>
-                        <input type="hidden" value="<?=$teen->von?>"  name="teen-von[<?=$ind?>]"/>
+                        <input type="text" maxlength="2"
+                               value="<?=$teen->von?>" <?if (!$teen->active) echo 'disabled'?>/>
+                        <input type="hidden" value="<?=$teen->von?>" name="teen-von[<?=$ind?>]"/>
                     </td>
                     <td class="age">
-                        <input type="text" maxlength="2" value="<?=$teen->bis?>" <?if(!$teen->active) echo 'disabled'?>/>
+                        <input type="text" maxlength="2"
+                               value="<?=$teen->bis?>" <?if (!$teen->active) echo 'disabled'?>/>
                         <input type="hidden" value="<?=$teen->bis?>" name="teen-bis[<?=$ind?>]"/>
                     </td>
                 </tr>
@@ -136,7 +139,7 @@
             <span>Kind / Child</span>
             <input type="checkbox" name="childblock_active" <?if ($hotel->childblock_active) echo 'checked'?>/>
         </div>
-        <div class="child-content" <?if($hotel->childblock_active) echo 'style="display:block"'?>>
+        <div class="child-content" <?if ($hotel->childblock_active) echo 'style="display:block"'?>>
             <table>
                 <thead>
                 <th class="active">&nbsp;</th>
@@ -152,11 +155,13 @@
                                               name="child-active[<?=$ind?>]" <?if ($child->active) echo 'checked';?>>
                     </td>
                     <td class="age">
-                        <input type="text" maxlength="2" value="<?=$child->von?>" <?if(!$child->active) echo 'disabled'?>/>
+                        <input type="text" maxlength="2"
+                               value="<?=$child->von?>" <?if (!$child->active) echo 'disabled'?>/>
                         <input type="hidden" value="<?=$child->von?>" name="child-von[<?=$ind?>]"/>
                     </td>
                     <td class="age">
-                        <input type="text" maxlength="2" value="<?=$child->bis?>"  <?if(!$child->active) echo 'disabled'?>/>
+                        <input type="text" maxlength="2"
+                               value="<?=$child->bis?>"  <?if (!$child->active) echo 'disabled'?>/>
                         <input type="hidden" value="<?=$child->bis?>" name="child-bis[<?=$ind?>]"/>
                     </td>
                 </tr>
@@ -184,7 +189,7 @@
             <span>Baby / Infant</span>
             <input type="checkbox" name="infantblock_active" <?if ($hotel->infantblock_active) echo 'checked'?>/>
         </div>
-        <div class="child-content" <?if($hotel->infantblock_active) echo 'style="display:block"'?>>
+        <div class="child-content" <?if ($hotel->infantblock_active) echo 'style="display:block"'?>>
             <table>
                 <thead>
                 <th class="active">&nbsp;</th>
@@ -200,11 +205,13 @@
                                               name="infant-active[<?=$ind?>]" <?if ($infant->active) echo 'checked';?>>
                     </td>
                     <td class="age">
-                        <input type="text" maxlength="2" value="<?=$infant->von?>"  <?if(!$infant->active) echo 'disabled'?> />
+                        <input type="text" maxlength="2"
+                               value="<?=$infant->von?>"  <?if (!$infant->active) echo 'disabled'?> />
                         <input type="hidden" value="<?=$infant->von?>" name="infant-von[<?=$ind?>]"/>
                     </td>
                     <td class="age">
-                        <input type="text" maxlength="2" value="<?=$infant->bis?>" <?if(!$infant->active) echo 'disabled'?> />
+                        <input type="text" maxlength="2"
+                               value="<?=$infant->bis?>" <?if (!$infant->active) echo 'disabled'?> />
                         <input type="hidden" value="<?=$infant->bis?>" name="infant-bis[<?=$ind?>]"/>
                     </td>
                 </tr>
@@ -243,10 +250,12 @@
 
             <div class="period-param param">
                 <label for="von">Period von</label>
-                <input type="text" class="minimum-von" name="minimum_von[<?=$ind?>]" value="<?=$minimum->von->format('dmY')?>"
+                <input type="text" class="minimum-von" name="minimum_von[<?=$ind?>]"
+                       value="<?=$minimum->von->format('dmY')?>"
                        maxlength="8"/>
                 <label for="bis">bis</label>
-                <input type="text" class="minimum-bis" name="minimum_bis[<?=$ind?>]" value="<?=$minimum->bis->format('dmY')?>"
+                <input type="text" class="minimum-bis" name="minimum_bis[<?=$ind?>]"
+                       value="<?=$minimum->bis->format('dmY')?>"
                        maxlength="8"/>
                 <a href="#" class="delete-icon minimum-delete"></a>
             </div>
@@ -342,77 +351,217 @@
 
 
 <div class="page" id="bonus-page" style="display:none">
-    <div class="bonus-list">
-        <span class="empty">No bonuses</span>
+<div class="bonus-list">
+<span class="empty">No bonuses</span>
 
-        <div class="bonus-list">
+<div class="bonus-list">
+</div>
+
+<button id="bonusnew-open">Neueu bonus</button>
+<br class="clear"/>
+
+<? foreach ($hotel->bonuses as $ind => $bonus): ?>
+<div class="bonus-item">
+
+    <div class="bonus-preview">
+        <p><?=$bonus->text?></p>
+
+        <div class="preview-buttons">
+            <button class="bonus-edit">Edit</button>
+            <button class="bonus-delete">Delete</button>
+            <br class="clear"/>
         </div>
-
-        <button id="bonusnew-open">Neueu bonus</button>
         <br class="clear"/>
+    </div>
 
-        <div class="bonus-item example" style="display:none">
+    <div class="bonus-content" style="display:none">
 
-            <div class="bonus-preview">
-                <p></p>
-
-                <div class="preview-buttons">
-                    <button class="bonus-edit">Edit</button>
-                    <button class="bonus-delete">Delete</button>
-                    <br class="clear"/>
-                </div>
-                <br class="clear"/>
-            </div>
-
-            <div class="bonus-content" style="display:none">
-
-                <div class="period-param param">
-                    <label for="von">Period von</label>
-                    <input type="text" class="bonus-von" maxlength="8"/>
-                    <label for="bis">bis</label>
-                    <input type="text" class="bonus-bis" maxlength="8"/>
-                </div>
-
-                <div class="bonus-blocks">
-                    <div id="bonus_1_block" class="bonus-block">
-                        <div class="radio">
-                            <input type="radio" class="bonustype" value="1" checked/><label>Nachte bonus</label>
-                        </div>
-
-                        <div class="param">
-                            <label>Nachte</label>
-                            <input type="text" maxlength="2" id="from"/> = <input type="text" maxlength="2" id="to"/>
-                        </div>
-                    </div>
-
-                    <div id="bonus_2_block" class="bonus-block">
-                        <div class="radio">
-                            <input type="radio" class="bonustype" value="2"/><label>EarlyBird</label>
-                        </div>
-
-                        <div class="param">
-                            <label>Days before</label>
-                            <input type="text" id="days" maxlength="2"/>
-                        </div>
-                        <div class="param">
-                            <label>Discount %</label>
-                            <input type="text" id="percent" maxlength="2"/>
-                        </div>
-                    </div>
-                    <br class="clear"/>
-                </div>
-
-                <div class="buttons">
-                    <button class="bonusadd-cancel">Cancel</button>
-                    <button class="bonusadd-submit">Add</button>
-                    <br class="clear"/>
-                </div>
-
-                <br class="clear"/>
-            </div>
+        <div class="period-param param">
+            <label for="von">Period von</label>
+            <input type="text" name="bonus_von[<?=$ind?>]" value="<?=$bonus->period_start->format('dmY')?>"
+                   class="bonus-von" maxlength="8"/>
+            <label for="bis">bis</label>
+            <input type="text" name="bonus_bis[<?=$ind?>]" value="<?=$bonus->period_finish->format('dmY')?>"
+                   class="bonus-bis" maxlength="8"/>
         </div>
 
+        <div class="bonus-blocks">
+
+            <div id="bonus_1_block" class="bonus-block">
+                <div class="radio">
+                    <input type="radio" name="bonustype[<?=$ind?>]" class="bonustype" value="night_bonus"
+                           <?=$bonus->type == 'night_bonus' ? 'checked' : ''?>/><label>Nachte
+                    bonus</label>
+                </div>
+
+                <div class="param">
+                    <label>Nachte</label>
+                    <input type="text" name="from_nights[<?=$ind?>]"  value="<?=$bonus->night_1?>" maxlength="2" id="from"/> =
+                    <input type="text" value="<?=$bonus->night_2?>"
+                           name="to_nights[<?=$ind?>]"
+                           maxlength="2" id="to"/>
+                </div>
+            </div>
+
+            <div id="bonus_2_block" class="bonus-block">
+                <div class="radio">
+                    <input type="radio" name="bonustype[<?=$ind?>]" class="bonustype" value="earlybird_days" <?=$bonus->type == 'earlybird_days' ? 'checked' : ''?>/><label>EarlyBird(days)</label>
+                </div>
+
+                <div class="param">
+                    <label>Days before</label>
+                    <input type="text" name="days_before[<?=$ind?>]"  value="<?=$bonus->days_before?>" id="days" maxlength="2"/>
+                </div>
+                <div class="param">
+                    <label>Discount %</label>
+                    <input type="text" name="discount1[<?=$ind?>]" id="percent"  value="<?=$bonus->discount_1?>" maxlength="2"/>
+                </div>
+            </div>
+
+            <div id="bonus_3_block" class="bonus-block">
+                <div class="radio">
+                    <input type="radio" name="bonustype[<?=$ind?>]" class="bonustype" value="earlybird_date" <?=$bonus->type == 'earlybird_date' ? 'checked' : ''?>/><label>EarlyBird(date)</label>
+                </div>
+
+                <div class="param">
+                    <label>Booking till</label>
+                    <input type="text" name="booking_till[<?=$ind?>]"  value="<?=$bonus->booking_till ? $bonus->booking_till->format('dmY') : ''?>" id="booking_till" maxlength="2"/>
+                </div>
+                <div class="param">
+                    <label>Discount %</label>
+                    <input type="text" name="discount2[<?=$ind?>]" id="discount2"  value="<?=$bonus->discount_2?>" maxlength="2"/>
+                </div>
+            </div>
+
+            <div id="bonus_4_block" class="bonus-block">
+                <div class="radio">
+                    <input type="radio" name="bonustype[<?=$ind?>]" class="bonustype"
+                           value="long_stay" <?=$bonus->type == 'long_stay' ? 'checked' : ''?>/><label>Longstay</label>
+                </div>
+
+                <div class="param">
+                    <label>Days count</label>
+                    <input type="text" name="days_count[<?=$ind?>]"  value="<?=$bonus->days_count?>" id="days_count" maxlength="2"/>
+                </div>
+                <div class="param">
+                    <label>Discount %</label>
+                    <input type="text" id="discount3" name="discount3[<?=$ind?>]"  value="<?=$bonus->discount_3?>" maxlength="2"/>
+                </div>
+            </div>
+
+            <br class="clear"/>
+        </div>
+
+        <div class="buttons">
+            <button class="bonusadd-cancel">Cancel</button>
+            <button class="bonusadd-submit">Add</button>
+            <br class="clear"/>
+        </div>
+
+        <br class="clear"/>
     </div>
+</div>
+    <? endforeach; ?>
+
+<div class="bonus-item example" style="display:none">
+
+    <div class="bonus-preview">
+        <p></p>
+
+        <div class="preview-buttons">
+            <button class="bonus-edit">Edit</button>
+            <button class="bonus-delete">Delete</button>
+            <br class="clear"/>
+        </div>
+        <br class="clear"/>
+    </div>
+
+    <div class="bonus-content" style="display:none">
+
+        <div class="period-param param">
+            <label for="von">Period von</label>
+            <input type="text" for-name="bonus_von" class="bonus-von" maxlength="8"/>
+            <label for="bis">bis</label>
+            <input type="text" for-name="bonus_bis" class="bonus-bis" maxlength="8"/>
+        </div>
+
+        <div class="bonus-blocks">
+
+            <div id="bonus_1_block" class="bonus-block">
+                <div class="radio">
+                    <input type="radio" for-name="bonus_type" class="bonustype" value="night_bonus"
+                           checked/><label>Nachte bonus</label>
+                </div>
+
+                <div class="param">
+                    <label>Nachte</label>
+                    <input type="text" for-name="from_nights" maxlength="2" id="from"/> = <input type="text"
+                                                                                                 for-name="to_nights"
+                                                                                                 maxlength="2"
+                                                                                                 id="to"/>
+                </div>
+            </div>
+
+            <div id="bonus_2_block" class="bonus-block">
+                <div class="radio">
+                    <input type="radio" for-name="bonustype" class="bonustype" value="earlybird_days"/><label>EarlyBird(days)</label>
+                </div>
+
+                <div class="param">
+                    <label>Days before</label>
+                    <input type="text" for-name="days_before" id="days" maxlength="2"/>
+                </div>
+                <div class="param">
+                    <label>Discount %</label>
+                    <input type="text" for-name="discount1" id="percent" maxlength="2"/>
+                </div>
+            </div>
+
+            <div id="bonus_3_block" class="bonus-block">
+                <div class="radio">
+                    <input type="radio" for-name="bonustype" class="bonustype" value="earlybird_date"/><label>EarlyBird(date)</label>
+                </div>
+
+                <div class="param">
+                    <label>Booking till</label>
+                    <input type="text" for-name="booking_till" id="booking_till" maxlength="2"/>
+                </div>
+                <div class="param">
+                    <label>Discount %</label>
+                    <input type="text" for-name="discount2" id="discount2" maxlength="2"/>
+                </div>
+            </div>
+
+            <div id="bonus_4_block" class="bonus-block">
+                <div class="radio">
+                    <input type="radio" for-name="bonustype" class="bonustype"
+                           value="long_stay"/><label>Longstay</label>
+                </div>
+
+                <div class="param">
+                    <label>Days count</label>
+                    <input type="text" for-name="days_count" id="days_count" maxlength="2"/>
+                </div>
+                <div class="param">
+                    <label>Discount %</label>
+                    <input type="text" id="discount3" for-name="discount3" maxlength="2"/>
+                </div>
+            </div>
+
+            <br class="clear"/>
+        </div>
+
+        <div class="buttons">
+            <button class="bonusadd-cancel">Cancel</button>
+            <button class="bonusadd-submit">Add</button>
+            <br class="clear"/>
+        </div>
+
+        <br class="clear"/>
+    </div>
+</div>
+
+</div>
 
 </div>
 

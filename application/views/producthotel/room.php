@@ -10,33 +10,36 @@
 </div>
 
 <div id="createroom-page" class="content room-page">
-    <?=form_open("product/hotel/create_room/" . $hotel->id);?>
+    <h2 class="hotel-name"><a href="product/hotel/edit/<?=$hotel->id?>"><?=$hotel->name?></a></h2>
+    <?=form_open("product/hotel/room/" . $hotel->id.($room ? '/'.$room->id : ''));?>
     <div class="room-mainoptions">
         <div class="roomname-param">
             <label for="roomname">Zimmer Category</label>
-            <input type="text" name="roomname"/>
+            <input type="text" name="roomname" value="<?=$room ? $room->name : ''?>"/>
         </div>
         <div class="room-checkboxes">
             <div class="checkbox-block">
+                <div class="block-header">Kodierung</div>
                 <? for ($i = 0; $i <= Config::get('max_zimmer_count'); $i++): ?>
                 <div class="checkbox-item">
                     <label><?=$i?></label>
-                    <input type="checkbox" name="room_count[<?=$i?>]"/>
+                    <input type="checkbox" name="room_count[<?=$i?>]" <?=$room && $room->is_count_active($i) ? "checked" : ''?>/>
                 </div>
                 <? endfor; ?>
             </div>
             <div class="checkbox-block">
+                <div class="block-header">Verpflegungsart</div>
                 <? foreach (Service::all() as $service): ?>
                 <div class="checkbox-item">
                     <label><?=$service->short_name?></label>
-                    <input type="checkbox" name="room_service[<?=$service->id?>]"/>
+                    <input type="checkbox" name="room_service[<?=$service->id?>]" <?=$room && $room->is_service_active($service->id) ? "checked" : ''?>/>
                 </div>
                 <? endforeach; ?>
             </div>
             <br class="clear"/>
         </div>
         <div class="button-wr">
-            <input type="submit" value="Create"/>
+            <input type="submit" value="Save"/>
         </div>
     </div>
     </form>

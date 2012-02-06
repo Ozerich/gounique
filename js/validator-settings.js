@@ -8,4 +8,6 @@ $(document).ready(function () {
     $('#createformular-page #personcount').setValidator({only_digits: true});
 
     $('.only-digits').setValidator({only_digits: true});
+
+    $('#price-page input').setValidator({only_digits: true});
 });

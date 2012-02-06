@@ -155,7 +155,7 @@ $(document).ready(function () {
         $(bonus_block).find('.bonus-content').show();
 
         $(bonus_block).find('input').each(function () {
-            $(this).attr('name', $(this).attr('for') + '[' + $('.bonus-item:visible').size() + ']');
+            $(this).attr('name', $(this).attr('for-name') + '[' + $('.bonus-item:visible').size() + ']');
         });
 
         $(bonus_block).find('.bonusadd-cancel').click(function () {
@@ -261,7 +261,7 @@ $(document).ready(function () {
         return false;
     });
 
-    $('#hotelcreate-page .bonus-item:visible').find('.bonus-von, .bonus-bis').datepicker().
+    $('#hotelcreate-page .bonus-item').find('.bonus-von, .bonus-bis').datepicker().
         datepicker("option", "showAnim", "blind").
         datepicker("option", "dateFormat", 'ddmmyy');
 
@@ -298,5 +298,70 @@ $(document).ready(function () {
         $(this).addClass("active");
         return false;
     });
+
+    $('#price-page #price-table tr').click(function(){
+        var period_id = $(this).find('#period_id').val();
+        $('.price-block #price-loader').show();
+        $('input[name=period_id]').val(period_id);
+
+        $('#price-page #price-table tr').removeClass('current');
+        $(this).addClass('current');
+
+        $('#price-page .price-input input').attr('disabled', 'disabled');
+        $('#price-page .datum-block #von').val($(this).find('.period_start').val());
+        $('#price-page .datum-block #bis').val($(this).find('.period_finish').val());
+        $('#price-page .datum-block #zimmerkontigent').val($(this).find('.zimmer_kontigent').html());
+        $('#price-page .datum-block #relis').val($(this).find('.relis').html());
+        $('#price-page .price-input input[name=erw_price]').val($(this).find('.period_price').html());
+        $('#price-page .price-input input[name=marge_price]').val($(this).find('.price_marge').html());
+        $('#price-page .price-input input[name=erm_price]').val($(this).find('.price_erm').html());
+        $('#price-page .price-input input[name=marge_meal]').val($(this).find('.meal_marge').html());
+        $('#edit-price').show();
+        $('#price-page .price-input .percent_price1, #price-page .price-input .percent_price2').val('');
+        $.ajax({
+            url: 'product/hotel/ajax_period/' + period_id,
+            success: function(data){
+                data = jQuery.parseJSON(data);
+
+                for(var age_id in data)
+                {
+                    for(var service_id in data[age_id])
+                        $('input[name="meal[' + age_id + ']['+ service_id + ']"]').val(data[age_id][service_id]);
+
+                    if(age_id > 0)
+                    {
+                        $('input[name="price1[' + age_id + ']"]').val(data[age_id]['price'][1]);
+                        $('input[name="price2[' + age_id + ']"]').val(data[age_id]['price'][2]);
+                    }
+                }
+
+
+                $('.price-block #price-loader').hide();
+                $('#price-page .price-input input').removeAttr('disabled');
+            }
+        });
+        return false;
+    });
+
+    $('#price-page .price-input .price1').keyup(function(){
+        $(this).parents('tr').find('.percent_price1').val('');
+    });
+
+    $('#price-page .price-input .price2').keyup(function(){
+        $(this).parents('tr').find('.percent_price2').val('');
+    });
+
+    $('#price-page .price-input .percent_price1').keyup(function()
+    {
+        var base_price = $('.price-input .base_price').val();
+        $(this).parents('tr').find('.price1').val(Math.round(base_price - (base_price / 100 * $(this).val())));
+    });
+
+    $('#price-page .price-input .percent_price2').keyup(function()
+    {
+        var base_price = $('.price-input .base_price').val();
+        $(this).parents('tr').find('.price2').val(Math.round(base_price - (base_price / 100 * $(this).val())));
+    });
+
 
 });
