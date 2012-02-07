@@ -2,7 +2,7 @@
     <div id="page-header">
         <a href="dashboard" class="home-link"><img src="img/header-logo.jpg"/></a>
         <ul class="page-path">
-            <li><a href="product">product</a></li>
+            <li><a href="product">produkt</a></li>
             <li><a href="product/hotel">hotelverwaltung</a></li>
             <li><span>neueu hotel</span></li>
         </ul>
@@ -285,7 +285,7 @@
 
                 <div class="bonus-blocks">
 
-                    <div id="bonus_1_block" class="bonus-block">
+                    <div id="bonus_1_block" class="bonus-block active">
                         <div class="radio">
                             <input type="radio" for-name="bonus_type" class="bonustype" value="night_bonus" checked/><label>Nachte bonus</label>
                         </div>
@@ -318,7 +318,7 @@
 
                         <div class="param">
                             <label>Booking till</label>
-                            <input type="text" for-name="booking_till" id="booking_till" maxlength="2"/>
+                            <input type="text" for-name="booking_till" id="booking_till" maxlength="8"/>
                         </div>
                         <div class="param">
                             <label>Discount %</label>

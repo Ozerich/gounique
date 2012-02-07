@@ -10,4 +10,5 @@ $(document).ready(function () {
     $('.only-digits').setValidator({only_digits: true});
 
     $('#price-page input').setValidator({only_digits: true});
+    $('.bonus-content input').setValidator({only_digits: true});
 });

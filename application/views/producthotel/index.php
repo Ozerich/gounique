@@ -2,7 +2,7 @@
     <div id="page-header">
         <a href="dashboard" class="home-link"><img src="img/header-logo.jpg"/></a>
         <ul class="page-path">
-            <li><a href="product">product</a></li>
+            <li><a href="product">produkt</a></li>
             <li><span>hotelverwaltung</span></li>
         </ul>
     </div>

@@ -1,3 +1,18 @@
+function GetBonusText(bonus_block) {
+    var bonus_type = $(bonus_block).find('.bonustype:checked').val();
+    var period = InputToTime($(bonus_block).find('.bonus-von').val()) + " - " + InputToTime($(bonus_block).find(".bonus-bis").val()) + ' ';
+
+    if (bonus_type == "night_bonus")
+        return period + $(bonus_block).find('#from').val() + '=' + $(bonus_block).find('#to').val();
+    else if (bonus_type == "long_stay")
+        return period + "Longstay for " + $(bonus_block).find('#days_count').val() + " days " + $(bonus_block).find('#discount3').val() + "%";
+    else if (bonus_type == "earlybird_days")
+        return period + "Booking before " + $(bonus_block).find('#days').val() + " days " + $(bonus_block).find('#percent').val() + "%";
+    else if (bonus_type == "earlybird_date")
+        return period + "Booking till " + InputToTime($(bonus_block).find('#booking_till').val()) + " " + $(bonus_block).find('#discount2').val() + "%";
+    else return "Unknown bonus";
+}
+
 $(document).ready(function () {
     $('#hotelcreate-page #tabs span').click(function () {
         $('#tabs li').removeClass('active').each(function () {
@@ -153,6 +168,8 @@ $(document).ready(function () {
         var bonus_block = $('.bonus-item.example').clone().removeClass('example');
         $(bonus_block).appendTo('.bonus-list');
 
+        $(bonus_block).find('input').setValidator({only_digits: true});
+
         $(bonus_block).show().find('.bonus-preview').hide();
         $(bonus_block).find('.bonus-content').show();
 
@@ -196,13 +213,8 @@ $(document).ready(function () {
             var period = $(bonus_block).find('.bonus-von').val() + ' - ' + $(bonus_block).find('.bonus-bis').val();
             var val = $(bonus_block).find('.bonustype:checked').val();
 
-            var text = '';
-            if (val == 1)
-                text = 'Bonus von ' + $(bonus_block).find('#from').val() + '=' + $(bonus_block).find('#to').val() +
-                    ' Gultig fur den Reisezeitraum: ' + period;
-            else if (val == 2)
-                text = period + ' - ' + $(bonus_block).find('#days').val() + ' Tage vor Hotelankuft getatigate Buchungen erhalten ' +
-                    $(bonus_block).find('#percent').val() + '% Ermabigurg';
+            var text = GetBonusText(bonus_block);
+
 
             $(bonus_block).find('.bonus-preview p').html(text);
 
@@ -213,12 +225,49 @@ $(document).ready(function () {
             return false;
         });
 
+        $(bonus_block).find('.bonustype').click(function()
+        {
+            $(this).parents('.bonus-item').find('.bonus-block').removeClass('active');
+            $(this).parents('.bonus-block').addClass('active');
+        });
+
         $('#bonusnew-open').hide();
         return false;
     });
 
+    $('#hotelcreate-page .bonus-item').not('.example').find('.bonus-von, .bonus-bis').each(function(){
+        var old_val = $(this).val();
+        $(this).datepicker().datepicker("option", "showAnim", "blind").datepicker("option", "dateFormat", 'ddmmyy');
+        $(this).val(old_val);
+    });
+
+    $('#hotelcreate-page .bonusadd-submit').click(function () {
+        $('#hotelcreate-page #bonus-page .empty').hide();
+
+        var bonus_block = $(this).parents('.bonus-item');
+
+        var period = $(bonus_block).find('.bonus-von').val() + ' - ' + $(bonus_block).find('.bonus-bis').val();
+        var val = $(bonus_block).find('.bonustype:checked').val();
+
+        var text = GetBonusText(bonus_block);
+
+        $(bonus_block).find('.bonus-preview p').html(text);
+
+        $(bonus_block).find('.bonus-preview').show();
+        $(bonus_block).find('.bonus-content').hide();
+
+        $('#bonusnew-open').show();
+        return false;
+    });
+
+    $('#hotelcreate-page .bonustype').click(function()
+    {
+        $(this).parents('.bonus-item').find('.bonus-block').removeClass('active');
+        $(this).parents('.bonus-block').addClass('active');
+    });
+
     $('#hotelcreate-page .bonusadd-cancel').click(function () {
-        if ($('#hotelcreate-page').find('.bonus-preview p').html() == '')
+        if ($('#hotelcreate-page').parents('.bonus-item').find('.bonus-preview p').html() == '')
             $(this).parents('.bonus-item').remove();
         else {
             $(this).parents('.bonus-item').find('.bonus-preview').show();
@@ -238,34 +287,6 @@ $(document).ready(function () {
         $(this).parents('.bonus-item').find('.bonus-content').show();
         return false;
     });
-
-    $('#hotelcreate-page .bonusadd-submit').click(function () {
-        $('#hotelcreate-page #bonus-page .empty').hide();
-
-        var period = $('#hotelcreate-page').find('.bonus-von').val() + ' - ' + $(bonus_block).find('.bonus-bis').val();
-        var val = $('#hotelcreate-page').find('.bonustype:checked').val();
-
-        var text = '';
-        if (val == 1)
-            text = 'Bonus von ' + $('#hotelcreate-page').find('#from').val() + '=' + $('#hotelcreate-page').find('#to').val() +
-                ' Gultig fur den Reisezeitraum: ' + period;
-        else if (val == 2)
-            text = period + ' - ' + $('#hotelcreate-page').find('#days').val() + ' Tage vor Hotelankuft getatigate Buchungen erhalten '
-                + $('#hotelcreate-page').find('#percent').val() + '% Ermabigurg';
-
-        $('#hotelcreate-page').find('.bonus-preview p').html(text);
-
-        $('#hotelcreate-page').find('.bonus-preview').show();
-        $('#hotelcreate-page').find('.bonus-content').hide();
-
-        $('#bonusnew-open').show();
-
-        return false;
-    });
-
-    $('#hotelcreate-page .bonus-item').find('.bonus-von, .bonus-bis').datepicker().
-        datepicker("option", "showAnim", "blind").
-        datepicker("option", "dateFormat", 'ddmmyy');
 
 
     $('.room-page #persons-page .delete-icon').click(function () {

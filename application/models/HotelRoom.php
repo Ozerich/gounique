@@ -6,12 +6,13 @@ class HotelRoom extends ActiveRecord\Model
 
     public function get_code()
     {
+
         $name = str_replace('-', '',$this->name);
         $words = explode(' ', $name);
         $result = '';
 
         foreach ($words as $word)
-            if ($word)
+            if ($word && ($word[0] < '0' || $word[0] > '9'))
                 $result .= $word[0];
 
         return $result;

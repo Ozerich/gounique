@@ -2,7 +2,7 @@
     <div id="page-header">
         <a href="dashboard" class="home-link"><img src="img/header-logo.jpg"/></a>
         <ul class="page-path">
-            <li><a href="product">product</a></li>
+            <li><a href="product">produkt</a></li>
             <li><a href="product/hotel">hotelverwaltung</a></li>
             <li><span>hotel <?=$hotel->code?></span></li>
         </ul>
@@ -382,16 +382,16 @@
 
         <div class="period-param param">
             <label for="von">Period von</label>
-            <input type="text" name="bonus_von[<?=$ind?>]" value="<?=$bonus->period_start->format('dmY')?>"
+            <input type="text" name="bonus_von[<?=$ind?>]" value="<?=($bonus->period_start ? $bonus->period_start->format('dmY') : '')?>"
                    class="bonus-von" maxlength="8"/>
             <label for="bis">bis</label>
-            <input type="text" name="bonus_bis[<?=$ind?>]" value="<?=$bonus->period_finish->format('dmY')?>"
+            <input type="text" name="bonus_bis[<?=$ind?>]" value="<?=($bonus->period_finish ? $bonus->period_finish->format('dmY') : '')?>"
                    class="bonus-bis" maxlength="8"/>
         </div>
 
         <div class="bonus-blocks">
 
-            <div id="bonus_1_block" class="bonus-block">
+            <div id="bonus_1_block" class="bonus-block  <?=$bonus->type == 'night_bonus' ? 'active' : ''?>">
                 <div class="radio">
                     <input type="radio" name="bonustype[<?=$ind?>]" class="bonustype" value="night_bonus"
                            <?=$bonus->type == 'night_bonus' ? 'checked' : ''?>/><label>Nachte
@@ -407,7 +407,7 @@
                 </div>
             </div>
 
-            <div id="bonus_2_block" class="bonus-block">
+            <div id="bonus_2_block" class="bonus-block <?=$bonus->type == 'earlybird_days' ? 'active' : ''?>">
                 <div class="radio">
                     <input type="radio" name="bonustype[<?=$ind?>]" class="bonustype" value="earlybird_days" <?=$bonus->type == 'earlybird_days' ? 'checked' : ''?>/><label>EarlyBird(days)</label>
                 </div>
@@ -422,14 +422,14 @@
                 </div>
             </div>
 
-            <div id="bonus_3_block" class="bonus-block">
+            <div id="bonus_3_block" class="bonus-block <?=$bonus->type == 'earlybird_date' ? 'active' : ''?>">
                 <div class="radio">
                     <input type="radio" name="bonustype[<?=$ind?>]" class="bonustype" value="earlybird_date" <?=$bonus->type == 'earlybird_date' ? 'checked' : ''?>/><label>EarlyBird(date)</label>
                 </div>
 
                 <div class="param">
                     <label>Booking till</label>
-                    <input type="text" name="booking_till[<?=$ind?>]"  value="<?=$bonus->booking_till ? $bonus->booking_till->format('dmY') : ''?>" id="booking_till" maxlength="2"/>
+                    <input type="text" name="booking_till[<?=$ind?>]"  value="<?=$bonus->booking_till ? $bonus->booking_till->format('dmY') : ''?>" id="booking_till" maxlength="8"/>
                 </div>
                 <div class="param">
                     <label>Discount %</label>
@@ -437,7 +437,7 @@
                 </div>
             </div>
 
-            <div id="bonus_4_block" class="bonus-block">
+            <div id="bonus_4_block" class="bonus-block <?=$bonus->type == 'long_stay' ? 'active' : ''?>">
                 <div class="radio">
                     <input type="radio" name="bonustype[<?=$ind?>]" class="bonustype"
                            value="long_stay" <?=$bonus->type == 'long_stay' ? 'checked' : ''?>/><label>Longstay</label>
@@ -491,7 +491,7 @@
 
         <div class="bonus-blocks">
 
-            <div id="bonus_1_block" class="bonus-block">
+            <div id="bonus_1_block" class="bonus-block active">
                 <div class="radio">
                     <input type="radio" for-name="bonus_type" class="bonustype" value="night_bonus"
                            checked/><label>Nachte bonus</label>
@@ -528,7 +528,7 @@
 
                 <div class="param">
                     <label>Booking till</label>
-                    <input type="text" for-name="booking_till" id="booking_till" maxlength="2"/>
+                    <input type="text" for-name="booking_till" id="booking_till" maxlength="8"/>
                 </div>
                 <div class="param">
                     <label>Discount %</label>
