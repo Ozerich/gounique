@@ -60,12 +60,14 @@ $(document).ready(function () {
     $('#hotelcreate-page .child-cat .child-new').click(function () {
         var block = $(this).parents('.child-cat');
 
-        var row = $(block).find('tr.example').clone().removeClass('example').appendTo($(block).find('table')).show().
-            find('input').each(
+        var row = $(block).find('tr.example').clone().removeClass('example').appendTo($(block).find('table')).show();
+        $(row).find('input').each(
             function () {
                 if ($(this).attr('for-name'))
                     $(this).attr('name', $(this).attr('for-name') + '[' + ($(block).find('.child-content tr').size() - 2) + ']');
-            }).find('input[type=text]').keyup(
+            });
+
+        $(row).find('input[type=text]').keyup(
             function () {
                 $(this).next().val($(this).val());
             });
@@ -299,7 +301,7 @@ $(document).ready(function () {
         return false;
     });
 
-    $('#price-page #price-table tr').click(function(){
+    $('#price-page #price-table tr').click(function () {
         var period_id = $(this).find('#period_id').val();
         $('.price-block #price-loader').show();
         $('input[name=period_id]').val(period_id);
@@ -307,7 +309,7 @@ $(document).ready(function () {
         $('#price-page #price-table tr').removeClass('current');
         $(this).addClass('current');
 
-        $('#price-page .price-input input').attr('disabled', 'disabled');
+        $('#price-page .price-input input').attr('disabled', 'disabled').val('');
         $('#price-page .datum-block #von').val($(this).find('.period_start').val());
         $('#price-page .datum-block #bis').val($(this).find('.period_finish').val());
         $('#price-page .datum-block #zimmerkontigent').val($(this).find('.zimmer_kontigent').html());
@@ -319,17 +321,15 @@ $(document).ready(function () {
         $('#edit-price').show();
         $('#price-page .price-input .percent_price1, #price-page .price-input .percent_price2').val('');
         $.ajax({
-            url: 'product/hotel/ajax_period/' + period_id,
-            success: function(data){
+            url:'product/hotel/ajax_period/' + period_id,
+            success:function (data) {
                 data = jQuery.parseJSON(data);
 
-                for(var age_id in data)
-                {
-                    for(var service_id in data[age_id])
-                        $('input[name="meal[' + age_id + ']['+ service_id + ']"]').val(data[age_id][service_id]);
+                for (var age_id in data) {
+                    for (var service_id in data[age_id])
+                        $('input[name="meal[' + age_id + '][' + service_id + ']"]').val(data[age_id][service_id]);
 
-                    if(age_id > 0)
-                    {
+                    if (age_id > 0) {
                         $('input[name="price1[' + age_id + ']"]').val(data[age_id]['price'][1]);
                         $('input[name="price2[' + age_id + ']"]').val(data[age_id]['price'][2]);
                     }
@@ -343,25 +343,34 @@ $(document).ready(function () {
         return false;
     });
 
-    $('#price-page .price-input .price1').keyup(function(){
+    $('#price-page .price-input .price1').keyup(function () {
         $(this).parents('tr').find('.percent_price1').val('');
     });
 
-    $('#price-page .price-input .price2').keyup(function(){
+    $('#price-page .price-input .price2').keyup(function () {
         $(this).parents('tr').find('.percent_price2').val('');
     });
 
-    $('#price-page .price-input .percent_price1').keyup(function()
-    {
+    $('#price-page .price-input .percent_price1').keyup(function () {
         var base_price = $('.price-input .base_price').val();
         $(this).parents('tr').find('.price1').val(Math.round(base_price - (base_price / 100 * $(this).val())));
     });
 
-    $('#price-page .price-input .percent_price2').keyup(function()
-    {
+    $('#price-page .price-input .percent_price2').keyup(function () {
         var base_price = $('.price-input .base_price').val();
         $(this).parents('tr').find('.price2').val(Math.round(base_price - (base_price / 100 * $(this).val())));
     });
 
+
+    $('.hotellist-top .search-hotel').keyup(function () {
+        $.ajax({
+            url:'product/hotel/search_hotel',
+            data:'search=' + $(this).val(),
+            type:'post',
+            success:function (data) {
+                $('#hotel-list tbody').html(data);
+            }
+        });
+    });
 
 });

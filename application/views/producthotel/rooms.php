@@ -4,7 +4,7 @@
         <ul class="page-path">
             <li><a href="product">product</a></li>
             <li><a href="product/hotel">hotelverwaltung</a></li>
-            <li><span>hoteldaten</span></li>
+            <li><a href="product/hotel/edit/<?=$hotel->id?>">hoteldaten</a></li>
         </ul>
     </div>
 </div>
@@ -12,7 +12,8 @@
 <div id="zimmerlist-page" class="content room-page">
 
 <h2 class="hotel-name"><a href="product/hotel/edit/<?=$hotel->id?>"><?=$hotel->name?></a>
-    - <?=$room ? '<a href="product/hotel/room/'.$hotel->id.'/'.$room->room_id.'">'.$room->cat_name.'</a>' : ' no zimmer'?></h2>
+    - <?=$room ? '<a href="product/hotel/room/' . $hotel->id . '/' . $room->room_id . '">' . $room->cat_name . '</a>' : ' no zimmer'?>
+</h2>
 
 <div class="zimmer-new">
     <a href="product/hotel/room/<?=$hotel->id?>" class="button-link">Add Zimmer</a>
@@ -75,7 +76,7 @@
                 <th>&nbsp;</th>
                 <th>Preis</th>
                 <th>&nbsp;</th>
-                <th>Preis</th>
+                <th><?=$hotel->child_types ? 'Preis' : ''?></th>
                 <th class="right-line">&nbsp;</th>
                 <? foreach ($room->services as $service): ?>
                 <th><?=$service->short_name?></th>
@@ -94,6 +95,8 @@
                 <td class="meal"><input maxlength="3" name="meal[0][<?=$service->id?>]" type="text"/></td>
                 <? endforeach; ?>
             </tr>
+
+            <? if ($hotel->child_types): ?>
             <tr class="header-second">
                 <td>&nbsp;</td>
                 <td>erste</td>
@@ -101,6 +104,7 @@
                 <td>zweite</td>
                 <td class="right-line"><span class="erm">ERM</span>%</td>
                 <td colspan="100">&nbsp;</td>
+                <? endif; ?>
             </tr>
                 <? foreach ($hotel->child_types as $child): ?>
             <tr>
@@ -141,7 +145,7 @@
     <br class="clear"/>
 
 
-    <table id="price-table">
+    <table id="price-table" class="product-list">
         <thead>
         <th>Period</th>
         <th>Konti</th>
@@ -168,8 +172,9 @@
             <td class="zimmer_kontigent"><?=$period->zimmer_kontigent?></td>
             <td class="relis"><?=$period->relis?></td>
             <td class="period_price"><?=$period->price?></td>
+
             <?foreach ($hotel->child_types as $child): ?>
-            <td><?=$period->child_prices[$child->id][1]?></td>
+            <td><?=isset($period->child_prices[$child->id][1]) ? $period->child_prices[$child->id][1] : ''?></td>
             <? endforeach; ?>
             <td class="price_marge"><?=$period->price_marge?></td>
             <td class="price_erm"><?=$period->price_erm?></td>
@@ -209,7 +214,7 @@
             <td class="name"><input type="text" maxlength="1" name="diff[0][<?=$ind?>]" value="<?=$dif[0]?>"/></td>
             <? foreach ($hotel->child_types as $child): ?>
             <td class="plus">+</td>
-            <td class="name"><input type="text" maxlength="1" value="<?=$dif[$child->id]?>"
+            <td class="name"><input type="text" maxlength="1" value="<?=isset($dif[$child->id]) ? $dif[$child->id] : '0'?>"
                                     name="diff[<?=$child->id?>][<?=$ind?>]"/></td>
             <? endforeach; ?>
             <td class="delete"><a href="#" class="delete-icon"></a></td>

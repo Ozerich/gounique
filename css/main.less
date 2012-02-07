@@ -1708,35 +1708,38 @@ label{
     margin: 10px auto;
 }
 
-.room-page #price-page #price-table{
+.product-list{
     margin: 20px auto;
     background: #f7f7f7;
+    width: 100%;
 }
 
-.room-page #price-page #price-table th{
+.product-list th{
     .verticalGradient(0, #FFFFFF, 100%, #E1E1E1);
     font-size: 12px;
     font-weight: normal;
     padding: 5px 10px;
-}
-
-.room-page #price-page #price-table td{
     text-align: center;
-    padding: 5px 5px;
+}
+.product-list tr{
     border-bottom: 1px solid #aaa;
 }
+.product-list td{
+    text-align: center;
+    padding: 5px 5px;
+}
 
-.room-page #price-page #price-table tr:hover{
+.product-list tr:hover{
     cursor: pointer;
 }
 
-.room-page #price-page #price-table tr:nth-child(even){background: #effcff;}
-.room-page #price-page #price-table tr:nth-child(even):hover{background: #e8f5f7;}
+.product-list tr:nth-child(even){background: #effcff;}
+.product-list tr:nth-child(even):hover{background: #e8f5f7;}
 
-.room-page #price-page #price-table tr:nth-child(odd){background: #fafafa;}
-.room-page #price-page #price-table tr:nth-child(odd):hover{background: #ebebeb;}
+.product-list tr:nth-child(odd){background: #fafafa;}
+.product-list tr:nth-child(odd):hover{background: #ebebeb;}
 
-.room-page #price-page #price-table tr.current, .room-page #price-page #price-table tr.current:hover{
+.product-list tr.current, .product-list tr.current:hover{
     background: #4bffa9 !important;
 }
 
@@ -1750,3 +1753,68 @@ label{
     height: 15px;
     margin: 0 auto;
 }
+
+.product-list td.status{
+    width: 31px;
+}
+.product-list td.active{
+    color: #12ab05;
+}
+
+.product-list td.inactive{
+    color: #e81515;
+}
+
+.product-list tr td.submenu{
+    display: block;
+    position: relative;
+    width: 1px;
+}
+
+.product-list tr td.submenu ul{
+    position: absolute;
+    top: -2px;
+    display: none;
+    padding-left: 18px;
+}
+
+.product-list tr:hover td.submenu ul{
+    display: block;
+}
+
+.product-list tr td.submenu ul a{
+    display: block;
+    text-decoration: none;
+    color: #777;
+    background: #fff;
+    padding: 5px;
+    width: 100px;
+    margin-top:1px;
+    border: 1px solid #ccc;
+}
+
+.product-list tr td.submenu ul li:hover a{
+    background: none repeat scroll 0 0 #F9F9F9;
+    color: #E2144A;
+}
+
+.hotellist-top .hotel-search{
+    float: left;
+    width: 400px;
+}
+
+.hotellist-top .hotel-search input{
+    width: 379px;
+}
+
+.hotellist-top .new-hotel{
+    display: block;
+    float: right;
+    margin-top: 17px;
+}
+
+#hotel-list th.code{width: 40px}
+#hotel-list th.land,#hotel-list th.zielgebiet,#hotel-list th.ort{width: 110px}
+#hotel-list th.kat{width: 15px}
+#hotel-list th.status{width: 30px}
+#hotel-list th.submenu{width: 1px}

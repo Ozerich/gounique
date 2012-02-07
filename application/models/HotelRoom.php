@@ -6,11 +6,13 @@ class HotelRoom extends ActiveRecord\Model
 
     public function get_code()
     {
-        $words = explode(' ',$this->name);
+        $name = str_replace('-', '',$this->name);
+        $words = explode(' ', $name);
         $result = '';
 
-        foreach($words as $word)
-            $result .= $word[0];
+        foreach ($words as $word)
+            if ($word)
+                $result .= $word[0];
 
         return $result;
     }
@@ -20,7 +22,7 @@ class HotelRoom extends ActiveRecord\Model
         $items = HotelRoomService::all(array('conditions' => array('room_id = ? AND active = 1', $this->id)));
         $result = array();
 
-        foreach($items as $item)
+        foreach ($items as $item)
             $result[] = Service::find_by_id($item->service_id);
 
         return $result;

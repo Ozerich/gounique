@@ -15,7 +15,17 @@ class ProductHotel_Controller extends MY_Controller
     public function index()
     {
         $this->view_data['page_title'] = 'Hotels';
-        $this->view_data['hotels'] = Hotel::all();
+        $this->view_data['hotel_list'] = $this->load->view('producthotel/hotel_list.php', array('hotels' => Hotel::all()), true);
+    }
+
+    public function search_hotel()
+    {
+        $s = $this->input->post('search');
+
+        $hotels = Hotel::find('all', array('conditions' => array('code like "%' . $s . '%" OR name like "%' . $s . '%"')));
+
+        echo $this->load->view('producthotel/hotel_list.php', array('hotels' => $hotels), true);
+        exit();
     }
 
     public function edit($id = 0)
@@ -57,38 +67,22 @@ class ProductHotel_Controller extends MY_Controller
             $hotel->infantblock_active = isset($_POST['infantblock_active']) ? 1 : 0;
             $hotel->save();
 
-            HotelChildAge::table()->delete(array('hotel_id' => $id));
             HotelMinimum::table()->delete(array('hotel_id' => $id));
 
-            if ($this->input->post('teen-von'))
-                foreach ($this->input->post('teen-von') as $ind => $teen)
-                    HotelChildAge::create(array(
-                        'hotel_id' => $id,
-                        'von' => $_POST['teen-von'][$ind],
-                        'bis' => $_POST['teen-bis'][$ind],
-                        'active' => isset($_POST['teen-active'][$ind]) ? 1 : 0,
-                        'type' => 'teen'
-                    ));
+            foreach (array('teen', 'child', 'infant') as $ct)
+                if ($this->input->post($ct . '-von'))
+                    foreach ($this->input->post($ct . '-von') as $ind => $child)
+                    {
+                        $child_age = isset($_POST[$ct . '_id'][$ind]) ? HotelChildAge::find_by_id($_POST[$ct . '_id'][$ind]) :
+                            HotelChildAge::create(array('hotel_id' => $id));
 
-            if ($this->input->post('child-von'))
-                foreach ($this->input->post('child-von') as $ind => $child)
-                    HotelChildAge::create(array(
-                        'hotel_id' => $id,
-                        'von' => $_POST['child-von'][$ind],
-                        'bis' => $_POST['child-bis'][$ind],
-                        'active' => isset($_POST['child-active'][$ind]) ? 1 : 0,
-                        'type' => 'child'
-                    ));
-
-            if ($this->input->post('infant-von'))
-                foreach ($this->input->post('infant-von') as $ind => $infant)
-                    HotelChildAge::create(array(
-                        'hotel_id' => $id,
-                        'von' => $_POST['infant-von'][$ind],
-                        'bis' => $_POST['infant-bis'][$ind],
-                        'active' => isset($_POST['infant-active'][$ind]) ? 1 : 0,
-                        'type' => 'infant'
-                    ));
+                        $child_age->hotel_id = $id;
+                        $child_age->von = $_POST[$ct . '-von'][$ind];
+                        $child_age->bis = $_POST[$ct . '-bis'][$ind];
+                        $child_age->active = isset($_POST[$ct . '-active'][$ind]) ? 1 : 0;
+                        $child_age->type = $ct;
+                        $child_age->save();
+                    }
 
             if ($this->input->post('minimum_von'))
                 foreach ($this->input->post('minimum_von') as $ind => $minimum)
@@ -135,6 +129,8 @@ class ProductHotel_Controller extends MY_Controller
 
                     HotelBonus::create($bonus);
                 }
+
+            redirect('product/hotel');
         }
 
         $this->view_data['hotel'] = $hotel;
@@ -307,13 +303,14 @@ class ProductHotel_Controller extends MY_Controller
             $period_id = $period->id;
 
             PeriodChildPrice::table()->delete(array('period_id' => $period_id));
+            if($this->input->post('price1'))
             foreach ($this->input->post('price1') as $age_id => $data)
             {
                 PeriodChildPrice::create(array(
                     'period_id' => $period_id,
                     'age_id' => $age_id,
-                    'price_1' => $_POST['price1'][$age_id],
-                    'price_2' => $_POST['price2'][$age_id]
+                    'price_1' => $_POST['price1'][$age_id] ? $_POST['price1'][$age_id] : $period->price,
+                    'price_2' => $_POST['price2'][$age_id] ? $_POST['price2'][$age_id] : $period->price,
                 ));
             }
 
@@ -382,7 +379,7 @@ class ProductHotel_Controller extends MY_Controller
             if ($room_id == 0) {
                 $room = HotelRoom::create(array(
                     'hotel_id' => $hotel_id,
-                    'name' => $this->input->post('roomname')
+                    'name' => strtoupper($this->input->post('roomname'))
                 ));
 
 
@@ -396,13 +393,22 @@ class ProductHotel_Controller extends MY_Controller
                 for ($i = 0; $i <= Config::get('max_zimmer_count'); $i++)
                 {
                     $active = isset($_POST['room_count'][$i]);
-                    HotelRoomType::create(array(
+                    $roomtype = HotelRoomType::create(array(
                         'room_id' => $room->id,
                         'hotel_id' => $hotel->id,
                         'code' => $room->code . $i,
                         'count' => $i,
                         'active' => $active
                     ));
+
+                    $people_count = $i == 0 ? 2 : $i;
+                    $hd = HotelRoomDifference::create(array('room_id' => $roomtype->id));
+                    HotelRoomDifferenceItem::create(array(
+                        'room_difference_id' => $hd->id,
+                        'room_id' => $roomtype->id,
+                        'childage_id' => 0,
+                        'value' => $people_count));
+
                 }
             }
             else

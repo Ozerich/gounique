@@ -104,6 +104,7 @@
                 <tr>
                     <td class="active"><input type="checkbox"
                                               name="teen-active[<?=$ind?>]" <?if ($teen->active) echo 'checked';?>></td>
+                    <input type="hidden" name="teen_id[<?=$ind?>]" value="<?=$teen->id?>"/>
                     <td class="age">
                         <input type="text" maxlength="2"
                                value="<?=$teen->von?>" <?if (!$teen->active) echo 'disabled'?>/>
@@ -154,6 +155,7 @@
                     <td class="active"><input type="checkbox"
                                               name="child-active[<?=$ind?>]" <?if ($child->active) echo 'checked';?>>
                     </td>
+                    <input type="hidden" name="child_id[<?=$ind?>]" value="<?=$child->id?>"/>
                     <td class="age">
                         <input type="text" maxlength="2"
                                value="<?=$child->von?>" <?if (!$child->active) echo 'disabled'?>/>
@@ -204,6 +206,8 @@
                     <td class="active"><input type="checkbox"
                                               name="infant-active[<?=$ind?>]" <?if ($infant->active) echo 'checked';?>>
                     </td>
+                    <input type="hidden" name="infant_id[<?=$ind?>]" value="<?=$infant->id?>"/>
+
                     <td class="age">
                         <input type="text" maxlength="2"
                                value="<?=$infant->von?>"  <?if (!$infant->active) echo 'disabled'?> />
