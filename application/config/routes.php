@@ -79,8 +79,14 @@ $route['settings/(:any)'] = 'settings_controller/$1';
 $route['product/hotel'] = 'producthotel_controller';
 $route['product/hotel/(:any)'] = 'producthotel_controller/$1';
 
+$route['product/rundreise'] = 'productrundreise_controller';
+$route['product/rundreise/(:any)'] = 'productrundreise_controller/$1';
+
 $route['product'] = 'product_controller';
 $route['product/(:any)'] = 'product_controller/$1';
+
+$route['control'] = 'control_controller';
+$route['control/(:any)'] = 'control_controller/$1';
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

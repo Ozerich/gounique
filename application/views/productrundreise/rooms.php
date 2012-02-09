@@ -47,11 +47,11 @@
                 <input type="text" name="bis" id="bis" maxlength="8"/>
             </div>
             <div class="param">
-                <label for="zimmerkontigent">Allotm.</label>
+                <label for="zimmerkontigent">Zimm. Kont.</label>
                 <input type="text" maxlength="3" name="zimmerkontigent" id="zimmerkontigent"/>
             </div>
             <div class="param last">
-                <label for="relis">Release</label>
+                <label for="relis">Relis</label>
                 <input type="text" maxlength="3" name="relis" id="relis">
             </div>
         </fieldset>
@@ -99,9 +99,9 @@
             <? if ($hotel->child_types): ?>
             <tr class="header-second">
                 <td>&nbsp;</td>
-                <td>Kind 1</td>
+                <td>erste</td>
                 <td><span class="erm">ERM</span>%</td>
-                <td>Kind 2</td>
+                <td>zweite</td>
                 <td class="right-line"><span class="erm">ERM</span>%</td>
                 <td colspan="100">&nbsp;</td>
                 <? endif; ?>

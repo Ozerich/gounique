@@ -3,30 +3,29 @@
         <a href="dashboard" class="home-link"><img src="img/header-logo.jpg"/></a>
         <ul class="page-path">
             <li><a href="product">produkt</a></li>
-            <li><a href="product/hotel">hotelverwaltung</a></li>
-            <li><span>neueu hotel</span></li>
+            <li><a href="product/rundreise">rundreise</a></li>
+            <li><span>neueu tour</span></li>
         </ul>
     </div>
 </div>
 
 <div id="hotelcreate-page" class="content product-create">
-<?=form_open("product/hotel/create")?>
+<?=form_open("product/rundreise/create")?>
 
 <ul id="tabs">
     <li class="active"><span for="crs-page">CRS Daten</span></li>
     <li><span for="klassen-page">Childs & Extras</span></li>
-    <li><span for="bonus-page">Bonuses</span></li>
     <li><span for="kontakt-page">Kontaktdaten</span></li>
 </ul>
 
 <div class="page" id="crs-page">
     <div class="param">
-        <label for="code">Hotelcode</label>
+        <label for="code">Packetcode</label>
         <input name="code" class="high-letters" type="text" id="code" maxlength="10"/>
     </div>
 
     <div class="param">
-        <label for="name">Hotelname</label>
+        <label for="name">Packetname</label>
         <input name="name" type="text" id="name"/>
     </div>
 
@@ -36,7 +35,7 @@
     </div>
 
     <div class="param">
-        <label for="tlc">Hotel TLC</label>
+        <label for="tlc">Start TLC</label>
         <input name="tlc" type="text" id="tlc"/>
     </div>
 
@@ -51,7 +50,7 @@
     </div>
 
     <div class="param">
-        <label for="land">Hotel Land</label>
+        <label for="land">Land</label>
         <input name="land" type="text" id="land"/>
     </div>
 
@@ -171,31 +170,7 @@
 
         <br class="clear"/>
     </div>
-    <div class="minimum-block">
-        <span class="block-header">Minimums:</span>
 
-        <div class="minimum-list">
-            <span class="empty">No minumum</span>
-
-            <div class="minimum-item example" style="display:none">
-
-                <div class="period-param param">
-                    <label for="von">Period von</label>
-                    <input type="text" class="minimum-von" maxlength="8"/>
-                    <label for="bis">bis</label>
-                    <input type="text" class="minimum-bis" maxlength="8"/>
-                    <a href="#" class="delete-icon minimum-delete"></a>
-                </div>
-                <div class="period-param param">
-                    <label for="nachte_max">Nachte:</label>
-                    <input type="text" id="nachte_max" class="minimum-nights"/>
-                </div>
-
-            </div>
-        </div>
-        <button id="new-minimum">Neueu minimum</button>
-        <br class="clear"/>
-    </div>
     <div class="holiday-block">
         <div class="param">
             <div class="left">
@@ -250,129 +225,6 @@
     </div>
 </div>
 
-
-<div class="page" id="bonus-page" style="display:none">
-    <div class="bonus-list">
-        <span class="empty"></span>
-
-        <div class="bonus-list">
-        </div>
-
-        <button id="bonusnew-open">Neueu bonus</button>
-        <br class="clear"/>
-
-        <div class="bonus-item example" style="display:none">
-
-            <div class="bonus-preview">
-                <p></p>
-
-                <div class="preview-buttons">
-                    <button class="bonus-edit">Edit</button>
-                    <button class="bonus-delete">Delete</button>
-                    <br class="clear"/>
-                </div>
-                <br class="clear"/>
-            </div>
-
-            <div class="bonus-content" style="display:none">
-
-                <div class="period-param param">
-                    <label for="von">Period von</label>
-                    <input type="text" for-name="bonus_von" class="bonus-von" maxlength="8"/>
-                    <label for="bis">bis</label>
-                    <input type="text" for-name="bonus_bis" class="bonus-bis" maxlength="8"/>
-                </div>
-
-                <div class="bonus-blocks">
-
-                    <div id="bonus_1_block" class="bonus-block active">
-                        <div class="radio">
-                            <input type="radio" for-name="bonus_type" class="bonustype" value="night_bonus" checked/><label>Bonus</label>
-                        </div>
-
-                        <div class="param">
-                            <label>Nachte</label>
-                            <input type="text" for-name="from_nights" maxlength="2" id="from"/> = <input type="text" for-name="to_nights" maxlength="2" id="to"/>
-                        </div>
-                    </div>
-
-                    <div id="bonus_2_block" class="bonus-block">
-                        <div class="radio">
-                            <input type="radio" for-name="bonustype" class="bonustype" value="earlybird_days"/><label>EB-Promo</label>
-                        </div>
-
-                        <div class="param">
-                            <label>Days before</label>
-                            <input type="text" for-name="days_before" id="days" maxlength="2"/>
-                        </div>
-                        <div class="param">
-                            <label>Discount %</label>
-                            <input type="text" for-name="discount1" id="percent" maxlength="2"/>
-                        </div>
-                    </div>
-
-                    <div id="bonus_3_block" class="bonus-block">
-                        <div class="radio">
-                            <input type="radio" for-name="bonustype" class="bonustype" value="earlybird_date"/><label>EarlyBird</label>
-                        </div>
-
-                        <div class="param">
-                            <label>Booking till</label>
-                            <input type="text" for-name="booking_till" class="booking_till" maxlength="8"/>
-                        </div>
-                        <div class="param">
-                            <label>Discount %</label>
-                            <input type="text" for-name="discount2" id="discount2" maxlength="2"/>
-                        </div>
-                    </div>
-
-                    <div id="bonus_4_block" class="bonus-block">
-                        <div class="radio">
-                            <input type="radio" for-name="bonustype" class="bonustype" value="long_stay"/><label>Longstay</label>
-                        </div>
-
-                        <div class="param">
-                            <label>Days count</label>
-                            <input type="text" for-name="days_count" id="days_count" maxlength="2"/>
-                        </div>
-                        <div class="param">
-                            <label>Discount %</label>
-                            <input type="text" id="discount3" for-name="discount3" maxlength="2"/>
-                        </div>
-                    </div>
-
-                    <div id="bonus_5_block" class="bonus-block">
-                        <div class="radio">
-                            <input type="radio" for-name="bonustype" class="bonustype"
-                                   value="turbo_bonus"/><label>Turbo bonus</label>
-                        </div>
-
-                        <div class="param">
-                            <label>Booking till</label>
-                            <input type="text" for-name="booking_till_2" class="booking_till_2" maxlength="8"/>
-                        </div>
-                        <div class="param">
-                            <label>Discount &euro;</label>
-                            <input type="text" for-name="discount4" id="discount4" maxlength="2"/>
-                        </div>
-                    </div>
-
-                    <br class="clear"/>
-                </div>
-
-                <div class="buttons">
-                    <button class="bonusadd-cancel">Cancel</button>
-                    <button class="bonusadd-submit">Add</button>
-                    <br class="clear"/>
-                </div>
-
-                <br class="clear"/>
-            </div>
-        </div>
-
-    </div>
-
-</div>
 
 <div class="page" id="kontakt-page" style="display:none">
     <div class="param">

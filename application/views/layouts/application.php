@@ -60,5 +60,11 @@
     </div>
 
 </div>
+
+<div id="dark-overlay">
+</div>
+<div id="overlay-window">
+
+</div>
 </body>
 </html>

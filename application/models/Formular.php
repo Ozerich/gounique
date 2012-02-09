@@ -62,11 +62,6 @@ class Formular extends ActiveRecord\Model
         return $hotels;
     }
 
-    public function get_payments()
-    {
-        return FormularPayment::find_all_by_formular_id($this->id);
-    }
-
     public function get_paid_amount()
     {
         $payments = $this->payments;
@@ -109,7 +104,7 @@ class Formular extends ActiveRecord\Model
             }
 
         $price_data['provision'] = round($price_data['brutto'] * $this->provision / 100, 2);
-        $price_data['mwst'] = $this->kunde->ausland == 1 ? 0 : (round($price_data['provision'] * 0.19, 2));
+        $price_data['mwst'] = $this->kunde && $this->kunde->ausland == 1 ? 0 : (round($price_data['provision'] * 0.19, 2));
 
         $price_data['total_provision'] = $price_data['provision'] + $price_data['mwst'];
 
@@ -172,12 +167,6 @@ class Formular extends ActiveRecord\Model
         return $result;
     }
 
-    public function get_berater()
-    {
-        $name = explode(' ', $this->sachbearbeiter);
-        return strtoupper($name[1][0] . $name[0][0]);
-    }
-
     public function get_plain_persons()
     {
         $persons = FormularPerson::find_all_by_formular_id($this->id);
@@ -188,6 +177,25 @@ class Formular extends ActiveRecord\Model
 
         return $text ? substr($text, 0, -2) : "";
     }
+
+    public function get_is_sofort()
+    {
+        if($this->prepayment_date && $this->prepayment_amount > 0)
+            return false;
+        return true;
+    }
+
+    public function get_sachbearbeiter()
+    {
+        return User::find_by_id($this->created_by);
+    }
+
+    public function get_payments()
+    {
+        $data = FormularPayment::find_all_by_formular_id($this->id);
+        return $data ? $data : array();
+    }
+
 }
 
 ?>

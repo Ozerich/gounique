@@ -954,6 +954,24 @@ $(document).ready(function () {
     /*------------------------------------------------------------------------------------------------------------
      Final page
      ------------------------------------------------------------------------------------------------------------*/
+
+    $('.reservierung-page .incoming-send').click(function()
+    {
+        $(this).parents('.incoming-sendblock').hide();
+        var block = $(this).parents('.item');
+        $.ajax({
+            url: 'reservierung/send_report',
+            type: 'post',
+            data: 'type=' + $(block).find('.item_type').val() + '&id=' + $(block).find('.item_id').val(),
+            success: function(data)
+            {
+                alert(data);
+                $(block).find('.incoming-sendok').show();
+            }
+        });
+        return false;
+    });
+
     $('.reservierung-page').find('#prepayment_date,#departure_date, #finalpayment_date').datepicker({
         onSelect:function () {
             $(this).change();

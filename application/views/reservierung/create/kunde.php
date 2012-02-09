@@ -210,6 +210,15 @@
                     <textarea id="voucher_remark" class="voucher-text" name="voucher_remark"></textarea>
                 </div>
 
+                <div class="param">
+                    <label class="param-name">Incoming</label>
+                    <select name="incoming">
+                        <option value="0">No Incoming</option>
+                        <? foreach(Kunde::find_all_by_type('incoming') as $incoming): ?>
+                            <option value="<?=$incoming->id?>"><?=$incoming->name?></option>
+                        <? endforeach; ?>
+                    </select>
+                </div>
 
             </div>
 
@@ -277,6 +286,15 @@
                     <textarea id="voucher_remark" class="voucher-text" name="manuel_voucher_remark"></textarea>
                 </div>
 
+                <div class="param">
+                    <label class="param-name">Incoming</label>
+                    <select name="manuel_incoming">
+                        <option value="0">No Incoming</option>
+                        <? foreach(Kunde::find_all_by_type('incoming') as $incoming): ?>
+                            <option value="<?=$incoming->id?>"><?=$incoming->name?></option>
+                        <? endforeach; ?>
+                    </select>
+                </div>
             </div>
 
             <div class="manuel-nodate" style="display:none">
@@ -294,6 +312,16 @@
                 <div class="param">
                     <label class="param-name" for="voucher_remark">Voucher text</label>
                     <textarea id="voucher_remark" class="voucher-text" name="manuel_voucher_remark"></textarea>
+                </div>
+
+                <div class="param">
+                    <label class="param-name">Incoming</label>
+                    <select name="manuel_incoming">
+                        <option value="0">No Incoming</option>
+                        <? foreach(Kunde::find_all_by_type('incoming') as $incoming): ?>
+                            <option value="<?=$incoming->id?>"><?=$incoming->name?></option>
+                        <? endforeach; ?>
+                    </select>
                 </div>
 
             </div>

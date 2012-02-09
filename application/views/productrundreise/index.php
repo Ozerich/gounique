@@ -3,7 +3,7 @@
         <a href="dashboard" class="home-link"><img src="img/header-logo.jpg"/></a>
         <ul class="page-path">
             <li><a href="product">produkt</a></li>
-            <li><span>hotelverwaltung</span></li>
+            <li><span>rundreise</span></li>
         </ul>
     </div>
 </div>
@@ -13,10 +13,10 @@
     <div class="hotellist-top">
         <div class="hotel-search">
             <label for="search">Search:</label>
-            <input class="search-hotel" type="text" id="search"/>
+            <input class="search-tour" type="text" id="search"/>
             <div class="search-loading"></div>
         </div>
-        <a href="product/hotel/create" class="new-hotel button-link">neueu hotel</a>
+        <a href="product/rundreise/create" class="new-hotel button-link">neueu tour</a>
         <br class="clear"/>
     </div>
     <table class="product-list" id="hotel-list">
@@ -28,11 +28,10 @@
         <th class="zielgebiet">Zielgebiet</th>
         <th class="kat">Kat</th>
         <th class="status">Status</th>
-        <th class="changed">Changed</th>
         <th class="submenu">&nbsp;</th>
         </thead>
         <tbody>
-        <?=$hotel_list?>
+        <?=$tour_list?>
         </tbody>
 </div>
 </div>

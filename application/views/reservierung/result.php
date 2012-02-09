@@ -200,6 +200,8 @@
                id="departure_date"/>
     </div>
 
+
+
     <? if($formular->status == "rechnung"): ?>
     <div class="prepayment-block" <? if(!$formular->finalpayment_date) echo 'style="display:none"' ?>>
 

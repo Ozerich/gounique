@@ -1,6 +1,6 @@
 <?php
 
-class ProductHotel_Controller extends MY_Controller
+class ProductRundreise_Controller extends MY_Controller
 {
     public function __construct()
     {
@@ -14,17 +14,17 @@ class ProductHotel_Controller extends MY_Controller
 
     public function index()
     {
-        $this->view_data['page_title'] = 'Hotels';
-        $this->view_data['hotel_list'] = $this->load->view('producthotel/hotel_list.php', array('hotels' => Hotel::all()), true);
+        $this->view_data['page_title'] = 'Tours';
+        $this->view_data['tour_list'] = $this->load->view('productrundreise/tour_list.php', array('tours' => Rundreise::all()), true);
     }
 
-    public function search_hotel()
+    public function search_tour()
     {
         $s = $this->input->post('search');
 
-        $hotels = Hotel::find('all', array('conditions' => array('code like "%' . $s . '%" OR name like "%' . $s . '%"')));
+        $hotels = Rundreise::find('all', array('conditions' => array('code like "%' . $s . '%" OR name like "%' . $s . '%"')));
 
-        echo $this->load->view('producthotel/hotel_list.php', array('hotels' => $hotels), true);
+        echo $this->load->view('productrundreise/tour_list.php', array('tours' => $hotels), true);
         exit();
     }
 
@@ -65,13 +65,7 @@ class ProductHotel_Controller extends MY_Controller
             $hotel->teenblock_active = isset($_POST['teenblock_active']) ? 1 : 0;
             $hotel->childblock_active = isset($_POST['childblock_active']) ? 1 : 0;
             $hotel->infantblock_active = isset($_POST['infantblock_active']) ? 1 : 0;
-
-            $hotel->changed_by = $this->user->id;
-            $hotel->changed_time = time_to_mysqldatetime(time());
-
             $hotel->save();
-
-            HotelMinimum::table()->delete(array('hotel_id' => $id));
 
             foreach (array('teen', 'child', 'infant') as $ct)
                 if ($this->input->post($ct . '-von'))
@@ -88,59 +82,7 @@ class ProductHotel_Controller extends MY_Controller
                         $child_age->save();
                     }
 
-            if ($this->input->post('minimum_von'))
-                foreach ($this->input->post('minimum_von') as $ind => $minimum)
-                    if ($_POST['minimum_von'][$ind] && $_POST['minimum_bis'][$ind])
-                        HotelMinimum::create(array(
-                            'hotel_id' => $id,
-                            'von' => inputdate_to_mysqldate($_POST['minimum_von'][$ind]),
-                            'bis' => inputdate_to_mysqldate($_POST['minimum_bis'][$ind]),
-                            'nights' => $_POST['minimum_nights'][$ind],
-                        ));
-
-            HotelBonus::table()->delete(array('hotel_id' => $id));
-            if ($this->input->post('bonustype'))
-                foreach ($this->input->post('bonustype') as $ind => $bonus_type)
-                {
-                    $bonus = array(
-                        'hotel_id' => $id,
-                        'type' => $bonus_type,
-                        'period_start' => inputdate_to_mysqldate($_POST['bonus_von'][$ind]),
-                        'period_finish' => inputdate_to_mysqldate($_POST['bonus_bis'][$ind])
-                    );
-
-                    switch ($bonus_type)
-                    {
-                        case "night_bonus":
-                            $bonus['night_1'] = $_POST['from_nights'][$ind];
-                            $bonus['night_2'] = $_POST['to_nights'][$ind];
-                            break;
-
-                        case "earlybird_days":
-                            $bonus['days_before'] = $_POST['days_before'][$ind];
-                            $bonus['discount_1'] = $_POST['discount1'][$ind];
-                            break;
-
-                        case "earlybird_date":
-                            $bonus['booking_till'] = inputdate_to_mysqldate($_POST['booking_till'][$ind]);
-                            $bonus['discount_2'] = $_POST['discount2'][$ind];
-                            break;
-
-                        case "long_stay":
-                            $bonus['days_count'] = $_POST['days_count'][$ind];
-                            $bonus['discount_3'] = $_POST['discount3'][$ind];
-                            break;
-
-                        case "turbo_bonus":
-                            $bonus['booking_till_2'] = inputdate_to_mysqldate($_POST['booking_till_2'][$ind]);
-                            $bonus['discount_4'] = $_POST['discount4'][$ind];
-                            break;
-                    }
-
-                    HotelBonus::create($bonus);
-                }
-
-            redirect('product/hotel/edit/' . $hotel->id);
+            redirect('product/hotel');
         }
 
         $this->view_data['hotel'] = $hotel;
@@ -150,7 +92,7 @@ class ProductHotel_Controller extends MY_Controller
     {
         if ($_POST) {
 
-            $hotel = Hotel::create(array(
+            $tour = Rundreise::create(array(
                 'code' => $this->input->post('code'),
                 'name' => $this->input->post('name'),
                 'stars' => $this->input->post('stars'),
@@ -179,16 +121,14 @@ class ProductHotel_Controller extends MY_Controller
                 'teenblock_active' => isset($_POST['teenblock_active']) ? 1 : 0,
                 'childblock_active' => isset($_POST['childblock_active']) ? 1 : 0,
                 'infantblock_active' => isset($_POST['infantblock_active']) ? 1 : 0,
-                'changed_by' => $this->user->id,
-                'changed_time' => time_to_mysqldatetime(time()),
             ));
 
-            $hotel_id = $hotel->id;
+            $tour_id = $tour->id;
 
             if ($this->input->post('teen-von'))
                 foreach ($this->input->post('teen-von') as $ind => $teen)
-                    HotelChildAge::create(array(
-                        'hotel_id' => $hotel_id,
+                    RundreiseChildAge::create(array(
+                        'tour_id' => $tour_id,
                         'von' => $_POST['teen-von'][$ind],
                         'bis' => $_POST['teen-bis'][$ind],
                         'active' => isset($_POST['teen-active'][$ind]) ? 1 : 0,
@@ -197,8 +137,8 @@ class ProductHotel_Controller extends MY_Controller
 
             if ($this->input->post('child-von'))
                 foreach ($this->input->post('child-von') as $ind => $child)
-                    HotelChildAge::create(array(
-                        'hotel_id' => $hotel_id,
+                    RundreiseChildAge::create(array(
+                        'hotel_id' => $tour_id,
                         'von' => $_POST['child-von'][$ind],
                         'bis' => $_POST['child-bis'][$ind],
                         'active' => isset($_POST['child-active'][$ind]) ? 1 : 0,
@@ -207,62 +147,13 @@ class ProductHotel_Controller extends MY_Controller
 
             if ($this->input->post('infant-von'))
                 foreach ($this->input->post('infant-von') as $ind => $infant)
-                    HotelChildAge::create(array(
-                        'hotel_id' => $hotel_id,
+                    RundreiseChildAge::create(array(
+                        'hotel_id' => $tour_id,
                         'von' => $_POST['infant-von'][$ind],
                         'bis' => $_POST['infant-bis'][$ind],
                         'active' => isset($_POST['infant-active'][$ind]) ? 1 : 0,
                         'type' => 'infant'
                     ));
-
-            if ($this->input->post('minimum_von'))
-                foreach ($this->input->post('minimum_von') as $ind => $minimum)
-                    HotelMinimum::create(array(
-                        'hotel_id' => $hotel_id,
-                        'von' => inputdate_to_mysqldate($_POST['minimum_von'][$ind]),
-                        'bis' => inputdate_to_mysqldate($_POST['minimum_bis'][$ind]),
-                        'nights' => inputdate_to_mysqldate($_POST['minimum_nights'][$ind]),
-                    ));
-            if ($this->input->post('bonustype'))
-                foreach ($this->input->post('bonustype') as $ind => $bonus_type)
-                {
-                    $bonus = array(
-                        'hotel_id' => $hotel_id,
-                        'type' => $bonus_type,
-                        'period_start' => inputdate_to_mysqldate($_POST['bonus_von'][$ind]),
-                        'period_finish' => inputdate_to_mysqldate($_POST['bonus_bis'][$ind])
-                    );
-
-                    switch ($bonus_type)
-                    {
-                        case "night_bonus":
-                            $bonus['night_1'] = $_POST['from_nights'][$ind];
-                            $bonus['night_2'] = $_POST['to_nights'][$ind];
-                            break;
-
-                        case "earlybird_date":
-                            $bonus['days_before'] = $_POST['days_before'][$ind];
-                            $bonus['discount_1'] = $_POST['discount1'][$ind];
-                            break;
-
-                        case "earlybird_days":
-                            $bonus['booking_till'] = inputdate_to_mysqldate($_POST['booking_till'][$ind]);
-                            $bonus['discount_2'] = $_POST['discount2'][$ind];
-                            break;
-
-                        case "long_stay":
-                            $bonus['days_count'] = $_POST['days_count'][$ind];
-                            $bonus['discount_3'] = $_POST['discount3'][$ind];
-                            break;
-
-                        case "turbo_bonus":
-                            $bonus['booking_till_2'] = inputdate_to_mysqldate($_POST['booking_till_2'][$ind]);
-                            $bonus['discount_4'] = $_POST['discount4'][$ind];
-                            break;
-                    }
-
-                    HotelBonus::create($bonus);
-                }
         }
     }
 
@@ -320,16 +211,16 @@ class ProductHotel_Controller extends MY_Controller
             $period_id = $period->id;
 
             PeriodChildPrice::table()->delete(array('period_id' => $period_id));
-            if ($this->input->post('price1'))
-                foreach ($this->input->post('price1') as $age_id => $data)
-                {
-                    PeriodChildPrice::create(array(
-                        'period_id' => $period_id,
-                        'age_id' => $age_id,
-                        'price_1' => $_POST['price1'][$age_id] ? $_POST['price1'][$age_id] : $period->price,
-                        'price_2' => $_POST['price2'][$age_id] ? $_POST['price2'][$age_id] : $period->price,
-                    ));
-                }
+            if($this->input->post('price1'))
+            foreach ($this->input->post('price1') as $age_id => $data)
+            {
+                PeriodChildPrice::create(array(
+                    'period_id' => $period_id,
+                    'age_id' => $age_id,
+                    'price_1' => $_POST['price1'][$age_id] ? $_POST['price1'][$age_id] : $period->price,
+                    'price_2' => $_POST['price2'][$age_id] ? $_POST['price2'][$age_id] : $period->price,
+                ));
+            }
 
             PeriodServicePrice::table()->delete(array('period_id' => $period_id));
             foreach ($this->input->post('meal') as $age_id => $data)

@@ -13,6 +13,15 @@ class FormularManuel extends ActiveRecord\Model
         return $text;
     }
 
+    public function get_incoming_report()
+    {
+        $text = '';
+        $text = ($this->date_start && $this->date_end) ? $this->date_start->format('d.m.Y') . " - " . $this->date_end->format('d.m.Y') . " " : '';
+        $text .=  $this->text;
+
+        return $text;
+    }
+
     public function get_pdf_text()
     {
         $text = '';
@@ -61,7 +70,22 @@ class FormularManuel extends ActiveRecord\Model
 
     public function get_voucher_name()
     {
-        return "voucher_manuel_".$this->id.".pdf";
+        $result = "Voucher_";
+
+        $formular = Formular::find_by_id($this->formular_id);
+
+        $person = $formular->persons[0];
+        $result .= $person->name."_";
+
+        $words = explode(' ', $this->text);
+        $result .= $words[0];
+
+        return $result.".pdf";
+    }
+
+    public function get_incoming()
+    {
+        return Kunde::find_by_id($this->incoming_id);
     }
 
 }

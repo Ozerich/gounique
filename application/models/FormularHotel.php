@@ -53,20 +53,49 @@ class FormularHotel extends ActiveRecord\Model
     {
         $text = $this->date_start->format('d.m.Y') . " - " . $this->date_end->format('d.m.Y') . " ";
         $text .= $this->days_count . "N HOTEL: " . $this->hotel_name . " / ";
-        $text .= $this->roomcapacity  . " / ";
+        $text .= $this->roomcapacity . " / ";
         $text .= $this->roomtype . " / ";
         $text .= HotelService::find_by_id($this->hotelservice_id)->value . " / ";
-        $text .= ($this->transfer == "kein") ? '' :  " / TRANSFER " . strtoupper($this->transfer);
+        $text .= ($this->transfer == "kein") ? '' : " / TRANSFER " . strtoupper($this->transfer);
         $text .= ($this->remark ? ' / ' . $this->remark : '') . ($this->city_tour ? ' / ' . $this->city_tour : '');
 
         return $text;
     }
 
+    public function get_incoming_report()
+    {
+        $text = $this->date_start->format('d.m.Y') . " - " . $this->date_end->format('d.m.Y') . " ";
+        $text .= $this->days_count . "N HOTEL: " . $this->hotel_name . " / ";
+        $text .= $this->incoming_roomcapacity . " / ";
+        $text .= $this->roomtype . " / ";
+        $text .= HotelService::find_by_id($this->hotelservice_id)->english_value . " / ";
+        $text .= ($this->transfer == "kein") ? '' : " / TRANSFER " . strtoupper($this->transfer);
+        $text .= ($this->remark ? ' / ' . $this->remark : '') . ($this->city_tour ? ' / ' . $this->city_tour : '');
+
+        return $text;
+    }
+
+    public function get_incoming_roomcapacity()
+    {
+        switch($this->roomcapacity){
+            case "EZ":
+                return "SGL";
+            case "DZ0":
+                return "DBL";
+            case "DZ2":
+                return "DBL + Extra Bed \"Child\"";
+            case "DZ3":
+                return "DBL + Extra Bed";
+            default:
+                return $this->roomcapacity;
+        }
+    }
+
     public function get_nodate_text()
     {
         $text = $this->days_count . "N HOTEL: " . $this->hotel_name . " / ";
-        $text .= $this->roomcapacity. " / ";
-        $text .= $this->roomtype. " / ";
+        $text .= $this->roomcapacity . " / ";
+        $text .= $this->roomtype . " / ";
         $text .= HotelService::find_by_id($this->hotelservice_id)->value . " / ";
         $text .= ($this->transfer == "kein") ? '' : " / TRANSFER " . strtoupper($this->transfer);
         $text .= ($this->remark ? ' / ' . $this->remark : '') . " - &nbsp;<b>" . $this->all_price . "&euro;</b>";
@@ -76,7 +105,7 @@ class FormularHotel extends ActiveRecord\Model
 
     public function get_people_count()
     {
-        if($this->plain_roomcapacity == "EZ")
+        if ($this->plain_roomcapacity == "EZ")
             return 1;
         $num = substr($this->plain_roomcapacity, -1);
         return $num == 0 ? 2 : $num;
@@ -131,7 +160,20 @@ class FormularHotel extends ActiveRecord\Model
 
     public function get_voucher_name()
     {
-        return "voucher_hotel_" . $this->id . ".pdf";
+        $result = "Voucher_";
+
+        $formular = Formular::find_by_id($this->formular_id);
+
+        $person = $formular->persons[0];
+        $result .= $person->name . "_";
+
+        $words = explode(' ', $this->hotel_name);
+        $result .= $words[0];
+
+        if(count($words) > 1 && ($words[1][0] < '0' || $words[1][0] > '9'))
+            $result .= $words[1];
+
+        return $result . ".pdf";
     }
 
     public function get_plain_roomtype()
@@ -195,5 +237,10 @@ class FormularHotel extends ActiveRecord\Model
         $text .= ($this->remark ? ' / ' . $this->remark : '') . ($this->city_tour ? ' / ' . $this->city_tour : '');
 
         return $text;
+    }
+
+    public function get_incoming()
+    {
+        return Kunde::find_by_id($this->incoming_id);
     }
 }

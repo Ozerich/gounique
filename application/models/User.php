@@ -55,6 +55,11 @@ class User extends ActiveRecord\Model
     {
         return $this->name." ".$this->surname;
     }
+
+    public function get_initials()
+    {
+        return $this->name[0].$this->surname[0];
+    }
 }
 
 ?>

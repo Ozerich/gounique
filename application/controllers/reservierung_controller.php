@@ -6,6 +6,57 @@ require_once APPPATH . "libraries/MPDF/mpdf.php";
 class Reservierung_Controller extends MY_Controller
 {
 
+    public function send_report()
+    {
+
+        $item_type = $this->input->post('type');
+        $item_id = $this->input->post('id');
+
+        $item = $item_type == "hotel" ? FormularHotel::find_by_id($item_id) : FormularManuel::find_by_id($item_id);
+        if (!$item)
+            exit();
+
+        $formular = Formular::find_by_id($item->formular_id);
+
+        $incoming = $item->incoming;
+
+        if (!$incoming || !$incoming->email)
+            exit();
+
+        $email = $incoming->email;
+        $hotel_text = $item->incoming_report;
+        $flight = $formular->flight_text;
+
+        $item->incoming_sendtime = time_to_mysqldatetime(time());
+        $item->save();
+
+        $text =
+        "Dear all,
+
+please book and confirm by return:
+
+        " . $hotel_text . "
+
+Flightdetails:
+
+" . $flight . "
+
+Thank you
+Best regards
+Your Unique World Team";
+
+        $text = str_replace("\n", "\t\r\n", $text);
+
+        $this->email->clear();
+        $this->email->from($this->user->email, $this->user->name . " " . $this->user->surname . " <" . $this->user->email . ">");
+        $this->email->to($email);
+        $this->email->subject("Unique World Report");
+        $this->email->message($text);
+        $this->email->send();
+
+        exit();
+    }
+
     public function create_voucher()
     {
         $persons = explode(',', $this->input->post('persons'));
@@ -40,12 +91,7 @@ class Reservierung_Controller extends MY_Controller
         $tplId = $pdf->ImportPage($pagecount);
         $pdf->UseTemplate($tplId);
 
-        $view = "";
-
-        if ($item->type == "hotel")
-            $view = "hotel";
-        else
-            $view = "manuel";
+        $view = ($item->type == "hotel") ? "hotel" : "manuel";
 
         $html = $this->load->view("vouchers/" . $view, $this->view_data, TRUE);
 
@@ -141,6 +187,7 @@ class Reservierung_Controller extends MY_Controller
         $this->view_data['JS_files'] = array("js/reservierung.js");
 
         $this->load->helper('date');
+        $this->load->library("email");
     }
 
     public function generate_vnum($type = "")
@@ -198,14 +245,17 @@ class Reservierung_Controller extends MY_Controller
                 $formular = Formular::create(array(
                         'v_num' => $this->input->post('formular-vnum'),
                         'kunde_id' => $this->input->post('kunde_id'),
-                        'created_date' => date('Y-m-d', time()),
                         'type' => $this->input->post('formular-type'),
                         'r_num' => 0,
                         'provision' => $this->input->post('provision'),
                         'flight_text' => $this->input->post('flight-text'),
                         'flight_price' => $this->input->post('flight-price'),
                         'person_count' => $this->input->post('personcount'),
-                        'sachbearbeiter' => $this->user->name . " " . $this->user->surname,
+                        'created_date' => time_to_mysqldatetime(time()),
+                        'changed_date' => time_to_mysqldatetime(time()),
+                        'created_by' => $this->user->id,
+                        'changed_by' => $this->user->id,
+
                         'prepayment_date' => time_to_mysqldate($this->get_prepayment_date())
                     )
                 );
@@ -234,6 +284,7 @@ class Reservierung_Controller extends MY_Controller
                             'remark' => $_POST['remark'][$ind],
                             'voucher_remark' => $_POST['voucher_remark'][$ind],
                             'city_tour' => $_POST['city_tour'][$ind],
+                            'incoming_id' => $_POST['incoming'][$ind]
                         ));
                     }
 
@@ -249,6 +300,7 @@ class Reservierung_Controller extends MY_Controller
                             'days_count' => isset($_POST['manuel_dayscount'][$ind]) ? $_POST['manuel_dayscount'][$ind] : 0,
                             'price' => $_POST['manuel_price'][$ind],
                             'voucher_remark' => $_POST['manuel_voucher_remark'][$ind],
+                            'incoming_id' => $_POST['manuel_incoming'][$ind],
                         ));
                     }
 
@@ -307,6 +359,7 @@ class Reservierung_Controller extends MY_Controller
                         $hotel->hotel_name = $_POST['hotelname'][$ind];
                         $hotel->voucher_remark = $_POST['voucher_remark'][$ind];
                         $hotel->city_tour = $_POST['city_tour'][$ind];
+                        $hotel->incoming_id = $_POST['incoming'][$ind];
 
                         $hotel->save();
 
@@ -331,6 +384,7 @@ class Reservierung_Controller extends MY_Controller
                             'remark' => $_POST['remark'][$ind],
                             'voucher_remark' => $_POST['voucher_remark'][$ind],
                             'city_tour' => $_POST['city_tour'][$ind],
+                            'incoming_id' => $_POST['incoming'][$ind],
                         ));
                     }
                 }
@@ -347,6 +401,7 @@ class Reservierung_Controller extends MY_Controller
                         $manuel->days_count = isset($_POST['manuel_dayscount'][$ind]) ? $_POST['manuel_dayscount'][$ind] : 0;
                         $manuel->price = $_POST['manuel_price'][$ind];
                         $manuel->voucher_remark = $_POST['manuel_voucher_remark'][$ind];
+                        $manuel->incoming_id = $_POST['manuel_incoming'][$ind];
 
                         $manuel->save();
 
@@ -362,7 +417,8 @@ class Reservierung_Controller extends MY_Controller
                             'date_end' => isset($_POST['manuel_dateend'][$ind]) ? inputdate_to_mysqldate($_POST['manuel_dateend'][$ind]) : '',
                             'days_count' => isset($_POST['manuel_dayscount'][$ind]) ? $_POST['manuel_dayscount'][$ind] : 0,
                             'price' => $_POST['manuel_price'][$ind],
-                            'voucher_remark' => $_POST['manuel_voucher_remark'][$ind]
+                            'voucher_remark' => $_POST['manuel_voucher_remark'][$ind],
+                            'incoming_id' => $_POST['manuel_incoming'][$ind],
                         ));
                     }
                 }
@@ -701,7 +757,7 @@ class Reservierung_Controller extends MY_Controller
         $email = $this->input->post("email");
         $pdf = $this->input->post("type");
 
-        $this->load->library("email");
+
 
 
         $this->email->clear();

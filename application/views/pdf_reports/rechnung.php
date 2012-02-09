@@ -17,7 +17,7 @@
             <td class="left-paramname">Rechnungsnummer:</td>
             <td class="left-paramvalue"><?=$formular->r_num?></td>
             <td class="right-paramname">Sachbearbeiter:</td>
-            <td class="right-paramvalue"><?=$formular->sachbearbeiter?></td>
+            <td class="right-paramvalue"><?=$formular->sachbearbeiter->fullname?></td>
         </tr>
         <tr>
             <td class="left-paramname">Kundennummer:</td>
@@ -76,8 +76,8 @@
     <div class="anzahlung-block">
         <? if ($formular->status == "rechnung"): ?>
         <? if ($formular->finalpayment_date): ?>
-            <p>Die Anzahlung beträgt EUR <?=$formular->price['anzahlung_value']?> und ist fällig am <?=$formular->prepayment_date->format('d.m.y')?>.</p>
-            <p>Die Restzahlung beträgt EUR <?=$formular->price['restzahlung']?> und ist fällig am <?=$formular->finalpayment_date->format('d.m.y')?>.</p>
+            <p>Die Anzahlung beträgt EUR <?=$formular->price['anzahlung_value']?> und ist fällig am <?=$formular->prepayment_date ? $formular->prepayment_date->format('d.m.y') : ''?>.</p>
+            <p>Die Restzahlung beträgt EUR <?=$formular->price['restzahlung']?> und ist fällig am <?=$formular->finalpayment_date ? $formular->finalpayment_date->format('d.m.y') : ''?>.</p>
             <? else: ?>
             <p>Zahlung sofort nach Erhalt der Rechnung</p>
             <? endif; ?>

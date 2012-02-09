@@ -10,6 +10,8 @@ function GetBonusText(bonus_block) {
         return period + "Booking before " + $(bonus_block).find('#days').val() + " days " + $(bonus_block).find('#percent').val() + "%";
     else if (bonus_type == "earlybird_date")
         return period + "Booking till " + InputToTime($(bonus_block).find('#booking_till').val()) + " " + $(bonus_block).find('#discount2').val() + "%";
+    else if (bonus_type == "turbo_bonus")
+            return period + "Booking till " + InputToTime($(bonus_block).find('.booking_till_2').val()) + " " + $(bonus_block).find('#discount4').val() + "&euro;";
     else return "Unknown bonus";
 }
 
@@ -202,7 +204,7 @@ $(document).ready(function () {
             return false;
         });
 
-        $(bonus_block).find('.bonus-von, .bonus-bis').datepicker().datepicker("option", "showAnim", "blind").
+        $(bonus_block).find('.bonus-von, .bonus-bis, .booking_till, #booking_till_2').datepicker().datepicker("option", "showAnim", "blind").
             datepicker("option", "dateFormat", 'ddmmyy');
 
         $(bonus_block).find('.bonustype').attr('name', 'bonustype[' + ($('.bonus-item:visible').size()) + ']');
@@ -235,7 +237,7 @@ $(document).ready(function () {
         return false;
     });
 
-    $('#hotelcreate-page .bonus-item').not('.example').find('.bonus-von, .bonus-bis').each(function(){
+    $('#hotelcreate-page .bonus-item').not('.example').find('.bonus-von, .bonus-bis, .booking_till, .booking_till_2').each(function(){
         var old_val = $(this).val();
         $(this).datepicker().datepicker("option", "showAnim", "blind").datepicker("option", "dateFormat", 'ddmmyy');
         $(this).val(old_val);
@@ -393,5 +395,21 @@ $(document).ready(function () {
             }
         });
     });
+
+    $('.hotellist-top .search-tour').keyup(function () {
+        $.ajax({
+            url:'product/rundreise/search_tour',
+            data:'search=' + $(this).val(),
+            type:'post',
+            success:function (data) {
+                $('#hotel-list tbody').html(data);
+            }
+        });
+    });
+
+    $('.datum-block #von, .datum-block #bis').datepicker({
+        changeMonth: true,
+        changeYear: true
+    }).datepicker("option", "showAnim", "blind").datepicker("option", "dateFormat", 'ddmmyy');
 
 });

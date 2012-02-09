@@ -1,14 +1,8 @@
 <?php
 
-class Hotel extends ActiveRecord\Model
+class Rundreise extends ActiveRecord\Model
 {
-    static $table_name = "hotels";
-
-    public function get_minimums()
-    {
-        $data = HotelMinimum::find_all_by_hotel_id($this->id);
-        return $data ? $data : array();
-    }
+    static $table_name = "rundreise";
 
     public function get_childs()
     {
@@ -66,18 +60,6 @@ class Hotel extends ActiveRecord\Model
                     $result[] = $infant;
 
         return $result;
-    }
-
-    public function get_bonuses()
-    {
-        $data = HotelBonus::find_all_by_hotel_id($this->id);
-        return $data ? $data : array();
-    }
-
-    public function get_changed_by_user()
-    {
-        $data = User::find_by_id($this->changed_by);
-        return $data ? $data : null;
     }
 }
 

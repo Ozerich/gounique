@@ -70,8 +70,18 @@
 
     <? foreach ($formular->hotels as $ind => $hotel): ?>
     <div class="item">
+        <input type="hidden" class="item_id" value="<?=$hotel->id?>"/>
+        <input type="hidden" class="item_type" value="hotel"/>
         <span class="num"><?=($ind + 1)?></span>
         <span class="text"><?=$hotel->plain_text . " - &nbsp;<b>" . $hotel->all_price . "&euro;</b>"; ?></span>
+        <? if ($hotel->incoming): ?>
+        <div class="incoming-sendblock">
+            <a href="#" class="incoming-send">Send report</a>
+            <span
+                class="lastsend">Last send: <?=$hotel->incoming_sendtime ? $hotel->incoming_sendtime->format('d.m.Y H:i') : 'never'?></span>
+        </div>
+        <span class="incoming-sendok" style="display:none">OK</span>
+        <? endif; ?>
     </div>
     <? endforeach; ?>
 
@@ -81,8 +91,18 @@
 
     <? foreach ($formular->manuels as $ind => $manuel): ?>
     <div class="item">
+        <input type="hidden" class="item_id" value="<?=$manuel->id?>"/>
+        <input type="hidden" class="item_type" value="manuel"/>
         <span class="num"><?=($ind + 1)?></span>
         <span class="text"><?=$manuel->plain_text; ?></span>
+        <? if ($manuel->incoming): ?>
+        <div class="incoming-sendblock">
+            <a href="#" class="incoming-send">Send report</a>
+            <span
+                class="lastsend">Last send: <?=$manuel->incoming_sendtime ? $manuel->incoming_sendtime->format('d.m.Y H:i') : 'never'?></span>
+        </div>
+        <span class="incoming-sendok" style="display:none">OK</span>
+        <? endif; ?>
     </div>
     <? endforeach; ?>
 
@@ -140,11 +160,11 @@
                 <td class="param">Provision <?=$formular->provision?>%</td>
                 <td><?=$formular->price['provision']?></td>
             </tr>
-            <? if(!$formular->kunde->ausland): ?>
-            <tr>
-                <td class="param">MWST auf Prov 19%</td>
-                <td><?=$formular->price['mwst']?></td>
-            </tr>
+            <? if (!$formular->kunde->ausland): ?>
+                <tr>
+                    <td class="param">MWST auf Prov 19%</td>
+                    <td><?=$formular->price['mwst']?></td>
+                </tr>
                 <? endif; ?>
             <tr>
                 <td class="param">Total Provision:</td>
@@ -232,9 +252,8 @@
 </div>
 
 
-
 <div id="stage">
-<? if ($formular->status != 'storeno'): ?>
+    <? if ($formular->status != 'storeno'): ?>
 
     <input type="radio" id="radio1" name="stage" value="1"
         <?if ($formular->status == "angebot" || $formular->status == "eingangsmitteilung") echo 'checked';?>/>
@@ -251,20 +270,20 @@
         <? if ($formular->kunde->type == "agenturen"): ?>
             <input type="radio" id="radio4" name="stage" value="4"/><label for="radio4">Rechnung
                 (Kundenkopie)</label>
+            <? endif; ?>
         <? endif; ?>
+
+    <? else: ?>
+    <? if ($formular->kunde->type == "agenturen"): ?>
+        <input type="radio" id="radio1" name="stage" checked value="5"/><label for="radio1">Storeno</label>
+        <? endif; ?>
+    <input type="radio" id="radio2" name="stage" value="6"/><label for="radio2">Storeno(Kundenkopie)</label>
     <? endif; ?>
 
-<? else: ?>
-        <? if ($formular->kunde->type == "agenturen"): ?>
-            <input type="radio" id="radio1" name="stage" checked value="5"/><label for="radio1">Storeno</label>
-        <? endif; ?>
-        <input type="radio" id="radio2" name="stage" value="6"/><label for="radio2">Storeno(Kundenkopie)</label>
-<? endif; ?>
-
 </div>
-    <?=
-    form_open("reservierung/sendmail/" . $formular->id, null, array("formular_id" => $formular->id))
-    ; ?>
+<?=
+form_open("reservierung/sendmail/" . $formular->id, null, array("formular_id" => $formular->id))
+; ?>
 <div class="mail-block">
     <div class="mail" style="display:none">
         <span class="left">Mail</span>

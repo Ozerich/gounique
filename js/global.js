@@ -34,15 +34,36 @@ function validateEmail(email) {
     return reg.test(email);
 }
 
-function isValidDate(d)
-{
+function isValidDate(d) {
     if (Object.prototype.toString.call(d) === "[object Date]")
         return !isNaN(d.getTime());
     else
         return false;
 }
 
-$(document).ready(function()
-{
+jQuery.fn.center = function () {
+    this.css("position", "absolute");
+    var top = (($(window).height() - this.outerHeight()) / 2) + $(window).scrollTop();
+    this.css("top", (top < 0 ? 0 : top) + "px");
+    this.css("left", (($(window).width() - this.outerWidth()) / 2) + $(window).scrollLeft() + "px");
+    return this;
+}
+
+jQuery.fn.setdatepicker = function () {
+    $(this).datepicker({
+        changeMonth:true,
+        changeYear:true
+    }).datepicker("option", "showAnim", "blind").datepicker("option", "dateFormat", 'ddmmyy');
+}
+
+
+
+$(document).ready(function () {
     $('.buttonset').buttonset();
+
+    $('#dark-overlay').click(function(){
+        $(this).fadeOut();
+        $('#overlay-window').hide();
+    });
 });
+

@@ -18,7 +18,7 @@
             <td class="left-paramname">Rechnungsnummer:</td>
             <td class="left-paramvalue">-</td>
             <td class="right-paramname">Sachbearbeiter:</td>
-            <td class="right-paramvalue"><?=$formular->sachbearbeiter?></td>
+            <td class="right-paramvalue"><?=$formular->sachbearbeiter->fullname?></td>
         </tr>
         <tr>
             <td class="left-paramname">Kundennummer:</td>

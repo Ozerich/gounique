@@ -20,4 +20,17 @@ class FormularPerson extends ActiveRecord\Model
     {
         return strtoupper($this->sex);
     }
+
+    public function get_english_sex()
+    {
+        if($this->sex == "herr")
+            return "MR";
+        else if($this->sex == "frau")
+            return "MRS";
+        else if($this->sex == "child")
+            return "CHD";
+        else if($this->sex == "infant")
+            return "INF";
+        return '';
+    }
 }

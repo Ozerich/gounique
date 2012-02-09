@@ -6,11 +6,11 @@
         <div class="row">
             <a href="reservierung">resevierung</a>
             <a href="kundenverwaltung">kundenverwaltung</a>
-            <a href="product" class="last">product</a>
+            <a href="product" class="last">produkt</a>
         </div>
 
         <div class="row">
-            <a class="disabled">versand</a>
+            <a href="control">kontrol</a>
             <a href="statistik">statistik</a>
             <a class="last disabled">buchhaltung</a>
         </div>

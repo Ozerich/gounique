@@ -13,7 +13,7 @@
 
         <div class="persons">
             <? foreach ($persons as $person): ?>
-            <div class="person"><?=$person->name . " / " . $person->surname?></div>
+            <div class="person"><?=$person->english_sex." ".$person->name . " / " . $person->surname?></div>
             <? endforeach; ?>
         </div>
     </div>
