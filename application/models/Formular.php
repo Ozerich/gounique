@@ -115,9 +115,6 @@ class Formular extends ActiveRecord\Model
         $price_data['restzahlung'] = $price_data['brutto'] - $price_data['anzahlung_value'];
 
 
-        $price_data['paid'] = $this->paid_amount;
-        $price_data['need_to_pay'] = $price_data['brutto'] - $price_data['paid'];
-
         if ($this->status == "storeno") {
             $price_data['storeno_sum'] = $this->storeno->percent / 100 * $price_data['brutto'];
             $price_data['gutschriftsbetrag'] = $price_data['brutto'] - $price_data['storeno_sum'];
@@ -180,7 +177,7 @@ class Formular extends ActiveRecord\Model
 
     public function get_is_sofort()
     {
-        if($this->prepayment_date && $this->prepayment_amount > 0)
+        if ($this->prepayment_date && $this->prepayment_amount > 0)
             return false;
         return true;
     }
@@ -194,6 +191,64 @@ class Formular extends ActiveRecord\Model
     {
         $data = FormularPayment::find_all_by_formular_id($this->id);
         return $data ? $data : array();
+    }
+
+    public function get_anzahlung_status()
+    {
+        $anzahlung = $this->prepayment_amount;
+
+        foreach ($this->payments as $payment)
+            $anzahlung -= $payment->amount;
+
+        return ($anzahlung <= 0) ? "OK" : "-" . $anzahlung;
+    }
+
+    public function get_restzahlung_status()
+    {
+        $restzahlung = $this->finalpayment_amount;
+        $anzahlung = $this->prepayment_amount;
+
+        foreach ($this->payments as $payment)
+        {
+            if ($anzahlung > 0) {
+                $anzahlung -= $payment->amount;
+
+                if ($anzahlung < 0) {
+                    $restzahlung += $anzahlung;
+                    $anzahlung = 0;
+                }
+                continue;
+            }
+            $restzahlung -= $payment->amount;
+        }
+
+        return ($restzahlung <= 0) ? "OK" : "-" . $restzahlung;
+    }
+
+    public function get_last_payment()
+    {
+        $last = null;
+
+        foreach($this->payments as $payment)
+            if($last == null || $payment->payment_date > $last->payment_date)
+                $last = $payment;
+
+        return $last;
+    }
+
+    public function get_payment_status()
+    {
+        $total = 0;
+
+        foreach($this->payments as $payment)
+            $total += $payment->amount;
+
+        if($total > $this->brutto)
+            return "+".($total - $this->brutto);
+        else if($total < $this->brutto)
+            return "-".($this->brutto - $total);
+        else
+            return "OK";
     }
 
 }

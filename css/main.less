@@ -37,6 +37,7 @@
 }
 
 
+
 .common-link{
     width: 250px;
     margin-right: 50px;
@@ -189,6 +190,29 @@ label{
     display: block;
     font-weight: bold;
     margin-bottom: 3px;
+}
+
+
+.search-button{
+        background: url("img/search-sprite.gif") no-repeat scroll 0 0 transparent !important;
+        border: medium none !important;
+        cursor: pointer !important;
+        display: block;
+        line-height: 16px;
+        margin: 3px;
+        overflow: hidden;
+        padding: 0 !important;
+        text-indent: -999px;
+        width: 16px;
+        height: 16px;
+}
+
+.search-button:hover{
+    background-position: 0 -16px !important;
+}
+
+.search-button.loading{
+    background-position: 0 -32px !important;
 }
 
 /*---------------------------------------------------------------
@@ -1748,9 +1772,7 @@ label{
 .product-list tr:nth-child(odd){background: #fafafa;}
 .product-list tr:nth-child(odd):hover{background: #ebebeb;}
 
-.product-list tr.current, .product-list tr.current:hover{
-    background: #4bffa9 !important;
-}
+.product-list tr.current, .product-list tr.current:hover{background: #4bffa9 !important;}
 
 .room-page #price-page #price-loader{
     width: 100%;
@@ -1846,9 +1868,13 @@ label{
 }
 
 
+/*
+    Payments page
+*/
+
 #payments-page{
     width: 600px;
-    padding: 20px;
+    padding: 10px 20px;
 }
 
 #payments-page h3{
@@ -1857,15 +1883,32 @@ label{
     margin: 15px 0;
 }
 
-#payments-page .info-block{
-    width: 250px;
+#payments-page .info-block {
+    border: 1px solid #AAAAAA;
     float: left;
-    margin-left: 20px;
+    height: 80px;
+    padding: 5px 15px;
+    width: 255px;
 }
 
-#payments-page .info-block .param label{
+#payments-page .info-block .sofort{
+    font-size: 30px;
+    letter-spacing: 30px;
+    padding-top: 19px;
+    text-align: center;
+    width: 100%;
+}
+
+#payments-page .restzahlung-block{float: right;}
+
+#payments-page .info-block .param{
+    margin: 7px 0;
+}
+
+#payments-page .info-block .param .param-name{
     width: 170px;
-    float: left;
+    display: inline-block;
+    font-weight: bold;
 }
 
 #payments-page .total-amount{font-weight: bold;}
@@ -1879,6 +1922,77 @@ label{
     height: 70px;
 }
 
+#payments-page .total-payment{
+    margin-bottom: 5px;
+}
+
+#payments-page .total-payment .total-payment-value{
+    font-weight: bold;
+}
+
 .control-page .hotel-buttons{
     float: right;
 }
+
+.control-page .num-search{
+    width: 200px;
+    float: left;
+}
+
+.control-page .date-search{
+    float: left;
+    width: 400px;
+}
+
+.control-page .search-header{
+    display: block;
+    float: left;
+    width: 125px;
+    padding: 5px 10px 0 0;
+    text-align: right;
+}
+
+.control-page .num-search .param{
+    margin-bottom: 15px;
+}
+
+.control-page .date-search .date-item{
+    margin-bottom: 10px;
+}
+
+.control-page .date-search label
+{
+    padding-top: 5px;
+}
+
+.control-page .date-search label, .control-page .date-search input{
+    display: block;
+    float: left;
+}
+
+.control-page .date-search input[type=text]{
+    width: 75px;
+    margin: 2px 5px;
+}
+
+.control-page .date-search .search-button{
+    margin-top: 7px;
+}
+
+
+#controlpayments-list .reisedatum{background: #ffeadc;}
+#controlpayments-list .anzahlung{background: #f3f6ff;}
+#controlpayments-list .restzahlung{background: #d4ffe4;}
+#controlpayments-list .payments{background: #fff6f2;}
+
+#controlpayments-list tr:hover{
+    cursor: pointer;
+}
+
+#controlpayments-list tr:nth-child(even){background: #effcff;}
+#controlpayments-list tr:nth-child(even):hover td{background: #e8f5f7 !important;}
+
+#controlpayments-list tr:nth-child(odd){background: #fafafa}
+#controlpayments-list tr:nth-child(odd):hover td{background: #ebebeb !important;}
+
+#controlpayments-list tr.current td, #controlpayments-list tr.current:hover td{background: #4bffa9 !important;}

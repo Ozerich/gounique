@@ -1,41 +1,11 @@
 <div id="payments-page">
     <input type="hidden" id="payments_formular_id" value="<?=$formular->id?>"/>
-    <h3>Payments for <span class="rnum"><?=$formular->r_num?></span></h3>
 
-    <div class="top-blocks">
-        <div class="anzahlung-block info-block">
-            <div class="param">
-                <label>Anzahlungdatum: </label>
-                <span><?=$formular->prepayment_date ? $formular->prepayment_date->format('d.M.Y') : ''?></span>
-            </div>
-            <div class="param">
-                <label>Anzahlung Amount: </label>
-                <span><?=$formular->prepayment_amount?></span>
-            </div>
-            <div class="param">
-                <label>Anzahlung Status: </label>
-                <span>OK</span>
-            </div>
-        </div>
-        <div class="anzahlung-block info-block">
-            <div class="param">
-                <label>Restzahlungdatum: </label>
-                <span><?=$formular->finalpayment_date->format('d.M.Y')?></span>
-            </div>
-            <div class="param">
-                <label>Restzahlung Amount: </label>
-                <span><?=$formular->finalpayment_amount?></span>
-            </div>
-            <div class="param">
-                <label>Restzahlung Status: </label>
-                <span>OK</span>
-            </div>
-        </div>
-        <br class="clear"/>
-    </div>
-    <table id="payments-table" class="product-list">
+    <h3>Payments overview for <span class="rnum"><?=$formular->r_num?></span></h3>
+    <p class="total-payment">Rechnungsbetrag <span class="total-payment-value"><?=$formular->brutto?> &euro;</span></p>
+    <div class="payment-content">
         <?=$payments_list?>
-    </table>
+    </div>
 
     <fieldset id="new-payment">
         <legend>New Payment</legend>

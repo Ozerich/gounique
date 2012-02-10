@@ -32,6 +32,37 @@ class Control_Controller extends MY_Controller
         exit();
     }
 
+    public function search_formulars()
+    {
+
+        $search_field = $this->input->post('search_field');
+        $search_string = $this->input->post('search_string');
+
+        $von = inputdate_to_mysqldate($this->input->post('von'));
+        $bis = inputdate_to_mysqldate($this->input->post('bis'));
+
+        $formulars = array();
+
+        if ($search_string)
+            $formulars = Formular::find('all', array('conditions' => array('status = "rechnung" AND ' . $search_field . ' like "%' . $search_string . '%"')));
+        else if ($von && $bis) {
+            $search_map = array(
+                'buchung' => 'created_date',
+                'rechnung' => 'rechnung_date',
+                'abreise' => 'departure_date',
+                'anzahlung' => 'prepayment_date',
+                'restzahlung' => 'finalpayment_date',
+            );
+
+            if (isset($search_map[$search_field])) {
+                $search_field = $search_map[$search_field];
+                $formulars = Formular::find('all', array('conditions' => array('status = "rechnung" AND ' . $search_field . ' >= ? AND ' . $search_field . ' <= ?', $von, $bis)));
+            }
+        }
+        echo $this->load->view('control/invoice_list.php', array('formulars' => $formulars), true);
+        exit();
+    }
+
     public function add_payment($formular_id)
     {
 
