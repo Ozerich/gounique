@@ -32,7 +32,7 @@ class Kunde extends ActiveRecord\Model
 
             case 'incoming':
                 $text = $this->name . "<br />" . $this->address . "<br/>" . $this->plz .
-                                               " " . $this->ort;
+                                               " " . $this->ort . "<br/>" . $this->phone;
                 break;
 
             case 'mitarbeiter':

@@ -1,11 +1,12 @@
 <div id="payments-page">
     <input type="hidden" id="payments_formular_id" value="<?=$formular->id?>"/>
-
-    <h3>Payments overview for <span class="rnum"><?=$formular->r_num?></span></h3>
-    <p class="total-payment">Rechnungsbetrag <span class="total-payment-value"><?=$formular->brutto?> &euro;</span></p>
-    <div class="payment-content">
+    <a href="#" class="closepopup-button">Close</a>
+    <h3>Provision overview for <span class="rnum"><?=$formular->r_num?></span></h3>
+   <div class="payment-content">
         <?=$payments_list?>
     </div>
+
+
 
     <fieldset id="new-payment">
         <legend>New Payment</legend>
@@ -18,11 +19,11 @@
                 <label for="payment-amount">Amount &euro;</label>
                 <input type="text" id="payment-amount" maxlength="5"/>
             </div>
-            <div class="param">
+            <div class="remark-param">
                 <label for="payment-remark">Remark:</label>
                 <textarea id="payment-remark"></textarea>
             </div>
-            <button id="add-payment">Add Payment</button>
+            <button id="add-payment">Eingabe</button>
         </div>
     </fieldset>
 

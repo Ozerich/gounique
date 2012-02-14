@@ -96,7 +96,7 @@
     </div>
 
     <div class="bottom-text">
-        <p>Achtung! Reise wurde am <?=$formular->storeno->date->format('d.m.Y')?> durch Kunde storniert.</p>
+        <p>Achtung! Reise wurde am <?=$formular->created_date->format('d.m.Y')?> durch Kunde storniert.</p>
         Mit freundlichen Grüßen, <br/>
         Ihr Unique World Team
     </div>

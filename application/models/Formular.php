@@ -11,6 +11,8 @@ class Formular extends ActiveRecord\Model
 
     public function get_plain_status()
     {
+        if ($this->is_storno && $this->status == "rechnung")
+            return "Stornorechnung";
         return strtoupper($this->status[0]) . substr($this->status, 1);
     }
 
@@ -21,20 +23,20 @@ class Formular extends ActiveRecord\Model
 
     public function get_persons()
     {
-        return FormularPerson::find_all_by_formular_id($this->id);
+        return FormularPerson::find_all_by_formular_id($this->storno_original && $this->is_storno ? $this->storno_original : $this->id);
     }
 
     public function get_hotels()
     {
         return FormularHotel::all(array(
-            'conditions' => array('formular_id = ?', $this->id),
+            'conditions' => array('formular_id = ?', $this->storno_original && $this->is_storno ? $this->storno_original : $this->id),
             "order" => 'date_start asc'
         ));
     }
 
     public function get_manuels()
     {
-        return FormularManuel::find_all_by_formular_id($this->id);
+        return FormularManuel::find_all_by_formular_id($this->storno_original && $this->is_storno ? $this->storno_original : $this->id);
     }
 
     public function get_adult_count()
@@ -68,7 +70,18 @@ class Formular extends ActiveRecord\Model
         $res = 0;
 
         foreach ($payments as $payment)
-            $res += $payment->value;
+            $res += $payment->amount;
+
+        return $res;
+    }
+
+    public function get_provisionpaid_amount()
+    {
+        $payments = $this->provision_payments;
+        $res = 0;
+
+        foreach ($payments as $payment)
+            $res += $payment->amount;
 
         return $res;
     }
@@ -115,14 +128,16 @@ class Formular extends ActiveRecord\Model
         $price_data['restzahlung'] = $price_data['brutto'] - $price_data['anzahlung_value'];
 
 
-        if ($this->status == "storeno") {
-            $price_data['storeno_sum'] = $this->storeno->percent / 100 * $price_data['brutto'];
-            $price_data['gutschriftsbetrag'] = $price_data['brutto'] - $price_data['storeno_sum'];
+        if ($this->is_storno) {
+
+            $price_data['storeno_brutto'] = $this->storno_percent / 100 * $price_data['brutto'];
+
             if ($this->kunde->type == "agenturen") {
-                $price_data['storeno_provision'] = $this->kunde->provision / 100 * $price_data['storeno_sum'];
-                $price_data['storeno_mwst'] = $this->kunde->ausland == 1 ? 0 : $price_data['storeno_provision'] * 0.19;
-                $price_data['gesamtprovision'] = $price_data['storeno_mwst'] + $price_data['storeno_provision'];
+                $price_data['storno_provision'] = $price_data['storeno_brutto'] / 100 * $this->storno_percent;
+                $price_data['storno_mwst'] = $this->kunde->ausland == 1 ? 0 : $price_data['storno_provision'] * 0.19;
+                $price_data['storno_gesamtprovision'] = $price_data['storno_mwst'] + $price_data['storno_provision'];
             }
+
         }
 
         foreach ($price_data as &$val)
@@ -189,7 +204,13 @@ class Formular extends ActiveRecord\Model
 
     public function get_payments()
     {
-        $data = FormularPayment::find_all_by_formular_id($this->id);
+        $data = IncomingPayment::find_all_by_formular_id($this->id);
+        return $data ? $data : array();
+    }
+
+    public function get_provision_payments()
+    {
+        $data = ProvisionPayment::find_all_by_formular_id($this->id);
         return $data ? $data : array();
     }
 
@@ -208,6 +229,7 @@ class Formular extends ActiveRecord\Model
         $restzahlung = $this->finalpayment_amount;
         $anzahlung = $this->prepayment_amount;
 
+
         foreach ($this->payments as $payment)
         {
             if ($anzahlung > 0) {
@@ -216,12 +238,11 @@ class Formular extends ActiveRecord\Model
                 if ($anzahlung < 0) {
                     $restzahlung += $anzahlung;
                     $anzahlung = 0;
+                    continue;
                 }
-                continue;
             }
             $restzahlung -= $payment->amount;
         }
-
         return ($restzahlung <= 0) ? "OK" : "-" . $restzahlung;
     }
 
@@ -229,26 +250,60 @@ class Formular extends ActiveRecord\Model
     {
         $last = null;
 
-        foreach($this->payments as $payment)
-            if($last == null || $payment->payment_date > $last->payment_date)
+        foreach ($this->payments as $payment)
+            if ($last == null || $payment->payment_date > $last->payment_date)
                 $last = $payment;
 
         return $last;
     }
 
-    public function get_payment_status()
+
+    public function get_lastprovision_payment()
     {
-        $total = 0;
+        $last = null;
 
-        foreach($this->payments as $payment)
-            $total += $payment->amount;
+        foreach ($this->provision_payments as $payment)
+            if ($last == null || $payment->payment_date > $last->payment_date)
+                $last = $payment;
 
-        if($total > $this->brutto)
-            return "+".($total - $this->brutto);
-        else if($total < $this->brutto)
-            return "-".($this->brutto - $total);
+        return $last;
+    }
+
+    public function get_versand_status1()
+    {
+        if ($this->is_freigabe)
+            return 'Freigabe';
+
+        $total = $this->get_paid_amount();
+
+        if ($total < $this->brutto)
+            return "-" . ($this->brutto - $total);
         else
-            return "OK";
+            return 'Freigabe';
+    }
+
+    public function get_versand_status2()
+    {
+        if (!$this->is_freigabe)
+            return "-";
+        return $this->is_versand ? 'versendet' : 'waiting';
+    }
+
+    public function get_provision_status()
+    {
+        $total = $this->get_provisionpaid_amount();
+
+        return $total >= $this->provision_amount ? 'OK' : '-' . ($this->provision_amount - $total);
+    }
+
+    public function get_original()
+    {
+        return $this->storno_original ? Formular::find_by_id($this->storno_original) : $this;
+    }
+
+    public function get_versanded_user()
+    {
+        return User::find_by_id($this->versanded_by);
     }
 
 }

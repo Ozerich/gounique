@@ -61,9 +61,5 @@ jQuery.fn.setdatepicker = function () {
 $(document).ready(function () {
     $('.buttonset').buttonset();
 
-    $('#dark-overlay').click(function(){
-        $(this).fadeOut();
-        $('#overlay-window').hide();
-    });
 });
 

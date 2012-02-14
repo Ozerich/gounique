@@ -1,8 +1,8 @@
 <?php
 
-class FormularPayment extends ActiveRecord\Model
+class ProvisionPayment extends ActiveRecord\Model
 {
-    static $table_name = "formular_payments";
+    static $table_name = "provision_payments";
 
     public function get_user()
     {

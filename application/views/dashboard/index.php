@@ -3,6 +3,7 @@
     <a href="dashboard" id="header-logo"></a>
 
     <div class="nav">
+
         <div class="row">
             <a href="reservierung">resevierung</a>
             <a href="kundenverwaltung">kundenverwaltung</a>
@@ -10,7 +11,7 @@
         </div>
 
         <div class="row">
-            <a href="control">kontrol</a>
+            <a href="control">finanzen & controling</a>
             <a href="statistik">statistik</a>
             <a class="last disabled">buchhaltung</a>
         </div>
@@ -18,5 +19,7 @@
         <div class="row">
             <a class="center disabled">systemverwaltung</a>
         </div>
+
     </div>
+
 </div>

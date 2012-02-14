@@ -60,13 +60,24 @@
 }
 
 .alert-block{
-   background: #fff6bf url(img/exclamation.png) 15px center no-repeat;
+   background: #fff6bf url(img/exclamation.png) 5px center no-repeat;
    text-align: left;
-   padding: 10px 20px 10px 50px;
-   margin: -40px 0 40px;
+   padding: 10px 20px 10px 60px;
    border-top: 2px solid #ffd324;
    border-bottom: 2px solid #ffd324;
+   list-style: circle;
 }
+
+.info-block {
+   color: #00529B;
+   background: url('img/info.png') no-repeat 5px center #f7f798;
+   padding: 10px 20px 10px 50px;
+   border-top: 2px solid #00529B;
+   border-bottom: 2px solid #00529B;
+   margin-bottom: 5px;
+}
+
+
 
 .common-button{
     text-align: center;
@@ -193,6 +204,37 @@ label{
 }
 
 
+ul.tabs{
+    border-bottom: 1px solid #DDDDDD;
+    margin-bottom: 15px;
+    padding: 2px 0 0 10px;
+    margin-top: 15px;
+}
+
+ul.tabs li{
+    display: inline-block;
+}
+
+ul.tabs li span, ul.tabs li a{
+    background-color: #FFFFFF;
+    border-left: 1px solid #DDDDDD;
+    border-right: 1px solid #DDDDDD;
+    border-top: 1px solid #DDDDDD;
+    color: #666666;
+    display: inline-block;
+    margin-bottom: -1px;
+    padding: 8px 12px;
+    text-decoration: none;
+    .border-radius(3px, 3px, 0, 0);
+    cursor: pointer;
+}
+
+ul.tabs li.active{
+    border-bottom: 1px solid #FFFFFF;
+    font-weight: bold;
+}
+
+
 .search-button{
         background: url("img/search-sprite.gif") no-repeat scroll 0 0 transparent !important;
         border: medium none !important;
@@ -316,6 +358,7 @@ label{
     height: 40px;
     line-height: 40px;
 }
+
 .nav a.center{margin-left: 300px;}
 .nav a.last{margin-right: 0;}
 
@@ -941,6 +984,20 @@ label{
 
 #createformular-page .vnum-input{
     text-transform: uppercase;
+    width: 60px;
+}
+
+#createformular-page .flight-price{
+    width: 50px;
+}
+
+
+#createformular-page .service-charge{
+    font-weight: bold;
+}
+
+#createformular-page .service-charge input{
+    width: 50px;
 }
 
 #createformular-page .block-preview p.text{
@@ -957,21 +1014,33 @@ label{
     margin: 0 auto;
 }
 
-#createformular-page .changetype-block .type-edit{
-    margin-top: 20px;
+#createformular-page .changetype-block .typeedit-block{
+    margin-top: 5px;
 }
 
-#createformular-page .changetype-block .type-edit label{
+#createformular-page .changetype-block .typeedit-block label{
     margin-top: 10px;
+    display: inline-block;
+}
+#createformular-page .changetype-block #nurflug-type label{
+    width: 150px;
 }
 
-#createformular-page .changetype-block .type-edit textarea{
+#createformular-page .changetype-block .typeedit-block input[type=text]{
+    text-align: center;
+}
+
+#createformular-page .changetype-block .typeedit-block textarea{
     width: 375px;
     height: 150px;
 }
 
-#createformular-page .changetype-block .bottom-block{
+#createformular-page .changetype-block .typeedit-block .bottom-block{
     margin-top: 10px;
+}
+
+#createformular-page .changetype-block .person-count{
+    width: 34px;
 }
 
 #createformular-page p.error{
@@ -979,7 +1048,7 @@ label{
     width: 295px;
 }
 
-#createformular-page .changetype-block button{
+#createformular-page .changetype-block button,#createformular-page .changetype-block input[type=submit]{
     float: right;
     margin: 0 14px 0 0;
 }
@@ -1010,8 +1079,12 @@ label{
     margin-bottom: 20px;
 }
 
+#createformular-page .formular-content #intro-page input{
+    text-align: center;
+}
+
 #createformular-page .formular-content #intro-page .input{
-    width: 150px;
+    margin-right: 30px;
     float: left;
 }
 
@@ -1202,19 +1275,57 @@ label{
     Storeno Page
 ------------------------------------------------------------------------------------------------------------*/
 
+#storeno-page input{
+    text-align: center;
+}
+
 #storeno-page .storeno-content{
     width: 300px;
     margin: 0 auto;
+    position: relative;
 }
 
-#storeno-page label{
-    margin-top: 10px;
+#storeno-page #agb-window{
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+#storeno-page .date-wr label{
+    display: inline-block;
+    margin-right: 15px;
+}
+
+#storeno-page #date{
+    width: 67px;
+}
+
+#storeno-page .agb-param{
+    margin: 15px 0;
+}
+
+#storeno-page .agb-item{
+    float: left;
+    margin-right: 20px;
+    width: 70px;
+}
+
+#storeno-page .agb-item.manuel{
+    width: 120px;
+}
+
+#storeno-page .agb-item.manuel input{
+    margin-left: 40px;
+}
+
+#storeno-page .agb-item input{
+    width: 30px;
+    margin-left: 20px;
 }
 
 #storeno-page .buttons{
-    margin-top: 20px;
+    margin-top: 15px;
 }
-
 
 /*------------------------------------------------------------------------------------------------------------
     Product create page
@@ -1760,6 +1871,7 @@ label{
 .product-list td{
     text-align: center;
     padding: 5px 5px;
+    font-size: 13px;
 }
 
 .product-list tr:hover{
@@ -1875,6 +1987,37 @@ label{
 #payments-page{
     width: 600px;
     padding: 10px 20px;
+    position: relative;
+}
+
+#payments-page .new-payment-block input{
+    width: 105px;
+}
+
+#payments-page .new-payment-block .param{
+    width: 172px;
+    float: left;
+}
+
+#payments-page .new-payment-block #payment-type{
+    margin-top: 4px;
+}
+
+#payments-page .new-payment-block .remark-param{
+    padding-top: 10px;
+    clear: both;
+}
+
+#payments-page .versandfreigabe{
+    color: red;
+    font-size: 16px;
+    text-align: center;
+}
+
+#payments-page .closepopup-button{
+    position: absolute;
+    right: 10px;
+    top: 10px;
 }
 
 #payments-page h3{
@@ -1883,15 +2026,20 @@ label{
     margin: 15px 0;
 }
 
-#payments-page .info-block {
-    border: 1px solid #AAAAAA;
+#payments-page .paymentsinfo-block {
+    border: 1px solid #00529B;
     float: left;
-    height: 80px;
     padding: 5px 15px;
     width: 255px;
+    color: #00529B;
+    background: #f7f798;
 }
 
-#payments-page .info-block .sofort{
+
+#payments-page #provision-block{margin-left: 158px;}
+#payments-page #anzahlung-block{height: 80px;}
+
+#payments-page .paymentsinfo-block .sofort{
     font-size: 30px;
     letter-spacing: 30px;
     padding-top: 19px;
@@ -1899,13 +2047,13 @@ label{
     width: 100%;
 }
 
-#payments-page .restzahlung-block{float: right;}
+#payments-page #restzahlung-block{float: right;}
 
-#payments-page .info-block .param{
+#payments-page .paymentsinfo-block .param{
     margin: 7px 0;
 }
 
-#payments-page .info-block .param .param-name{
+#payments-page .paymentsinfo-block .param .param-name{
     width: 170px;
     display: inline-block;
     font-weight: bold;
@@ -1941,7 +2089,6 @@ label{
 
 .control-page .date-search{
     float: left;
-    width: 400px;
 }
 
 .control-page .search-header{
@@ -1965,9 +2112,14 @@ label{
     padding-top: 5px;
 }
 
-.control-page .date-search label, .control-page .date-search input{
+.control-page .date-search label, .control-page .date-search input, .control-page .date-search select{
     display: block;
     float: left;
+}
+
+.control-page .date-search select{
+    font-size: 17px;
+    margin: 2px 5px 0 0;
 }
 
 .control-page .date-search input[type=text]{
@@ -1980,10 +2132,11 @@ label{
 }
 
 
-#controlpayments-list .reisedatum{background: #ffeadc;}
-#controlpayments-list .anzahlung{background: #f3f6ff;}
-#controlpayments-list .restzahlung{background: #d4ffe4;}
-#controlpayments-list .payments{background: #fff6f2;}
+#controlpayments-list .anzahlung{background: #adf0ff;}
+#controlpayments-list .restzahlung{background: #fdff95;}
+#controlpayments-list .versand{background: #c6ffd6;}
+#controlpayments-list .storno{background: #ffc1c3;}
+#controlpayments-list .provisionstatus{background: #a3ffa7;}
 
 #controlpayments-list tr:hover{
     cursor: pointer;
@@ -1996,3 +2149,14 @@ label{
 #controlpayments-list tr:nth-child(odd):hover td{background: #ebebeb !important;}
 
 #controlpayments-list tr.current td, #controlpayments-list tr.current:hover td{background: #4bffa9 !important;}
+
+.product-list .num{
+    max-width: 10px;}
+.product-list .ag-num{
+    max-width: 30px;}
+.product-list .rg-num{
+    max-width: 70px;
+}
+.product-list .status{
+    min-width: 70px;
+}

@@ -12,6 +12,7 @@
 
 
 <div id="createformular-page" class="reservierung-page content">
+<input type="hidden" id="formular-mode" value="edit"/>
 <?if ($formular->status == 'rechnung'): ?>
 <div class="alert-block">
     <p>Diese rehnung, 30 € wert Bearbeitung! Tun Sie das nicht!</p>
@@ -28,7 +29,7 @@
 
         <div class="param">
             <span class="param-name">Typ:</span>
-            <span class="param-value" id="formulartype-value"><?=$formular->type?></span>
+            <a href="#" class="param-value" id="formulartype-value"><?=$formular->type?></a>
         </div>
 
         <div class="param">
@@ -60,40 +61,100 @@
         <pre class="text"><?=$formular->flight_text?></pre>
     </div>
 </div>
-
 <div class="changetype-block" style="display:none">
 
-    <label>Formulartyp ausw?hlen:</label>
+    <label>Formulartyp auswahlen:</label>
 
     <div id="type-radio">
-        <input type="radio" name="formular-type"
-               id="type_1" <?if ($formular->type == "pausschalreise") echo 'checked';?> value="pausschalreise"><label
+        <input type="radio" name="formular-type" id="type_1" <?=$formular->type == 'pausschalreise' ? 'checked' : ''?> value="pausschalreise"><label
         for="type_1">Pauschalreise</label>
-        <input type="radio" name="formular-type" id="type_2" <?if ($formular->type == "bausteinreise") echo 'checked';?>
-               value="bausteinreise"><label
+        <input type="radio" name="formular-type" id="type_2" <?=$formular->type == 'bausteinreise' ? 'checked' : ''?> value="bausteinreise"><label
         for="type_2">Bausteinreise</label>
-        <input type="radio" name="formular-type" id="type_3" <?if ($formular->type == "nurflug") echo 'checked';?>
-               value="nurflug"><label for="type_3">Nur flug</label>
+        <input type="radio" name="formular-type" id="type_3" <?=$formular->type == 'nurflug' ? 'checked' : ''?> value="nurflug"><label for="type_3">Nur flug</label>
+
     </div>
 
-    <div class="type-edit">
+    <ul id="type-error" class="alert-block" style="display: none">
+
+    </ul>
+
+    <div class="typeedit-block" id="pausscahlreise-type" <?=$formular->type == 'pausschalreise' ? '' : 'style="display:none"'?>>
 
         <div class="vorgansnummer-wr">
             <label for="vorgangsnummer">Vorgangsnummer:</label>
-            <input type="text" class="vnum-input" name="formular-vnum" value="<?=$formular->v_num?>"/>
+            <input type="text" maxlength="6" value="<?=$formular->type == 'pausscahlreise' ? $formular->v_num: ''?>" class="vnum-input"/>
         </div>
 
         <label for="flight-text">Flugplan</label>
-        <textarea id="flight-text" name="flight-text"><?=$formular->flight_text?></textarea>
+        <textarea class="flight-text"><?=$formular->type == 'pausscahlreise' ? $formular->flight_text: ''?></textarea>
 
-        <label for="flight-price">Flugpreis &euro;</label>
-        <input type="text" name="flight-price" id="flight-price" value="<?=$formular->flight_price?>"/>
+        <label for="flight-price">Flugpreis:</label>
+        <input type="text" maxlength="5" class="flight-price" value="<?=$formular->type == 'pausscahlreise' ? $formular->flight_price: ''?>"/> &euro;
+
+        <div class="bottom-block">
+
+            <button class="type-submit">Weiter</button>
+            <br class="clear"/>
+
+        </div>
+
     </div>
 
-    <div class="bottom-block">
-        <p class="error" id="type-error"></p>
-        <button id="type-submit">Weiter</button>
-        <br class="clear"/>
+    <div class="typeedit-block" id="bausteinreise-type" <?=$formular->type == 'bausteinreise' ? '' : 'style="display:none"'?>>
+        <label for="flight-text">Flugplan</label>
+        <textarea class="flight-text"><?=$formular->type == 'bausteinreise' ? $formular->flight_text: ''?></textarea>
+
+        <label for="flight-price">Flugpreis:</label>
+        <input type="text" class="flight-price" maxlength="5" value="<?=$formular->type == 'bausteinreise' ? $formular->flight_price: ''?>"/> &euro;
+
+        <div class="bottom-block">
+
+            <button class="type-submit">Weiter</button>
+            <br class="clear"/>
+        </div>
+
+
+    </div>
+
+    <div class="typeedit-block" id="nurflug-type" <?=$formular->type == 'nurflug' ? '' : 'style="display:none"'?>>
+
+        <div class="info-block">
+            <h2>Ahtung!</h2>
+
+            <p>Text</p>
+        </div>
+
+        <div class="vorgansnummer-wr">
+            <label for="vorgangsnummer">Vorgangsnummer:</label>
+            <input type="text" name="nurflug_vnum" maxlength="6" value="<?=$formular->type == 'nurflug' ? $formular->v_num: ''?>" class="vnum-input"/>
+        </div>
+
+        <div>
+            <label for="person-count">Person Count:</label>
+            <input type="text" class="person-count" name="nurflug_personcount" value="<?=$formular->type == 'nurflug' ? $formular->person_count: ''?>" maxlength="2"/>
+        </div>
+
+        <label for="flight-text">Flugplan:</label>
+        <textarea id="flight-text" name="nurflug_flight"><?=$formular->type == 'nurflug' ? $formular->flight_text: ''?></textarea>
+
+        <label for="flight-price">Flugpreis:</label>
+        <input type="text" class="flight-price" name="nurflug_flightprice" maxlength="5" value="<?=$formular->type == 'nurflug' ? $formular->flight_price: ''?>"/> &euro;
+
+        <div class="service-charge">
+            <label for="servicecharge-amount">Service charge:</label>
+            <input type="text" maxlength="3" class="servicecharge" value="<?=$formular->type == 'nurflug' ? $formular->service_charge: ''?>" name="nurflug_servicecharge" id="servicecharge-amount"/> &euro;
+            or <input type="text" maxlength="2" class="servicecharge-percent" id="servicecharge-percent"/> % <br/>
+            <label for="total-amount">Total:</label>
+            <input value="<?=$formular->type == 'nurflug' ? ($formular->flight_price + $formular->service_charge) : ''?>" type="text" disabled id="total-amount"/> &euro;
+        </div>
+
+        <div class="bottom-block">
+
+            <input type="submit" value="Weiter"/>
+            <br class="clear"/>
+
+        </div>
+
     </div>
 
 </div>
@@ -101,16 +162,25 @@
 <div class="formular-content">
 
 <div id="intro-page">
+
     <? if ($formular->kunde->type == "agenturen"): ?>
+
     <div class="input" id="provision-wr">
         <label for="provision">Provision %:</label>
-        <input type="text" id="provision" name="provision"
-               value="<?=$formular->provision?>" size="3"/>
+        <input disabled type="text" id="provision"
+               value="<?=$formular->kunde->provision?>" size="3"/>
     </div>
+
+    <div class="input" id="provision-wr">
+        <label for="provision">Manuel Provision %:</label>
+        <input type="text" value="<?=$formular->kunde->provision != $formular->provision ? $formular->provision : ''?>" name="provision-manuel" maxlength="2" size="2"/>
+    </div>
+
     <? endif; ?>
+
     <div class="input" id="personcount-wr">
         <label for="personcount">Personen:</label>
-        <input type="text" id="personcount" value="<?=$formular->person_count?>" name="personcount"
+        <input type="text" id="personcount" maxlength="2" value="<?=$formular->person_count?>" name="personcount"
                size="2"/>
     </div>
     <br class="clear"/>

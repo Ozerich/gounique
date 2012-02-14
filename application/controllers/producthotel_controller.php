@@ -179,9 +179,7 @@ class ProductHotel_Controller extends MY_Controller
                 'teenblock_active' => isset($_POST['teenblock_active']) ? 1 : 0,
                 'childblock_active' => isset($_POST['childblock_active']) ? 1 : 0,
                 'infantblock_active' => isset($_POST['infantblock_active']) ? 1 : 0,
-                'changed_by' => $this->user->id,
-                'changed_time' => time_to_mysqldatetime(time()),
-            ));
+               ));
 
             $hotel_id = $hotel->id;
 

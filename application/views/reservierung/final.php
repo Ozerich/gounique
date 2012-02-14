@@ -38,10 +38,17 @@
             <span class="param-value"><?=$formular->plain_status?></span>
         </div>
 
-        <? if ($formular->status == "rechnung" || $formular->status == "freigabe"): ?>
+        <? if ($formular->status == "rechnung"): ?>
         <div class="param">
             <span class="param-name">Rechnungsnummer:</span>
             <span class="param-value"><?=$formular->r_num?></span>
+        </div>
+        <? endif; ?>
+
+        <? if($formular->status == "rechnung" && $formular->is_storno): ?>
+        <div class="param">
+            <span class="param-name">Original Rechnung</span>
+            <a class="param-value" href="reservierung/final/<?=$formular->storno_original?>"><?=$formular->original->r_num?></a>
         </div>
         <? endif; ?>
 
@@ -147,6 +154,28 @@
     </div>
     <div class="right-float">
         <table class="price-table">
+            <? if($formular->is_storno && $formular->status == "rechnung"): ?>
+            <tr>
+                <td class="param">Gesamptreisepreis</td>
+                <td><?=$formular->original->price['brutto']?></td>
+            </tr>
+            <tr>
+                <td class="param">Stornogebühr lt. AGB´s <?=$formular->original->storno_percent?>%</td>
+                <td><?=$formular->original->price['storeno_brutto']?></td>
+            </tr>
+            <tr>
+                <td class="param"><?=$formular->provision?>% Provision auf Storno</td>
+                <td><?=$formular->original->price['storno_provision']?></td>
+            </tr>
+            <tr>
+                <td class="param">19% MwSt.</td>
+                <td><?=$formular->original->price['storno_mwst']?></td>
+            </tr>
+            <tr>
+                <td class="param">Gesamptprovision</td>
+                <td><?=$formular->original->price['storno_gesamtprovision']?></td>
+            </tr>
+            <? else: ?>
             <tr>
                 <td class="param">Preis Brutto/p.Person</td>
                 <td><?=$formular->price['person']?></td>
@@ -178,16 +207,8 @@
                 <td class="param">Endpreise Netto</td>
                 <td><?=$formular->price['netto']?></td>
             </tr>
-            <? if ($formular->status == 'rechnung'): ?>
-                <tr>
-                    <td class="param">Paid</td>
-                    <td><?=$formular->price['paid']?></td>
-                </tr>
-                <tr>
-                    <td class="param">Need to paid</td>
-                    <td><?=$formular->price['need_to_pay']?></td>
-                </tr>
-                <? endif; ?>
+
+            <? endif; ?>
             <? endif; ?>
         </table>
 
@@ -243,7 +264,7 @@
                 <?endif; ?>
             </form>
 
-            <? elseif ($formular->status == "rechnung"): ?>
+            <? elseif ($formular->status == "rechnung" && !$formular->is_storno): ?>
             <a href="reservierung/storeno/<?=$formular->id?>" class="button-link">Storno</a>
             <? endif; ?>
         </div>
@@ -253,7 +274,7 @@
 
 
 <div id="stage">
-    <? if ($formular->status != 'storeno'): ?>
+    <? if (!$formular->is_storno): ?>
 
     <input type="radio" id="radio1" name="stage" value="1"
         <?if ($formular->status == "angebot" || $formular->status == "eingangsmitteilung") echo 'checked';?>/>
@@ -308,15 +329,15 @@ form_open("reservierung/sendmail/" . $formular->id, null, array("formular_id" =>
 </form>
 
 <div id="final-buttons" class="formular-buttons">
-    <? if ($formular->status != "storeno"): ?>
+    <? if (!$formular->is_storno): ?>
     <a href="reservierung/edit/<?=$formular->id?>" class="button-link">Formular editieren</a>
     <? endif; ?>
-    <? if ($formular->status == "eingangsmitteilung"): ?>
+    <? if ($formular->status == "eingangsmitteilung" && !$formular->is_storno): ?>
     <a href="reservierung/status/<?=$formular->id?>" class="button-link">Status editieren</a>
-    <? elseif ($formular->status == "rechnung"): ?>
+    <? elseif ($formular->status == "rechnung" && !$formular->is_storno): ?>
     <a href="reservierung/payments/<?=$formular->id?>" class="button-link">Payments</a>
     <? endif; ?>
-    <? if ($formular->status == "rechnung" || $formular->status == "freigabe"): ?>
+    <? if ($formular->status == "rechnung"  && !$formular->is_storno): ?>
     <a href="reservierung/vouchers/<?=$formular->id?>" class="button-link">Vouchers</a>
     <? endif; ?>
     <button id="addmail-button">E-Mail hinzufuegen</button>

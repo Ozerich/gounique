@@ -103,7 +103,7 @@
     </div>
 
     <div class="bottom-text">
-        <p>Achtung! Reise wurde am <?=$formular->storeno->date->format('d.m.Y')?>
+        <p>Achtung! Reise wurde am <?=$formular->created_date->format('d.m.Y')?>
             durch <?=$formular->kunde->type == "agenturen" ? 'Reisebüro' : 'Kunde'?> storniert.
             <? if ($formular->kunde->type == "agenturen") echo 'Ihre neue Provision entnehmen Sie bitte';?>
             obengenannten Aufstellungen.</p>

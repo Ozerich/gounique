@@ -1,11 +1,17 @@
-<? foreach ($formulars as $formular): ?>
+<? foreach ($formulars as $ind=>$formular): ?>
 <tr>
-    <td><a href="reservierung/final/<?=$formular->id?>"><?=$formular->r_num?></a></td>
+    <td class="num"><?=($ind + 1)?></td>
+    <td class="ag-num">
+        <? if($formular->kunde): ?>
+        <a href="kundenverwaltung/historie/<?=$formular->kunde->id?>"><?=$formular->kunde->k_num?></a>
+        <? else: ?>
+            -
+        <? endif; ?>
+    </td>
+    <td class="rg-num"><a href="reservierung/final/<?=$formular->id?>"><?=$formular->r_num?></a></td>
     <td><?=$formular->v_num?></td>
-    <td><?=$formular->created_date->format('d.M.Y')?></td>
-    <td><?=$formular->rechnung_date->format('d.M.Y')?></td>
+    <td class="reisedatum"><?=$formular->rechnung_date->format('d.M.Y');?></td>
     <td class="reisedatum"><?=$formular->departure_date->format('d.M.Y')?></td>
-    <td class="reisedatum"><?=$formular->arrival_date ? $formular->arrival_date->format('d.M.Y') : ''?></td>
     <? if ($formular->is_sofort): ?>
     <td class="anzahlung" colspan="3">SOFORT</td>
     <? else: ?>
@@ -16,13 +22,12 @@
     <td class="restzahlung"><?=$formular->finalpayment_amount?></td>
     <td class="restzahlung"><?=$formular->finalpayment_date ? $formular->finalpayment_date->format('d.M.Y') : ''?></td>
     <td class="restzahlung"><?=$formular->restzahlung_status?></td>
-    <? if($formular->last_payment): ?>
-    <td class="payments"><?=$formular->last_payment->payment_date->format('d.M.Y');?></td>
-    <td class="payments"><?=$formular->last_payment->amount;?></td>
-    <? else: ?>
-        <td colspan="2" class="payments">NO PAYMENTS</td>
-    <? endif; ?>
-    <td><?=$formular->payment_status?></td>
+
+    <td class="storno"><?=$formular->status == 'storno' ? 'STORNO' : ''?></td>
+    <td class="versand"><?=$formular->versand_status1?></td>
+    <td class="versand"><?=$formular->versand_status2?></td>
+    <td class="versand"><?=$formular->is_versand && $formular->is_freigabe ? $formular->versanded_date->format('d.M.Y') : ''?></td>
+
     <input type="hidden" class="formular_id" value="<?=$formular->id?>"/>
 </tr>
 <? endforeach; ?>

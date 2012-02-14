@@ -31,7 +31,7 @@ class Reservierung_Controller extends MY_Controller
         $item->save();
 
         $text =
-        "Dear all,
+            "Dear all,
 
 please book and confirm by return:
 
@@ -242,22 +242,30 @@ Your Unique World Team";
 
             if ($_POST) {
 
+                $type = $this->input->post('formular-type');
+
+                $provision = 0;
+                if ($type != 'nurflug')
+                    $provision = $this->input->post('provision-manuel') != '' ? $this->input->post('provision-manuel') :
+                        $kunde->provision;
+
                 $formular = Formular::create(array(
-                        'v_num' => $this->input->post('formular-vnum'),
+
+                        'v_num' => $type == 'nurflug' ? $this->input->post('nurflug_vnum') : $this->input->post('vnum'),
                         'kunde_id' => $this->input->post('kunde_id'),
                         'type' => $this->input->post('formular-type'),
                         'r_num' => 0,
-                        'provision' => $this->input->post('provision'),
-                        'flight_text' => $this->input->post('flight-text'),
-                        'flight_price' => $this->input->post('flight-price'),
-                        'person_count' => $this->input->post('personcount'),
+                        'provision' => $provision,
+
+                        'service_charge' => $type == 'nurflug' ? $this->input->post('nurflug_servicecharge') : 0,
+                        'flight_text' => $type == 'nurflug' ? $this->input->post('nurflug_flight') : $this->input->post('flight'),
+                        'flight_price' => $type == 'nurflug' ? $this->input->post('nurflug_flightprice') : $this->input->post('flightprice'),
+                        'person_count' => $type == 'nurflug' ? $this->input->post('nurflug_personcount') : $this->input->post('personcount'),
+
                         'created_date' => time_to_mysqldatetime(time()),
                         'changed_date' => time_to_mysqldatetime(time()),
                         'created_by' => $this->user->id,
-                        'changed_by' => $this->user->id,
-
-                        'prepayment_date' => time_to_mysqldate($this->get_prepayment_date())
-                    )
+                        'changed_by' => $this->user->id,)
                 );
 
 
@@ -324,7 +332,8 @@ Your Unique World Team";
         }
         if ($_POST) {
 
-            $formular->provision = $this->input->post('provision');
+            $formular->provision = $this->input->post('provision-manuel') != '' ? $this->input->post('provision-manuel') :
+                $formular->kunde->provision;
             $formular->flight_text = $this->input->post('flight-text');
             $formular->flight_price = $this->input->post('flight-price');
             $formular->person_count = $this->input->post('personcount');
@@ -546,7 +555,8 @@ Your Unique World Team";
     }
 
 
-    public function result($id = 0)
+    public
+    function result($id = 0)
     {
         $formular = Formular::find_by_id($id);
 
@@ -597,7 +607,8 @@ Your Unique World Team";
 
     }
 
-    public function status($id)
+    public
+    function status($id)
     {
         $formular = Formular::find_by_id($id);
 
@@ -630,7 +641,8 @@ Your Unique World Team";
 
     }
 
-    public function final_($id)
+    public
+    function final_($id)
     {
         $formular = Formular::find_by_id($id);
 
@@ -645,7 +657,8 @@ Your Unique World Team";
     }
 
 
-    public function do_rechnung($id = 0)
+    public
+    function do_rechnung($id = 0)
     {
         $formular = Formular::find_by_id($id);
 
@@ -705,26 +718,48 @@ Your Unique World Team";
         }
 
         if ($_POST) {
-            $formular->status = 'storeno';
 
-            $this->load->library('session');
-            $user_session = $this->session->all_userdata();
-
-            FormularStorno::create(array(
-                'formular_id' => $formular->id,
-                'canceled_by' => $this->input->post('who'),
-                'percent' => $this->input->post('percent'),
-                'user_id' => $user_session['user_id'],
-                'date' => time_to_mysqldate(time()),
-            ));
-
+            $formular->status = 'storno';
+            $formular->is_storno = true;
+            $formular->storno_date = inputdate_to_mysqldate($this->input->post('date'));
+            $formular->storno_percent = $this->input->post('manuel-agb') ? $this->input->post('manuel-agb') : $this->input->post('agb-value');
+            $formular->storno_who = $this->input->post('who');
+            $formular->storno_by = $this->user->id;
+            $formular->storno_created_date = time_to_mysqldatetime(time());
             $formular->save();
 
-            $this->write_to_pdf($formular->id, 6);
-            if ($formular->kunde->type == "agenturen")
-                $this->write_to_pdf($formular->id, 5);
+            $brutto = $formular->brutto / 100 * $formular->storno_percent;
 
-            redirect("reservierung/final/" . $formular->id);
+            $storno_rechnung = Formular::create(array(
+                'kunde_id' => $formular->kunde_id,
+                'status' => 'rechnung',
+                'is_storno' => true,
+                'r_num' => $formular->r_num.'S',
+                'v_num' => $formular->v_num,
+                'type' => $formular->type,
+                'flight_text' => $formular->flight_text,
+                'flight_price' => $formular->flight_price,
+                'provision' => $formular->provision,
+                'provision_amount' => $brutto / 100 * $formular->storno_percent,
+                'provision_date' => '',
+                'service_charge' => $formular->service_charge,
+                'brutto' => $brutto,
+                'departure_date' => $formular->departure_date,
+                'rechnung_date' => time_to_mysqldatetime(time()),
+                'person_count' => $formular->person_count,
+                'comment' => $formular->comment,
+                'created_date' => time_to_mysqldatetime(time()),
+                'created_by' => $this->user->id,
+                'changed_date' => time_to_mysqldatetime(time()),
+                'changed_by' => $this->user->id,
+                'storno_original' => $formular->id,
+
+            ));
+
+            $this->write_to_pdf($storno_rechnung->id, 5);
+            $this->write_to_pdf($storno_rechnung->id, 6);
+
+            redirect("reservierung/final/" . $storno_rechnung->id);
         }
 
         $this->view_data['formular'] = $formular;
@@ -756,8 +791,6 @@ Your Unique World Team";
 
         $email = $this->input->post("email");
         $pdf = $this->input->post("type");
-
-
 
 
         $this->email->clear();
@@ -807,35 +840,6 @@ Your Unique World Team";
         exit();
     }
 
-
-    public function payments($id = 0)
-    {
-        $formular = Formular::find_by_id($id);
-
-        if (!$formular) {
-            show_404();
-            return false;
-        }
-
-        if ($_POST) {
-            FormularPayment::create(array(
-                "formular_id" => $id,
-                "value" => $this->input->post("payment_value"),
-                "datetime" => time_to_mysqldatetime(time()),
-                "user_id" => $this->user->id,
-            ));
-
-            if ($formular->paid_amount >= $formular->price['brutto']) {
-                $formular->status = "freigabe";
-
-                $formular->save();
-            }
-
-            redirect("reservierung/final/" . $id);
-        }
-
-        $this->view_data['formular'] = $formular;
-    }
 
     public function livesearch($type = "", $str = "")
     {
@@ -900,7 +904,8 @@ Your Unique World Team";
         exit();
     }
 
-    public function open()
+    public
+    function open()
     {
         if ($_POST) {
             if (isset($_POST['view-vnum']))
