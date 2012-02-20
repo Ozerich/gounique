@@ -6,12 +6,6 @@ class Product_Controller extends MY_Controller
     {
         parent::__construct();
 
-        foreach(Formular::all() as $formular)
-        {
-            $formular->provision_date = $formular->provision2_date;
-            $formular->save();
-        }
-
         if (!$this->user)
             redirect('login');
     }

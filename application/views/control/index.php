@@ -4,9 +4,9 @@
 
     <div class="nav">
         <div class="row">
-            <a href="control/incoming">incoming payments</a>
-            <a href="control/provision">provision payments</a>
-            <a class="disabled last">hotel payments</a>
+            <a href="control/incoming">Zahlungseingang</a>
+            <a href="control/provision">Provisionszahlung</a>
+            <a href="control/invoice">Zahlungsausgang</a>
         </div>
     </div>
 </div>

@@ -5,6 +5,7 @@
 </div>
 <div class="content">
     <h1>STORNORECHNUNG</h1>
+
     <h2>Kundenkopie</h2>
 
     <table class="top-block">
@@ -85,7 +86,7 @@
                 <td class="paramvalue"><?=$formular->price['brutto']?> &euro;</td>
             </tr>
             <tr>
-                <td class="paramname">Stornogebühr lt. AGB´s <?=$formular->storeno->percent?>% </td>
+                <td class="paramname">Stornogebühr lt. AGB´s <?=$formular->storeno->percent?>%</td>
                 <td class="paramvalue"><?=$formular->price['storeno_sum']?> &euro;</td>
             </tr>
             <tr>

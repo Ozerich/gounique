@@ -17,7 +17,7 @@
             </div>
             <div class="param">
                 <label for="payment-amount">Amount &euro;</label>
-                <input type="text" id="payment-amount" maxlength="5"/>
+                <input type="text" id="payment-amount" maxlength="8"/>
             </div>
             <div class="remark-param">
                 <label for="payment-remark">Remark:</label>

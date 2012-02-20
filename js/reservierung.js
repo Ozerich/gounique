@@ -710,8 +710,8 @@ $(document).ready(function () {
         if (flight_price == '' || flight_price == 0)
             $('<li>Flight price must be positive integer</li>').appendTo(error_block);
 
-        if (service_charge == '' || service_charge == 0)
-            $('<li>Service charge must be positive integer</li>').appendTo(error_block);
+        /*if (service_charge == '' || service_charge == 0)
+            $('<li>Service charge must be positive integer</li>').appendTo(error_block);*/
 
         var find_error = $(error_block).find('li').size() > 0;
 
@@ -755,8 +755,7 @@ $(document).ready(function () {
                 }
             });
         }
-        else if($(block).attr('id') == 'pausscahlreise-type')
-        {
+        else if ($(block).attr('id') == 'pausscahlreise-type') {
             vnum = $(block).find('.vnum-input').val();
 
             if (vnum.length != 6)
@@ -909,6 +908,19 @@ $(document).ready(function () {
         return false;
     });
 
+    $('.reservierung-page .formular-buttons #fertig-button').click(function () {
+
+        var persons_count = $('.reservierung-page #intro-page #personcount').val();
+        if (persons_count == '' || persons_count == 0) {
+            $('.reservierung-page #intro-page #personcount').addClass('error');
+            return false;
+        }
+        else
+            $('.reservierung-page #intro-page #personcount').removeClass('error');
+
+        return true;
+    });
+
 
     /*-----------------------------------------------------------------------------------------
      Flight block in create page
@@ -1028,6 +1040,19 @@ $(document).ready(function () {
      Result page
      ----------------------------------------------------------------------------------------------------------*/
 
+    $('#result-page #speichern').click(function () {
+        var error = false;
+        $('#result-page .person-name, #result-page #departure_date').each(function () {
+            if ($(this).val() == '') {
+                $(this).addClass('error');
+                error = true;
+            }
+            else
+                $(this).removeClass('error');
+        });
+
+        return !error;
+    });
 
     /*------------------------------------------------------------------------------------------------------------
      Final page
@@ -1048,18 +1073,26 @@ $(document).ready(function () {
         return false;
     });
 
-    $('.reservierung-page').find('#prepayment_date,#departure_date, #finalpayment_date').datepicker({
+    $('.reservierung-page #sofort').click(function () {
+        if ($(this).is(':checked'))
+            $('.prepayment-block').hide();
+        else
+            $('.prepayment-block').show();
+    });
+
+    $('.reservierung-page').find('#prepayment_date,#departure_date, #finalpayment_date').setdatepicker().datepicker({
         onSelect:function () {
             $(this).change();
             return false;
         }
-    }).datepicker("option", "showAnim", "blind").datepicker("option", "dateFormat", 'ddmmyy');
+    });
+
 
     $('.reservierung-page #departure_date').change(
         function () {
             var val = $(this).val();
 
-            var departure = new Date(val.substr(4, 4), parseInt(val.substr(2, 2)) - 1, val.substr(0, 2));
+            var departure = new Date(val.substr(4, 4), val.substr(2, 2) - 1, val.substr(0, 2));
             if (!isValidDate(departure))
                 return false;
 
@@ -1069,15 +1102,20 @@ $(document).ready(function () {
             $('.reservierung-page #finalpayment_date,.reservierung-page #prepayment_date').datepicker("option", "maxDate", new Date(departure - ONE_DAY));
 
             if (prepayment < today) {
+                $('.reservierung-page #sofort').attr('checked', 'checked');
                 $('.reservierung-page .prepayment-block').hide();
+
                 prepayment = today;
                 prepayment.setDate(prepayment.getDate() + 2);
-                $('.reservierung-page #anzahlung, #prepayment_date, #finalpayment_date').val('');
+                $('.reservierung-page #finalpayment_date').datepicker('setDate', DateToInput(prepayment));
             }
             else {
-                $('.reservierung-page #prepayment_date').datepicker("option", "maxDate", new Date(prepayment - ONE_DAY));
-                $('.reservierung-page .prepayment-block').show();
                 $('.reservierung-page #finalpayment_date').val(DateToInput(prepayment));
+                prepayment = today;
+                prepayment.setDate(prepayment.getDate() + 7);
+                $('.reservierung-page #prepayment_date').datepicker('setDate', DateToInput(prepayment));
+                $('.reservierung-page .prepayment-block').show();
+                $('.reservierung-page #sofort').removeAttr('checked');
             }
             return false;
         }).change();
@@ -1091,6 +1129,29 @@ $(document).ready(function () {
             $(".reservierung-page #anzahlungsum").html((parseFloat($("input#brutto_price").val().split(' ').join('')) / 100 * val).toFixed(2));
         }).change();
 
+    $('.reservierung-page #do_rechnung').click(function () {
+
+        $('#final-page .anzahlung-block').find('#departure_date, #finalpayment_date').each(function(){
+            if($(this).val() == '')
+                $(this).addClass('error');
+            else
+                $(this).removeClass('error');
+        });
+
+        if(!$('#final-page #sofort').is(':checked'))
+        {
+            $('#final-page .prepayment-block input').each(function(){
+                if($(this).val() == '')
+                   $(this).addClass('error');
+               else
+                   $(this).removeClass('error');
+            });
+        }
+        else
+            $('#final-page .prepayment-block input').removeClass('error');
+
+        return $('#final-page .anzahlung-block input.error').size() == 0;
+    });
 
     $('#final-page #addmail-button').click(
         function (event) {

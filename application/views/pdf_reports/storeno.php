@@ -52,7 +52,7 @@
                 </tr>
             </table>
         </div>
-
+        <? if ($formular->type != 'nurflug'): ?>
         <div class="block">
             <h3>Leistung:</h3>
             <table class="liestung-table">
@@ -63,6 +63,7 @@
                 <? endforeach; ?>
             </table>
         </div>
+        <? endif; ?>
 
         <?if ($formular->flight_text != ""): ?>
         <div class="block">
@@ -90,10 +91,10 @@
                 <td class="paramvalue"><?=$formular->price['storeno_provision']?> &euro;</td>
             </tr>
             <? if (!$formular->kunde->ausland): ?>
-                <tr class="green">
-                    <td class="paramname">MWST auf Prov 19%</td>
-                    <td class="paramvalue"><?=$formular->price['mwst']?> &euro;</td>
-                </tr>
+            <tr class="green">
+                <td class="paramname">MWST auf Prov 19%</td>
+                <td class="paramvalue"><?=$formular->price['mwst']?> &euro;</td>
+            </tr>
             <? endif; ?>
             <tr>
                 <td class="paramname">Gesamtprovision</td>

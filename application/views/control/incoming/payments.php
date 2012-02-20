@@ -3,14 +3,33 @@
     <a href="#" class="closepopup-button">Close</a>
 
     <h3>Payments overview for <span class="rnum"><?=$formular->r_num?></span></h3>
-    <p class="total-payment">Rechnungsbetrag <span class="total-payment-value"><?=$formular->brutto?> &euro;</span></p>
-    <div class="payment-content">
+    <div class="preview">
+        <div class="param">
+            <span class="param-name">AG-Num:</span>
+            <span class="param-value"><?=$formular->kunde->k_num?></span>
+        </div>
+        <div class="param">
+            <span class="param-name">VG-Num:</span>
+            <span class="param-value"><?=$formular->v_num?></span>
+        </div>
+        <div class="param">
+            <span class="param-name">Person:</span>
+            <span class="param-value"><?=$formular->person?></span>
+        </div>
+        <div class="param">
+            <span class="param-name">Betrag:</span>
+            <span class="param-value"><?=$formular->brutto?> &euro;</span>
+        </div>
+        <br class="clear"/>
+    </div>
+<div class="payment-content">
         <?=$payments_list?>
     </div>
 
     <fieldset id="new-payment">
         <legend>New Payment</legend>
         <div class="new-payment-block">
+
             <div class="param">
                 <label for="payment-date">Payment date:</label>
                 <input type="text" id="payment-date" maxlength="8"/>
@@ -22,9 +41,11 @@
             <div class="param">
                 <label for="payment-type">Payment type:</label>
                 <select id="payment-type">
-                    <option value="bank">Bank transfer</option>
-                    <option value="cash">Cash</option>
-                    <option value="card">Credit card</option>
+                    <option value="uberweisung">Uberweisung</option>
+                    <option value="kreditkart">Kreditkart by UW</option>
+                    <option value="kreditkart_aer">Kreditkart by AER</option>
+                    <option value="lastschrift">Lastschrift</option>
+                    <option value="bar">Bar</option>
                 </select>
             </div>
             <div class="remark-param">

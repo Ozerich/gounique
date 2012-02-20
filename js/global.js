@@ -43,7 +43,7 @@ function isValidDate(d) {
 
 jQuery.fn.center = function () {
     this.css("position", "absolute");
-    var top = (($(window).height() - this.outerHeight()) / 2) + $(window).scrollTop();
+    var top = $(window).scrollTop();
     this.css("top", (top < 0 ? 0 : top) + "px");
     this.css("left", (($(window).width() - this.outerWidth()) / 2) + $(window).scrollLeft() + "px");
     return this;
@@ -54,6 +54,7 @@ jQuery.fn.setdatepicker = function () {
         changeMonth:true,
         changeYear:true
     }).datepicker("option", "showAnim", "blind").datepicker("option", "dateFormat", 'ddmmyy');
+    return $(this);
 }
 
 

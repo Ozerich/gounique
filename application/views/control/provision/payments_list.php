@@ -51,7 +51,11 @@
         <td><?=$payment->amount?></td>
         <td><?=$diff?></td>
         <td><?=$payment->remark?></td>
-        <td><a href="#" class="delete-icon delete-payment"></a></td>
+        <td>
+            <? if($payment->added_by != 0): ?>
+            <a href="#" class="delete-icon delete-payment"></a>
+            <? endif; ?>
+    </td>
     </tr>
         <? endforeach; ?>
     <tr>

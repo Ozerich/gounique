@@ -16,7 +16,7 @@
         <?=form_open("login");?>
             <div class="login_fields">
                 <div class="field">
-                    <label for="email">Email</label>
+                    <label for="email">Login</label>
                     <input type="text" name="email" value="" id="email" tabindex="1"/>
                 </div>
 

@@ -19,24 +19,24 @@
     </div>
     <div id="restzahlung-block" class="paymentsinfo-block">
         <div class="param">
-            <span class="param-name">Restzahlungdatum: </span>
+            <span class="param-name"><?=$formular->is_sofort ? 'Totalzahlung' : 'Restzahlungdatum'?> </span>
             <span><?=$formular->finalpayment_date ? $formular->finalpayment_date->format('d.M.Y') : ''?></span>
         </div>
         <div class="param">
-            <span class="param-name">Restzahlung Amount: </span>
+            <span class="param-name"><?=$formular->is_sofort ? 'Totalzahlung' : 'Restzahlung'?> Amount: </span>
             <span><?=$formular->finalpayment_amount?></span>
         </div>
         <div class="param">
-            <span class="param-name">Restzahlung Status: </span>
+            <span class="param-name"><?=$formular->is_sofort ? 'Totalzahlung' : 'Restzahlung'?> Status: </span>
             <span><?=$formular->restzahlung_status?></span>
         </div>
-        <? if($formular->is_freigabe): ?>
+        <? if ($formular->is_freigabe): ?>
         <p class="versandfreigabe">Versandfreigabe</p>
         <div class="param">
             <span class="param-name">Versended</span>
             <input type="checkbox" id="check_versand" <?=$formular->is_versand ? 'checked' : ''?>/>
         </div>
-            <? if($formular->is_versand): ?>
+        <? if ($formular->is_versand): ?>
             <div class="param">
                 <span class="param-name">Versended date</span>
                 <span><?=$formular->versanded_date->format('d.M.Y')?></span>
@@ -48,6 +48,9 @@
             <? endif; ?>
         <? endif; ?>
     </div>
+    <? if($formular->kunde->type == 'agenturen'):?>
+        <div class="netto-wr"><input type="checkbox" id="is-netto" <?=$formular->payment_netto ? 'checked' : ''?>/><span class="netto-label">Netto</span></div>
+        <? endif; ?>
     <br class="clear"/>
 </div>
 
@@ -70,6 +73,7 @@
     $total = 0;
     $anzahlung = $formular->prepayment_amount;
     $restzahlung = $formular->finalpayment_amount;
+
     $anzahlung_diff = $restzahlung_diff = 0;
     foreach ($formular->payments as $payment):
         $total += $payment->amount;
@@ -95,16 +99,20 @@
         <td><?=$payment->amount?></td>
         <td><?=$anzahlung_diff?></td>
         <td><?=$restzahlung_diff?></td>
-        <td><?=$payment->plain_type?></td>
+        <td><?=$payment->added_by ? $payment->plain_type : 'Provision'?></td>
         <td><?=$payment->remark?></td>
-        <td><a href="#" class="delete-icon delete-payment"></a></td>
+        <td>
+            <?if ($payment->added_by != 0): ?>
+            <a href="#" class="delete-icon delete-payment"></a>
+            <? endif; ?>
+        </td>
     </tr>
         <? endforeach; ?>
     <tr>
         <td>&nbsp;</td>
         <td class="total-amount"><?=$total?> &euro;</td>
         <td>&nbsp;</td>
-        <td class="total-amount"><?=$restzahlung_diff?> &euro;</td>
+        <td class="total-amount"><?=($formular->brutto - $total) > 0 ? '-' . ($formular->brutto - $total) : '+' . ($total - $formular->brutto)?> &euro;</td>
         <td>&nbsp;</td>
         <td>&nbsp;</td>
     </tr>

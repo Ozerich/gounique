@@ -36,7 +36,10 @@ class Formular extends ActiveRecord\Model
 
     public function get_manuels()
     {
-        return FormularManuel::find_all_by_formular_id($this->storno_original && $this->is_storno ? $this->storno_original : $this->id);
+        return FormularManuel::all(array(
+            'conditions' => array('formular_id = ?', $this->storno_original && $this->is_storno ? $this->storno_original : $this->id),
+            "order" => 'date_start asc'
+        ));
     }
 
     public function get_adult_count()
@@ -57,11 +60,28 @@ class Formular extends ActiveRecord\Model
     public function get_hotels_and_manuels()
     {
         $hotels = $this->get_hotels();
+        $manuels = $this->get_manuels();
+        $list = array();
+        $hotel_ind = $manuel_ind = 0;
 
-        foreach ($this->get_manuels() as $manuel)
-            $hotels[] = $manuel;
+        for(;$manuel_ind < count($manuels) && !$manuels[$manuel_ind]->date_start; $manuel_ind++);
 
-        return $hotels;
+        while($hotel_ind < count($hotels) || $manuel_ind < count($manuels))
+        {
+            if($hotel_ind >= count($hotels))
+                $list[] = $manuels[$manuel_ind++];
+            else if($manuel_ind >= count($manuels))
+                $list[] = $hotels[$hotel_ind++];
+            else if($hotels[$hotel_ind]->date_start > $manuels[$manuel_ind]->date_start)
+                $list[] = $manuels[$manuel_ind++];
+            else
+                $list[] = $hotels[$hotel_ind++];
+        }
+
+        for($i = 0; $i < count($manuels) && !$manuels[$i]->date_start; $i++)
+            $list[] = $manuels[$i];
+
+        return $list;
     }
 
     public function get_paid_amount()
@@ -86,29 +106,31 @@ class Formular extends ActiveRecord\Model
         return $res;
     }
 
-    public function get_price()
+    public function get_brutto_price()
     {
-        $hotel_price = 0;
-        $hotels = FormularHotel::find_all_by_formular_id($this->id);
+        if($this->type == 'nurflug')
+            return ($this->flight_price + $this->service_charge) * $this->person_count;
 
-        foreach ($hotels as $hotel)
+        $hotel_price = $manuel_price = 0;
+
+        foreach (FormularHotel::find_all_by_formular_id($this->id) as $hotel)
             $hotel_price += $hotel->all_price;
 
-        $manuel_price = 0;
-        $manuels = FormularManuel::find_all_by_formular_id($this->id);
-
-        foreach ($manuels as $manuel)
+        foreach (FormularManuel::find_all_by_formular_id($this->id) as $manuel)
             $manuel_price += $manuel->price;
 
         $flight_price = $this->flight_price * $this->person_count;
 
-        $price = $hotel_price + $manuel_price + $flight_price;
+        return $hotel_price + $manuel_price + $flight_price;
+    }
 
-        $price_data = array();
+    public function get_price()
+    {
+        $brutto = $price_data['brutto'] = $this->brutto;
 
-        $price_data['brutto'] = $price;
+        $hotels = FormularHotel::find_all_by_formular_id($this->id);
 
-        $price_data['person'] = $this->person_count == 0 ? 0 : $price_data['brutto'] / $this->person_count;
+        $price_data['person'] = $this->person_count == 0 ? 0 : $brutto / $this->person_count;
 
         foreach ($hotels as $hotel)
             if ($hotel->people_count < $this->person_count) {
@@ -116,21 +138,21 @@ class Formular extends ActiveRecord\Model
                 break;
             }
 
-        $price_data['provision'] = round($price_data['brutto'] * $this->provision / 100, 2);
+        $price_data['provision'] = round($brutto * $this->provision / 100, 2);
         $price_data['mwst'] = $this->kunde && $this->kunde->ausland == 1 ? 0 : (round($price_data['provision'] * 0.19, 2));
 
         $price_data['total_provision'] = $price_data['provision'] + $price_data['mwst'];
 
-        $price_data['netto'] = round($price_data['brutto'] - $price_data['total_provision'], 2);
+        $price_data['netto'] = round($brutto - $price_data['total_provision'], 2);
 
         $price_data['anzahlung'] = $this->prepayment;
-        $price_data['anzahlung_value'] = round($price_data['brutto'] / 100 * $this->prepayment);
-        $price_data['restzahlung'] = $price_data['brutto'] - $price_data['anzahlung_value'];
+        $price_data['anzahlung_value'] = round($brutto / 100 * $this->prepayment);
+        $price_data['restzahlung'] = $brutto - $price_data['anzahlung_value'];
 
 
         if ($this->is_storno) {
 
-            $price_data['storeno_brutto'] = $this->storno_percent / 100 * $price_data['brutto'];
+            $price_data['storeno_brutto'] = $this->storno_percent / 100 * $brutto;
 
             if ($this->kunde->type == "agenturen") {
                 $price_data['storno_provision'] = $price_data['storeno_brutto'] / 100 * $this->storno_percent;
@@ -229,7 +251,6 @@ class Formular extends ActiveRecord\Model
         $restzahlung = $this->finalpayment_amount;
         $anzahlung = $this->prepayment_amount;
 
-
         foreach ($this->payments as $payment)
         {
             if ($anzahlung > 0) {
@@ -238,8 +259,8 @@ class Formular extends ActiveRecord\Model
                 if ($anzahlung < 0) {
                     $restzahlung += $anzahlung;
                     $anzahlung = 0;
-                    continue;
                 }
+                continue;
             }
             $restzahlung -= $payment->amount;
         }
@@ -304,6 +325,54 @@ class Formular extends ActiveRecord\Model
     public function get_versanded_user()
     {
         return User::find_by_id($this->versanded_by);
+    }
+
+    public function get_invoices(){
+        $data = Invoice::find_all_by_formular_id($this->id);
+        return $data ? $data : array();
+    }
+
+    public function get_incomings()
+    {
+        $incomings = $added = array();
+
+        foreach($this->hotels_and_manuels as $item)
+            if($item->incoming_id)
+            {
+                if(!isset($added[$item->incoming_id]))
+                {
+                    $added[$item->incoming_id] = count($incomings);
+                    $incomings[] = Kunde::find_by_id($item->incoming_id);
+                }
+              //  $incomings[$added[$item->incoming_id]]->amount += $item->all_price;
+            }
+
+        return $incomings;
+    }
+
+    public function get_invoice_stats(){
+        $data = array('hotel' => array(), 'transfer' => array(), 'flight' => array(), 'rundreise' => array(), 'total' => array(), 'other' => array());
+        foreach($data as &$item)
+            $item = array('paid' => 0, 'amount' => 0, 'status' => 0);
+
+        foreach($this->invoices as $invoice)
+        {
+            $type = substr($invoice->type, 0, strlen('flight')) == "flight" ? "flight" : $invoice->type;
+            $data[$type]['paid'] += $invoice->paid_amount;
+            $data[$type]['amount'] += $invoice->amount;
+            $data['total']['paid'] += $invoice->paid_amount;
+            $data['total']['amount'] += $invoice->amount;
+        }
+
+        foreach($data as &$type)
+            $type['status'] = $type['amount'] > $type['paid'] ? '-'.($type['amount'] - $type['paid']) : '+'.($type['paid'] - $type['amount']);
+
+        return $data;
+    }
+
+    public function get_person(){
+        $persons = $this->persons;
+        return $persons ? $persons[0]->name : "NO";
     }
 
 }

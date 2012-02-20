@@ -51,8 +51,9 @@
             </table>
         </div>
 
+        <? if ($formular->type != 'nurflug'): ?>
         <div class="block">
-            <div class="block-header">Reiseteilnehmer:</div>
+            <div class="block-header">Leistung:</div>
             <table class="liestung-table">
                 <? foreach ($formular->hotels_and_manuels as $ind => $item): ?>
                 <tr>
@@ -61,6 +62,7 @@
                 <? endforeach; ?>
             </table>
         </div>
+        <? endif; ?>
 
         <?if ($formular->flight_text != ""): ?>
         <div class="block">
@@ -94,7 +96,7 @@
                     <td class="paramname">MWST auf Prov 19%</td>
                     <td class="paramvalue"><?=$formular->price['mwst']?> &euro;</td>
                 </tr>
-            <? endif; ?>
+                <? endif; ?>
 
 
             <tr class="empty">

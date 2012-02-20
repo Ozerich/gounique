@@ -12,12 +12,14 @@ class IncomingPayment extends ActiveRecord\Model
     public function get_plain_type()
     {
         switch($this->type){
-            case 'card':
-                return 'Credit Card';
-            case 'bank':
-                return 'Bank Transfer';
-            case 'cash':
-                return 'Cash Money';
+            case 'uberweisung':
+                return 'Uberweisung';
+            case 'kreditkart':
+                return 'Kreditkart';
+            case 'lastschrift':
+                return 'Lastschrift';
+            case 'bar':
+                return 'Bar';
             default:
                 return 'Unknown';
         }

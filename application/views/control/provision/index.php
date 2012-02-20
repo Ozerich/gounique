@@ -2,8 +2,8 @@
     <div id="page-header">
         <a href="dashboard" class="home-link"><img src="img/header-logo.jpg"/></a>
         <ul class="page-path">
-            <li><a href="control">finanzen & controling</a></li>
-            <li><span>provision payments</span></li>
+            <li><a href="control">finance & controlling</a></li>
+            <li><span>Provisionszahlung</span></li>
         </ul>
     </div>
 </div>
@@ -17,32 +17,37 @@
 
     <div class="hotellist-top">
 
-        <div class="num-search">
+        <fieldset class="num-search">
+            <legend>Search by:</legend>
             <div class="param">
-                <label for="v_num">Search by Vorg-NR</label>
-                <input type="text" id="v_num"/>
+                <label for="v_num">Vorg-NR</label>
+                <input type="text" id="v_num" maxlength="6"/>
             </div>
             <div class="param">
-                <label for="r_num">Search by RG-NR</label>
-                <input type="text" id="r_num"/>
+                <label for="r_num">RG-NR</label>
+                <input type="text" id="r_num" maxlength="11"/>
             </div>
-        </div>
+        </fieldset>
 
-        <div class="date-search">
+        <fieldset class="date-search">
 
-            <label for="search-von">von</label>
-            <input type="text" maxlength="8" id="search-von"/>
-            <label for="search-bis">bis</label>
-            <input type="text" maxlength="8" id="search-bis"/>
+            <legend>Search Date</legend>
 
-            <select id="datesearch-type">
-                <option value="provision">Provision</option>
-            </select>
+            <div class="search-wr">
+                <label for="search-von">von</label>
+                <input type="text" maxlength="8" id="search-von"/>
+                <label for="search-bis">bis</label>
+                <input type="text" maxlength="8" id="search-bis"/>
+
+                <select id="datesearch-type">
+                                <option value="provision">Provision</option>
+                            </select>
+            </div>
 
             <input type="submit" class="search-button" id="datesearch-start"/>
             <br class="clear"/>
 
-        </div>
+        </fieldset>
 
         <div class="hotel-buttons">
             <button id="show-payments" style="display:none">Payments</button>
@@ -56,8 +61,12 @@
             <th class="r-num">AG-NR</th>
             <th class="ag-num">RG-NR</th>
             <th>Vorg-NR</th>
+            <th>Total</th>
+            <th>Provision %</th>
             <th>Betrag</th>
             <th>Faellig bis</th>
+            <th>Storno</th>
+            <th>Netto</th>
             <th>Status</th>
             <th>Payment date</th>
         </tr>

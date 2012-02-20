@@ -50,7 +50,7 @@
                 </tr>
             </table>
         </div>
-
+        <? if ($formular->type != 'nurflug'): ?>
         <div class="block">
             <h3>Leistung:</h3>
             <table class="liestung-table">
@@ -61,6 +61,7 @@
                 <? endforeach; ?>
             </table>
         </div>
+        <? endif; ?>
 
         <?if ($formular->flight_text != ""): ?>
         <div class="block">
@@ -76,8 +77,10 @@
     <div class="anzahlung-block">
         <? if ($formular->status == "rechnung"): ?>
         <? if ($formular->finalpayment_date): ?>
-            <p>Die Anzahlung beträgt EUR <?=$formular->price['anzahlung_value']?> und ist fällig am <?=$formular->prepayment_date ? $formular->prepayment_date->format('d.m.y') : ''?>.</p>
-            <p>Die Restzahlung beträgt EUR <?=$formular->price['restzahlung']?> und ist fällig am <?=$formular->finalpayment_date ? $formular->finalpayment_date->format('d.m.y') : ''?>.</p>
+            <p>Die Anzahlung beträgt EUR <?=$formular->price['anzahlung_value']?> und ist fällig
+                am <?=$formular->prepayment_date ? $formular->prepayment_date->format('d.m.y') : ''?>.</p>
+            <p>Die Restzahlung beträgt EUR <?=$formular->price['restzahlung']?> und ist fällig
+                am <?=$formular->finalpayment_date ? $formular->finalpayment_date->format('d.m.y') : ''?>.</p>
             <? else: ?>
             <p>Zahlung sofort nach Erhalt der Rechnung</p>
             <? endif; ?>
@@ -85,6 +88,7 @@
 
         <div class="bank-block">
             Bitte überweisen Sie den Rechnungsbetrag auf unser Geschäftskonto:<br>
+
             <div class="param"><b>Commerzbank AG</b></div>
             <div class="param"><b>Kto.: 420 131 500</b></div>
             <div class="param"><b>BLZ: 200 400 00</b></div>
@@ -112,7 +116,7 @@
                     <td class="paramname">MWST auf Prov 19%</td>
                     <td class="paramvalue"><?=$formular->price['mwst']?> &euro;</td>
                 </tr>
-            <? endif; ?>
+                <? endif; ?>
             <tr class="green">
                 <td class="paramname">Total Provision:</td>
                 <td class="paramvalue"><?=$formular->price['total_provision']?> &euro;</td>

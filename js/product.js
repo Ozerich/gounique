@@ -9,7 +9,7 @@ function GetBonusText(bonus_block) {
     else if (bonus_type == "earlybird_days")
         return period + "Booking before " + $(bonus_block).find('#days').val() + " days " + $(bonus_block).find('#percent').val() + "%";
     else if (bonus_type == "earlybird_date")
-        return period + "Booking till " + InputToTime($(bonus_block).find('#booking_till').val()) + " " + $(bonus_block).find('#discount2').val() + "%";
+        return period + "Booking till " + InputToTime($(bonus_block).find('.booking_till').val()) + " " + $(bonus_block).find('#discount2').val() + "%";
     else if (bonus_type == "turbo_bonus")
             return period + "Booking till " + InputToTime($(bonus_block).find('.booking_till_2').val()) + " " + $(bonus_block).find('#discount4').val() + "&euro;";
     else return "Unknown bonus";

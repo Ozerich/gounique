@@ -81,7 +81,7 @@
         <textarea class="flight-text"></textarea>
 
         <label for="flight-price">Flugpreis:</label>
-        <input type="text" maxlength="5" class="flight-price"/> &euro;
+        <input type="text" maxlength="8" class="flight-price"/> &euro;
 
         <div class="bottom-block">
 
@@ -97,7 +97,7 @@
         <textarea class="flight-text"></textarea>
 
         <label for="flight-price">Flugpreis:</label>
-        <input type="text" class="flight-price" maxlength="5"/> &euro;
+        <input type="text" class="flight-price" maxlength="8"/> &euro;
 
         <div class="bottom-block">
 
@@ -130,11 +130,11 @@
         <textarea id="flight-text" name="nurflug_flight"></textarea>
 
         <label for="flight-price">Flugpreis:</label>
-        <input type="text" class="flight-price" name="nurflug_flightprice" maxlength="5"/> &euro;
+        <input type="text" class="flight-price" name="nurflug_flightprice" maxlength="8"/> &euro;
 
         <div class="service-charge">
             <label for="servicecharge-amount">Service charge:</label>
-            <input type="text" maxlength="3" class="servicecharge" name="nurflug_servicecharge" id="servicecharge-amount"/> &euro;
+            <input type="text" maxlength="7" class="servicecharge" name="nurflug_servicecharge" id="servicecharge-amount"/> &euro;
             or <input type="text" maxlength="2" class="servicecharge-percent" id="servicecharge-percent"/> % <br/>
             <label for="total-amount">Total:</label>
             <input value="0" type="text" disabled id="total-amount"/> &euro;
@@ -158,12 +158,12 @@
 
     <div class="input" id="provision-wr">
         <label for="provision">Provision %:</label>
-        <input disabled type="text" id="provision" value="<?=$kunde->provision?>" maxlength="2" size="2"/>
+        <input disabled type="text" id="provision" value="<?=$kunde->provision?>" maxlength="4" size="4"/>
     </div>
 
     <div class="input" id="provision-wr">
         <label for="provision">Manuel Provision %:</label>
-        <input type="text" name="provision-manuel" maxlength="2" size="2"/>
+        <input type="text" name="provision-manuel" maxlength="4" size="4"/>
     </div>
     <? endif; ?>
 
@@ -414,7 +414,7 @@
     </div>
     <div class="input" id="flightprice-wr">
         <label for="flightprice">Preis of flight</label>
-        <input type="text" id="flightprice" name="flightprice" maxlength="5" size="5" value=""/>
+        <input type="text" id="flightprice" name="flightprice" maxlength="8" size="5" value=""/>
     </div>
 
     <br class="clear"/>

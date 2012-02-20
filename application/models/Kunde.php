@@ -21,29 +21,30 @@ class Kunde extends ActiveRecord\Model
         switch($this->type)
         {
             case 'agenturen':
-                $text = $this->name . "<br />" . $this->address . "<br/>" . $this->plz .
-                                " " . $this->ort;
+                $text = $this->name . "<br />" . $this->strasse . "<br/>" . $this->plz .
+                                " " . $this->ort . "<br/>" . $this->phone;
                 break;
 
             case 'stammkunden':
-                $text = $this->name . "<br />" . $this->address . "<br/>" . $this->plz .
-                                               " " . $this->ort;
-                break;
-
-            case 'incoming':
-                $text = $this->name . "<br />" . $this->address . "<br/>" . $this->plz .
+                $text = $this->name . "<br />" . $this->strasse . "<br/>" . $this->plz .
                                                " " . $this->ort . "<br/>" . $this->phone;
                 break;
 
-            case 'mitarbeiter':
-                $text = $this->name . "<br />" . $this->address . "<br/>" . $this->plz .
-                                               " " . $this->ort;
-                break;
+            default:
+                $text = "Unknown type";
         }
         
         return $text;
     }
 
+    public function get_changed_user(){
+        return User::find_by_id($this->changed_by);
+    }
+
+    public function get_provision(){
+        $level = ProvisionLevel::find_by_id($this->provision_level);
+        return $level ? $level->percent : 0;
+    }
 }
 
 ?>

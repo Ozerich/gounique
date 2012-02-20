@@ -232,7 +232,6 @@ Your Unique World Team";
         }
         else
         {
-
             $kunde = Kunde::find_by_id($kunde_id);
 
             if (!$kunde) {
@@ -241,24 +240,23 @@ Your Unique World Team";
             }
 
             if ($_POST) {
-
                 $type = $this->input->post('formular-type');
 
                 $provision = 0;
                 if ($type != 'nurflug')
-                    $provision = $this->input->post('provision-manuel') != '' ? $this->input->post('provision-manuel') :
+                    $provision = $this->input->post('provision-manuel') != '' ? str_replace(',','.',$this->input->post('provision-manuel')) :
                         $kunde->provision;
 
                 $formular = Formular::create(array(
 
-                        'v_num' => $type == 'nurflug' ? $this->input->post('nurflug_vnum') : $this->input->post('vnum'),
+                        'v_num' => strtoupper($type == 'nurflug' ? $this->input->post('nurflug_vnum') : $this->input->post('vnum')),
                         'kunde_id' => $this->input->post('kunde_id'),
                         'type' => $this->input->post('formular-type'),
                         'r_num' => 0,
                         'provision' => $provision,
 
                         'service_charge' => $type == 'nurflug' ? $this->input->post('nurflug_servicecharge') : 0,
-                        'flight_text' => $type == 'nurflug' ? $this->input->post('nurflug_flight') : $this->input->post('flight'),
+                        'flight_text' => strtoupper($type == 'nurflug' ? $this->input->post('nurflug_flight') : $this->input->post('flight')),
                         'flight_price' => $type == 'nurflug' ? $this->input->post('nurflug_flightprice') : $this->input->post('flightprice'),
                         'person_count' => $type == 'nurflug' ? $this->input->post('nurflug_personcount') : $this->input->post('personcount'),
 
@@ -312,6 +310,10 @@ Your Unique World Team";
                         ));
                     }
 
+                $formular->brutto = $formular->brutto_price;
+                $formular->provision_amount = $formular->brutto * $formular->provision / 100;
+                $formular->save();
+
                 redirect('reservierung/result/' . $formular->id);
             }
             else
@@ -331,12 +333,22 @@ Your Unique World Team";
             return false;
         }
         if ($_POST) {
+            $type = $this->input->post('formular-type');
 
-            $formular->provision = $this->input->post('provision-manuel') != '' ? $this->input->post('provision-manuel') :
-                $formular->kunde->provision;
-            $formular->flight_text = $this->input->post('flight-text');
-            $formular->flight_price = $this->input->post('flight-price');
-            $formular->person_count = $this->input->post('personcount');
+            $provision = 0;
+            if ($type != 'nurflug')
+                $provision = $this->input->post('provision-manuel') != '' ? str_replace(',','.',$this->input->post('provision-manuel')) :
+                    $formular->kunde->provision;
+
+            $formular->type = $this->input->post('formular-type');
+            $formular->provision = $provision;
+            $formular->service_charge = $type == 'nurflug' ? $this->input->post('nurflug_servicecharge') : 0;
+            $formular->flight_text = strtoupper($type == 'nurflug' ? $this->input->post('nurflug_flight') : $this->input->post('flight'));
+            $formular->flight_price = $type == 'nurflug' ? $this->input->post('nurflug_flightprice') : $this->input->post('flightprice');
+            $formular->person_count = $type == 'nurflug' ? $this->input->post('nurflug_personcount') : $this->input->post('personcount');
+
+            $formular->changed_by = $this->user->id;
+            $formular->changed_date = time_to_mysqldatetime(time());
 
             $formular->save();
 
@@ -436,6 +448,14 @@ Your Unique World Team";
                     $item = ($val['type'] == "manuel") ? FormularManuel::find_by_id($item_id) : FormularHotel::find_by_id($item_id);
                     $item->delete();
                 }
+
+            $formular->brutto = $formular->brutto_price;
+            $formular->provision_amount = $formular->brutto * $formular->provision / 100;
+            if ($formular->status == "rechnung") {
+                $formular->prepayment_amount = $formular->brutto * $formular->prepayment / 100;
+                $formular->finalpayment_amount = $formular->brutto - $formular->prepayment_amount;
+            }
+            $formular->save();
 
             redirect('reservierung/result/' . $formular->id);
         }
@@ -555,8 +575,7 @@ Your Unique World Team";
     }
 
 
-    public
-    function result($id = 0)
+    public function result($id = 0)
     {
         $formular = Formular::find_by_id($id);
 
@@ -590,14 +609,7 @@ Your Unique World Team";
                 }
 
             $formular->comment = $this->input->post("bigcomment");
-
-            $formular->departure_date = inputdate_to_mysqldate($this->input->post("departure_date"));
-            if ($formular->status == "rechnung") {
-                $formular->prepayment = $this->input->post("prepayment");
-                $formular->prepayment_date = inputdate_to_mysqldate($this->input->post("preprepayment_date"));
-                $formular->finalpayment_date = inputdate_to_mysqldate($this->input->post("finalpayment_date"));
-            }
-
+            $formular->departure_date = inputdate_to_mysqldate($this->input->post('departure_date'));
             $formular->save();
 
             $this->write_pdf($formular->id);
@@ -657,8 +669,7 @@ Your Unique World Team";
     }
 
 
-    public
-    function do_rechnung($id = 0)
+    public function do_rechnung($id = 0)
     {
         $formular = Formular::find_by_id($id);
 
@@ -667,20 +678,25 @@ Your Unique World Team";
             return false;
         }
 
+        $sofort = $this->input->post('sofort') != '';
 
-        $formular->prepayment = $this->input->post("prepayment");
-        $formular->prepayment_date = inputdate_to_mysqldate($this->input->post("preprepayment_date"));
-        $formular->finalpayment_date = inputdate_to_mysqldate($this->input->post("finalpayment_date"));
         $formular->departure_date = inputdate_to_mysqldate($this->input->post("departure_date"));
-
+        $formular->provision_date = $formular->departure_date->add(new DateInterval('P5D'));
+        $formular->finalpayment_date = inputdate_to_mysqldate($this->input->post("finalpayment_date"));
+        $formular->prepayment = $sofort ? 0 : $this->input->post("prepayment");
+        $formular->prepayment_date = $sofort ? null : inputdate_to_mysqldate($this->input->post("preprepayment_date"));
+        $formular->prepayment_amount = $sofort ? 0 : $formular->brutto * $formular->prepayment / 100;
+        $formular->finalpayment_amount = $formular->brutto - $formular->prepayment_amount;
+        $formular->rechnung_date = time_to_mysqldate(time());
+        $formular->changed_date = time_to_mysqldate(time());
+        $formular->changed_by = $this->user->id;
 
         $next_rnum = Config::find_by_param('next_rnum');
         $formular->status = "rechnung";
 
-        $formular->r_num = "201100/" . $next_rnum->value++;
+        $formular->r_num = "201100/" . ($next_rnum->value < 10 ? "0".$next_rnum->value : $next_rnum->value);
+        $next_rnum->value = $next_rnum->value + 1;
         $next_rnum->save();
-
-        $formular->rechnung_date = time_to_mysqldate(time());
 
         $formular->save();
         $this->write_to_pdf($formular->id, 3);
@@ -734,7 +750,7 @@ Your Unique World Team";
                 'kunde_id' => $formular->kunde_id,
                 'status' => 'rechnung',
                 'is_storno' => true,
-                'r_num' => $formular->r_num.'S',
+                'r_num' => $formular->r_num . 'S',
                 'v_num' => $formular->v_num,
                 'type' => $formular->type,
                 'flight_text' => $formular->flight_text,
