@@ -15,7 +15,9 @@ class IncomingPayment extends ActiveRecord\Model
             case 'uberweisung':
                 return 'Uberweisung';
             case 'kreditkart':
-                return 'Kreditkart';
+                return 'KK über UW';
+            case 'kreditkart_aer':
+                return 'KK über AER';
             case 'lastschrift':
                 return 'Lastschrift';
             case 'bar':

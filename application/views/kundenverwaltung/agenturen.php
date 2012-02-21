@@ -11,7 +11,7 @@
 <div id="agenturen-page" class="content kundenverwaltung-rasdel">
 
     <ul class="tabs" id="agenturen-tabs">
-        <li class="active"><span>Agenturendaten</span></li>
+        <li class="active"><span>Agenturedaten</span></li>
         <li><a href="stammkunden">Stammkunden</a></li>
         <li><a href="incoming">Incoming</a></li>
         <li><a href="ketten">Ketten</a></li>
@@ -22,6 +22,7 @@
     <table class="product-list" id="agenturen-list">
         <thead>
         <tr>
+            <th>№</th>
             <th class="ag-num">AG Nummer</th>
             <th class="ag-name">Name</th>
             <th class="ag-provision">Provision</th>

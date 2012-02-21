@@ -6,7 +6,7 @@ foreach ($formulars as $ind => $formular):
     $total_restzahlung += $formular->finalpayment_amount;
     ?>
 <tr>
-    <td class="num"><?=($ind + 1)?></td>
+    <td class="rg-num"><a href="reservierung/final/<?=$formular->id?>"><?=$formular->r_num?></a></td>
     <td class="ag-num">
         <? if ($formular->kunde): ?>
         <a href="kundenverwaltung/historie/<?=$formular->kunde->id?>"><?=$formular->kunde->k_num?></a>
@@ -14,19 +14,19 @@ foreach ($formulars as $ind => $formular):
         -
         <? endif; ?>
     </td>
-    <td class="rg-num"><a href="reservierung/final/<?=$formular->id?>"><?=$formular->r_num?></a></td>
     <td><?=$formular->v_num?></td>
     <td class="reisedatum"><?=$formular->rechnung_date->format('d.M.Y');?></td>
     <td class="reisedatum"><?=$formular->departure_date->format('d.M.Y')?></td>
-    <td class="total"><?=$formular->brutto?></td>
+    <td class="total"><?=number_format($formular->brutto, 2, ',', '.')?></td>
     <? if ($formular->is_sofort): ?>
-    <td class="anzahlung" colspan="3">SOFORT</td>
+    <td class="anzahlung sofort" colspan="3">SOFORT</td>
     <? else: ?>
-    <td class="anzahlung"><?=$formular->prepayment_amount?></td>
+    <td class="anzahlung"><?=number_format($formular->prepayment_amount,2, ',', '.')?></td>
     <td class="anzahlung"><?=$formular->prepayment_date ? $formular->prepayment_date->format('d.M.y') : ''?></td>
     <td class="anzahlung"><?=$formular->anzahlung_status?></td>
     <? endif; ?>
-    <td class="restzahlung"><?=$formular->finalpayment_amount?></td>
+
+    <td class="restzahlung"><?=number_format($formular->finalpayment_amount,2, ',', '.')?></td>
     <td class="restzahlung"><?=$formular->finalpayment_date ? $formular->finalpayment_date->format('d.M.y') : ''?></td>
     <td class="restzahlung"><?=$formular->restzahlung_status?></td>
 
@@ -40,10 +40,10 @@ foreach ($formulars as $ind => $formular):
 </tr>
 <? endforeach; ?>
 <tr class="total">
-    <td colspan="6">&nbsp;</td>
-    <td><?=$total_brutto?></td>
-    <td><?=$total_anzahlung?></td>
+    <td colspan="5">&nbsp;</td>
+    <td><?=number_format($total_brutto,2)?></td>
+    <td><?=number_format($total_anzahlung,2)?></td>
     <td colspan="2">&nbsp;</td>
-    <td><?=$total_restzahlung?></td>
+    <td><?=number_format($total_restzahlung,2)?></td>
     <td colspan="10">&nbsp;</td>
 </tr>

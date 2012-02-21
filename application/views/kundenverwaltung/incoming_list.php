@@ -4,7 +4,7 @@ if (!$incomings): ?>
     <td colspan="10">No Incomings</td>
 </tr>
 <? else: ?>
-<? foreach ($incomings as $incoming): ?>
+<? foreach ($incomings as $ind=>$incoming): ?>
     <tr>
         <td><?=$incoming->id?></td>
         <td><?=$incoming->name?></td>

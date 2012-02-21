@@ -3,8 +3,9 @@
     <td colspan="10">No Stammkunden</td>
 </tr>
 <? else: ?>
-<? foreach ($stammkunden as $kunde): ?>
+<? foreach ($stammkunden as $ind=>$kunde): ?>
     <tr>
+        <td><?=($ind + 1)?></td>
         <td><?=$kunde->k_num?></td>
         <td><?=$kunde->name?></td>
         <td><?=$kunde->changed_user ? $kunde->changed_user->fullname : '-'?> <?=$kunde->changed_date ? $kunde->changed_date->format('d.M.Y') : '-'?></td>

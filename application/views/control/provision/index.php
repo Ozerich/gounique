@@ -40,8 +40,13 @@
                 <input type="text" maxlength="8" id="search-bis"/>
 
                 <select id="datesearch-type">
-                                <option value="provision">Provision</option>
-                            </select>
+                    <option value="provision">Provision</option>
+                </select>
+
+                <div class="agenturen-wr">
+                    <label for="ag_num">AG-NR:</label>
+                    <input type="text" id="ag_num" maxlength="30" size="30"/>
+                </div>
             </div>
 
             <input type="submit" class="search-button" id="datesearch-start"/>
@@ -53,13 +58,13 @@
             <button id="show-payments" style="display:none">Payments</button>
         </div>
         <br class="clear"/>
+        <a id="clear_filter" href="#">Clear filter</a>
     </div>
     <table class="product-list" id="controlpayments-list">
         <thead>
         <tr>
-            <th>№</th>
-            <th class="r-num">AG-NR</th>
             <th class="ag-num">RG-NR</th>
+            <th class="r-num">AG-NR</th>
             <th>Vorg-NR</th>
             <th>Total</th>
             <th>Provision %</th>

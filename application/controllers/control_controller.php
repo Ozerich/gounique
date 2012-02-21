@@ -21,7 +21,7 @@ class Control_Controller extends MY_Controller
     {
         $this->view_data['page_title'] = 'Incoming Payments';
         $this->view_data['invoice_list'] = $this->load->view('control/incoming/invoice_list.php',
-            array('formulars' => Formular::find_all_by_status('rechnung')), true);
+            array('formulars' => $this->search_formulars('incoming', false)), true);
         $this->content_view = 'control/incoming/index';
     }
 
@@ -103,7 +103,7 @@ class Control_Controller extends MY_Controller
         $this->view_data['page_title'] = 'Provision Payments';
 
         $formulars = array();
-        foreach (Formular::find_all_by_status('rechnung') as $formular)
+        foreach ($this->search_formulars('provision', false) as $formular)
             if ($formular->kunde && $formular->kunde->type == "agenturen")
                 $formulars[] = $formular;
 
@@ -128,7 +128,7 @@ class Control_Controller extends MY_Controller
         exit();
     }
 
-    public function search_formulars($type = 'incoming')
+    public function search_formulars($type = 'incoming', $output = true)
     {
 
         $search_field = $this->input->post('search_field');
@@ -137,10 +137,13 @@ class Control_Controller extends MY_Controller
         $von = inputdate_to_mysqldate($this->input->post('von'));
         $bis = inputdate_to_mysqldate($this->input->post('bis'));
 
+        $kunde = $this->input->post('ag_num') ? Kunde::find_by_k_num($this->input->post('ag_num')) : 0;
+        $kunde_query = $kunde ? ' AND kunde_id="'.$kunde->id.'"' : '';
         $formulars = array();
 
         if ($search_string)
-            $formulars = Formular::find('all', array('conditions' => array('status = "rechnung" AND ' . $search_field . ' like "%' . $search_string . '%"')));
+            $formulars = Formular::find('all', array('conditions' =>
+            array('status = "rechnung"'.$kunde_query.' AND ' . $search_field . ' like "%' . $search_string . '%"')));
         else if ($von && $bis) {
             $search_map = array(
                 'buchung' => 'created_date',
@@ -154,11 +157,15 @@ class Control_Controller extends MY_Controller
 
             if (isset($search_map[$search_field])) {
                 $search_field = $search_map[$search_field];
-                $formulars = Formular::find('all', array('conditions' => array('status = "rechnung" AND ' . $search_field . ' >= ? AND ' . $search_field . ' <= ?', $von, $bis)));
+                $formulars = Formular::find('all', array('conditions' =>
+                array('status = "rechnung"'.$kunde_query.' AND ' . $search_field . ' >= ? AND ' . $search_field . ' <= ?', $von, $bis)));
             }
         }
         else
-            $formulars = Formular::find_all_by_status('rechnung');
+            $formulars = Formular::all(array(
+                    'conditions' => array('status = "rechnung"'.$kunde_query),
+                    'order' => 'r_num')
+            );
 
         if ($type == 'provision') {
             $result = array();
@@ -169,9 +176,12 @@ class Control_Controller extends MY_Controller
         else
             $result = $formulars;
 
-
-        echo $this->load->view('control/' . $type . '/invoice_list.php', array('formulars' => $result), true);
-        exit();
+        if ($output) {
+            echo $this->load->view('control/' . $type . '/invoice_list.php', array('formulars' => $result), true);
+            exit();
+        }
+        else
+            return $result;
     }
 
     public function add_payment($type = 'incoming', $formular_id = 0, $invoice_id = 0)

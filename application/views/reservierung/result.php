@@ -51,6 +51,11 @@
             </div>
             <? endif; ?>
 
+            <div class="param">
+                        <span class="param-name">Sachbearbeiter:</span>
+                        <span class="param-value"><?=$formular->sachbearbeiter->fullname?></span>
+                    </div>
+
         </div>
         <br class="clear"/>
 
@@ -184,6 +189,13 @@
             <input type="text" name="departure_date" size="8" maxlength="8"
                    value="<?=$formular->departure_date ? $formular->departure_date->format('m/d/Y') : ''?>"
                    id="departure_date"/>
+        </div>
+
+        <div class="param-block">
+            <label for="arrival_date">Rückreisedatum</label>
+            <input type="text" name="arrival_date" size="8" maxlength="8"
+                   value="<?=$formular->arrival_date ? $formular->arrival_date->format('m/d/Y') : ''?>"
+                   id="arrival_date"/>
         </div>
 
 

@@ -365,6 +365,7 @@ ul.tabs li.active{
 
     height: 40px;
     line-height: 40px;
+    text-transform: capitalize;
 }
 
 .nav a.center{margin-left: 300px;}
@@ -418,6 +419,7 @@ ul.tabs li.active{
     height: 40px;
     line-height: 40px;
     margin-bottom: 5px;
+    text-transform: capitalize;
 }
 
 #page-header .page-path a:hover{
@@ -945,7 +947,7 @@ ul.tabs li.active{
 ----------------------------------------------------------------------------------------------*/
 
 #createstart-page{
-    width: 270px;
+    width: 400px;
 }
 
 #createstart-page #v_num, #createstart-page #kunde_name{
@@ -1928,6 +1930,7 @@ ul.tabs li.active{
     padding: 5px 5px;
     text-align: center;
 }
+
 .product-list tr{
     border-bottom: 1px solid #aaa;
 }
@@ -1935,6 +1938,10 @@ ul.tabs li.active{
     text-align: center;
     padding: 5px 5px;
     font-size: 12px;
+}
+#controlpayments-list td,#controlpayments-list th{
+    font-size: 11px;
+    padding: 5px 5px;
 }
 
 .product-list td.checkbox,.product-list td.checkbox:hover{
@@ -2217,9 +2224,15 @@ ul.tabs li.active{
     float: left;
 }
 
+.control-page .date-search .search-wr{
+    margin-top:16px;
+}
+
 .control-page .date-search .search-wr, .control-page .date-search .agenturen-wr{
     display: inline-block;
 }
+
+.control-page .date-search .agenturen-wr input{width:165px !important;}
 
 .control-page .search-header{
     display: block;
@@ -2257,16 +2270,20 @@ ul.tabs li.active{
 }
 
 
-#controlpayments-list .anzahlung{background-color: #adf0ff;}
-#controlpayments-list .total{background-color: #c6ffd6;}
-#controlpayments-list .restzahlung{background-color: #fdff95;}
-#controlpayments-list .versand{background-color: #c6ffd6;}
-#controlpayments-list .storno{background-color: #ffc1c3;}
-#controlpayments-list .provisionstatus{background-color: #a3ffa7;}
+#controlpayments-list .anzahlung{background-color: #d3f3ff;}
+#controlpayments-list .total{background-color: #e8e8e8;}
+#controlpayments-list .restzahlung{background-color: #e8f5f7;}
+#controlpayments-list .versand{background-color: #dbffe7;}
+#controlpayments-list .storno{background-color: #ffdfe1;}
+#controlpayments-list .provisionstatus{background-color: #dbffe7;}
 
 #controlpayments-list tr:hover{
     cursor: pointer;
 }
+
+#controlpayments-list td{text-align: right;}
+
+#controlpayments-list td.anzahlung.sofort{text-align: center}
 
 #controlpayments-list tr:nth-child(even){background-color: #effcff;}
 #controlpayments-list tr:nth-child(even):hover td{background-color: #e8f5f7 !important;}

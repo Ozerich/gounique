@@ -1,5 +1,6 @@
-<? foreach ($agencies as $agency): ?>
+<? foreach ($agencies as $ind=>$agency): ?>
 <tr>
+    <td><?=($ind + 1)?></td>
     <td><?=$agency->k_num?></td>
     <td><?=$agency->name?></td>
     <td><?=$agency->provision?></td>

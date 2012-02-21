@@ -5,7 +5,7 @@ foreach ($formulars as $ind => $formular):
     $total_provision += $formular->provision_amount;
     ?>
 <tr>
-    <td><?=($ind + 1)?></td>
+    <td><a href="reservierung/final/<?=$formular->id?>"><?=$formular->r_num?></a></td>
     <td class="ag-num">
         <? if ($formular->kunde): ?>
         <a href="kundenverwaltung/historie/<?=$formular->kunde->id?>"><?=$formular->kunde->k_num?></a>
@@ -13,11 +13,10 @@ foreach ($formulars as $ind => $formular):
         -
         <? endif; ?>
     </td>
-    <td><a href="reservierung/final/<?=$formular->id?>"><?=$formular->r_num?></a></td>
     <td><?=$formular->v_num?></td>
-    <td><?=$formular->brutto?></td>
-    <td><?=$formular->provision?></td>
-    <td><?=$formular->type == 'nurflug' ? 'nurflug' : $formular->provision_amount?></td>
+    <td><?=number_format($formular->brutto,2, ',', '.')?></td>
+    <td><?=number_format($formular->provision,2, ',', '.')?></td>
+    <td><?=$formular->type == 'nurflug' ? 'nurflug' : number_format($formular->provision_amount,2, ',', '.')?></td>
     <td><?=$formular->provision_date ? $formular->provision_date->format('d.M.Y') : ''?></td>
     <td class="storno"><?=$formular->status == 'storno' ? 'STORNO' : ''?></td>
     <td <?=$formular->payment_netto ? 'class="checkbox"' : ''?>>&nbsp;</td>
@@ -27,9 +26,9 @@ foreach ($formulars as $ind => $formular):
 </tr>
 <? endforeach; ?>
 <tr class="total">
-    <td colspan="4">&nbsp;</td>
-    <td><?=$total_brutto?></td>
+    <td colspan="3">&nbsp;</td>
+    <td><?=number_format($total_brutto,2)?></td>
     <td>&nbsp;</td>
-    <td><?=$total_provision?></td>
+    <td><?=number_format($total_provision,2)?></td>
     <td colspan="10">&nbsp;</td>
 </tr>

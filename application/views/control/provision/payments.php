@@ -2,6 +2,26 @@
     <input type="hidden" id="payments_formular_id" value="<?=$formular->id?>"/>
     <a href="#" class="closepopup-button">Close</a>
     <h3>Provision overview for <span class="rnum"><?=$formular->r_num?></span></h3>
+    <div class="preview">
+            <div class="param">
+                <span class="param-name">AG-Num:</span>
+                <span class="param-value"><?=$formular->kunde->k_num?></span>
+            </div>
+            <div class="param">
+                <span class="param-name">VG-Num:</span>
+                <span class="param-value"><?=$formular->v_num?></span>
+            </div>
+            <div class="param">
+                <span class="param-name">Person:</span>
+                <span class="param-value"><?=$formular->person?></span>
+            </div>
+            <div class="param">
+                <span class="param-name">Betrag:</span>
+                <span class="param-value"><?=number_format($formular->brutto, 2, ',', '.')?> &euro;</span>
+            </div>
+            <br class="clear"/>
+        </div>
+
    <div class="payment-content">
         <?=$payments_list?>
     </div>

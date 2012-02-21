@@ -18,7 +18,7 @@
         </div>
         <div class="param">
             <span class="param-name">Betrag:</span>
-            <span class="param-value"><?=$formular->brutto?> &euro;</span>
+            <span class="param-value"><?=number_format($formular->brutto, 2, ',', '.')?> &euro;</span>
         </div>
         <br class="clear"/>
     </div>
@@ -42,8 +42,8 @@
                 <label for="payment-type">Payment type:</label>
                 <select id="payment-type">
                     <option value="uberweisung">Uberweisung</option>
-                    <option value="kreditkart">Kreditkart by UW</option>
-                    <option value="kreditkart_aer">Kreditkart by AER</option>
+                    <option value="kreditkart">KK über UW</option>
+                    <option value="kreditkart_aer">KK über AER</option>
                     <option value="lastschrift">Lastschrift</option>
                     <option value="bar">Bar</option>
                 </select>

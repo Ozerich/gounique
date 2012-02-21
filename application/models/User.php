@@ -3,6 +3,14 @@
 class User extends ActiveRecord\Model
 {
 
+    public static function generate_password($password)
+    {
+        $salt = bin2hex(mcrypt_create_iv(32, MCRYPT_RAND));
+        $hash = hash("sha256", $salt . $password);
+
+        return $salt . $hash;
+    }
+
     public function set_password($plain_text)
     {
         $this->hashed_password = $this->hash_password($plain_text);
@@ -26,16 +34,15 @@ class User extends ActiveRecord\Model
         return $password_hash == $hash;
     }
 
-    public static function validate_login($email, $password)
+    public static function validate_login($email, $password, $user_id)
     {
         $user = User::find_by_email($email);
 
-        if($user && $user->validate_password($password))
-        {
+        if ($user && $user->validate_password($password) && $user->id == $user_id) {
             User::login($user->id);
             return $user;
         }
-      else
+        else
             return FALSE;
     }
 
@@ -53,12 +60,12 @@ class User extends ActiveRecord\Model
 
     public function get_fullname()
     {
-        return $this->name." ".$this->surname;
+        return $this->name . " " . $this->surname;
     }
 
     public function get_initials()
     {
-        return $this->name[0].$this->surname[0];
+        return $this->name[0] . $this->surname[0];
     }
 }
 

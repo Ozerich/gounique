@@ -2,7 +2,7 @@
     <div id="provision-block" class="paymentsinfo-block">
         <div class="param">
             <span class="param-name">Provision datum: </span>
-            <span><?=$formular->provision_date->format('d.M.Y')?></span>
+            <span><?=$formular->provision_date ? $formular->provision_date->format('d.M.Y'): ''?></span>
         </div>
         <div class="param">
             <span class="param-name">Provision %: </span>
@@ -10,7 +10,7 @@
         </div>
         <div class="param">
             <span class="param-name">Provision &euro;: </span>
-            <span><?=$formular->provision_amount?></span>
+            <span><?=number_format($formular->provision_amount, 2, ',', '.')?></span>
         </div>
         <div class="param">
             <span class="param-name">Provision Status: </span>
@@ -48,20 +48,20 @@
     <tr>
         <input type="hidden" class="payment_id" value="<?=$payment->id?>"/>
         <td><?=$payment->payment_date->format('d.M.Y');?></td>
-        <td><?=$payment->amount?></td>
-        <td><?=$diff?></td>
+        <td><?=number_format($payment->amount, 2, ',', '.')?></td>
+        <td><?=number_format($diff, 2, ',', '.')?></td>
         <td><?=$payment->remark?></td>
         <td>
-            <? if($payment->added_by != 0): ?>
+            <? if ($payment->added_by != 0): ?>
             <a href="#" class="delete-icon delete-payment"></a>
             <? endif; ?>
-    </td>
+        </td>
     </tr>
         <? endforeach; ?>
     <tr>
         <td>&nbsp;</td>
-        <td class="total-amount"><?=$total?> &euro;</td>
-        <td class="total-amount"><?=$diff?> &euro;</td>
+        <td class="total-amount"><?=number_format($total, 2, ',', '.')?> &euro;</td>
+        <td class="total-amount"><?=number_format($diff, 2, ',', '.')?> &euro;</td>
         <td>&nbsp;</td>
         <td>&nbsp;</td>
     </tr>

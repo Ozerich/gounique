@@ -21,13 +21,18 @@
                 </div>
 
                 <div class="field">
+                    <label for="user_id">User ID</label>
+                    <input type="text" name="user_id" id="user_id" tabindex="2"/>
+                </div>
+
+                <div class="field">
                     <label for="password">Password
                     </label>
-                    <input type="password" name="password" value="" id="password" tabindex="2"/>
+                    <input type="password" name="password" value="" id="password" tabindex="3"/>
                 </div>
             </div>
             <div class="login_actions">
-                <button type="submit" name="login-submit" class="btn btn-black" tabindex="3">Login</button>
+                <button type="submit" name="login-submit" class="btn btn-black" tabindex="4">Login</button>
             </div>
         </form>
     </div>

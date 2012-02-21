@@ -290,7 +290,7 @@
                     <label class="param-name">Incoming</label>
                     <select name="incoming">
                         <option value="0">No Incoming</option>
-                        <? foreach (Kunde::find_all_by_type('incoming') as $incoming): ?>
+                        <? foreach (Incoming::all() as $incoming): ?>
                         <option value="<?=$incoming->id?>"><?=$incoming->name?></option>
                         <? endforeach; ?>
                     </select>
@@ -365,7 +365,7 @@
                     <label class="param-name">Incoming</label>
                     <select name="manuel_incoming">
                         <option value="0">No Incoming</option>
-                        <? foreach (Kunde::find_all_by_type('incoming') as $incoming): ?>
+                        <? foreach (Incoming::all() as $incoming): ?>
                         <option value="<?=$incoming->id?>"><?=$incoming->name?></option>
                         <? endforeach; ?>
                     </select>
@@ -394,7 +394,7 @@
                     <label class="param-name">Incoming</label>
                     <select name="manuel_incoming">
                         <option value="0">No Incoming</option>
-                        <? foreach (Kunde::find_all_by_type('incoming') as $incoming): ?>
+                        <? foreach (Incoming::all() as $incoming): ?>
                         <option value="<?=$incoming->id?>"><?=$incoming->name?></option>
                         <? endforeach; ?>
                     </select>
@@ -513,7 +513,7 @@
                 <label class="param-name">Incoming</label>
                 <select name="incoming[<?=($ind + 1)?>]">
                     <option value="0">No Incoming</option>
-                    <? foreach (Kunde::find_all_by_type('incoming') as $incoming): ?>
+                    <? foreach (Incoming::all() as $incoming): ?>
                     <option  <?=$hotel->incoming_id == $incoming->id ? "selected" : ''?>
                         value="<?=$incoming->id?>"><?=$incoming->name?></option>
                     <? endforeach; ?>
@@ -586,7 +586,7 @@
                 <label class="param-name">Incoming</label>
                 <select name="manuel_incoming[<?=($ind + 1)?>]">
                     <option value="0">No Incoming</option>
-                    <? foreach (Kunde::find_all_by_type('incoming') as $incoming): ?>
+                    <? foreach (Incoming::all() as $incoming): ?>
                     <option  <?=$manuel->incoming_id == $incoming->id ? "selected" : ''?>
                         value="<?=$incoming->id?>"><?=$incoming->name?></option>
                     <? endforeach; ?>
@@ -621,7 +621,7 @@
                 <label class="param-name">Incoming</label>
                 <select name="manuel_incoming[<?=($ind + 1)?>]">
                     <option value="0">No Incoming</option>
-                    <? foreach (Kunde::find_all_by_type('incoming') as $incoming): ?>
+                    <? foreach (Incoming::all() as $incoming): ?>
                     <option  <?=$manuel->incoming_id == $incoming->id ? "selected" : ''?>
                         value="<?=$incoming->id?>"><?=$incoming->name?></option>
                     <? endforeach; ?>

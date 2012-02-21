@@ -30,8 +30,8 @@
                     <div class="param sex-param">
                         <label for="sex">Male:</label>
                         <select id="sex" name="sex">
-                            <option value="herr" <?=$kette->sex == "herr" ? "selected" : ""?>>Herr</option>
-                            <option value="frau" <?=$kette->sex == "frau" ? "selected" : ""?>>Frau</option>
+                            <option value="herr" <?=$kette->kontakt_sex == "herr" ? "selected" : ""?>>Herr</option>
+                            <option value="frau" <?=$kette->kontakt_sex == "frau" ? "selected" : ""?>>Frau</option>
                         </select>
                     </div>
 
@@ -70,7 +70,7 @@
 
                     <div class="param">
                         <label for="strasse">Strasse</label>
-                        <input type="text" id="strasse" name="strasse" maxlength="60"
+                        <input type="text" id="strasse" name="strasse" maxlength="200"
                                value="<?=$kette->kontakt_strasse?>"/>
                     </div>
                 </div>

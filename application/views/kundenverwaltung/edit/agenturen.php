@@ -135,7 +135,7 @@
 
             <div class="param">
                 <label for="strasse">Strasse</label>
-                <input type="text" id="strasse" name="strasse" value="<?=$agency->strasse?>" maxlength="60"/>
+                <input type="text" id="strasse" name="strasse" value="<?=$agency->strasse?>" maxlength="200"/>
             </div>
         </div>
 

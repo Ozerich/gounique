@@ -72,7 +72,7 @@
 
                     <div class="param">
                         <label for="strasse">Strasse</label>
-                        <input type="text" id="strasse" name="strasse" maxlength="60"
+                        <input type="text" id="strasse" name="strasse" maxlength="200"
                                value="<?=$incoming->kontakt_strasse?>"/>
                     </div>
                 </div>

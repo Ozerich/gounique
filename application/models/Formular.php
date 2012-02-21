@@ -182,7 +182,7 @@ class Formular extends ActiveRecord\Model
         return FormularStorno::find_by_formular_id($this->id);
     }
 
-    public function get_arrival_date()
+    public function count_arrival_date()
     {
         $hotels = Formular::get_hotels_and_manuels();
 
@@ -243,7 +243,7 @@ class Formular extends ActiveRecord\Model
         foreach ($this->payments as $payment)
             $anzahlung -= $payment->amount;
 
-        return ($anzahlung <= 0) ? "OK" : "-" . $anzahlung;
+        return ($anzahlung <= 0) ? "OK" : "-" . number_format($anzahlung,2, ',', '.');
     }
 
     public function get_restzahlung_status()
@@ -264,7 +264,7 @@ class Formular extends ActiveRecord\Model
             }
             $restzahlung -= $payment->amount;
         }
-        return ($restzahlung <= 0) ? "OK" : "-" . $restzahlung;
+        return ($restzahlung <= 0) ? "OK" : "-" . number_format($restzahlung,2, ',', '.');
     }
 
     public function get_last_payment()
@@ -298,7 +298,7 @@ class Formular extends ActiveRecord\Model
         $total = $this->get_paid_amount();
 
         if ($total < $this->brutto)
-            return "-" . ($this->brutto - $total);
+            return "-" . number_format($this->brutto - $total,2, ',', '.');
         else
             return 'Freigabe';
     }
@@ -314,7 +314,7 @@ class Formular extends ActiveRecord\Model
     {
         $total = $this->get_provisionpaid_amount();
 
-        return $total >= $this->provision_amount ? 'OK' : '-' . ($this->provision_amount - $total);
+        return $total >= $this->provision_amount ? 'OK' : '-' . number_format($this->provision_amount - $total,2, ',', '.');
     }
 
     public function get_original()

@@ -85,9 +85,46 @@ class Dashboard_Controller extends MY_Controller
         parent::__construct();
 
         if (!$this->user)
-            redirect('login');
 
-      //  $this->convert();
+
+/*
+        foreach (Formular::all() as $formular) {
+            $formular->brutto = $formular->brutto_price;
+
+            if ($formular->prepayment) {
+                $formular->prepayment_amount = $formular->brutto * $formular->prepayment / 100;
+                if (!$formular->prepayment_date)
+                    $formular->prepayment_date = $formular->departure_date->add(new DateInterval('P7D'));
+            }
+            else {
+                $formular->prepayment_amount = 0;
+                $formular->prepayment_date = null;
+            }
+
+            $formular->finalpayment_amount = $formular->brutto - $formular->prepayment_amount;
+
+            if ($formular->provision) {
+                $formular->provision_amount = $formular->brutto * $formular->provision / 100;
+                $formular->provision_amount *= 1.19;
+            }
+            else
+            {
+                $formular->provision_amount = 0;
+                $formular->provision_date = null;
+            }
+
+            if ($formular->departure_date) {
+                if (!$formular->finalpayment_date)
+                    $formular->finalpayment_date = $formular->departure_date->sub(new DateInterval('P35D'));
+
+                if ($formular->finalpayment_date <= $formular->departure_date->add(new DateInterval('P3D')))
+                    $formular->finalpayment_date = $formular->departure_date->add(new DateInterval('P3D'));
+            }
+
+            $formular->save();
+        }*/
+
+        //  $this->convert();
     }
 
     public function index()

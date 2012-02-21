@@ -44,6 +44,11 @@
             </div>
             <? endif; ?>
 
+            <div class="param">
+                        <span class="param-name">Sachbearbeiter:</span>
+                        <span class="param-value"><?=$formular->sachbearbeiter->fullname?></span>
+                    </div>
+
         </div>
         <br class="clear"/>
 

@@ -74,7 +74,7 @@ $route['provisionierung/(:num)'] = 'kundenverwaltung_controller/provisionierung/
 $route['kundenverwaltung/(:any)'] = 'kundenverwaltung_controller/$1';
 
 
-$route['reservierung'] = 'reservierung_controller/create';
+$route['reservierung'] = 'reservierung_controller';
 $route['reservierung/final/(:num)'] = 'reservierung_controller/final_/$1';
 $route['reservierung/(:any)'] = 'reservierung_controller/$1';
 

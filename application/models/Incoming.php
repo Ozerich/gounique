@@ -6,8 +6,8 @@ class Incoming extends ActiveRecord\Model
 
     public function get_plain_text()
     {
-        return $this->name . "<br />" . $this->address . "<br/>" . $this->plz .
-            " " . $this->ort . "<br/>" . $this->phone;
+        return $this->name . "<br />" . $this->kontakt_strasse . "<br/>" . $this->kontakt_plz .
+            " " . $this->kontakt_ort . "<br/>" . $this->kontakt_phone;
     }
 
     public function get_invoices()

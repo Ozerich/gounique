@@ -46,7 +46,14 @@
                     <option value="rechnung">Rechnungsdatum</option>
                     <option value="versand">Versanddatum</option>
                 </select>
+
+                <div class="agenturen-wr">
+                    <label for="ag_num">AG-NR:</label>
+                    <input type="text" id="ag_num" maxlength="5" size="5"/>
+                </div>
+
             </div>
+
 
             <input type="submit" class="search-button" id="datesearch-start"/>
             <br class="clear"/>
@@ -63,7 +70,6 @@
     <table class="product-list" id="controlpayments-list">
         <thead>
         <tr>
-            <th>&nbsp;</th>
             <th colspan="6">&nbsp;</th>
             <th colspan="3">Anzahlung</th>
             <th colspan="3">Restzahlung</th>
@@ -72,11 +78,10 @@
             <th colspan="3">Versand</th>
         </tr>
         <tr>
-            <th class="num">№</th>
-            <th class="ag-num">AG-NR</th>
             <th class="rg-num">RG-NR</th>
+            <th class="ag-num">AG-NR</th>
             <th>Vorg-NR</th>
-            <th>Rechnungdatum</th>
+            <th>RG-Datum</th>
             <th>Abreise</th>
             <th>Total</th>
             <th>Betrag</th>

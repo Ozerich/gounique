@@ -147,7 +147,7 @@ function UpdateInvoiceList(invoice_block) {
 }
 
 function BindSelectLineEvent() {
-    $('#controlpayments-list tbody tr').click(function () {
+    $('#controlpayments-list tbody tr').not('.total').click(function () {
         if ($(this).hasClass('current'))
             $('#show-payments').click();
         else {
@@ -157,7 +157,7 @@ function BindSelectLineEvent() {
         }
     });
 
-    $('#invoice-list tbody tr').click(function () {
+    $('#invoice-list tbody tr').not('.total').click(function () {
             if ($(this).hasClass('current')) {
                 var formular_id = $(this).find('.formular_id').val();
                 document.location = 'control/invoice/' + formular_id;
@@ -293,19 +293,14 @@ $(document).ready(function () {
 
     $('.date-search #datesearch-start').click(function () {
 
-        $('.date-search input[type=text]:visible').each(function () {
-            if ($(this).val() == "")
-                $(this).addClass('error');
-            else
-                $(this).removeClass('error');
-        });
-
         if ($('.date-search input[type=text]:visible.error').size())return false;
 
         $(this).addClass('loading');
         var button = $(this);
         var search_field = $(this).attr('id');
         var search_str = 'search_field=' + $('#datesearch-type option:selected').val() + '&von=' + $('#search-von').val() + "&bis=" + $('#search-bis').val();
+        if($('#ag_num').val())
+            search_str += '&ag_num=' + $('#ag_num').val();
         $('#last_searchquery').val(search_str);
         $.ajax({
             url:'control/search_formulars/' + $('#payments_type').val(),
@@ -382,4 +377,9 @@ $(document).ready(function () {
     });
 
     UpdateInvoiceList($('.invoice-list'));
+
+    $('#control-page #ag_num').liveSearch({
+            url:'kundenverwaltung/livesearch/',
+            width:400
+        });
 });

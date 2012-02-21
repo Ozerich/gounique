@@ -9,7 +9,7 @@
         </div>
         <div class="param">
             <span class="param-name">Anzahlung Amount: </span>
-            <span><?=$formular->prepayment_amount?></span>
+            <span><?=number_format($formular->prepayment_amount,2)?></span>
         </div>
         <div class="param">
             <span class="param-name">Anzahlung Status: </span>
@@ -24,7 +24,7 @@
         </div>
         <div class="param">
             <span class="param-name"><?=$formular->is_sofort ? 'Totalzahlung' : 'Restzahlung'?> Amount: </span>
-            <span><?=$formular->finalpayment_amount?></span>
+            <span><?=number_format($formular->finalpayment_amount)?></span>
         </div>
         <div class="param">
             <span class="param-name"><?=$formular->is_sofort ? 'Totalzahlung' : 'Restzahlung'?> Status: </span>
@@ -96,9 +96,9 @@
     <tr>
         <input type="hidden" class="payment_id" value="<?=$payment->id?>"/>
         <td><?=$payment->payment_date->format('d.M.Y');?></td>
-        <td><?=$payment->amount?></td>
-        <td><?=$anzahlung_diff?></td>
-        <td><?=$restzahlung_diff?></td>
+        <td><?=number_format($payment->amount,2)?></td>
+        <td><?=number_format($anzahlung_diff, 2, ',', '.')?></td>
+        <td><?=number_format($restzahlung_diff, 2, ',', '.')?></td>
         <td><?=$payment->added_by ? $payment->plain_type : 'Provision'?></td>
         <td><?=$payment->remark?></td>
         <td>
@@ -110,9 +110,9 @@
         <? endforeach; ?>
     <tr>
         <td>&nbsp;</td>
-        <td class="total-amount"><?=$total?> &euro;</td>
+        <td class="total-amount"><?=number_format($total, 2, ',', '.')?> &euro;</td>
         <td>&nbsp;</td>
-        <td class="total-amount"><?=($formular->brutto - $total) > 0 ? '-' . ($formular->brutto - $total) : '+' . ($total - $formular->brutto)?> &euro;</td>
+        <td class="total-amount"><?=number_format(($formular->brutto - $total) > 0 ? '-' . ($formular->brutto - $total) : '+' . ($total - $formular->brutto), 2, ',', '.')?> &euro;</td>
         <td>&nbsp;</td>
         <td>&nbsp;</td>
     </tr>

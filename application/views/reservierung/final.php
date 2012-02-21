@@ -45,6 +45,11 @@
         </div>
         <? endif; ?>
 
+        <div class="param">
+            <span class="param-name">Sachbearbeiter:</span>
+            <span class="param-value"><?=$formular->sachbearbeiter->fullname?></span>
+        </div>
+
         <? if ($formular->status == "rechnung" && $formular->is_storno): ?>
         <div class="param">
             <span class="param-name">Original Rechnung</span>
@@ -105,8 +110,7 @@
     <div class="left-float">
         <div class="comment-block">
             <h3 class="block-header">Kommentar:</h3>
-
-            <p><?=$formular->comment;?></p>
+            <p><?=str_replace("\n", "<br/>", $formular->comment)?></p>
         </div>
 
 

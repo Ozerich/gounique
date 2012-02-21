@@ -1042,7 +1042,7 @@ $(document).ready(function () {
 
     $('#result-page #speichern').click(function () {
         var error = false;
-        $('#result-page .person-name, #result-page #departure_date').each(function () {
+        $('#result-page .person-name, #result-page #departure_date, #result-page #arrival_date').each(function () {
             if ($(this).val() == '') {
                 $(this).addClass('error');
                 error = true;
@@ -1080,7 +1080,7 @@ $(document).ready(function () {
             $('.prepayment-block').show();
     });
 
-    $('.reservierung-page').find('#prepayment_date,#departure_date, #finalpayment_date').setdatepicker().datepicker({
+    $('.reservierung-page').find('#prepayment_date,#departure_date, #arrival_date, #finalpayment_date').setdatepicker().datepicker({
         onSelect:function () {
             $(this).change();
             return false;
