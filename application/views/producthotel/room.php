@@ -19,7 +19,7 @@
         </div>
         <div class="room-checkboxes">
             <div class="checkbox-block">
-                <div class="block-header">Kodierung</div>
+                <div class="block-header">Belegung</div>
                 <? for ($i = 0; $i <= Config::get('max_zimmer_count'); $i++): ?>
                 <div class="checkbox-item">
                     <label><?=$i?></label>

@@ -28,6 +28,7 @@
         <th class="zielgebiet">Zielgebiet</th>
         <th class="kat">Kat</th>
         <th class="status">Status</th>
+        <th class="changed">Changed</th>
         <th class="submenu">&nbsp;</th>
         </thead>
         <tbody>

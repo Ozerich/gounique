@@ -11,6 +11,8 @@
 
 
 <div id="createformular-page" class="reservierung-page content">
+<input type="hidden" id="formular-mode" value="create"/>
+
 <? echo form_open("reservierung/create/" . $kunde->id); ?>
 
 <div class="formular-header">
@@ -19,7 +21,12 @@
 
         <div class="param">
             <span class="param-name">Kundennummer:</span>
-            <a href="kundenverwaltung/historie/<?=$formular->kunde->id?>"><?=$formular->kunde->k_num?></a>
+            <a id="kunde_link" for="<?=$kunde->id?>" href="#"><?=$kunde->k_num?></a>
+            <a href="#" id="change-ag">Change</a>
+            <input type="hidden" id="new_ag_id"/>
+            <input type="hidden" id="new_ag_num"/>
+            <a href="#" id="save-ag" style="display:none">Save</a>
+            <input id="new_agnum" type="text" maxlength="20" size="20" style="display:none"/>
         </div>
 
         <div class="param">
@@ -56,42 +63,113 @@
     <label>Formulartyp auswahlen:</label>
 
     <div id="type-radio">
-        <input type="radio" name="formular-type" id="type_1" checked value="Pausschalreise"><label
+        <input type="radio" name="formular-type" id="type_1" checked value="pausschalreise"><label
         for="type_1">Pauschalreise</label>
-        <input type="radio" name="formular-type" id="type_2" value="Bausteinreise"><label
+        <input type="radio" name="formular-type" id="type_2" value="bausteinreise"><label
         for="type_2">Bausteinreise</label>
-        <input type="radio" name="formular-type" id="type_3" value="Nurflug"><label for="type_3">Nur flug</label>
+        <input type="radio" name="formular-type" id="type_3" value="nurflug"><label for="type_3">Nur flug</label>
+
     </div>
 
-    <div class="type-edit">
+    <ul id="type-error" class="alert-block" style="display: none">
+
+    </ul>
+
+    <div class="typeedit-block" id="pausscahlreise-type">
 
         <div class="vorgansnummer-wr">
             <label for="vorgangsnummer">Vorgangsnummer:</label>
-            <input type="text" maxlength="6" class="vnum-input" name="formular-vnum"/>
+            <input type="text" maxlength="6" class="vnum-input"/>
         </div>
 
         <label for="flight-text">Flugplan</label>
-        <textarea id="flight-text" name="flight-text"></textarea>
+        <textarea class="flight-text"></textarea>
 
-        <label for="flight-price">Flugpreis &euro;</label>
-        <input type="text" name="flight-price" id="flight-price"/>
+        <label for="flight-price">Flugpreis:</label>
+        <input type="text" maxlength="8" class="flight-price"/> &euro;
+
+        <div class="bottom-block">
+
+            <button class="type-submit">Weiter</button>
+            <br class="clear"/>
+
+        </div>
+
     </div>
 
-    <div class="bottom-block">
-        <p class="error" id="type-error"></p>
-        <button id="type-submit">Weiter</button>
-        <br class="clear"/>
+    <div class="typeedit-block" id="bausteinreise-type" style="display:none">
+        <label for="flight-text">Flugplan</label>
+        <textarea class="flight-text"></textarea>
+
+        <label for="flight-price">Flugpreis:</label>
+        <input type="text" class="flight-price" maxlength="8"/> &euro;
+
+        <div class="bottom-block">
+
+            <button class="type-submit">Weiter</button>
+            <br class="clear"/>
+        </div>
+
+
+    </div>
+
+    <div class="typeedit-block" id="nurflug-type" style="display:none">
+
+        <div class="info-block">
+            <h2>Ahtung!</h2>
+
+            <p>Text</p>
+        </div>
+
+        <div class="vorgansnummer-wr">
+            <label for="vorgangsnummer">Vorgangsnummer:</label>
+            <input type="text" name="nurflug_vnum" maxlength="6" class="vnum-input"/>
+        </div>
+
+        <div>
+            <label for="person-count">Person Count:</label>
+            <input type="text" class="person-count" name="nurflug_personcount" maxlength="2"/>
+        </div>
+
+        <label for="flight-text">Flugplan:</label>
+        <textarea id="flight-text" name="nurflug_flight"></textarea>
+
+        <label for="flight-price">Flugpreis:</label>
+        <input type="text" class="flight-price" name="nurflug_flightprice" maxlength="8"/> &euro;
+
+        <div class="service-charge">
+            <label for="servicecharge-amount">Service charge:</label>
+            <input type="text" maxlength="7" class="servicecharge" name="nurflug_servicecharge"
+                   id="servicecharge-amount"/> &euro;
+            or <input type="text" maxlength="4" class="servicecharge-percent" id="servicecharge-percent"/> % <br/>
+            <label for="total-amount">Total:</label>
+            <input value="0" type="text" disabled id="total-amount"/> &euro;
+        </div>
+
+        <div class="bottom-block">
+
+            <input type="submit" value="Weiter"/>
+            <br class="clear"/>
+
+        </div>
+
     </div>
 
 </div>
 
+
 <div class="formular-content" style="display:none">
 <div id="intro-page">
     <? if ($kunde->type == 'agenturen'): ?>
+
     <div class="input" id="provision-wr">
         <label for="provision">Provision %:</label>
-        <input type="text" id="provision" name="provision"
-               value="<?=$kunde->provision?>" maxlength="2" size="2"/>
+        <input disabled type="text" id="provision" value="<?=$kunde->provision?>" maxlength="4" size="4"/>
+    </div>
+
+    <div class="input" id="provision-wr">
+        <label for="provision">Manuel Provision %:</label>
+        <input type="text" name="provision-manuel" maxlength="4" size="4"/>
     </div>
     <? endif; ?>
 
@@ -133,7 +211,6 @@
             </div>
 
 
-
             <div class="manuel-hotel" style="display:none">
 
                 <div class="param">
@@ -143,7 +220,7 @@
 
                 <div class="param">
                     <label class="param-name" for="roomtype">Room type</label>
-                    <input type="text" id="roomtype" name="roomtype" />
+                    <input type="text" id="roomtype" name="roomtype"/>
                 </div>
 
                 <div class="param">
@@ -199,7 +276,7 @@
                     <label class="param-name" for="transfer_price">Transfer Price &euro;</label>
                     <input type="text" class="transfer-price" id="transfer_price" name="transfer_price"/>
                 </div>
-                
+
                 <div class="param">
                     <label class="param-name" for="remark">Remark</label>
                     <textarea id="remark" name="remark"></textarea>
@@ -210,6 +287,15 @@
                     <textarea id="voucher_remark" class="voucher-text" name="voucher_remark"></textarea>
                 </div>
 
+                <div class="param">
+                    <label class="param-name">Incoming</label>
+                    <select name="incoming">
+                        <option value="0">No Incoming</option>
+                        <? foreach (Incoming::all() as $incoming): ?>
+                        <option value="<?=$incoming->id?>"><?=$incoming->name?></option>
+                        <? endforeach; ?>
+                    </select>
+                </div>
 
             </div>
 
@@ -277,6 +363,15 @@
                     <textarea id="voucher_remark" class="voucher-text" name="manuel_voucher_remark"></textarea>
                 </div>
 
+                <div class="param">
+                    <label class="param-name">Incoming</label>
+                    <select name="manuel_incoming">
+                        <option value="0">No Incoming</option>
+                        <? foreach (Incoming::all() as $incoming): ?>
+                        <option value="<?=$incoming->id?>"><?=$incoming->name?></option>
+                        <? endforeach; ?>
+                    </select>
+                </div>
             </div>
 
             <div class="manuel-nodate" style="display:none">
@@ -296,6 +391,16 @@
                     <textarea id="voucher_remark" class="voucher-text" name="manuel_voucher_remark"></textarea>
                 </div>
 
+                <div class="param">
+                    <label class="param-name">Incoming</label>
+                    <select name="manuel_incoming">
+                        <option value="0">No Incoming</option>
+                        <? foreach (Incoming::all() as $incoming): ?>
+                        <option value="<?=$incoming->id?>"><?=$incoming->name?></option>
+                        <? endforeach; ?>
+                    </select>
+                </div>
+
             </div>
 
             <div class="buttons">
@@ -311,11 +416,11 @@
 
     <div class="input" id="flightplan-wr">
         <label for="flightplan">Flugplan</label>
-        <textarea id="flightplan"></textarea>
+        <textarea id="flightplan" name="flight"></textarea>
     </div>
     <div class="input" id="flightprice-wr">
         <label for="flightprice">Preis of flight</label>
-        <input type="text" id="flightprice" size="5" value=""/>
+        <input type="text" id="flightprice" name="flightprice" maxlength="8" size="5" value=""/>
     </div>
 
     <br class="clear"/>
@@ -335,6 +440,7 @@
 
 
 <input type="hidden" name="kunde_id" value="<?=$kunde->id?>"/>
+<input type="hidden" name="vnum" id="vnum-value" value=""/>
 
 </form>
 

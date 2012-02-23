@@ -47,23 +47,34 @@ $route['login'] = 'auth_controller/login';
 $route['logout'] = 'auth_controller/logout';
 
 
-$route['kundenverwaltung'] = 'kundenverwaltung_controller';
+$route['kundenverwaltung'] = 'kundenverwaltung_controller/agenturen';
 $route['agenturen'] = 'kundenverwaltung_controller/agenturen';
 $route['incoming'] = 'kundenverwaltung_controller/incoming';
 $route['stammkunden'] = 'kundenverwaltung_controller/stammkunden';
-$route['mitarbeiter'] = 'kundenverwaltung_controller/mitarbeiter';
+$route['ketten'] = 'kundenverwaltung_controller/ketten';
+$route['provisionierung'] = 'kundenverwaltung_controller/provisionierung';
+
 $route['agenturen/new'] = 'kundenverwaltung_controller/new_/agenturen';
 $route['incoming/new'] = 'kundenverwaltung_controller/new_/incoming';
 $route['stammkunden/new'] = 'kundenverwaltung_controller/new_/stammkunden';
-$route['mitarbeiter/new'] = 'kundenverwaltung_controller/new_/mitarbeiter';
+$route['ketten/new'] = 'kundenverwaltung_controller/new_/ketten';
+$route['provisionierung/new'] = 'kundenverwaltung_controller/new_/provisionierung';
+
+$route['agenturen/delete/(:num)'] = 'kundenverwaltung_controller/delete/agenturen/$1';
+$route['incoming/delete/(:num)'] = 'kundenverwaltung_controller/delete/incoming/$1';
+$route['stammkunden/delete/(:num)'] = 'kundenverwaltung_controller/delete/stammkunden/$1';
+$route['ketten/delete/(:num)'] = 'kundenverwaltung_controller/delete/ketten/$1';
+$route['provisionierung/delete/(:num)'] = 'kundenverwaltung_controller/delete/provisionierung/$1';
+
 $route['agenturen/(:any)'] = 'kundenverwaltung_controller/agenturen/$1';
 $route['incoming/(:any)'] = 'kundenverwaltung_controller/incoming/$1';
 $route['stammkunden/(:any)'] = 'kundenverwaltung_controller/stammkunden/$1';
-$route['mitarbeiter/(:any)'] = 'kundenverwaltung_controller/mitarbeiter/$1';
+$route['ketten/(:num)'] = 'kundenverwaltung_controller/ketten/$1';
+$route['provisionierung/(:num)'] = 'kundenverwaltung_controller/provisionierung/$1';
 $route['kundenverwaltung/(:any)'] = 'kundenverwaltung_controller/$1';
 
 
-$route['reservierung'] = 'reservierung_controller/create';
+$route['reservierung'] = 'reservierung_controller';
 $route['reservierung/final/(:num)'] = 'reservierung_controller/final_/$1';
 $route['reservierung/(:any)'] = 'reservierung_controller/$1';
 
@@ -79,8 +90,14 @@ $route['settings/(:any)'] = 'settings_controller/$1';
 $route['product/hotel'] = 'producthotel_controller';
 $route['product/hotel/(:any)'] = 'producthotel_controller/$1';
 
+$route['product/rundreise'] = 'productrundreise_controller';
+$route['product/rundreise/(:any)'] = 'productrundreise_controller/$1';
+
 $route['product'] = 'product_controller';
 $route['product/(:any)'] = 'product_controller/$1';
+
+$route['control'] = 'control_controller';
+$route['control/(:any)'] = 'control_controller/$1';
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

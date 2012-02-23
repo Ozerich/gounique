@@ -8,45 +8,33 @@
     </div>
 </div>
 
-<div id="incoming-page" class="content kundenverwaltung-rasdel">
+<div id="agenturen-page" class="content kundenverwaltung-rasdel">
 
-    <div class="left-block">
-        <?=form_open("kundenverwaltung/incoming/search");?>
-         <div class="search-block">
-             <label for="search" class="header">incoming suchen</label>
-             <input type="text" id="search" value="<?=$search_text?>" name="search_text"/>
-             <button id="search-agentur" class="search-button">suchen</button>
-             <br class="clear"/>
-         </div>
-         </form>
+    <ul class="tabs" id="agenturen-tabs">
+        <li><a href="agenturen">Agenturedaten</a></li>
+        <li><a href="stammkunden">Stammkunden</a></li>
+        <li class="active"><span>Incoming</span></li>
+        <li><a href="ketten">Ketten</a></li>
+        <li><a href="provisionierung">Provisionierung</a></li>
+        <li class="last"><a href="incoming/new">Neueu Incoming</a></li>
+    </ul>
 
-        <a href="incoming/new" class="new-button">incoming neu</a>
-    </div>
+    <table class="product-list" id="incoming-list">
+        <thead>
+        <tr>
+            <th class="inc-num">Inc. Num</th>
+            <th class="inc-name">Inc. Name</th>
+            <th class="inc-changed">Changed</th>
+            <th>&nbsp;</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?=$incoming_list?>
+        </tbody>
+    </table>
 
-    <div class="list-block">
-        <span class="list-header">incoming</span>
+</div>
 
-        <div class="list">
-
-            <? foreach ($items as $client): ?>
-
-            <div class="item">
-                <span class="text"><?=$client->k_num?> - <?=$client->name?></span>
-                <span class="arrow arrow-e"></span>
-                <br class="clear"/>
-                <ul class="submenu">
-                    <li><a href="kundenverwaltung/verwalten/<?=$client->id?>">verwalten</a></li>
-                    <li><a href="kundenverwaltung/historie/<?=$client->id?>">historie</a></li>
-                    <li><a href="kundenverwaltung/buchen/<?=$client->id?>">buchen</a></li>
-                    <li><a href="kundenverwaltung/delete/<?=$client->id?>">loeschen</a></li>
-                </ul>
-            </div>
-
-            <? endforeach; ?>
-
-        </div>
-    </div>
-
-    <br class="clear"/>
-
+<div id="delete-confirm" style="display:none">
+    Are you sure?
 </div>

@@ -253,7 +253,7 @@
 
 <div class="page" id="bonus-page" style="display:none">
     <div class="bonus-list">
-        <span class="empty">No bonuses</span>
+        <span class="empty"></span>
 
         <div class="bonus-list">
         </div>
@@ -287,7 +287,7 @@
 
                     <div id="bonus_1_block" class="bonus-block active">
                         <div class="radio">
-                            <input type="radio" for-name="bonus_type" class="bonustype" value="night_bonus" checked/><label>Nachte bonus</label>
+                            <input type="radio" for-name="bonus_type" class="bonustype" value="night_bonus" checked/><label>Bonus</label>
                         </div>
 
                         <div class="param">
@@ -298,7 +298,7 @@
 
                     <div id="bonus_2_block" class="bonus-block">
                         <div class="radio">
-                            <input type="radio" for-name="bonustype" class="bonustype" value="earlybird_days"/><label>EarlyBird(days)</label>
+                            <input type="radio" for-name="bonustype" class="bonustype" value="earlybird_days"/><label>EB-Promo</label>
                         </div>
 
                         <div class="param">
@@ -313,12 +313,12 @@
 
                     <div id="bonus_3_block" class="bonus-block">
                         <div class="radio">
-                            <input type="radio" for-name="bonustype" class="bonustype" value="earlybird_date"/><label>EarlyBird(date)</label>
+                            <input type="radio" for-name="bonustype" class="bonustype" value="earlybird_date"/><label>EarlyBird</label>
                         </div>
 
                         <div class="param">
                             <label>Booking till</label>
-                            <input type="text" for-name="booking_till" id="booking_till" maxlength="8"/>
+                            <input type="text" for-name="booking_till" class="booking_till" maxlength="8"/>
                         </div>
                         <div class="param">
                             <label>Discount %</label>
@@ -338,6 +338,22 @@
                         <div class="param">
                             <label>Discount %</label>
                             <input type="text" id="discount3" for-name="discount3" maxlength="2"/>
+                        </div>
+                    </div>
+
+                    <div id="bonus_5_block" class="bonus-block">
+                        <div class="radio">
+                            <input type="radio" for-name="bonustype" class="bonustype"
+                                   value="turbo_bonus"/><label>Turbo bonus</label>
+                        </div>
+
+                        <div class="param">
+                            <label>Booking till</label>
+                            <input type="text" for-name="booking_till_2" class="booking_till_2" maxlength="8"/>
+                        </div>
+                        <div class="param">
+                            <label>Discount &euro;</label>
+                            <input type="text" for-name="discount4" id="discount4" maxlength="2"/>
                         </div>
                     </div>
 

@@ -17,6 +17,7 @@
         <div class="topinfo">
             <div class="address block">
                 <span class="header">Adresse</span>
+
                 <div class="kundeblock-content"><?=$kunde->plain_text;?></div>
             </div>
 
@@ -24,7 +25,7 @@
                 <span class="header">Ansprechpartner</span>
 
                 <div class="kundeblock-content">
-                    <?=$kunde->person_name.' '." - ".$kunde->sex?><br/>
+                    <?=$kunde->person_name . ' ' . " - " . $kunde->sex?><br/>
                     e-mail: <a href="mailto:<?=$kunde->email?>"><?=$kunde->email?></a><br/>
                     phone: <?=$kunde->phone?><br/>
                     fax: <?=$kunde->fax?><br/>
@@ -58,7 +59,7 @@
         <th>date created</th>
         <th>&nbsp;</th>
         </thead>
-        <? foreach($kunde->formulars as $formular): ?>
+        <? foreach ($kunde->formulars as $formular): ?>
         <tr>
             <td class="v_num"><?=$formular->v_num?></td>
             <td><?=($formular->r_num) ? $formular->r_num : '-' ?></td>

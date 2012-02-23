@@ -468,7 +468,7 @@ function BindHotelEvents() {
                 return false;
             });
 
-            $(this).find('.hotel-preview button.delete').click(function(){
+            $(this).find('.hotel-preview button.delete').click(function () {
                 $(hotel_wrapper).remove();
                 return false;
             });
@@ -609,7 +609,7 @@ function BindManuelEvents() {
             return false;
         });
 
-        $(this).find('.manuel-preview button.delete').click(function(){
+        $(this).find('.manuel-preview button.delete').click(function () {
             $(manuel_wrapper).remove();
             return false;
         });
@@ -622,6 +622,8 @@ $(document).ready(function () {
 
     BindHotelEvents();
     BindManuelEvents();
+
+    $('#flight-window').draggable();
 
     $('#createformular-page form').submit(function () {
         $('.hidden-param-block').remove();
@@ -647,6 +649,49 @@ $(document).ready(function () {
         return false;
     });
 
+    $('.reservierung-page .formular-header #change-ag').click(function () {
+        $(this).hide();
+        $('#new_aghid').val('');
+        $('.formular-header').find('#save-ag, #new_agnum').show();
+        return false;
+    });
+
+    $('.reservierung-page .formular-header #new_agnum').liveSearch({
+        url:'kundenverwaltung/livesearch/',
+        width:400,
+        onSelect:function (data) {
+            $('#new_ag_id').val(data.id);
+            $('#new_ag_num').val(data.num);
+        }
+    });
+
+    $('.reservierung-page .formular-header #save-ag').click(function () {
+        if ($('#new_ag_id').val() == '') {
+            $('.reservierung-page .formular-header #new_agnum').addClass('error');
+            return false;
+        }
+        $('.reservierung-page .formular-header #new_agnum').removeClass('error');
+
+        if ($('input#formular_id').size() > 0)
+            $.ajax({
+                url:'reservierung/change_agency/' + $('input#formular_id').val() + '/' + $('#new_ag_id').val()
+            });
+        else
+            $('input[name=kunde_id]').val($('#new_ag_id').val());
+
+        $('#kunde_link').html($('#new_ag_num').val()).attr('for', $('#new_ag_id').val());
+
+        $('.formular-header').find('#save-ag, #new_agnum').val('').hide();
+        $('.reservierung-page .formular-header #change-ag').show();
+
+        return false;
+    });
+
+    $('#kunde_link').click(function () {
+        document.location = "kunderverwaltung/historie/" + $(this).attr('for');
+        return false;
+    });
+
 
     /*-----------------------------------------------------------------------------------------
      Change type block
@@ -655,81 +700,156 @@ $(document).ready(function () {
     $('.reservierung-page .changetype-block #type-radio').buttonset();
 
     $('.reservierung-page .changetype-block #type-radio input').click(function () {
-        if ($('#type-radio #type_1').is(':checked') || $('#type-radio #type_3').is(':checked'))
-            $('.reservierung-page .changetype-block .type-edit').show().find('.vorgansnummer-wr').show().
-                find('.vnum-input').val($('#vnum-value').text()).focus();
-        else {
-            $('.reservierung-page .changetype-block .type-edit').find('.vorgansnummer-wr').hide();
-            $('.reservierung-page .changetype-block .type-edit #flight-text').focus();
-        }
+        $('.reservierung-page .changetype-block .typeedit-block').hide();
+        if ($('#type-radio #type_1').is(':checked'))
+            $('.reservierung-page .changetype-block #pausscahlreise-type').show();
+        else if ($('#type-radio #type_2').is(':checked'))
+            $('.reservierung-page .changetype-block #bausteinreise-type').show();
+        else if ($('#type-radio #type_3').is(':checked'))
+            $('.reservierung-page .changetype-block #nurflug-type').show();
     });
 
-    $('.reservierung-page .changetype-block #type-submit').click(function () {
+    $('.reservierung-page .changetype-block #nurflug-type .flight-price,' +
+        '.reservierung-page .changetype-block #nurflug-type #servicecharge-amount').keyup(function () {
+            var flight_price = parseFloat($('.reservierung-page .changetype-block #nurflug-type .flight-price').val());
+            var service_amount = parseFloat($('.reservierung-page .changetype-block #nurflug-type #servicecharge-amount').val());
 
-        var error_block = $('.reservierung-page .changetype-block #type-error');
+            if (!flight_price)flight_price = 0;
+            if (!service_amount)service_amount = 0;
 
-        if (!$('.reservierung-page .changetype-block #type-radio input').is(':checked')) {
-            $(error_block).html('Error: No selected type');
-            return false;
-        }
+            $('.reservierung-page .changetype-block #nurflug-type #total-amount').val(flight_price + service_amount);
+        });
 
-        if ($('#type-radio #type_1').is(':checked') || $('#type-radio #type_3').is(':checked')) {
-            if ($('.reservierung-page .changetype-block .vnum-input').val() == '') {
-                $(error_block).html('Error: Empty vorgangsnummer');
-                return false;
-            }
+    $('.reservierung-page .changetype-block #nurflug-type #servicecharge-percent').keyup(function () {
+        var percent = parseFloat($(this).val());
+        var flight_price = parseFloat($('.reservierung-page .changetype-block #nurflug-type .flight-price').val());
 
-            var error = 0;
-            var new_vnum = $('.reservierung-page .changetype-block .vnum-input').val();
-            var current_vnum = $('.reservierung-page .formular-header #vorgangsnummer-value').html();
-            if (new_vnum != current_vnum)
-                $.ajax({
-                    url:'reservierung/find/vnum',
-                    type:'post',
-                    data:'value=' + new_vnum,
-                    async:false,
-                    success:function (data) {
-                        if (data == 1) {
-                            $(error_block).html('Error: This vnum is exist. Choose another, please');
-                            error = 1;
-                        }
-                    }
-                });
+        if (!percent)percent = 0;
+        if (!flight_price)flight_price = 0;
 
-            if (error)
-                return false;
-        }
-        else {
+        $('.reservierung-page .changetype-block #nurflug-type #servicecharge-amount').val(flight_price / 100 * percent).keyup();
+    });
+
+    $('.reservierung-page .changetype-block #nurflug-type input[type=submit]').click(function () {
+
+        var old_vnum = $('.reservierung-page .formular-header #vorgangsnummer-value').html();
+        var vnum = $('.reservierung-page .changetype-block #nurflug-type [name=nurflug_vnum]').val();
+        var person_count = $('.reservierung-page .changetype-block #nurflug-type [name=nurflug_personcount]').val();
+        var flight = $('.reservierung-page .changetype-block #nurflug-type [name=nurflug_flight]').val();
+        var flight_price = $('.reservierung-page .changetype-block #nurflug-type [name=nurflug_flightprice]').val();
+        var service_charge = $('.reservierung-page .changetype-block #nurflug-type [name=nurflug_servicecharge]').val();
+
+        var error_block = $('.reservierung-page #type-error').empty().hide();
+
+        if (vnum.length != 6)
+            $('<li>Vorgansnummer must contain 6 symbols</li>').appendTo(error_block);
+
+        if (person_count == '' || person_count == 0)
+            $('<li>Persons count must be positive integer</li>').appendTo(error_block);
+
+        if (flight == '')
+            $('<li>Flight can not be empty</li>').appendTo(error_block);
+
+        if (flight_price == '' || flight_price == 0)
+            $('<li>Flight price must be positive integer</li>').appendTo(error_block);
+
+        /*if (service_charge == '' || service_charge == 0)
+         $('<li>Service charge must be positive integer</li>').appendTo(error_block);*/
+
+        var find_error = $(error_block).find('li').size() > 0;
+
+        if (!find_error && old_vnum != vnum) {
             $.ajax({
-                url:'reservierung/generate_vnum/bausteinreise',
+                url:'reservierung/find/vnum',
+                type:'post',
+                data:'value=' + vnum,
                 async:false,
                 success:function (data) {
-                    $('.reservierung-page .changetype-block .vnum-input').val(data);
+                    if (data == 1)
+                        $('<li>Vorgansnummer ' + vnum + ' is exist</li>').appendTo(error_block);
                 }
             });
         }
 
-        $(error_block).html('');
+        find_error = $(error_block).find('li').size() > 0;
 
-        $('.reservierung-page .changetype-block').hide();
-        $('.reservierung-page .formular-content').show();
+        if (find_error)
+            $(error_block).show();
 
-        $('.reservierung-page #flight-window .text').html($('.changetype-block .type-edit #flight-text').val());
-        $('.reservierung-page #flight-window .price').html($('.changetype-block .type-edit #flight-price').val());
+        return !find_error;
+    });
 
-        $('.reservierung-page #flugpage #flightplan').html($('.changetype-block .type-edit #flight-text').val());
-        $('.reservierung-page #flugpage #flightprice').val($('.changetype-block .type-edit #flight-price').val());
+    $('.reservierung-page .changetype-block .type-submit').click(function () {
+        var error_block = $('.reservierung-page #type-error').empty().hide();
 
+        var block = $(this).parents('.typeedit-block');
+        var flight = $(block).find('.flight-text').val();
+        var flight_price = $(block).find('.flight-price').val();
 
-        var type = $('.reservierung-page .changetype-block #type-radio input:checked').val();
-        var vnum = $('.reservierung-page .changetype-block .vnum-input').val();
+        var old_vnum = $('.reservierung-page .formular-header #vorgangsnummer-value').html();
+        var vnum = '';
 
-        $('.reservierung-page .formular-header #formulartype-value').html(type);
-        $('.reservierung-page .formular-header #vorgangsnummer-value').html(vnum);
+        if ($(block).attr('id') == 'bausteinreise-type') {
+            $.ajax({
+                url:'reservierung/generate_vnum/bausteinreise',
+                async:false,
+                success:function (data) {
+                    vnum = data;
+                }
+            });
+        }
+        else if ($(block).attr('id') == 'pausscahlreise-type') {
+            vnum = $(block).find('.vnum-input').val();
+
+            if (vnum.length != 6)
+                $('<li>Vorgansnummer must contain 6 symbols</li>').appendTo(error_block);
+
+            if (flight == '')
+                $('<li>Flight can not be empty</li>').appendTo(error_block);
+
+            if (flight_price == '' || flight_price == 0)
+                $('<li>Flight must be positive integer</li>').appendTo(error_block);
+
+            find_error = $(error_block).find('li').size() > 0;
+
+            if (!find_error && old_vnum != vnum) {
+                $.ajax({
+                    url:'reservierung/find/vnum',
+                    type:'post',
+                    data:'value=' + vnum,
+                    async:false,
+                    success:function (data) {
+                        if (data == 1)
+                            $('<li>Vorgansnummer ' + vnum + ' is exist</li>').appendTo(error_block);
+                    }
+                });
+            }
+        }
+
+        var find_error = $(error_block).find('li').size() > 0;
+
+        if (find_error)
+            $(error_block).show();
+        else {
+
+            $('.reservierung-page .changetype-block').hide();
+            $('.reservierung-page .formular-content').show();
+
+            $('.reservierung-page #flight-window .text').html(flight);
+            $('.reservierung-page #flight-window .price').html(flight_price);
+
+            $('.reservierung-page #flugpage #flightplan').html(flight);
+            $('.reservierung-page #flugpage #flightprice').val(flight_price);
+
+            var type = $('.reservierung-page [name=formular-type]:checked').val();
+
+            $('.reservierung-page #vnum-value').val(vnum);
+            $('.reservierung-page .formular-header #vorgangsnummer-value').html(vnum);
+            $('.reservierung-page .formular-header #formulartype-value').html(type);
+        }
 
         return false;
     });
-
 
     /*-----------------------------------------------------------------------------------------
      Formular buttons
@@ -829,6 +949,19 @@ $(document).ready(function () {
         $('#flugpage').show().find('#flightplan').focus();
 
         return false;
+    });
+
+    $('.reservierung-page .formular-buttons #fertig-button').click(function () {
+
+        var persons_count = $('.reservierung-page #intro-page #personcount').val();
+        if (persons_count == '' || persons_count == 0) {
+            $('.reservierung-page #intro-page #personcount').addClass('error');
+            return false;
+        }
+        else
+            $('.reservierung-page #intro-page #personcount').removeClass('error');
+
+        return true;
     });
 
 
@@ -950,42 +1083,85 @@ $(document).ready(function () {
      Result page
      ----------------------------------------------------------------------------------------------------------*/
 
+    $('#result-page #speichern').click(function () {
+        var error = false;
+        $('#result-page .person-name, #result-page #departure_date, #result-page #arrival_date').each(function () {
+            if ($(this).val() == '') {
+                $(this).addClass('error');
+                error = true;
+            }
+            else
+                $(this).removeClass('error');
+        });
+
+        return !error;
+    });
 
     /*------------------------------------------------------------------------------------------------------------
      Final page
      ------------------------------------------------------------------------------------------------------------*/
-    $('.reservierung-page').find('#prepayment_date,#departure_date, #finalpayment_date').datepicker({
+
+    $('.reservierung-page .incoming-send').click(function () {
+        $(this).parents('.incoming-sendblock').hide();
+        var block = $(this).parents('.item');
+        $.ajax({
+            url:'reservierung/send_report',
+            type:'post',
+            data:'type=' + $(block).find('.item_type').val() + '&id=' + $(block).find('.item_id').val(),
+            success:function (data) {
+                alert(data);
+                $(block).find('.incoming-sendok').show();
+            }
+        });
+        return false;
+    });
+
+    $('.reservierung-page #sofort').click(function () {
+        if ($(this).is(':checked'))
+            $('.prepayment-block').hide();
+        else
+            $('.prepayment-block').show();
+    });
+
+    $('.reservierung-page').find('#prepayment_date,#departure_date, #arrival_date, #finalpayment_date').setdatepicker().datepicker({
         onSelect:function () {
             $(this).change();
             return false;
         }
-    }).datepicker("option", "showAnim", "blind").datepicker("option", "dateFormat", 'ddmmyy');
+    });
 
-    $('.reservierung-page #departure_date').change(function () {
-        var val = $(this).val();
 
-        var departure = new Date(val.substr(4, 4), parseInt(val.substr(2, 2)) - 1, val.substr(0, 2));
-        if(!isValidDate(departure))
+    $('.reservierung-page #departure_date').change(
+        function () {
+            var val = $(this).val();
+
+            var departure = new Date(val.substr(4, 4), val.substr(2, 2) - 1, val.substr(0, 2));
+            if (!isValidDate(departure))
+                return false;
+
+            var prepayment = new Date(departure - new Date(35 * ONE_DAY));
+            var today = new Date();
+
+            $('.reservierung-page #finalpayment_date,.reservierung-page #prepayment_date').datepicker("option", "maxDate", new Date(departure - ONE_DAY));
+
+            if (prepayment < today) {
+                $('.reservierung-page #sofort').attr('checked', 'checked');
+                $('.reservierung-page .prepayment-block').hide();
+
+                prepayment = today;
+                prepayment.setDate(prepayment.getDate() + 2);
+                $('.reservierung-page #finalpayment_date').datepicker('setDate', DateToInput(prepayment));
+            }
+            else {
+                $('.reservierung-page #finalpayment_date').val(DateToInput(prepayment));
+                prepayment = today;
+                prepayment.setDate(prepayment.getDate() + 7);
+                $('.reservierung-page #prepayment_date').datepicker('setDate', DateToInput(prepayment));
+                $('.reservierung-page .prepayment-block').show();
+                $('.reservierung-page #sofort').removeAttr('checked');
+            }
             return false;
-
-        var prepayment = new Date(departure - new Date(35 * ONE_DAY));
-        var today = new Date();
-
-        $('.reservierung-page #finalpayment_date,.reservierung-page #prepayment_date').datepicker("option", "maxDate", new Date(departure - ONE_DAY));
-
-        if (prepayment < today) {
-            $('.reservierung-page .prepayment-block').hide();
-            prepayment = today;
-            prepayment.setDate(prepayment.getDate() + 2);
-            $('.reservierung-page #anzahlung, #prepayment_date, #finalpayment_date').val('');
-        }
-        else {
-            $('.reservierung-page #prepayment_date').datepicker("option", "maxDate", new Date(prepayment - ONE_DAY));
-            $('.reservierung-page .prepayment-block').show();
-            $('.reservierung-page #finalpayment_date').val(DateToInput(prepayment));
-        }
-        return false;
-    }).change();
+        }).change();
 
     $('.reservierung-page #anzahlung').keyup(
         function () {
@@ -996,6 +1172,28 @@ $(document).ready(function () {
             $(".reservierung-page #anzahlungsum").html((parseFloat($("input#brutto_price").val().split(' ').join('')) / 100 * val).toFixed(2));
         }).change();
 
+    $('.reservierung-page #do_rechnung').click(function () {
+
+        $('#final-page .anzahlung-block').find('#departure_date, #finalpayment_date').each(function () {
+            if ($(this).val() == '')
+                $(this).addClass('error');
+            else
+                $(this).removeClass('error');
+        });
+
+        if (!$('#final-page #sofort').is(':checked')) {
+            $('#final-page .prepayment-block input').each(function () {
+                if ($(this).val() == '')
+                    $(this).addClass('error');
+                else
+                    $(this).removeClass('error');
+            });
+        }
+        else
+            $('#final-page .prepayment-block input').removeClass('error');
+
+        return $('#final-page .anzahlung-block input.error').size() == 0;
+    });
 
     $('#final-page #addmail-button').click(
         function (event) {
@@ -1137,11 +1335,44 @@ $(document).ready(function () {
         return false;
     });
 
-/*------------------------------------------------------------------------------------------------------------
-    Storeno Page
-------------------------------------------------------------------------------------------------------------*/
+    /*------------------------------------------------------------------------------------------------------------
+     Storeno Page
+     ------------------------------------------------------------------------------------------------------------*/
     $('#storeno-page #who-radio').buttonset();
 
-    $('#storeno-page #date').datepicker().datepicker("option", "showAnim", "blind").datepicker("option", "dateFormat", 'ddmmyy');
+    $('#storeno-page #storno-date').setdatepicker();
 
+
+    $('#storeno-page #storno-submit').click(function () {
+
+        if ($('#storno-date').val() == '')
+            $('#storno-date').addClass('error');
+        else
+            $('#storno-date').removeClass('error');
+
+        if ($('#storno-percent').val() != '' && $('#storno-value').val() != '')
+            $('#storno-percent, #storno-value').addClass('error');
+        else
+            $('#storno-percent, #storno-value').removeClass('error');
+
+        if ($('#storeno-page input.error').size() > 0)
+            return false;
+
+        $("#storno-confirm").dialog({
+            resizable:false,
+            height:140,
+            modal:true,
+            buttons:{
+                "Storno":function () {
+                    $('.storeno-content form').submit();
+                    $(this).dialog("close");
+                },
+                Cancel:function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+
+        return false;
+    });
 });

@@ -4,7 +4,9 @@
 
     <div class="nav">
         <div class="row">
-            <a href="product/hotel" class="center">hotelverwaltung</a>
+            <a href="product/hotel">hotelverwaltung</a>
+            <a href="product/rundreise">rundreise</a>
+            <a class="disabled last">flugverwaltung</a>
         </div>
     </div>
 </div>

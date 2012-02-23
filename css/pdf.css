@@ -10,14 +10,14 @@ table {
 }
 
 .header{
-    width: 712px;
+    width: 290px;
     height: 220px;
     padding: 0 0 0 54px;
-    margin: 0 auto;
 }
 
 .header .info{
     padding: 120px 0 0 0;
+
 }
 
 .content{
@@ -119,8 +119,9 @@ h2{
 
 .reisezeitraum-table td{
     background: #dce6f0;
-    width: 130px;
+    width: 150px;
     border: 1px solid black;
+    text-align: center;
 }
 
 .reisezeitraum-table td.center{

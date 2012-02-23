@@ -1,6 +1,6 @@
 <div id="page-header-wr">
     <div id="page-header">
-        <a href="dashboard" class="home-link"><img src="img/header-logo.jpg" /></a>
+        <a href="dashboard" class="home-link"><img src="img/header-logo.jpg"/></a>
         <ul class="page-path">
             <li><span>kundenverwaltung</span></li>
         </ul>

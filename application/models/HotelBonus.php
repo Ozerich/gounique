@@ -19,6 +19,8 @@ class HotelBonus extends ActiveRecord\Model
                 return $period . "Booking till ".$this->booking_till->format('d.m.Y')." ".$this->discount_2."%";
             case "earlybird_days":
                 return $period . "Booking before ".$this->days_before." days ".$this->discount_1."%";
+            case "turbo_bonus":
+                return $period ."Booking till" . ($this->booking_till_2 ? $this->booking_till_2->format('d.m.Y') : '')." ".$this->discount_4." &euro;";
         }
 
         return "Unknown bonus";

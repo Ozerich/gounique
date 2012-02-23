@@ -4,6 +4,13 @@ class HotelRoom extends ActiveRecord\Model
 {
     static $table_name = "hotel_room";
 
+  /*  public static function get_code($name)
+    {
+        $name = trim(str_replace('-','',$name));
+        $words = explode(' ', $name);
+
+    }
+*/
     public function get_code()
     {
 

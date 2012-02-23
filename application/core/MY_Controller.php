@@ -30,10 +30,10 @@ class MY_Controller extends CI_Controller
 
         if ($this->content_view !== FALSE && empty($this->content_view))
             $this->content_view = $controller_class  .  ($this->template_path && $this->template_path[0] == "/" ? '' : '/'.str_replace('_','',$this->router->method)). (($this->template_path) ? '/'.$this->template_path : '');
-
        // print_r(APPPATH . "views/" . $this->content_view . EXT);exit();
         $content = file_exists(APPPATH . "views/" . $this->content_view . EXT)
                         ? $this->load->view($this->content_view, $this->view_data, TRUE) : FALSE;
+
         if($this->layout_view)
             echo $this->load->view('layouts/'. $this->layout_view, array("page_content" => $content), TRUE);
         else

@@ -1,117 +1,189 @@
-var language = {
-    "sProcessing": "Processing...",
-    "sLengthMenu": "Show _MENU_ entries",
-    "sZeroRecords": "No matching records found",
-    "sEmptyTable": "No data available in table",
-    "sLoadingRecords": "Loading...",
-    "sInfo": "Showing _START_ to _END_ of _TOTAL_ entries",
-    "sInfoEmpty": "Showing 0 to 0 of 0 entries",
-    "sInfoFiltered": "(filtered from _MAX_ total entries)",
-    "sInfoPostFix": "",
-    "sInfoThousands": ",",
-    "sSearch": "Search:",
-    "sUrl": "",
-    "oPaginate": {
-        "sFirst":    "First",
-        "sPrevious": "Previous",
-        "sNext":     "Next",
-        "sLast":     "Last"
-    },
-};
-
-$(document).ready(function() {
-    $('#kunde-all').dataTable({   "aoColumns": [
-        null,
-        null,
-        { "bSearchable": false },
-        null,
-        { "bSearchable": false },
-        { "bSortable": false,"bSearchable": false }
-    ] ,
-        "oLanguage": language
+function FindProvisionError(block) {
+    $(block).find('input').each(function () {
+        if ($(this).val() != '')
+            $(this).removeClass('error');
+        else
+            $(this).addClass('error');
     });
 
-    $('#kunde-formulars').dataTable({   "aoColumns": [
-        null,
-        null,
-        { "bSearchable": false },
-        { "bSearchable": false, "bSearchable": false }
-    ],
-        "oLanguage": language});
+    if (parseInt($(block).find('.from input').val()) >= parseInt($(block).find('.to input').val()))
+        $(block).find('.from input, .to input').addClass('error');
+    else
+        $(block).find('.from input, .to input').removeClass('error');
 
+    return $(block).find('input.error').size() > 0;
+}
 
-    $('#add_kunde-button').click(function() {
-        document.location = "kunde/create";
-        return false;
-    });
-
-
-    $("#cancel-button").click(function() {
-        document.location = "dashboard";
-        return false;
-    });
-
-    $(".kunde-item #cancel-button").click(function(){
-        document.location = "kunde/" + $("input[name=kunde_id]").val();
-        return false;
-    });
-
-    $("#type").buttonset().change(function() {
-        if ($("#radio1").is(":checked")) {
-            $("#agentur-block").show();
-            $("#kunden-block").hide();
-            $("input[name=type]").val("kunde");
+function UpdateProvisionLevels() {
+    $('#provisionlevels-list tbody tr').click(function () {
+        if ($(this).hasClass('new-line'))
+            return false;
+        if ($(this).hasClass('current')) {
+            $(this).find('span').hide();
+            $(this).find('input, a').show();
+            $(this).find('.delete-level').hide();
         }
         else {
-            $("#agentur-block").hide();
-            $("#kunden-block").show();
-            $("input[name=type]").val("person");
+            $('#provisionlevels-list tbody tr').removeClass('current');
+            $(this).addClass('current');
         }
     });
 
-    $('#kunde-all .edit-button').click(function() {
-        document.location = "kunde/edit/" + $(this).parent().parent().attr("kunde_id");
-        return false;
-    });
+    $('#provisionlevels-list tbody tr a.save').click(function () {
 
-    $('#kunde-all .createformular-button').click(function() {
-        document.location = "formular/create/" + $(this).parent().parent().attr("kunde_id");
-        return false;
-    });
-
-    $('.kunde-item input').keypress(function(event) {
-        if (event.keyCode == KEY_ENTER) {
-            var input = $(this).attr("name") == "comment" ? $('input[type=submit]').focus() : $(this).next('input, textarea');
-            if ($(input).size() == 0)
-                input = $(this).parents('.param').next().find('input,textarea').first();
-            $(input).focus();
+        if (FindProvisionError($(this).parents('tr')))
             return false;
-        }
-        else if (event.keyCode == KEY_ESC) {
-            var input = $(this).prev('input, textarea');
-            if ($(input).size() == 0)
-                input = $(this).parents('.param').prev().find('input,textarea').last();
-            $(input).focus();
-            return false;
-        }
-    });
+
+        var block = $(this).parents('tr');
+        $(block).find('.save').hide();
+        $(block).find('input').attr('disabled', 'disabled');
 
 
-    $('.view-param input').keypress(function(event) {
-        if (event.keyCode == KEY_ENTER) {
-            $(this).parent().find('button').click();
-            return false;
-        }
-    });
+        $(block).find('.loading').show();
+        $.ajax({
+            url:'provisionierung/' + $(block).find('.level_id').val(),
+            type:'post',
+            data:'from=' + $(block).find('.from input').val() + '&to=' + $(block).find('.to input').val() + '&percent=' +
+                $(block).find('.percent input').val(),
+            success:function () {
+                $(block).find('input').removeAttr('disabled').hide();
+                $(block).find('.loading').hide();
+                $(block).find('.from span').html($(block).find('.from input').val()).show();
+                $(block).find('.to span').html($(block).find('.to input').val()).show();
+                $(block).find('.percent span').html($(block).find('.percent input').val()).show();
+                $(block).find('.delete-level').show();
+            }
+        });
 
-    $('#add_formular-button').click(function() {
-        document.location = "formular/create/"+ $('#kunde_id').val();
         return false;
     });
 
-    $('#edit_kunde-button').click(function(){
-        document.location = "kunde/edit/" + $('#kunde_id').val();
+    $('#provisionlevels-list tbody tr a.delete-level').click(function () {
+        block = $(this).parents('tr');
+        $("#delete-confirm").dialog({
+            resizable:false,
+            height:140,
+            modal:true,
+            title:'Delete Confirmation',
+            buttons:{
+                "Delete":function () {
+                    $.ajax({
+                        url:'provisionierung/delete/' + $(block).find('.level_id').val(),
+                        success:function (data) {
+                            $('#provisionlevels-list tbody').empty().html(data);
+                            UpdateProvisionLevels();
+                        }
+                    });
+                    $(this).dialog("close");
+                },
+                Cancel:function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
         return false;
     });
+
+    $('#provisionlevels-list a.new-level').click(function () {
+        $(this).parents('tr').find('input,.add-new').show();
+        $(this).hide();
+        return false;
+    });
+
+    $('#provisionlevels-list .new-line .add-new').click(function () {
+
+        if (FindProvisionError('#provisionlevels-list .new-line'))
+            return false;
+
+        $(this).hide();
+
+        $('.new-line input').attr('disabled', 'disabled');
+        $('.new-line .loading').show();
+
+        $.ajax({
+            url:'provisionierung/new',
+            type:'post',
+            data:'from=' + $('.new-line .from input').val() + '&to=' + $('.new-line .to input').val() + '&percent=' + $('.new-line .percent input').val(),
+            success:function (data) {
+                $('#provisionlevels-list tbody').empty().html(data);
+                UpdateProvisionLevels();
+            }
+        });
+
+        return false;
+    });
+}
+
+$(document).ready(function () {
+
+    $('.contact-block .block-header').click(function () {
+        if ($(this).parents('.contact-block').find('.contact-content').is(':hidden')) {
+            $(this).parents('.contact-block').find('.contact-content').slideDown();
+            $(this).removeClass('closed');
+        }
+        else {
+            $(this).parents('.contact-block').find('.contact-content').slideUp();
+            $(this).addClass('closed');
+        }
+    });
+
+    $('#new-ketten-page #submit-button').click(function () {
+
+        if ($('#new-ketten-page #name').val())
+            return true;
+        $('#new-ketten-page #name').addClass('error');
+        return false;
+    });
+
+    $('.kundenverwaltung-rasdel .delete-link').click(function (e) {
+        var link = $(this);
+        $("#delete-confirm").dialog({
+            resizable:false,
+            height:140,
+            modal:true,
+            title:'Delete Confirmation',
+            buttons:{
+                "Delete":function () {
+                    document.location = $(link).attr('href');
+                },
+                Cancel:function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+
+        return false;
+    });
+
+    UpdateProvisionLevels();
+
+    $('#new-incoming-page #submit-button').click(function () {
+
+        if ($('#new-incoming-page #name').val())
+            return true;
+        $('#new-incoming-page #name').addClass('error');
+        return false;
+    });
+
+    $('#new-agenturen-page #submit-button').click(function () {
+        if ($('#new-agenturen-page #name').val())
+            return true;
+        $('#new-agenturen-page #name').addClass('error');
+        return false;
+    });
+
+    $('#new-stammkunden-page #submit-button').click(function () {
+
+        $('#new-stammkunden-page').find('#name, #surname').each(function(){
+            if($(this).val() == '')
+                $(this).addClass('error');
+            else
+                $(this).removeClass('error');
+        });
+
+        return $('#new-stammkunden-page input.error').size() == 0;
+
+    });
+
 });
 
