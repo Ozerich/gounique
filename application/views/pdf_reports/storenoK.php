@@ -5,6 +5,7 @@
 </div>
 <div class="content">
     <h1>STORNORECHNUNG</h1>
+
     <h2>Kundenkopie</h2>
 
     <table class="top-block">
@@ -18,7 +19,7 @@
             <td class="left-paramname">Rechnungsnummer:</td>
             <td class="left-paramvalue">-</td>
             <td class="right-paramname">Sachbearbeiter:</td>
-            <td class="right-paramvalue"><?=$formular->sachbearbeiter?></td>
+            <td class="right-paramvalue"><?=$formular->sachbearbeiter->fullname?></td>
         </tr>
         <tr>
             <td class="left-paramname">Kundennummer:</td>
@@ -82,21 +83,17 @@
             </tr>
             <tr>
                 <td class="paramname">Gesamtpreis:</td>
-                <td class="paramvalue"><?=$formular->price['brutto']?> &euro;</td>
+                <td class="paramvalue"><?=number_format($formular->original->brutto, 2, ',','.')?> &euro;</td>
             </tr>
             <tr>
-                <td class="paramname">Stornogebühr lt. AGB´s <?=$formular->storeno->percent?>% </td>
-                <td class="paramvalue"><?=$formular->price['storeno_sum']?> &euro;</td>
-            </tr>
-            <tr>
-                <td class="paramname">Gutschriftsbetrag</td>
-                <td class="paramvalue"><?=$formular->price['gutschriftsbetrag']?> &euro;</td>
+                <td class="paramname">Stornogebühr lt. AGB´s <?=$formular->original->storno_percent?>%</td>
+                <td class="paramvalue"><?=number_format($formular->brutto, 2, ',','.')?> &euro;</td>
             </tr>
         </table>
     </div>
 
     <div class="bottom-text">
-        <p>Achtung! Reise wurde am <?=$formular->storeno->date->format('d.m.Y')?> durch Kunde storniert.</p>
+        <p>Achtung! Reise wurde am <?=$formular->created_date->format('d.m.Y')?> durch Kunde storniert.</p>
         Mit freundlichen Grüßen, <br/>
         Ihr Unique World Team
     </div>

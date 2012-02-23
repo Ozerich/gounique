@@ -19,7 +19,7 @@
             <td class="left-paramname">Rechnungsnummer:</td>
             <td class="left-paramvalue">-</td>
             <td class="right-paramname">Sachbearbeiter:</td>
-            <td class="right-paramvalue"><?=$formular->sachbearbeiter?></td>
+            <td class="right-paramvalue"><?=$formular->sachbearbeiter->fullname?></td>
         </tr>
         <tr>
             <td class="left-paramname">Kundennummer:</td>
@@ -52,7 +52,7 @@
                 </tr>
             </table>
         </div>
-
+        <? if ($formular->type != 'nurflug'): ?>
         <div class="block">
             <h3>Leistung:</h3>
             <table class="liestung-table">
@@ -63,6 +63,7 @@
                 <? endforeach; ?>
             </table>
         </div>
+        <? endif; ?>
 
         <?if ($formular->flight_text != ""): ?>
         <div class="block">
@@ -79,31 +80,32 @@
         <table>
             <tr>
                 <td class="paramname">Gesamtreisepreis:</td>
-                <td class="paramvalue"><?=$formular->price['brutto']?> &euro;</td>
+                <td class="paramvalue"><?=number_format($formular->original->brutto, 2, ',','.')?> &euro;</td>
             </tr>
             <tr>
-                <td class="paramname">Stornogebühr lt. AGB´s <?=$formular->storeno->percent?>%</td>
-                <td class="paramvalue"><?=$formular->price['storeno_sum']?> &euro;</td>
+                <td class="paramname">Stornogebühr <?=$formular->original->storno_percent ?
+                    ' lt. AGB´s '.$formular->original->storno_percent.'%' : ''?></td>
+                <td class="paramvalue"><?=number_format($formular->brutto, 2, ',','.')?> &euro;</td>
             </tr>
             <tr>
                 <td class="paramname"><?=$formular->kunde->provision?>% Provision auf Storno</td>
-                <td class="paramvalue"><?=$formular->price['storeno_provision']?> &euro;</td>
+                <td class="paramvalue"><?=$formular->price['provision']?> &euro;</td>
             </tr>
             <? if (!$formular->kunde->ausland): ?>
-                <tr class="green">
-                    <td class="paramname">MWST auf Prov 19%</td>
-                    <td class="paramvalue"><?=$formular->price['mwst']?> &euro;</td>
-                </tr>
+            <tr class="green">
+                <td class="paramname">MWST auf Prov 19%</td>
+                <td class="paramvalue"><?=$formular->price['mwst']?> &euro;</td>
+            </tr>
             <? endif; ?>
             <tr>
                 <td class="paramname">Gesamtprovision</td>
-                <td class="paramvalue"><?=$formular->price['gesamtprovision']?> &euro;</td>
+                <td class="paramvalue"><?=number_format($formular->provision_amount, 2, ',','.')?> &euro;</td>
             </tr>
         </table>
     </div>
 
     <div class="bottom-text">
-        <p>Achtung! Reise wurde am <?=$formular->storeno->date->format('d.m.Y')?>
+        <p>Achtung! Reise wurde am <?=$formular->created_date->format('d.m.Y')?>
             durch <?=$formular->kunde->type == "agenturen" ? 'Reisebüro' : 'Kunde'?> storniert.
             <? if ($formular->kunde->type == "agenturen") echo 'Ihre neue Provision entnehmen Sie bitte';?>
             obengenannten Aufstellungen.</p>

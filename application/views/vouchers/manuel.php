@@ -13,7 +13,7 @@
 
         <div class="persons">
             <? foreach ($persons as $person): ?>
-            <div class="person"><?=$person->name . " / " . $person->surname?></div>
+            <div class="person"><?=$person->english_sex." ".$person->name . " / " . $person->surname?></div>
             <? endforeach; ?>
         </div>
     </div>
@@ -27,7 +27,7 @@
         </div>
         <div class="datestart"><?=($item->date_start) ? $item->date_start->format('d. M Y') : '&nbsp;';?></div>
         <div class="dateend"><?=($item->date_end) ? $item->date_end->format('d. M Y') : '&nbsp;';?></div>
-        <div class="remark"><?=$item->voucher_remark?></div>
+        <div class="remark"><?=str_replace("\n", "<br/>", $item->voucher_remark)?></div>
     </div>
 
     <div class="right">

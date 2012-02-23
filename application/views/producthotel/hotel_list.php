@@ -10,7 +10,7 @@
     <td class="submenu">
         <ul>
             <li><a href="product/hotel/edit/<?=$hotel->id?>">verwalten</a></li>
-            <li><a href="product/hotel/rooms/<?=$hotel->id?>">zimmerdaten</a></li>
+            <li><a href="product/hotel/rooms/<?=$hotel->id?>">pricedaten</a></li>
             <li><a href="product/hotel/delete/<?=$hotel->id?>">loeschen</a></li>
         </ul>
     </td>

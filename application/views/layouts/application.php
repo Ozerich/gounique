@@ -54,11 +54,13 @@
             <br class="clear"/>
         </div>
 
-        <span class="copyright">&copy; 2010 - 2012 Copyright <a href="#">goUnique</a> 1.2
+        <span class="copyright">&copy; 2010 - 2012 Copyright <a href="#">goUnique</a> 1.3
    Powered by <a class="author-link" href="mailto:ozicoder@gmail.com">Vital Ozierski</a></span>
 
     </div>
 
 </div>
+<div id="dark-overlay"></div>
+<div id="overlay-window"></div>
 </body>
 </html>

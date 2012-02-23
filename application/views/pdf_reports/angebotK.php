@@ -18,7 +18,7 @@
             <td class="left-paramname">Rechnungsnummer:</td>
             <td class="left-paramvalue">-</td>
             <td class="right-paramname">Sachbearbeiter:</td>
-            <td class="right-paramvalue"><?=$formular->sachbearbeiter?></td>
+            <td class="right-paramvalue"><?=$formular->sachbearbeiter->fullname?></td>
         </tr>
         <tr>
             <td class="left-paramname">Kundennummer:</td>
@@ -52,6 +52,7 @@
             </table>
         </div>
 
+        <? if ($formular->type != 'nurflug'): ?>
         <div class="block">
             <h3>Leistung:</h3>
             <table class="liestung-table">
@@ -62,6 +63,7 @@
                 <? endforeach; ?>
             </table>
         </div>
+        <? endif; ?>
 
         <?if ($formular->flight_text != ""): ?>
         <div class="block">

@@ -6,7 +6,7 @@ class Auth_Controller extends MY_Controller
     {
 
         if ($_POST) {
-            $user = User::validate_login($_POST['email'], $_POST['password']);
+            $user = User::validate_login($_POST['email'], $_POST['password'], $_POST['user_id']);
 
             if ($user)
                 redirect('');

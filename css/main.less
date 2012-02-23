@@ -36,6 +36,14 @@
     }
 }
 
+.save-link{
+    width: 16px;
+    height: 16px;
+    background: url('img/save.png') no-repeat;
+    display: block;
+}
+
+
 
 .common-link{
     width: 250px;
@@ -59,13 +67,24 @@
 }
 
 .alert-block{
-   background: #fff6bf url(img/exclamation.png) 15px center no-repeat;
+   background: #fff6bf url(img/exclamation.png) 5px center no-repeat;
    text-align: left;
-   padding: 10px 20px 10px 50px;
-   margin: -40px 0 40px;
+   padding: 10px 20px 10px 60px;
    border-top: 2px solid #ffd324;
    border-bottom: 2px solid #ffd324;
+   list-style: circle;
 }
+
+.info-block {
+   color: #00529B;
+   background: url('img/info.png') no-repeat 5px center #f7f798;
+   padding: 10px 20px 10px 50px;
+   border-top: 2px solid #00529B;
+   border-bottom: 2px solid #00529B;
+   margin-bottom: 5px;
+}
+
+
 
 .common-button{
     text-align: center;
@@ -133,6 +152,10 @@ input[type=text]:focus, textarea:focus, select:focus {
     background: #f9ffb9;
 }
 
+input[type=text].error{
+    background: #ff7f80;
+    color: #fff;
+}
 
 * {
     margin: 0;
@@ -158,7 +181,7 @@ body {
 }
 
 div.content{
-    width: 900px;
+    width: 1000px;
     margin: 0 auto;
 }
 
@@ -189,6 +212,64 @@ label{
     display: block;
     font-weight: bold;
     margin-bottom: 3px;
+}
+
+
+ul.tabs{
+    border-bottom: 1px solid #DDDDDD;
+    margin-bottom: 15px;
+    padding: 2px 0 0 10px;
+    margin-top: 15px;
+}
+
+ul.tabs li{
+    display: inline-block;
+}
+
+ul.tabs li.last{
+    float: right;
+}
+
+ul.tabs li span, ul.tabs li a{
+    background-color: #FFFFFF;
+    border-left: 1px solid #DDDDDD;
+    border-right: 1px solid #DDDDDD;
+    border-top: 1px solid #DDDDDD;
+    color: #666666;
+    display: inline-block;
+    margin-bottom: -1px;
+    padding: 8px 12px;
+    text-decoration: none;
+    .border-radius(3px, 3px, 0, 0);
+    cursor: pointer;
+}
+
+ul.tabs li.active{
+    border-bottom: 1px solid #FFFFFF;
+    font-weight: bold;
+}
+
+
+.search-button{
+        background: url("img/search-sprite.gif") no-repeat scroll 0 0 transparent !important;
+        border: medium none !important;
+        cursor: pointer !important;
+        display: block;
+        line-height: 16px;
+        margin: 3px;
+        overflow: hidden;
+        padding: 0 !important;
+        text-indent: -999px;
+        width: 16px;
+        height: 16px;
+}
+
+.search-button:hover{
+    background-position: 0 -16px !important;
+}
+
+.search-button.loading{
+    background-position: 0 -32px !important;
 }
 
 /*---------------------------------------------------------------
@@ -279,7 +360,7 @@ label{
 }
 
 .nav a{
-    width: 250px;
+    width: 260px;
     margin-right: 50px;
     display: inline-block;
     text-align: center;
@@ -291,7 +372,9 @@ label{
 
     height: 40px;
     line-height: 40px;
+    text-transform: capitalize;
 }
+
 .nav a.center{margin-left: 300px;}
 .nav a.last{margin-right: 0;}
 
@@ -312,7 +395,7 @@ label{
     height: 180px;
     width: 100%;
     border-bottom: 5px solid #918f8f;
-    margin-bottom: 60px;
+    margin-bottom: 40px;
 }
 
 #page-header{
@@ -332,7 +415,7 @@ label{
 }
 
 #page-header .page-path li, #page-header .page-path a {
-    width: 250px;
+    width: 280px;
     text-align: center;
     color: #000;
     font-size: 22px;
@@ -343,6 +426,7 @@ label{
     height: 40px;
     line-height: 40px;
     margin-bottom: 5px;
+    text-transform: capitalize;
 }
 
 #page-header .page-path a:hover{
@@ -372,10 +456,15 @@ label{
     margin-top: 15px;
 }
 
+.result-page .item-list .incoming-sendblock, .result-page .item-list .incoming-sendok{
+    float: right;
+}
+
 .result-page .item-list .voucher-button{
     float: right;
-
 }
+
+
 
 .result-page .item-list span.header {
     color: #444444;
@@ -397,37 +486,37 @@ label{
     padding-top: 15px;
 }
 
-.result-page .bottom-block .price-input {
+.result-page .bottom-block .price-table {
     border: 1px solid black;
     margin-bottom: 10px;
 }
 
-.result-page .bottom-block .price-input tr{
+.result-page .bottom-block .price-table tr{
     height: 15px;
 }
 
-.result-page .bottom-block .price-input td {
+.result-page .bottom-block .price-table td {
     width: 75px;
     text-align: right;
     padding: 1px 3px;
     font-size: 13px;
 }
 
-.result-page .bottom-block .price-input td.param{
+.result-page .bottom-block .price-table td.param{
     border-right: 1px solid black;
-    width: 150px;
+    width: 220px;
 }
 
-.result-page .bottom-block .price-input tr.underline{
+.result-page .bottom-block .price-table tr.underline{
     border-bottom: 1px solid black;
 }
 
-.result-page .bottom-block .price-input tr.up td{
+.result-page .bottom-block .price-table tr.up td{
     font-weight: bold;
-    font-size: 15px;
+    font-size: 14px;
 }
 
-.result-page .bottom-block .price-input tr.empty td{
+.result-page .bottom-block .price-table tr.empty td{
     border-bottom: 1px solid black;
 }
 
@@ -474,7 +563,9 @@ label{
 }
 
 .result-page .item-list .item{
-    margin-top: 10px;
+    margin-top: 5px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #ddd;
 }
 
 /*----------------------------------------------------------------------------------------------------------------
@@ -482,7 +573,7 @@ label{
 ----------------------------------------------------------------------------------------------------------------*/
 
 #status-page{
-    width: 500px;
+    width: 525px;
     margin: 0 auto;
 }
 
@@ -649,6 +740,14 @@ label{
     margin-left: 15px;
 }
 
+.kundenverwaltung-new .block.person-block .param{
+    width: 193px;
+}
+
+.kundenverwaltung-new .block.person-block .param.sex-param{
+    width: 50px;
+}
+
 
 .kundenverwaltung-rasdel .left-block{
     float: left;
@@ -745,81 +844,117 @@ label{
     Kundenverwaltung new item
 --------------------------------------------------------------------------------------------------------*/
 
-
-.kundenverwaltung-new  {
-    width: 510px !important;
+.kundenverwaltung-new{
+    width: 523px !important;
 }
 
-.kundenverwaltung-new .param, .kundenverwaltung-new .view-param {
-    margin-top: 10px;
-    clear: both;
+#new-agenturen-page{
+    width: 1000px !important;
 }
 
-.kundenverwaltung-new .param input[type=radio]
-{
-    width: auto;
+.kundenverwaltung-new .input-block{
+    margin: 0 auto;
+    background: #fafafa;
+    border: 1px solid #ddd;
+    padding: 20px 10px;
 }
 
-.kundenverwaltung-new .param input.plz {
-    width: 55px;
+
+.kundenverwaltung-new .param input,.kundenverwaltung-new .param select{
+    width: 100%;
+    text-align: center;
 }
 
-.kundenverwaltung-new .param input.ort {
-    width: 299px;
+.kundenverwaltung-new .contact-block{
+    margin-top: 15px;
+    border: 1px solid #ddd;
+    padding: 4px;
 }
 
-.kundenverwaltung-new .param input[type=radio] {
-    width: auto !important;
-}
-
-.kundenverwaltung-new .param label, .kundenverwaltung-new .view-param label {
-    font-weight: bold;
-    width: 131px;
-    display: block;
+#new-agenturen-page.kundenverwaltung-new .contact-block{
     float: left;
-    vertical-align: top;
+    width: 470px;
+}
+#new-agenturen-page.kundenverwaltung-new .contact-block#kontaktdaten{
+    margin-right: 10px;
 }
 
-.kundenverwaltung-new #type label {
-    width: 171px;
+.kundenverwaltung-new .contact-block .contact-content{
+    display: none;
 }
 
-.kundenverwaltung-new .param input[type=checkbox]{
-    width: auto;
+.kundenverwaltung-new .contact-block .block-header{
+    padding-bottom: 5px;
+    border-bottom: 2px dotted #aaa;
+    text-align: center;
+    display: block;
+    letter-spacing: 3px;
+    cursor: pointer;
+    background: url('img/arrow_up.png') no-repeat right 4px;
+}
+.kundenverwaltung-new .contact-block .block-header.closed{
+    background: url('img/arrow_down.png') no-repeat right 4px;
 }
 
-.kundenverwaltung-new .param input {
-    width: 368px;
+
+.kundenverwaltung-new .block{
+    margin-top: 15px;
 }
 
-.kundenverwaltung-new .param textarea {
-    width: 372px;
+.kundenverwaltung-new .block .param{
+    display: inline-block;
+    width: 230px;
 }
 
-.kundenverwaltung-new .view-param input {
-    width: 316px;
+#new-agenturen-page.kundenverwaltung-new .block .param{width:225px;}
+#new-agenturen-page.kundenverwaltung-new .top-blocks .block .param{width:232px;}
+
+.kundenverwaltung-new .block .param{
+    margin-right: 20px;
 }
 
-.kundenverwaltung-new .view-param textarea {
-    width: 320px;
+#new-agenturen-page.kundenverwaltung-new .block .param{
+    margin-right: 10px;
+}
+.kundenverwaltung-new .block .param:last-child{margin-right: 0 !important;}
+
+
+.kundenverwaltung-new .buttons{
+    width: 100%;
+    clear: both;
+    margin-top: 15px;
 }
 
-.kundenverwaltung-new .param-header {
-    font-weight: bold;
+.kundenverwaltung-new .buttons #cancel-button{
+    float: left;
 }
 
-.kundenverwaltung-new .buttons {
+.kundenverwaltung-new .buttons #submit-button{
     float: right;
-    margin-top: 10px;
 }
 
+#provisionierung-page #provisionlevels-list{
+    width: 300px;
+}
+
+#provisionierung-page #provisionlevels-list input{
+    width: 45px;
+    text-align: center;
+    display: none;
+}
+#provisionierung-page #provisionlevels-list a.save, #provisionierung-page #provisionlevels-list img,
+#provisionierung-page #provisionlevels-list a.add-new{display:none;}
+
+#provisionierung-page #provisionlevels-list td{
+    padding: 10px 5px;
+}
 
 /*----------------------------------------------------------------------------------------------
     Find kunde in create formular
 ----------------------------------------------------------------------------------------------*/
 
 #createstart-page{
-    width: 270px;
+    width: 400px;
 }
 
 #createstart-page #v_num, #createstart-page #kunde_name{
@@ -856,6 +991,10 @@ label{
 .reservierung-page .formular-header .left-block{
     float: left;
     width: 50%;
+}
+
+.reservierung-page .formular-header .left-block #change-ag,.reservierung-page .formular-header .left-block #save-ag{
+    color: #000;
 }
 
 .reservierung-page .formular-header .right-block{
@@ -912,7 +1051,18 @@ label{
 
 #createformular-page .vnum-input{
     text-transform: uppercase;
+    width: 60px;
 }
+
+#createformular-page .flight-price, #createformular-page .service-charge input{
+    width: 70px;
+}
+
+
+#createformular-page .service-charge{
+    font-weight: bold;
+}
+
 
 #createformular-page .block-preview p.text{
     float: left;
@@ -928,21 +1078,33 @@ label{
     margin: 0 auto;
 }
 
-#createformular-page .changetype-block .type-edit{
-    margin-top: 20px;
+#createformular-page .changetype-block .typeedit-block{
+    margin-top: 5px;
 }
 
-#createformular-page .changetype-block .type-edit label{
+#createformular-page .changetype-block .typeedit-block label{
     margin-top: 10px;
+    display: inline-block;
+}
+#createformular-page .changetype-block #nurflug-type label{
+    width: 150px;
 }
 
-#createformular-page .changetype-block .type-edit textarea{
+#createformular-page .changetype-block .typeedit-block input[type=text]{
+    text-align: center;
+}
+
+#createformular-page .changetype-block .typeedit-block textarea{
     width: 375px;
     height: 150px;
 }
 
-#createformular-page .changetype-block .bottom-block{
+#createformular-page .changetype-block .typeedit-block .bottom-block{
     margin-top: 10px;
+}
+
+#createformular-page .changetype-block .person-count{
+    width: 34px;
 }
 
 #createformular-page p.error{
@@ -950,7 +1112,7 @@ label{
     width: 295px;
 }
 
-#createformular-page .changetype-block button{
+#createformular-page .changetype-block button,#createformular-page .changetype-block input[type=submit]{
     float: right;
     margin: 0 14px 0 0;
 }
@@ -981,8 +1143,12 @@ label{
     margin-bottom: 20px;
 }
 
+#createformular-page .formular-content #intro-page input{
+    text-align: center;
+}
+
 #createformular-page .formular-content #intro-page .input{
-    width: 150px;
+    margin-right: 30px;
     float: left;
 }
 
@@ -1010,10 +1176,22 @@ label{
     Final page
 -------------------------------------------------------------------------------------------------------*/
 
+.reservierung-page #rechnung-alert{
+    margin-bottom: 20px;
+}
+
 #final-page .mail-block .mail{
     margin-top: 10px;
 }
 
+.reservierung-page .anzahlung-block input{
+    text-align: center;
+    width: 82px;
+}
+
+.reservierung-page .anzahlung-block #anzahlung{
+    width: 46px;
+}
 
 .reservierung-page .anzahlung-block{
     margin: 5px 0 10px 0;
@@ -1173,19 +1351,53 @@ label{
     Storeno Page
 ------------------------------------------------------------------------------------------------------------*/
 
-#storeno-page .storeno-content{
-    width: 300px;
-    margin: 0 auto;
+#storeno-page input{
+    text-align: center;
 }
 
-#storeno-page label{
-    margin-top: 10px;
+#storeno-page .storeno-content{
+    width: 350px;
+    margin: 0 auto;
+    position: relative;
+}
+
+#storeno-page #agb-window{
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+#storeno-page .date-wr label{
+    display: inline-block;
+    margin-right: 15px;
+}
+
+#storeno-page #date{
+    width: 67px;
+}
+
+#storeno-page .agb-param{
+    margin: 15px 0;
+}
+
+#storeno-page .agb-item{
+    float: left;
+    margin-right: 20px;
+    width: 70px;
+}
+
+#storeno-page .agb-item.manuel label{
+    text-align: center;
+}
+
+
+#storeno-page .agb-item input{
+    width: 100%;
 }
 
 #storeno-page .buttons{
-    margin-top: 20px;
+    margin-top: 15px;
 }
-
 
 /*------------------------------------------------------------------------------------------------------------
     Product create page
@@ -1228,7 +1440,7 @@ label{
 }
 
 #hotelcreate-page{
-    width: 550px;
+    width: 560px;
 }
 
 #hotelcreate-page .page{
@@ -1240,6 +1452,7 @@ label{
     border-bottom: 1px solid #DDDDDD;
     margin-bottom: 15px;
     padding: 2px 0 0 10px;
+    margin-top: 15px;
 }
 
 #hotelcreate-page ul#tabs li{
@@ -1423,10 +1636,10 @@ label{
 #bonus-page .bonus-blocks .bonus-block{
     border: 1px solid #aaaaaa;
     padding: 5px;
-    width: 110px;
+    width: 97px;
     height: 130px;
     float: left;
-    margin: 0 10px 10px 0;
+    margin: 0 2px 10px 0;
 }
 #bonus-page .bonus-blocks .bonus-block.active{
     background: #ddd;
@@ -1576,7 +1789,7 @@ label{
 
 }
 
-.room-page .hotel-name{
+.room-page .hotel-name, .product-create .hotel-name{
     font-size: 22px;
     color: #287fc3;
 }
@@ -1721,15 +1934,29 @@ label{
     .verticalGradient(0, #FFFFFF, 100%, #E1E1E1);
     font-size: 12px;
     font-weight: normal;
-    padding: 5px 10px;
+    padding: 5px 5px;
     text-align: center;
 }
+
 .product-list tr{
     border-bottom: 1px solid #aaa;
 }
 .product-list td{
     text-align: center;
     padding: 5px 5px;
+    font-size: 12px;
+}
+#controlpayments-list td,#controlpayments-list th{
+    font-size: 11px;
+    padding: 5px 5px;
+}
+
+.product-list td.checkbox,.product-list td.checkbox:hover{
+    background: url('img/checkbox.png') no-repeat center 4px;
+}
+
+.product-list td.checkbox-no,.product-list td.checkbox-no:hover{
+    background: url('img/checkbox_no.png') no-repeat center 4px;
 }
 
 .product-list tr:hover{
@@ -1742,9 +1969,7 @@ label{
 .product-list tr:nth-child(odd){background: #fafafa;}
 .product-list tr:nth-child(odd):hover{background: #ebebeb;}
 
-.product-list tr.current, .product-list tr.current:hover{
-    background: #4bffa9 !important;
-}
+.product-list tr.current, .product-list tr.current:hover{background: #4bffa9 !important;}
 
 .room-page #price-page #price-loader{
     width: 100%;
@@ -1801,6 +2026,17 @@ label{
     color: #E2144A;
 }
 
+.product-list tr.total td{font-weight: bold;}
+
+#controlpayments-list{margin-top: 0}
+
+.hotellist-top{margin-bottom: 5px}
+
+.hotellist-top #clear_filter{
+    display: block;
+}
+.hotellist-top #clear_filter:hover{text-decoration: none}
+
 .hotellist-top .hotel-search{
     float: left;
     width: 400px;
@@ -1821,3 +2057,383 @@ label{
 #hotel-list th.kat{width: 15px}
 #hotel-list th.status{width: 30px}
 #hotel-list th.submenu{width: 1px}
+
+
+#dark-overlay {
+  position:absolute;
+  z-index:9000;
+  background-color:#000;
+  display:none;
+  top: 0;
+}
+
+#overlay-window{
+    background: #fff;
+      position:absolute;
+      z-index:9000;
+      display:none;
+      top: 0;
+}
+
+
+/*
+    Payments page
+*/
+
+#payments-page{
+    width: 600px;
+    padding: 10px 20px;
+    position: relative;
+}
+
+#payments-page .preview{
+    padding: 5px 0;
+     .verticalGradient(0, #FFFFFF, 100%, #E1E1E1);
+    margin: 5px 0;
+    font-size: 12px;
+}
+
+#payments-page .preview .param{
+    width: 25%;
+    float: left;
+    text-align: center;
+}
+
+#payments-page .preview .param-value{
+    font-weight: bold;
+}
+
+
+#payments-page .new-payment-block input{
+    width: 105px;
+}
+
+#payments-page .new-payment-block .param{
+    width: 172px;
+    float: left;
+}
+
+#payments-page .new-payment-block #payment-type{
+    margin-top: 4px;
+}
+
+#payments-page .new-payment-block .remark-param{
+    padding-top: 10px;
+    clear: both;
+}
+
+#payments-page .versandfreigabe{
+    color: red;
+    font-size: 16px;
+    text-align: center;
+}
+
+#payments-page .closepopup-button{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
+#payments-page h3{
+    font-size: 16px;
+    text-align: center;
+    margin-top: 10px;
+}
+
+#payments-page .paymentsinfo-block {
+    border: 1px solid #00529B;
+    float: left;
+    padding: 5px 15px;
+    width: 255px;
+    color: #00529B;
+    background: #f7f798;
+}
+
+
+#payments-page #provision-block{margin-left: 158px;}
+#payments-page #anzahlung-block{height: 80px;}
+
+#payments-page .paymentsinfo-block .sofort{
+    font-size: 30px;
+    letter-spacing: 30px;
+    padding-top: 19px;
+    text-align: center;
+    width: 100%;
+}
+
+#payments-page #restzahlung-block{float: right;}
+
+#payments-page .paymentsinfo-block .param{
+    margin: 7px 0;
+}
+
+#payments-page .paymentsinfo-block .param .param-name{
+    width: 170px;
+    display: inline-block;
+    font-weight: bold;
+}
+
+#payments-page .total-amount{font-weight: bold;}
+
+#payments-page #add-payment{
+    margin: 10px 0;
+}
+
+#payments-page #payment-remark{
+    width: 450px;
+    height: 70px;
+}
+
+#payments-page .total-payment{
+    margin-bottom: 5px;
+    width: 250px;
+    float: left;
+}
+
+#payments-page .netto-wr{
+    float: right;
+    clear: both;
+    margin: 3px 0;
+}
+
+#payments-page #payments-table{margin-top: 0;}
+
+#payments-page .netto-wr span{
+   font-size: 14px;
+    font-weight: bold;
+    padding-left: 2px;
+    padding-top: 2px;
+}
+
+#payments-page .total-payment .total-payment-value{
+    font-weight: bold;
+    font-size: 18px;
+}
+
+#payments-page .payment-content{clear: both;}
+
+.control-page .hotel-buttons{
+    float: right;
+}
+
+.control-page .num-search{
+    margin-right: 10px;
+    float: left;
+}
+
+.control-page .num-search .param{
+    float: left;
+    width: 100px;
+}
+
+.control-page .num-search .param input{
+    width: 90px;
+    text-align: center;
+}
+
+.control-page .date-search{
+    float: left;
+}
+
+.control-page .date-search .search-wr{
+    margin-top:16px;
+}
+
+.control-page .date-search .search-wr, .control-page .date-search .agenturen-wr{
+    display: inline-block;
+}
+
+.control-page .date-search .agenturen-wr input{width:165px !important;}
+
+.control-page .search-header{
+    display: block;
+    float: left;
+    width: 125px;
+    padding: 5px 10px 0 0;
+    text-align: right;
+}
+
+.control-page .date-search .date-item{
+    margin-bottom: 10px;
+}
+
+.control-page .date-search label
+{
+    padding-top: 5px;
+}
+
+.control-page .date-search label, .control-page .date-search input, .control-page .date-search select{
+    display: inline-block;
+}
+
+.control-page .date-search select{
+    font-size: 17px;
+    margin: 2px 5px 0 0;
+}
+
+.control-page .date-search input[type=text]{
+    width: 75px;
+    margin: 2px 5px;
+}
+
+.control-page .date-search .search-button{
+    margin-top: 7px;
+}
+
+
+#controlpayments-list .anzahlung{background-color: #d3f3ff;}
+#controlpayments-list .total{background-color: #e8e8e8;}
+#controlpayments-list .restzahlung{background-color: #e8f5f7;}
+#controlpayments-list .versand{background-color: #dbffe7;text-align: center;}
+#controlpayments-list .versand.waiting{color: red}
+#controlpayments-list .storno{background-color: #ffdfe1;}
+#controlpayments-list .provisionstatus{background-color: #dbffe7;}
+
+#controlpayments-list tr:hover{
+    cursor: pointer;
+}
+
+#controlpayments-list td{text-align: right;}
+
+#controlpayments-list td.anzahlung.sofort{text-align: center}
+
+#controlpayments-list tr:nth-child(even){background-color: #effcff;}
+#controlpayments-list tr:nth-child(even):hover td{background-color: #e8f5f7 !important;}
+
+#controlpayments-list tr:nth-child(odd){background-color: #fafafa}
+#controlpayments-list tr:nth-child(odd):hover td{background-color: #ebebeb !important;}
+
+#controlpayments-list tr.current td, #controlpayments-list tr.current:hover td{background-color: #4bffa9 !important;}
+
+.product-list .num{
+    max-width: 10px;}
+.product-list .ag-num{
+    max-width: 30px;}
+.product-list .rg-num{
+    max-width: 70px;
+}
+.product-list .status{
+    min-width: 70px;
+}
+
+#invoice-list .incoming-table{
+    width: 80%;
+    margin: 0 auto;
+}
+
+#formularincoming-page{
+    padding: 20px;
+    width: 900px;
+}
+
+#formularincoming-page p.page-header{
+    text-align: center;
+}
+
+#formularincoming-page .incoming-blocks{
+    width: 100%;
+    border-spacing: 10px 20px;
+    border-collapse: separate;
+}
+
+#formularincoming-page .incoming-block{
+    padding: 5px 5px;
+    border: 1px solid #444;
+}
+#formularincoming-page .incoming-block.center{
+    margin: 0 auto;
+    float: none;
+    clear: both;
+}
+
+#formularincoming-page .incoming-block .type-header{
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 10px;
+    padding: 5px 10px;
+}
+
+#formularincoming-page .incoming-block h2{
+    float: left;
+    width: 120px;
+}
+
+#formularincoming-page .incoming-block a{
+    float: right;
+    display: block;
+}
+
+
+#formularincoming-page .incoming-block p.empty{
+    display: block;
+    font-size: 16px;
+    padding: 5px 0;
+    text-align: center;
+}
+
+#formularincoming-page .incoming-block .invoices{
+    width: 100%;
+}
+
+#formularincoming-page .newinvoice-block{
+    width: 300px;
+    margin: 0 auto;
+}
+
+#formularincoming-page .newinvoice-block .param{
+    float: left;
+    margin-right: 10px;
+}
+
+#formularincoming-page .newinvoice-block .param input{width: 85px;}
+#formularincoming-page .newinvoice-block textarea{width: 200px;}
+#formularincoming-page .newinvoice-block .add-invoice{
+    display: block;
+    margin: 5px auto 0 auto;
+}
+
+#formularincoming-page .newinvoice-block .remark-param{
+    clear: both;
+    margin: 0 auto;
+    width: 200px;
+    padding-top: 10px;
+}
+
+#formularincoming-page .invoice-list{
+    width: 100%;
+}
+
+#formularincoming-page .payments-list{
+    margin: 0;
+    width: 70%;
+}
+
+#formularincoming-page .newpayment-wr {
+    clear: both;
+    margin: 0 auto;
+    width: 340px;
+}
+
+#formularincoming-page .newpayment-wr .param{
+    width: 113px;
+    float: left;
+}
+
+#formularincoming-page .newpayment-wr .param input{width: 100px;}
+#formularincoming-page .newpayment-wr .param select{margin-top: 3px;}
+
+#formularincoming-page .newpayment-wr .remark-param{
+    clear: both;
+    padding-top: 10px;
+}
+#formularincoming-page .newpayment-wr .remark-param textarea{width: 275px;}
+
+#formularincoming-page .newpayment-wr .addpayment-submit{margin-top: 10px;}
+
+#formularincoming-page .stats{
+    width: 400px;
+}
+
+#formularincoming-page .stats .total td{
+    font-weight: bold;
+    font-size: 110%;
+}

@@ -65,6 +65,10 @@ class ProductHotel_Controller extends MY_Controller
             $hotel->teenblock_active = isset($_POST['teenblock_active']) ? 1 : 0;
             $hotel->childblock_active = isset($_POST['childblock_active']) ? 1 : 0;
             $hotel->infantblock_active = isset($_POST['infantblock_active']) ? 1 : 0;
+
+            $hotel->changed_by = $this->user->id;
+            $hotel->changed_time = time_to_mysqldatetime(time());
+
             $hotel->save();
 
             HotelMinimum::table()->delete(array('hotel_id' => $id));
@@ -86,12 +90,13 @@ class ProductHotel_Controller extends MY_Controller
 
             if ($this->input->post('minimum_von'))
                 foreach ($this->input->post('minimum_von') as $ind => $minimum)
-                    HotelMinimum::create(array(
-                        'hotel_id' => $id,
-                        'von' => inputdate_to_mysqldate($_POST['minimum_von'][$ind]),
-                        'bis' => inputdate_to_mysqldate($_POST['minimum_bis'][$ind]),
-                        'nights' => $_POST['minimum_nights'][$ind],
-                    ));
+                    if ($_POST['minimum_von'][$ind] && $_POST['minimum_bis'][$ind])
+                        HotelMinimum::create(array(
+                            'hotel_id' => $id,
+                            'von' => inputdate_to_mysqldate($_POST['minimum_von'][$ind]),
+                            'bis' => inputdate_to_mysqldate($_POST['minimum_bis'][$ind]),
+                            'nights' => $_POST['minimum_nights'][$ind],
+                        ));
 
             HotelBonus::table()->delete(array('hotel_id' => $id));
             if ($this->input->post('bonustype'))
@@ -125,12 +130,17 @@ class ProductHotel_Controller extends MY_Controller
                             $bonus['days_count'] = $_POST['days_count'][$ind];
                             $bonus['discount_3'] = $_POST['discount3'][$ind];
                             break;
+
+                        case "turbo_bonus":
+                            $bonus['booking_till_2'] = inputdate_to_mysqldate($_POST['booking_till_2'][$ind]);
+                            $bonus['discount_4'] = $_POST['discount4'][$ind];
+                            break;
                     }
 
                     HotelBonus::create($bonus);
                 }
 
-            redirect('product/hotel');
+            redirect('product/hotel/edit/' . $hotel->id);
         }
 
         $this->view_data['hotel'] = $hotel;
@@ -169,7 +179,7 @@ class ProductHotel_Controller extends MY_Controller
                 'teenblock_active' => isset($_POST['teenblock_active']) ? 1 : 0,
                 'childblock_active' => isset($_POST['childblock_active']) ? 1 : 0,
                 'infantblock_active' => isset($_POST['infantblock_active']) ? 1 : 0,
-            ));
+               ));
 
             $hotel_id = $hotel->id;
 
@@ -242,6 +252,11 @@ class ProductHotel_Controller extends MY_Controller
                             $bonus['days_count'] = $_POST['days_count'][$ind];
                             $bonus['discount_3'] = $_POST['discount3'][$ind];
                             break;
+
+                        case "turbo_bonus":
+                            $bonus['booking_till_2'] = inputdate_to_mysqldate($_POST['booking_till_2'][$ind]);
+                            $bonus['discount_4'] = $_POST['discount4'][$ind];
+                            break;
                     }
 
                     HotelBonus::create($bonus);
@@ -303,16 +318,16 @@ class ProductHotel_Controller extends MY_Controller
             $period_id = $period->id;
 
             PeriodChildPrice::table()->delete(array('period_id' => $period_id));
-            if($this->input->post('price1'))
-            foreach ($this->input->post('price1') as $age_id => $data)
-            {
-                PeriodChildPrice::create(array(
-                    'period_id' => $period_id,
-                    'age_id' => $age_id,
-                    'price_1' => $_POST['price1'][$age_id] ? $_POST['price1'][$age_id] : $period->price,
-                    'price_2' => $_POST['price2'][$age_id] ? $_POST['price2'][$age_id] : $period->price,
-                ));
-            }
+            if ($this->input->post('price1'))
+                foreach ($this->input->post('price1') as $age_id => $data)
+                {
+                    PeriodChildPrice::create(array(
+                        'period_id' => $period_id,
+                        'age_id' => $age_id,
+                        'price_1' => $_POST['price1'][$age_id] ? $_POST['price1'][$age_id] : $period->price,
+                        'price_2' => $_POST['price2'][$age_id] ? $_POST['price2'][$age_id] : $period->price,
+                    ));
+                }
 
             PeriodServicePrice::table()->delete(array('period_id' => $period_id));
             foreach ($this->input->post('meal') as $age_id => $data)

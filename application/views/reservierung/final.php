@@ -12,11 +12,20 @@
 </div>
 
 <div id="final-page" class="reservierung-page result-page content">
+<input type="hidden" id="formular_id" value="<?=$formular->id?>"/>
+
 <div class="formular-header">
     <div class="left-block">
         <div class="param">
             <span class="param-name">Kundennummer:</span>
-            <a href="kundenverwaltung/historie/<?=$formular->kunde->id?>"><?=$formular->kunde->k_num?></a>
+            <a id="kunde_link" for="<?=$formular->kunde->id?>" href="#"><?=$formular->kunde->k_num?></a>
+            <? if (!$formular->is_storno && $formular->status != "storno"): ?>
+            <a href="#" id="change-ag">Change</a>
+            <input type="hidden" id="new_ag_id"/>
+            <input type="hidden" id="new_ag_num"/>
+            <a href="#" id="save-ag" style="display:none">Save</a>
+            <input id="new_agnum" type="text" maxlength="20" size="20" style="display:none"/>
+            <? endif; ?>
         </div>
 
         <div class="param">
@@ -38,10 +47,23 @@
             <span class="param-value"><?=$formular->plain_status?></span>
         </div>
 
-        <? if ($formular->status == "rechnung" || $formular->status == "freigabe"): ?>
+        <? if ($formular->status == "rechnung"): ?>
         <div class="param">
             <span class="param-name">Rechnungsnummer:</span>
             <span class="param-value"><?=$formular->r_num?></span>
+        </div>
+        <? endif; ?>
+
+        <div class="param">
+            <span class="param-name">Sachbearbeiter:</span>
+            <span class="param-value"><?=$formular->sachbearbeiter->fullname?></span>
+        </div>
+
+        <? if ($formular->status == "rechnung" && $formular->is_storno): ?>
+        <div class="param">
+            <span class="param-name">Original Rechnung</span>
+            <a class="param-value"
+               href="reservierung/final/<?=$formular->storno_original?>"><?=$formular->original->r_num?></a>
         </div>
         <? endif; ?>
 
@@ -62,32 +84,27 @@
         </div>
         <? endforeach; ?>
 </div>
-
+<? if ($formular->type != 'nurflug'): ?>
 <div class="item-list">
     <h3 class="block-header">Leistung:</h3>
-
-    <span class="header">Hotels:</span>
-
-    <? foreach ($formular->hotels as $ind => $hotel): ?>
+    <? foreach ($formular->hotels_and_manuels as $ind => $item): ?>
     <div class="item">
+        <input type="hidden" class="item_id" value="<?=$item->id?>"/>
+        <input type="hidden" class="item_type" value="<?=$item->type?>"/>
         <span class="num"><?=($ind + 1)?></span>
-        <span class="text"><?=$hotel->plain_text . " - &nbsp;<b>" . $hotel->all_price . "&euro;</b>"; ?></span>
+        <span class="text"><?=$item->plain_text . " - &nbsp;<b>" . $item->all_price . "&euro;</b>"; ?></span>
+        <? if ($item->incoming): ?>
+        <div class="incoming-sendblock">
+            <a href="#" class="incoming-send">Send report</a>
+                    <span
+                        class="lastsend">Last send: <?=$item->incoming_sendtime ? $item->incoming_sendtime->format('d.m.Y H:i') : 'never'?></span>
+        </div>
+        <span class="incoming-sendok" style="display:none">OK</span>
+        <? endif; ?>
     </div>
     <? endforeach; ?>
-
-    <hr/>
-
-    <span class="header">Manuell:</span>
-
-    <? foreach ($formular->manuels as $ind => $manuel): ?>
-    <div class="item">
-        <span class="num"><?=($ind + 1)?></span>
-        <span class="text"><?=$manuel->plain_text; ?></span>
-    </div>
-    <? endforeach; ?>
-
-    <hr/>
 </div>
+    <? endif; ?>
 
 <div class="flight-block">
     <h3 class="block-header">Flugplan: <span class="flight-price"><?=$formular->flight_price?> &euro;</span>
@@ -103,7 +120,7 @@
         <div class="comment-block">
             <h3 class="block-header">Kommentar:</h3>
 
-            <p><?=$formular->comment;?></p>
+            <p><?=str_replace("\n", "<br/>", $formular->comment)?></p>
         </div>
 
 
@@ -127,6 +144,35 @@
     </div>
     <div class="right-float">
         <table class="price-table">
+            <? if ($formular->is_storno && $formular->status == "rechnung"): ?>
+            <tr>
+                <td class="param">Gesamptreisepreis</td>
+                <td><?=$formular->original->price['brutto']?></td>
+            </tr>
+            <tr class="underline up">
+                <td class="param">Stornogebühr
+                    <?=$formular->original->storno_percent ? 'lt. AGB´s ' . $formular->original->storno_percent . '%' : ''?></td>
+                <td><?=number_format($formular->brutto, 2, ',', '.')?></td>
+            </tr>
+            <? if ($formular->kunde->type == "agenturen"): ?>
+                <tr>
+                    <td class="param"><?=$formular->provision?>% Provision auf Storno</td>
+                    <td><?=$formular->price['provision']?></td>
+                </tr>
+                <tr>
+                    <td class="param">19% MwSt.</td>
+                    <td><?=$formular->price['mwst']?></td>
+                </tr>
+                <tr class="underline">
+                    <td class="param">Gesamptprovision</td>
+                    <td><?=number_format($formular->provision_amount, 2, ',', '.')?></td>
+                </tr>
+                <tr class="up underline">
+                    <td class="param">Endpreise Netto</td>
+                    <td><?=$formular->price['netto']?></td>
+                </tr>
+                <? endif; ?>
+            <? else: ?>
             <tr>
                 <td class="param">Preis Brutto/p.Person</td>
                 <td><?=$formular->price['person']?></td>
@@ -135,38 +181,30 @@
                 <td class="param">Gesamtpreis</td>
                 <td><?=$formular->price['brutto']?></td>
             </tr>
-            <? if ($formular->kunde->type == 'agenturen'): ?>
-            <tr>
-                <td class="param">Provision <?=$formular->provision?>%</td>
-                <td><?=$formular->price['provision']?></td>
-            </tr>
-            <? if(!$formular->kunde->ausland): ?>
-            <tr>
-                <td class="param">MWST auf Prov 19%</td>
-                <td><?=$formular->price['mwst']?></td>
-            </tr>
-                <? endif; ?>
-            <tr>
-                <td class="param">Total Provision:</td>
-                <td><?=$formular->price['total_provision']?></td>
-            </tr>
-            <tr class="empty">
-                <td class="param">&nbsp;</td>
-                <td>&nbsp;</td>
-            </tr>
-            <tr class="up underline">
-                <td class="param">Endpreise Netto</td>
-                <td><?=$formular->price['netto']?></td>
-            </tr>
-            <? if ($formular->status == 'rechnung'): ?>
+            <? if ($formular->kunde->type == 'agenturen' && $formular->type != 'nurflug'): ?>
                 <tr>
-                    <td class="param">Paid</td>
-                    <td><?=$formular->price['paid']?></td>
+                    <td class="param">Provision <?=$formular->provision?>%</td>
+                    <td><?=$formular->price['provision']?></td>
                 </tr>
+                <? if (!$formular->kunde->ausland): ?>
+                    <tr>
+                        <td class="param">MWST auf Prov 19%</td>
+                        <td><?=$formular->price['mwst']?></td>
+                    </tr>
+                    <? endif; ?>
                 <tr>
-                    <td class="param">Need to paid</td>
-                    <td><?=$formular->price['need_to_pay']?></td>
+                    <td class="param">Total Provision:</td>
+                    <td><?=number_format($formular->provision_amount, 2, ',', '.')?></td>
                 </tr>
+                <tr class="empty">
+                    <td class="param">&nbsp;</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr class="up underline">
+                    <td class="param">Endpreise Netto</td>
+                    <td><?=$formular->price['netto']?></td>
+                </tr>
+
                 <? endif; ?>
             <? endif; ?>
         </table>
@@ -182,7 +220,7 @@
             form_open("reservierung/do_rechnung/" . $formular->id)
             ; ?>
             <div class="anzahlung-block">
-                <input type="hidden" value="<?=$formular->price['brutto']?>" name="brutto_price" id="brutto_price"/>
+                <input type="hidden" value="<?=$formular->brutto?>" name="brutto_price" id="brutto_price"/>
 
                 <div class="param-block">
                     <label for="departure_date">Abreisedatum</label>
@@ -191,7 +229,18 @@
                            id="departure_date"/>
                 </div>
 
-                <div class="prepayment-block" <? if (!$formular->finalpayment_date) echo 'style="display:none"' ?>>
+                <div class="param-block">
+                    <label for="finalpayment_date">Restzahlung Datum:</label>
+                    <input type="text" name="finalpayment_date" size="8" maxlength="8" id="finalpayment_date"
+                           value="<?=$formular->finalpayment_date ? $formular->finalpayment_date->format('m/d/Y') : ''?>"/>
+                </div>
+
+                <div class="param-block">
+                    <label for="sofort">Sofort</label>
+                    <input type="checkbox" name="sofort" id="sofort"/>
+                </div>
+
+                <div class="prepayment-block">
 
                     <div class="param-block">
                         <label for="anzahlung" class="anzahlung">Anzahlung %</label>
@@ -208,22 +257,18 @@
                                id="prepayment_date"/>
                     </div>
 
-                    <div class="param-block">
-                        <label for="finalpayment_date">Restzahlung Datum:</label>
-                        <input type="text" name="finalpayment_date" size="8" maxlength="8" id="finalpayment_date"
-                               value="<?=$formular->finalpayment_date ? $formular->finalpayment_date->format('m/d/Y') : ''?>"/>
-                    </div>
+
                 </div>
             </div>
 
             <? if ($formular->can_rechnung): ?>
-                <button>Als Rechnung speichern</button>
+                <button id="do_rechnung">Als Rechnung speichern</button>
                 <? else: ?>
                 <a class="button-link disabled">Als Rechnung speichern</a>
                 <?endif; ?>
             </form>
 
-            <? elseif ($formular->status == "rechnung"): ?>
+            <? elseif ($formular->status == "rechnung" && !$formular->is_storno && $this->user->id != 9): ?>
             <a href="reservierung/storeno/<?=$formular->id?>" class="button-link">Storno</a>
             <? endif; ?>
         </div>
@@ -232,39 +277,35 @@
 </div>
 
 
-
 <div id="stage">
-<? if ($formular->status != 'storeno'): ?>
+    <? if (!$formular->is_storno): ?>
 
     <input type="radio" id="radio1" name="stage" value="1"
         <?if ($formular->status == "angebot" || $formular->status == "eingangsmitteilung") echo 'checked';?>/>
     <label for="radio1">Angebot</label>
-
-    <? if ($formular->kunde->type == "agenturen"): ?>
-        <input type="radio" id="radio2" name="stage"
-               value="2"/><label for="radio2">Angebot
-            (Kundenkopie)</label>
-        <? endif; ?>
+    <input type="radio" id="radio2" name="stage"
+           value="2"/><label for="radio2">Angebot
+        (Kundenkopie)</label>
 
     <? if ($formular->status == "rechnung" || $formular->status == "freigabe"): ?>
         <input type="radio" id="radio3" name="stage" value="3" checked/><label for="radio3">Rechnung</label>
-        <? if ($formular->kunde->type == "agenturen"): ?>
-            <input type="radio" id="radio4" name="stage" value="4"/><label for="radio4">Rechnung
-                (Kundenkopie)</label>
+        <input type="radio" id="radio4" name="stage" value="4"/><label for="radio4">Rechnung
+            (Kundenkopie)</label>
         <? endif; ?>
+
+    <? else: ?>
+    <? if ($formular->kunde->type == "agenturen"): ?>
+        <input type="radio" id="radio1" name="stage" checked value="5"/><label for="radio1">Storeno</label>
+        <? endif; ?>
+    <input type="radio" id="radio2" name="stage" value="6"/><label for="radio2">Storeno(Kundenkopie)</label>
     <? endif; ?>
 
-<? else: ?>
-        <? if ($formular->kunde->type == "agenturen"): ?>
-            <input type="radio" id="radio1" name="stage" checked value="5"/><label for="radio1">Storeno</label>
-        <? endif; ?>
-        <input type="radio" id="radio2" name="stage" value="6"/><label for="radio2">Storeno(Kundenkopie)</label>
-<? endif; ?>
 
 </div>
-    <?=
-    form_open("reservierung/sendmail/" . $formular->id, null, array("formular_id" => $formular->id))
-    ; ?>
+<?=
+form_open("reservierung/sendmail/" . $formular->id, null, array("formular_id" => $formular->id));
+?>
+<? if ($this->user->id != 9): ?>
 <div class="mail-block">
     <div class="mail" style="display:none">
         <span class="left">Mail</span>
@@ -274,36 +315,39 @@
     </div>
     <div class="mail">
         <span class="left">Administrator E-Mail</span>
-        <input type="text" disabled size="30" class="email" value="<?=$user->email?>"/>
+        <input type="text" disabled size="30" class="email" value="<?= $user->email ?>"/>
         <span class="status">noch nicht gesendet</span>
         <input type="hidden" class="sended" value="0"/>
     </div>
 
     <div class="mail">
         <span class="left">Kunde E-Mail</span>
-        <input type="text" size="30" class="email" value="<?=$formular->kunde->email?>"/>
+        <input type="text" size="30" class="email" value="<?= $formular->kunde->email ?>"/>
         <span class="status">noch nicht gesendet</span>
         <input type="hidden" class="sended" value="0"/>
     </div>
 </div>
+    <? endif; ?>
 </form>
 
 <div id="final-buttons" class="formular-buttons">
-    <? if ($formular->status != "storeno"): ?>
-    <a href="reservierung/edit/<?=$formular->id?>" class="button-link">Formular editieren</a>
-    <? endif; ?>
-    <? if ($formular->status == "eingangsmitteilung"): ?>
-    <a href="reservierung/status/<?=$formular->id?>" class="button-link">Status editieren</a>
-    <? elseif ($formular->status == "rechnung"): ?>
-    <a href="reservierung/payments/<?=$formular->id?>" class="button-link">Payments</a>
-    <? endif; ?>
-    <? if ($formular->status == "rechnung" || $formular->status == "freigabe"): ?>
-    <a href="reservierung/vouchers/<?=$formular->id?>" class="button-link">Vouchers</a>
-    <? endif; ?>
+    <? if ($this->user->id == 9): ?>
+    <a id="druck-link" href="#" class="button-link" target="_blank">Druck</a>
+    <? else: ?>
+    <? if (!$formular->is_storno): ?>
+        <a href="reservierung/edit/<?= $formular->id ?>" class="button-link">Formular editieren</a>
+        <? endif; ?>
+    <? if ($formular->status == "eingangsmitteilung" && !$formular->is_storno): ?>
+        <a href="reservierung/status/<?= $formular->id ?>" class="button-link">Status editieren</a>
+        <? endif; ?>
+    <? if ($formular->status == "rechnung" && !$formular->is_storno): ?>
+        <a href="reservierung/vouchers/<?= $formular->id ?>" class="button-link">Vouchers</a>
+        <? endif; ?>
     <button id="addmail-button">E-Mail hinzufuegen</button>
     <a id="druck-link" href="#" class="button-link" target="_blank">Druck</a>
     <button id="send-button" name="submit">Senden</button>
     <a href="#" class="button-link">Schliessen</a>
-</div>
 
+    <? endif; ?>
+</div>
 </div>

@@ -12,9 +12,10 @@
 </div>
 
 <div id="result-page" class="reservierung-page result-page content">
+<input type="hidden" id="formular_id" value="<?=$formular->id?>"/>
 <?if ($formular->status == 'rechnung'): ?>
-<div class="alert-block">
-    <p>Это рехнунг, 30 евро редактирование стоит! Не стоит этого делать!!!</p>
+<div id="rechnung-alert" class="alert-block">
+    <p>Diese rehnung, 30 € wert Bearbeitung! Tun Sie das nicht!</p>
 </div>
     <? endif;?>
 <?=form_open("reservierung/result/" . $formular->id);?>
@@ -22,7 +23,12 @@
     <div class="left-block">
         <div class="param">
             <span class="param-name">Kundennummer:</span>
-            <a href="kundenverwaltung/historie/<?=$formular->kunde->id?>"><?=$formular->kunde->k_num?></a>
+            <a id="kunde_link" for="<?=$formular->kunde->id?>" href="#"><?=$formular->kunde->k_num?></a>
+            <a href="#" id="change-ag">Change</a>
+            <input type="hidden" id="new_ag_id"/>
+            <input type="hidden" id="new_ag_num"/>
+            <a href="#" id="save-ag" style="display:none">Save</a>
+            <input id="new_agnum" type="text" maxlength="20" size="20" style="display:none"/>
         </div>
 
         <div class="param">
@@ -51,33 +57,25 @@
         </div>
         <? endif; ?>
 
+        <div class="param">
+            <span class="param-name">Sachbearbeiter:</span>
+            <span class="param-value"><?=$formular->sachbearbeiter->fullname?></span>
+        </div>
+
     </div>
     <br class="clear"/>
 
 </div>
 <div class="item-list">
+    <? if ($formular->type != 'nurflug'): ?>
     <h3 class="block-header">Leistung:</h3>
-
-    <span class="header">Hotels:</span>
-
-    <? foreach ($formular->hotels as $ind => $hotel): ?>
-    <div class="item">
-        <span class="num"><?=($ind + 1)?></span>
-        <span class="text"><?=$hotel->plain_text . " - &nbsp;<b>" . $hotel->all_price . "&euro;</b>"; ?></span>
-    </div>
-    <? endforeach; ?>
-
-    <hr/>
-
-    <span class="header">Manuell:</span>
-
-    <? foreach ($formular->manuels as $ind => $manuel): ?>
-    <div class="item">
-        <span class="num"><?=($ind + 1)?></span>
-        <span class="text"><?=$manuel->plain_text; ?></span>
-    </div>
-    <? endforeach; ?>
-    <hr/>
+    <? foreach ($formular->hotels_and_manuels as $ind => $item): ?>
+        <div class="item">
+            <span class="num"><?=($ind + 1)?></span>
+            <span class="text"><?=$item->plain_text . " - &nbsp;<b>" . $item->all_price . "&euro;</b>"; ?></span>
+        </div>
+        <? endforeach; ?>
+    <? endif; ?>
 </div>
 
 <? if ($formular->flight_text != ""): ?>
@@ -162,20 +160,20 @@
                 <td class="param">Gesamtpreis</td>
                 <td id="brutto-value"><?=$formular->price['brutto']?></td>
             </tr>
-            <? if ($formular->kunde->type == 'agenturen'): ?>
+            <? if ($formular->kunde->type == 'agenturen' && $formular->type != 'nurflug'): ?>
             <tr>
                 <td class="param">Provision <?=$formular->provision?>%</td>
                 <td><?=$formular->price['provision']?></td>
             </tr>
-            <? if(!$formular->kunde->ausland): ?>
-            <tr>
-                <td class="param">MWST auf Prov 19%</td>
-                <td><?=$formular->price['mwst']?></td>
-            </tr>
+            <? if (!$formular->kunde->ausland): ?>
+                <tr>
+                    <td class="param">MWST auf Prov 19%</td>
+                    <td><?=$formular->price['mwst']?></td>
+                </tr>
                 <? endif; ?>
             <tr>
                 <td class="param">Total Provision:</td>
-                <td><?=$formular->price['total_provision']?></td>
+                <td><?=number_format($formular->provision_amount, 2, ',','.')?></td>
             </tr>
             <tr class="empty">
                 <td class="param">&nbsp;</td>
@@ -191,7 +189,6 @@
     <br class="clear"/>
 </div>
 <div class="anzahlung-block">
-    <input type="hidden" value="<?=$formular->price['brutto']?>" name="brutto_price" id="brutto_price"/>
 
     <div class="param-block">
         <label for="departure_date">Abreisedatum</label>
@@ -200,31 +197,13 @@
                id="departure_date"/>
     </div>
 
-    <? if($formular->status == "rechnung"): ?>
-    <div class="prepayment-block" <? if(!$formular->finalpayment_date) echo 'style="display:none"' ?>>
-
-        <div class="param-block">
-            <label for="anzahlung" class="anzahlung">Anzahlung %</label>
-            <input type="text" name="prepayment" size="3" maxlength="3"
-                   value="<?=$formular->prepayment ? $formular->prepayment : '25'?>"
-                   id="anzahlung"/>
-            <span id="anzahlungsum">0</span> &euro;
-        </div>
-
-        <div class="param-block">
-            <label for="prepayment_date">Anzahlung Datum:</label>
-            <input type="text" name="preprepayment_date" size="8" maxlength="8"
-                   value="<?=$formular->prepayment_date ? $formular->prepayment_date->format('m/d/Y') : ''?>"
-                   id="prepayment_date"/>
-        </div>
-
-        <div class="param-block">
-            <label for="finalpayment_date">Restzahlung Datum:</label>
-            <input type="text" name="finalpayment_date" size="8" maxlength="8" id="finalpayment_date"
-                   value="<?=$formular->finalpayment_date ? $formular->finalpayment_date->format('m/d/Y') : ''?>"/>
-        </div>
+    <div class="param-block">
+        <label for="arrival_date">Rückreisedatum</label>
+        <input type="text" name="arrival_date" size="8" maxlength="8"
+               value="<?=$formular->arrival_date ? $formular->arrival_date->format('m/d/Y') : ''?>"
+               id="arrival_date"/>
     </div>
-    <? endif; ?>
+
 
     <div class="comment-block">
         <h3 class="block-header">Kommentar:</h3>
@@ -234,7 +213,7 @@
 
     <div id="result-buttons" class="formular-buttons">
         <a href="reservierung/edit/<?=$formular->id?>" class="button-link">Zur&uuml;ck</a>
-        <button name="submit">Speichern</button>
+        <input type="submit" id="speichern" value="Speichern"/>
     </div>
 </div>
 </form>

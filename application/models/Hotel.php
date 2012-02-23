@@ -73,6 +73,12 @@ class Hotel extends ActiveRecord\Model
         $data = HotelBonus::find_all_by_hotel_id($this->id);
         return $data ? $data : array();
     }
+
+    public function get_changed_by_user()
+    {
+        $data = User::find_by_id($this->changed_by);
+        return $data ? $data : null;
+    }
 }
 
 ?>
