@@ -36,6 +36,13 @@
     }
 }
 
+.save-link{
+    width: 16px;
+    height: 16px;
+    background: url('img/save.png') no-repeat;
+    display: block;
+}
+
 
 
 .common-link{
@@ -497,7 +504,7 @@ ul.tabs li.active{
 
 .result-page .bottom-block .price-table td.param{
     border-right: 1px solid black;
-    width: 150px;
+    width: 220px;
 }
 
 .result-page .bottom-block .price-table tr.underline{
@@ -506,7 +513,7 @@ ul.tabs li.active{
 
 .result-page .bottom-block .price-table tr.up td{
     font-weight: bold;
-    font-size: 15px;
+    font-size: 14px;
 }
 
 .result-page .bottom-block .price-table tr.empty td{
@@ -986,6 +993,10 @@ ul.tabs li.active{
     width: 50%;
 }
 
+.reservierung-page .formular-header .left-block #change-ag,.reservierung-page .formular-header .left-block #save-ag{
+    color: #000;
+}
+
 .reservierung-page .formular-header .right-block{
     float: right;
 }
@@ -1345,7 +1356,7 @@ ul.tabs li.active{
 }
 
 #storeno-page .storeno-content{
-    width: 300px;
+    width: 350px;
     margin: 0 auto;
     position: relative;
 }
@@ -1375,17 +1386,13 @@ ul.tabs li.active{
     width: 70px;
 }
 
-#storeno-page .agb-item.manuel{
-    width: 120px;
+#storeno-page .agb-item.manuel label{
+    text-align: center;
 }
 
-#storeno-page .agb-item.manuel input{
-    margin-left: 40px;
-}
 
 #storeno-page .agb-item input{
-    width: 30px;
-    margin-left: 20px;
+    width: 100%;
 }
 
 #storeno-page .buttons{
@@ -1945,7 +1952,11 @@ ul.tabs li.active{
 }
 
 .product-list td.checkbox,.product-list td.checkbox:hover{
-    background: url('img/checkbox.png') no-repeat center 0;
+    background: url('img/checkbox.png') no-repeat center 4px;
+}
+
+.product-list td.checkbox-no,.product-list td.checkbox-no:hover{
+    background: url('img/checkbox_no.png') no-repeat center 4px;
 }
 
 .product-list tr:hover{
@@ -2273,7 +2284,8 @@ ul.tabs li.active{
 #controlpayments-list .anzahlung{background-color: #d3f3ff;}
 #controlpayments-list .total{background-color: #e8e8e8;}
 #controlpayments-list .restzahlung{background-color: #e8f5f7;}
-#controlpayments-list .versand{background-color: #dbffe7;}
+#controlpayments-list .versand{background-color: #dbffe7;text-align: center;}
+#controlpayments-list .versand.waiting{color: red}
 #controlpayments-list .storno{background-color: #ffdfe1;}
 #controlpayments-list .provisionstatus{background-color: #dbffe7;}
 

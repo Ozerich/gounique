@@ -202,7 +202,7 @@ class Control_Controller extends MY_Controller
                 'added_by' => $this->user->id,
             ));
 
-            $formular->is_freigabe = $formular->paid_amount >= $formular->brutto ? true : false;
+            $formular->is_freigabe = $formular->paid_amount >= ($formular->brutto - 0.2) ? true : false;
             $formular->save();
         }
         else if ($type == "provision")

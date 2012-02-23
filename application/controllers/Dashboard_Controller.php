@@ -85,6 +85,9 @@ class Dashboard_Controller extends MY_Controller
         parent::__construct();
 
         if (!$this->user)
+            redirect('login');
+
+
 
 
 /*

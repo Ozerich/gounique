@@ -75,7 +75,7 @@
             <th colspan="3">Restzahlung</th>
             <th>&nbsp;</th>
             <th>&nbsp;</th>
-            <th colspan="3">Versand</th>
+            <th colspan="4">Versand</th>
         </tr>
         <tr>
             <th class="rg-num">RG-NR</th>
@@ -92,8 +92,9 @@
             <th>Status</th>
             <th>Storno</th>
             <th>Netto</th>
-            <th class="status">Status I</th>
-            <th class="status">Status II</th>
+            <th>Diff</th>
+            <th class="status">Freigabe</th>
+            <th class="status">Versand</th>
             <th>Date</th>
         </tr>
         </thead>

@@ -30,7 +30,7 @@
             <span class="param-name"><?=$formular->is_sofort ? 'Totalzahlung' : 'Restzahlung'?> Status: </span>
             <span><?=$formular->restzahlung_status?></span>
         </div>
-        <? if ($formular->is_freigabe): ?>
+
         <p class="versandfreigabe">Versandfreigabe</p>
         <div class="param">
             <span class="param-name">Versended</span>
@@ -46,7 +46,7 @@
                 <span><?=$formular->versanded_user->fullname?></span>
             </div>
             <? endif; ?>
-        <? endif; ?>
+
     </div>
     <? if($formular->kunde->type == 'agenturen'):?>
         <div class="netto-wr"><input type="checkbox" id="is-netto" <?=$formular->payment_netto ? 'checked' : ''?>/><span class="netto-label">Netto</span></div>
@@ -96,9 +96,9 @@
     <tr>
         <input type="hidden" class="payment_id" value="<?=$payment->id?>"/>
         <td><?=$payment->payment_date->format('d.M.Y');?></td>
-        <td><?=number_format($payment->amount,2)?></td>
-        <td><?=number_format($anzahlung_diff, 2, ',', '.')?></td>
-        <td><?=number_format($restzahlung_diff, 2, ',', '.')?></td>
+        <td><?=@number_format($payment->amount,2,',','.')?></td>
+        <td><?=@number_format($anzahlung_diff, 2, ',', '.')?></td>
+        <td><?=@number_format($restzahlung_diff, 2, ',', '.')?></td>
         <td><?=$payment->added_by ? $payment->plain_type : 'Provision'?></td>
         <td><?=$payment->remark?></td>
         <td>
@@ -110,9 +110,9 @@
         <? endforeach; ?>
     <tr>
         <td>&nbsp;</td>
-        <td class="total-amount"><?=number_format($total, 2, ',', '.')?> &euro;</td>
+        <td class="total-amount"><?=@number_format($total, 2, ',', '.')?> &euro;</td>
         <td>&nbsp;</td>
-        <td class="total-amount"><?=number_format(($formular->brutto - $total) > 0 ? '-' . ($formular->brutto - $total) : '+' . ($total - $formular->brutto), 2, ',', '.')?> &euro;</td>
+        <td class="total-amount"><?=@number_format(($formular->brutto - $total) > 0 ? '-' . ($formular->brutto - $total) : '+' . ($total - $formular->brutto), 2, ',', '.')?> &euro;</td>
         <td>&nbsp;</td>
         <td>&nbsp;</td>
     </tr>

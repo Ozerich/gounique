@@ -49,9 +49,9 @@
             <? endif; ?>
 
             <div class="param">
-                        <span class="param-name">Sachbearbeiter:</span>
-                        <span class="param-value"><?=$formular->sachbearbeiter->fullname?></span>
-                    </div>
+                <span class="param-name">Sachbearbeiter:</span>
+                <span class="param-value"><?=$formular->sachbearbeiter->fullname?></span>
+            </div>
 
         </div>
         <br class="clear"/>
@@ -61,21 +61,29 @@
         <?=form_open("reservierung/storeno/" . $formular->id, null, array("formular_id" => $formular->id));?>
 
         <div class="storno-form">
+
             <div class="date-wr">
-                <label for="date">Date</label>
-                <input type="text" name="date" maxlength="8" id="date"/>
+                <label for="storno-date">Date</label>
+                <input type="text" name="date" maxlength="8" id="storno-date"/>
             </div>
+
+            <br class="clear"/>
+
             <div class="agb-param">
                 <div class="agb-item">
                     <label for="agb-value">AGB's %</label>
-                    <input type="hidden" name="agb-value"/>
+                    <input type="hidden" name="agb-value" id="agb-value"/>
                     <input type="text" disabled/>
                 </div>
                 <div class="agb-item manuel">
-                    <label for="manuelagb-value">Manuel AGB's %</label>
-                    <input type="text" maxlength="3" name="manuel-agb"/>
+                    <label for="storno-percent">%</label>
+                    <input type="text" id="storno-percent" maxlength="5" name="manuel-percent"/>
                 </div>
-                <a href="#" id="agb-edit">Open AGB Table</a>
+                <div class="agb-item manuel">
+                    <label for="storno-value">Betrag</label>
+                    <input type="text" id="storno-value" maxlength="8" name="manuel-value"/>
+                </div>
+
                 <br class="clear"/>
             </div>
             <div id="who-radio">
@@ -89,29 +97,29 @@
             </div>
             <div class="buttons">
                 <a href="reservierung/final/<?=$formular->id?>" class="button-link">Abbrechen</a>
-                <input type="submit" value="Make Storeno"/>
+                <input type="submit" id="storno-submit" value="Make Storeno"/>
             </div>
         </div>
 
         <div id="agb-window" style="display: none">
             <table class="agb-list">
                 <thead>
-                    <tr>
-                        <th>№</th>
-                        <th>Day Count</th>
-                        <th>%</th>
-                        <th>&nbsp;</th>
-                    </tr>
+                <tr>
+                    <th>№</th>
+                    <th>Day Count</th>
+                    <th>%</th>
+                    <th>&nbsp;</th>
+                </tr>
                 </thead>
                 <tbody>
-                    <? foreach(StornoRule::all() as $ind => $storno_rule): ?>
-                        <tr>
-                            <input type="hidden" class="storno_rule_id" value="<?=$storno_rule->id?>"/>
-                            <td><?=($ind + 1)?></td>
-                            <td><?=$storno_rule->days?></td>
-                            <td><?=$storno_rule->percent?></td>
-                            <td><a href="#" class="delete-icon"></a></td>
-                        </tr>
+                <? foreach (StornoRule::all() as $ind => $storno_rule): ?>
+                <tr>
+                    <input type="hidden" class="storno_rule_id" value="<?=$storno_rule->id?>"/>
+                    <td><?=($ind + 1)?></td>
+                    <td><?=$storno_rule->days?></td>
+                    <td><?=$storno_rule->percent?></td>
+                    <td><a href="#" class="delete-icon"></a></td>
+                </tr>
                     <? endforeach; ?>
                 </tbody>
             </table>
@@ -122,3 +130,7 @@
         </form>
     </div>
 </div>
+
+<div id="storno-confirm" style="display:none">
+     Are you sure?
+ </div>

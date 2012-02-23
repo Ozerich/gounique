@@ -12,11 +12,20 @@
 </div>
 
 <div id="final-page" class="reservierung-page result-page content">
+<input type="hidden" id="formular_id" value="<?=$formular->id?>"/>
+
 <div class="formular-header">
     <div class="left-block">
         <div class="param">
             <span class="param-name">Kundennummer:</span>
-            <a href="kundenverwaltung/historie/<?=$formular->kunde->id?>"><?=$formular->kunde->k_num?></a>
+            <a id="kunde_link" for="<?=$formular->kunde->id?>" href="#"><?=$formular->kunde->k_num?></a>
+            <? if (!$formular->is_storno && $formular->status != "storno"): ?>
+            <a href="#" id="change-ag">Change</a>
+            <input type="hidden" id="new_ag_id"/>
+            <input type="hidden" id="new_ag_num"/>
+            <a href="#" id="save-ag" style="display:none">Save</a>
+            <input id="new_agnum" type="text" maxlength="20" size="20" style="display:none"/>
+            <? endif; ?>
         </div>
 
         <div class="param">
@@ -110,6 +119,7 @@
     <div class="left-float">
         <div class="comment-block">
             <h3 class="block-header">Kommentar:</h3>
+
             <p><?=str_replace("\n", "<br/>", $formular->comment)?></p>
         </div>
 
@@ -139,22 +149,29 @@
                 <td class="param">Gesamptreisepreis</td>
                 <td><?=$formular->original->price['brutto']?></td>
             </tr>
-            <tr>
-                <td class="param">Stornogebühr lt. AGB´s <?=$formular->original->storno_percent?>%</td>
-                <td><?=$formular->original->price['storeno_brutto']?></td>
+            <tr class="underline up">
+                <td class="param">Stornogebühr
+                    <?=$formular->original->storno_percent ? 'lt. AGB´s ' . $formular->original->storno_percent . '%' : ''?></td>
+                <td><?=number_format($formular->brutto, 2, ',', '.')?></td>
             </tr>
-            <tr>
-                <td class="param"><?=$formular->provision?>% Provision auf Storno</td>
-                <td><?=$formular->original->price['storno_provision']?></td>
-            </tr>
-            <tr>
-                <td class="param">19% MwSt.</td>
-                <td><?=$formular->original->price['storno_mwst']?></td>
-            </tr>
-            <tr>
-                <td class="param">Gesamptprovision</td>
-                <td><?=$formular->original->price['storno_gesamtprovision']?></td>
-            </tr>
+            <? if ($formular->kunde->type == "agenturen"): ?>
+                <tr>
+                    <td class="param"><?=$formular->provision?>% Provision auf Storno</td>
+                    <td><?=$formular->price['provision']?></td>
+                </tr>
+                <tr>
+                    <td class="param">19% MwSt.</td>
+                    <td><?=$formular->price['mwst']?></td>
+                </tr>
+                <tr class="underline">
+                    <td class="param">Gesamptprovision</td>
+                    <td><?=number_format($formular->provision_amount, 2, ',', '.')?></td>
+                </tr>
+                <tr class="up underline">
+                    <td class="param">Endpreise Netto</td>
+                    <td><?=$formular->price['netto']?></td>
+                </tr>
+                <? endif; ?>
             <? else: ?>
             <tr>
                 <td class="param">Preis Brutto/p.Person</td>
@@ -177,7 +194,7 @@
                     <? endif; ?>
                 <tr>
                     <td class="param">Total Provision:</td>
-                    <td><?=$formular->price['total_provision']?></td>
+                    <td><?=number_format($formular->provision_amount, 2, ',', '.')?></td>
                 </tr>
                 <tr class="empty">
                     <td class="param">&nbsp;</td>
@@ -251,7 +268,7 @@
                 <?endif; ?>
             </form>
 
-            <? elseif ($formular->status == "rechnung" && !$formular->is_storno): ?>
+            <? elseif ($formular->status == "rechnung" && !$formular->is_storno && $this->user->id != 9): ?>
             <a href="reservierung/storeno/<?=$formular->id?>" class="button-link">Storno</a>
             <? endif; ?>
         </div>
@@ -276,17 +293,19 @@
             (Kundenkopie)</label>
         <? endif; ?>
 
-<? else: ?>
+    <? else: ?>
     <? if ($formular->kunde->type == "agenturen"): ?>
         <input type="radio" id="radio1" name="stage" checked value="5"/><label for="radio1">Storeno</label>
         <? endif; ?>
     <input type="radio" id="radio2" name="stage" value="6"/><label for="radio2">Storeno(Kundenkopie)</label>
     <? endif; ?>
 
+
 </div>
 <?=
 form_open("reservierung/sendmail/" . $formular->id, null, array("formular_id" => $formular->id));
 ?>
+<? if ($this->user->id != 9): ?>
 <div class="mail-block">
     <div class="mail" style="display:none">
         <span class="left">Mail</span>
@@ -308,22 +327,27 @@ form_open("reservierung/sendmail/" . $formular->id, null, array("formular_id" =>
         <input type="hidden" class="sended" value="0"/>
     </div>
 </div>
+    <? endif; ?>
 </form>
 
 <div id="final-buttons" class="formular-buttons">
+    <? if ($this->user->id == 9): ?>
+    <a id="druck-link" href="#" class="button-link" target="_blank">Druck</a>
+    <? else: ?>
     <? if (!$formular->is_storno): ?>
-    <a href="reservierung/edit/<?= $formular->id ?>" class="button-link">Formular editieren</a>
-    <? endif; ?>
+        <a href="reservierung/edit/<?= $formular->id ?>" class="button-link">Formular editieren</a>
+        <? endif; ?>
     <? if ($formular->status == "eingangsmitteilung" && !$formular->is_storno): ?>
-    <a href="reservierung/status/<?= $formular->id ?>" class="button-link">Status editieren</a>
-    <? endif; ?>
+        <a href="reservierung/status/<?= $formular->id ?>" class="button-link">Status editieren</a>
+        <? endif; ?>
     <? if ($formular->status == "rechnung" && !$formular->is_storno): ?>
-    <a href="reservierung/vouchers/<?= $formular->id ?>" class="button-link">Vouchers</a>
-    <? endif; ?>
+        <a href="reservierung/vouchers/<?= $formular->id ?>" class="button-link">Vouchers</a>
+        <? endif; ?>
     <button id="addmail-button">E-Mail hinzufuegen</button>
     <a id="druck-link" href="#" class="button-link" target="_blank">Druck</a>
     <button id="send-button" name="submit">Senden</button>
     <a href="#" class="button-link">Schliessen</a>
-</div>
 
+    <? endif; ?>
+</div>
 </div>

@@ -30,11 +30,16 @@ foreach ($formulars as $ind => $formular):
     <td class="restzahlung"><?=$formular->finalpayment_date ? $formular->finalpayment_date->format('d.M.y') : ''?></td>
     <td class="restzahlung"><?=$formular->restzahlung_status?></td>
 
-    <td class="storno"><?=$formular->status == 'storno' ? 'STORNO' : ''?></td>
+    <td class="storno <?=$formular->is_storno ? 'checkbox' : ''?>">&nbsp;</td>
     <td <?=$formular->payment_netto ? 'class="checkbox"' : ''?>>&nbsp;</td>
-    <td class="versand"><?=$formular->versand_status1?></td>
-    <td class="versand"><?=$formular->versand_status2?></td>
-    <td class="versand"><?=$formular->is_versand && $formular->is_freigabe ? $formular->versanded_date->format('d.M.y') : ''?></td>
+    <td class="versand"><?=@number_format($formular->total_diff, 2, ',', '.')?></td>
+    <td class="versand <?=$formular->is_freigabe ? 'checkbox' : ''?>">&nbsp;</td>
+    <?  if (!$formular->is_freigabe && !$formular->is_versand): ?>
+        <td class="versand">&nbsp;</td>
+    <? else: ?>
+    <td class="versand <?=$formular->is_versand ? 'checkbox' : 'waiting'?>"> <?=$formular->is_versand ? '' : 'waiting'?></td>
+    <? endif; ?>
+    <td class="versand"><?=$formular->is_versand ? $formular->versanded_date->format('d.M.y') : ''?></td>
 
     <input type="hidden" class="formular_id" value="<?=$formular->id?>"/>
 </tr>

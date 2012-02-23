@@ -64,21 +64,21 @@ class Formular extends ActiveRecord\Model
         $list = array();
         $hotel_ind = $manuel_ind = 0;
 
-        for(;$manuel_ind < count($manuels) && !$manuels[$manuel_ind]->date_start; $manuel_ind++);
+        for (; $manuel_ind < count($manuels) && !$manuels[$manuel_ind]->date_start; $manuel_ind++) ;
 
-        while($hotel_ind < count($hotels) || $manuel_ind < count($manuels))
+        while ($hotel_ind < count($hotels) || $manuel_ind < count($manuels))
         {
-            if($hotel_ind >= count($hotels))
+            if ($hotel_ind >= count($hotels))
                 $list[] = $manuels[$manuel_ind++];
-            else if($manuel_ind >= count($manuels))
+            else if ($manuel_ind >= count($manuels))
                 $list[] = $hotels[$hotel_ind++];
-            else if($hotels[$hotel_ind]->date_start > $manuels[$manuel_ind]->date_start)
+            else if ($hotels[$hotel_ind]->date_start > $manuels[$manuel_ind]->date_start)
                 $list[] = $manuels[$manuel_ind++];
             else
                 $list[] = $hotels[$hotel_ind++];
         }
 
-        for($i = 0; $i < count($manuels) && !$manuels[$i]->date_start; $i++)
+        for ($i = 0; $i < count($manuels) && !$manuels[$i]->date_start; $i++)
             $list[] = $manuels[$i];
 
         return $list;
@@ -92,7 +92,7 @@ class Formular extends ActiveRecord\Model
         foreach ($payments as $payment)
             $res += $payment->amount;
 
-        return $res;
+        return round($res, 2);
     }
 
     public function get_provisionpaid_amount()
@@ -108,7 +108,7 @@ class Formular extends ActiveRecord\Model
 
     public function get_brutto_price()
     {
-        if($this->type == 'nurflug')
+        if ($this->type == 'nurflug')
             return ($this->flight_price + $this->service_charge) * $this->person_count;
 
         $hotel_price = $manuel_price = 0;
@@ -138,29 +138,15 @@ class Formular extends ActiveRecord\Model
                 break;
             }
 
-        $price_data['provision'] = round($brutto * $this->provision / 100, 2);
+        $price_data['provision'] = round($this->provision_amount / 1.19, 2);
         $price_data['mwst'] = $this->kunde && $this->kunde->ausland == 1 ? 0 : (round($price_data['provision'] * 0.19, 2));
 
-        $price_data['total_provision'] = $price_data['provision'] + $price_data['mwst'];
-
-        $price_data['netto'] = round($brutto - $price_data['total_provision'], 2);
+        $price_data['netto'] = round($brutto - $this->provision_amount, 2);
 
         $price_data['anzahlung'] = $this->prepayment;
         $price_data['anzahlung_value'] = round($brutto / 100 * $this->prepayment);
         $price_data['restzahlung'] = $brutto - $price_data['anzahlung_value'];
 
-
-        if ($this->is_storno) {
-
-            $price_data['storeno_brutto'] = $this->storno_percent / 100 * $brutto;
-
-            if ($this->kunde->type == "agenturen") {
-                $price_data['storno_provision'] = $price_data['storeno_brutto'] / 100 * $this->storno_percent;
-                $price_data['storno_mwst'] = $this->kunde->ausland == 1 ? 0 : $price_data['storno_provision'] * 0.19;
-                $price_data['storno_gesamtprovision'] = $price_data['storno_mwst'] + $price_data['storno_provision'];
-            }
-
-        }
 
         foreach ($price_data as &$val)
             $val = number_format($val, 2, ',', '.');
@@ -243,7 +229,7 @@ class Formular extends ActiveRecord\Model
         foreach ($this->payments as $payment)
             $anzahlung -= $payment->amount;
 
-        return ($anzahlung <= 0) ? "OK" : "-" . number_format($anzahlung,2, ',', '.');
+        return ($anzahlung <= 0) ? "OK" : "-" . number_format($anzahlung, 2, ',', '.');
     }
 
     public function get_restzahlung_status()
@@ -264,7 +250,7 @@ class Formular extends ActiveRecord\Model
             }
             $restzahlung -= $payment->amount;
         }
-        return ($restzahlung <= 0) ? "OK" : "-" . number_format($restzahlung,2, ',', '.');
+        return ($restzahlung <= 0.20) ? "OK" : "-" . number_format($restzahlung, 2, ',', '.');
     }
 
     public function get_last_payment()
@@ -298,14 +284,14 @@ class Formular extends ActiveRecord\Model
         $total = $this->get_paid_amount();
 
         if ($total < $this->brutto)
-            return "-" . number_format($this->brutto - $total,2, ',', '.');
+            return "-" . number_format($this->brutto - $total, 2, ',', '.');
         else
             return 'Freigabe';
     }
 
     public function get_versand_status2()
     {
-        if (!$this->is_freigabe)
+        if (!$this->is_freigabe && !$this->is_versand)
             return "-";
         return $this->is_versand ? 'versendet' : 'waiting';
     }
@@ -314,12 +300,12 @@ class Formular extends ActiveRecord\Model
     {
         $total = $this->get_provisionpaid_amount();
 
-        return $total >= $this->provision_amount ? 'OK' : '-' . number_format($this->provision_amount - $total,2, ',', '.');
+        return $total >= $this->provision_amount ? 'OK' : '-' . number_format($this->provision_amount - $total, 2, ',', '.');
     }
 
     public function get_original()
     {
-        return $this->storno_original ? Formular::find_by_id($this->storno_original) : $this;
+        return $this->storno_original ? Formular::find(array('conditions' => array('id = ?', $this->storno_original))) : $this;
     }
 
     public function get_versanded_user()
@@ -327,7 +313,8 @@ class Formular extends ActiveRecord\Model
         return User::find_by_id($this->versanded_by);
     }
 
-    public function get_invoices(){
+    public function get_invoices()
+    {
         $data = Invoice::find_all_by_formular_id($this->id);
         return $data ? $data : array();
     }
@@ -336,26 +323,25 @@ class Formular extends ActiveRecord\Model
     {
         $incomings = $added = array();
 
-        foreach($this->hotels_and_manuels as $item)
-            if($item->incoming_id)
-            {
-                if(!isset($added[$item->incoming_id]))
-                {
+        foreach ($this->hotels_and_manuels as $item)
+            if ($item->incoming_id) {
+                if (!isset($added[$item->incoming_id])) {
                     $added[$item->incoming_id] = count($incomings);
-                    $incomings[] = Kunde::find_by_id($item->incoming_id);
+                    $incomings[] = Incoming::find_by_id($item->incoming_id);
                 }
-              //  $incomings[$added[$item->incoming_id]]->amount += $item->all_price;
+                //  $incomings[$added[$item->incoming_id]]->amount += $item->all_price;
             }
 
         return $incomings;
     }
 
-    public function get_invoice_stats(){
+    public function get_invoice_stats()
+    {
         $data = array('hotel' => array(), 'transfer' => array(), 'flight' => array(), 'rundreise' => array(), 'total' => array(), 'other' => array());
-        foreach($data as &$item)
+        foreach ($data as &$item)
             $item = array('paid' => 0, 'amount' => 0, 'status' => 0);
 
-        foreach($this->invoices as $invoice)
+        foreach ($this->invoices as $invoice)
         {
             $type = substr($invoice->type, 0, strlen('flight')) == "flight" ? "flight" : $invoice->type;
             $data[$type]['paid'] += $invoice->paid_amount;
@@ -364,15 +350,26 @@ class Formular extends ActiveRecord\Model
             $data['total']['amount'] += $invoice->amount;
         }
 
-        foreach($data as &$type)
-            $type['status'] = $type['amount'] > $type['paid'] ? '-'.($type['amount'] - $type['paid']) : '+'.($type['paid'] - $type['amount']);
+        foreach ($data as &$type)
+            $type['status'] = $type['amount'] > $type['paid'] ? '-' . ($type['amount'] - $type['paid']) : '+' . ($type['paid'] - $type['amount']);
 
         return $data;
     }
 
-    public function get_person(){
+    public function get_person()
+    {
         $persons = $this->persons;
         return $persons ? $persons[0]->name : "NO";
+    }
+
+    public function get_total_diff()
+    {
+        $total = $this->get_paid_amount();
+
+        if ($total < $this->brutto)
+            return "-" . round($this->brutto - $total,2);
+        else
+            return "+" . round($total - $this->brutto,2);
     }
 
 }

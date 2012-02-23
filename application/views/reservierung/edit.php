@@ -13,6 +13,7 @@
 
 <div id="createformular-page" class="reservierung-page content">
 <input type="hidden" id="formular-mode" value="edit"/>
+<input type="hidden" id="formular_id" value="<?=$formular->id?>"/>
 <?if ($formular->status == 'rechnung'): ?>
 <div id="rechnung-alert" class="alert-block">
     <p>Diese rehnung, 30 € wert Bearbeitung! Tun Sie das nicht!</p>
@@ -24,7 +25,12 @@
     <div class="left-block">
         <div class="param">
             <span class="param-name">Kundennummer:</span>
-            <a href="kundenverwaltung/historie/<?=$formular->kunde->id?>"><?=$formular->kunde->k_num?></a>
+            <a id="kunde_link" for="<?=$formular->kunde->id?>" href="#"><?=$formular->kunde->k_num?></a>
+            <a href="#" id="change-ag">Change</a>
+            <input type="hidden" id="new_ag_id"/>
+            <input type="hidden" id="new_ag_num"/>
+            <a href="#" id="save-ag" style="display:none">Save</a>
+            <input id="new_agnum" type="text" maxlength="20" size="20" style="display:none"/>
         </div>
 
         <div class="param">
@@ -89,7 +95,7 @@
         <textarea class="flight-text"><?=$formular->type == 'pausscahlreise' ? $formular->flight_text: ''?></textarea>
 
         <label for="flight-price">Flugpreis:</label>
-        <input type="text" maxlength="5" class="flight-price" value="<?=$formular->type == 'pausscahlreise' ? $formular->flight_price: ''?>"/> &euro;
+        <input type="text" maxlength="7" class="flight-price" value="<?=$formular->type == 'pausscahlreise' ? $formular->flight_price: ''?>"/> &euro;
 
         <div class="bottom-block">
 
@@ -105,7 +111,7 @@
         <textarea class="flight-text"><?=$formular->type == 'bausteinreise' ? $formular->flight_text: ''?></textarea>
 
         <label for="flight-price">Flugpreis:</label>
-        <input type="text" class="flight-price" maxlength="5" value="<?=$formular->type == 'bausteinreise' ? $formular->flight_price: ''?>"/> &euro;
+        <input type="text" class="flight-price" maxlength="7" value="<?=$formular->type == 'bausteinreise' ? $formular->flight_price: ''?>"/> &euro;
 
         <div class="bottom-block">
 
@@ -138,12 +144,12 @@
         <textarea id="flight-text" name="nurflug_flight"><?=$formular->type == 'nurflug' ? $formular->flight_text: ''?></textarea>
 
         <label for="flight-price">Flugpreis:</label>
-        <input type="text" class="flight-price" name="nurflug_flightprice" maxlength="5" value="<?=$formular->type == 'nurflug' ? $formular->flight_price: ''?>"/> &euro;
+        <input type="text" class="flight-price" name="nurflug_flightprice" maxlength="7" value="<?=$formular->type == 'nurflug' ? $formular->flight_price: ''?>"/> &euro;
 
         <div class="service-charge">
             <label for="servicecharge-amount">Service charge:</label>
-            <input type="text" maxlength="3" class="servicecharge" value="<?=$formular->type == 'nurflug' ? $formular->service_charge: ''?>" name="nurflug_servicecharge" id="servicecharge-amount"/> &euro;
-            or <input type="text" maxlength="2" class="servicecharge-percent" id="servicecharge-percent"/> % <br/>
+            <input type="text" maxlength="5" class="servicecharge" value="<?=$formular->type == 'nurflug' ? $formular->service_charge: ''?>" name="nurflug_servicecharge" id="servicecharge-amount"/> &euro;
+            or <input type="text" maxlength="4" class="servicecharge-percent" id="servicecharge-percent"/> % <br/>
             <label for="total-amount">Total:</label>
             <input value="<?=$formular->type == 'nurflug' ? ($formular->flight_price + $formular->service_charge) : ''?>" type="text" disabled id="total-amount"/> &euro;
         </div>

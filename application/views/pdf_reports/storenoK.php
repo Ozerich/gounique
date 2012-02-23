@@ -83,15 +83,11 @@
             </tr>
             <tr>
                 <td class="paramname">Gesamtpreis:</td>
-                <td class="paramvalue"><?=$formular->price['brutto']?> &euro;</td>
+                <td class="paramvalue"><?=number_format($formular->original->brutto, 2, ',','.')?> &euro;</td>
             </tr>
             <tr>
-                <td class="paramname">Stornogebühr lt. AGB´s <?=$formular->storeno->percent?>%</td>
-                <td class="paramvalue"><?=$formular->price['storeno_sum']?> &euro;</td>
-            </tr>
-            <tr>
-                <td class="paramname">Gutschriftsbetrag</td>
-                <td class="paramvalue"><?=$formular->price['gutschriftsbetrag']?> &euro;</td>
+                <td class="paramname">Stornogebühr lt. AGB´s <?=$formular->original->storno_percent?>%</td>
+                <td class="paramvalue"><?=number_format($formular->brutto, 2, ',','.')?> &euro;</td>
             </tr>
         </table>
     </div>

@@ -649,6 +649,49 @@ $(document).ready(function () {
         return false;
     });
 
+    $('.reservierung-page .formular-header #change-ag').click(function () {
+        $(this).hide();
+        $('#new_aghid').val('');
+        $('.formular-header').find('#save-ag, #new_agnum').show();
+        return false;
+    });
+
+    $('.reservierung-page .formular-header #new_agnum').liveSearch({
+        url:'kundenverwaltung/livesearch/',
+        width:400,
+        onSelect:function (data) {
+            $('#new_ag_id').val(data.id);
+            $('#new_ag_num').val(data.num);
+        }
+    });
+
+    $('.reservierung-page .formular-header #save-ag').click(function () {
+        if ($('#new_ag_id').val() == '') {
+            $('.reservierung-page .formular-header #new_agnum').addClass('error');
+            return false;
+        }
+        $('.reservierung-page .formular-header #new_agnum').removeClass('error');
+
+        if ($('input#formular_id').size() > 0)
+            $.ajax({
+                url:'reservierung/change_agency/' + $('input#formular_id').val() + '/' + $('#new_ag_id').val()
+            });
+        else
+            $('input[name=kunde_id]').val($('#new_ag_id').val());
+
+        $('#kunde_link').html($('#new_ag_num').val()).attr('for', $('#new_ag_id').val());
+
+        $('.formular-header').find('#save-ag, #new_agnum').val('').hide();
+        $('.reservierung-page .formular-header #change-ag').show();
+
+        return false;
+    });
+
+    $('#kunde_link').click(function () {
+        document.location = "kunderverwaltung/historie/" + $(this).attr('for');
+        return false;
+    });
+
 
     /*-----------------------------------------------------------------------------------------
      Change type block
@@ -711,7 +754,7 @@ $(document).ready(function () {
             $('<li>Flight price must be positive integer</li>').appendTo(error_block);
 
         /*if (service_charge == '' || service_charge == 0)
-            $('<li>Service charge must be positive integer</li>').appendTo(error_block);*/
+         $('<li>Service charge must be positive integer</li>').appendTo(error_block);*/
 
         var find_error = $(error_block).find('li').size() > 0;
 
@@ -1131,20 +1174,19 @@ $(document).ready(function () {
 
     $('.reservierung-page #do_rechnung').click(function () {
 
-        $('#final-page .anzahlung-block').find('#departure_date, #finalpayment_date').each(function(){
-            if($(this).val() == '')
+        $('#final-page .anzahlung-block').find('#departure_date, #finalpayment_date').each(function () {
+            if ($(this).val() == '')
                 $(this).addClass('error');
             else
                 $(this).removeClass('error');
         });
 
-        if(!$('#final-page #sofort').is(':checked'))
-        {
-            $('#final-page .prepayment-block input').each(function(){
-                if($(this).val() == '')
-                   $(this).addClass('error');
-               else
-                   $(this).removeClass('error');
+        if (!$('#final-page #sofort').is(':checked')) {
+            $('#final-page .prepayment-block input').each(function () {
+                if ($(this).val() == '')
+                    $(this).addClass('error');
+                else
+                    $(this).removeClass('error');
             });
         }
         else
@@ -1298,7 +1340,39 @@ $(document).ready(function () {
      ------------------------------------------------------------------------------------------------------------*/
     $('#storeno-page #who-radio').buttonset();
 
-    $('#storeno-page #date').datepicker().datepicker("option", "showAnim", "blind").datepicker("option", "dateFormat", 'ddmmyy');
+    $('#storeno-page #storno-date').setdatepicker();
 
 
+    $('#storeno-page #storno-submit').click(function () {
+
+        if ($('#storno-date').val() == '')
+            $('#storno-date').addClass('error');
+        else
+            $('#storno-date').removeClass('error');
+
+        if ($('#storno-percent').val() != '' && $('#storno-value').val() != '')
+            $('#storno-percent, #storno-value').addClass('error');
+        else
+            $('#storno-percent, #storno-value').removeClass('error');
+
+        if ($('#storeno-page input.error').size() > 0)
+            return false;
+
+        $("#storno-confirm").dialog({
+            resizable:false,
+            height:140,
+            modal:true,
+            buttons:{
+                "Storno":function () {
+                    $('.storeno-content form').submit();
+                    $(this).dialog("close");
+                },
+                Cancel:function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+
+        return false;
+    });
 });

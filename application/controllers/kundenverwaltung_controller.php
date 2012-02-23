@@ -462,7 +462,8 @@ class Kundenverwaltung_Controller extends MY_Controller
             AND (type = "agenturen" OR type = "stammkunden")')));
         $result = array();
         foreach ($kundens as $kunde)
-            $result[] = array("text" => "<b>" . $kunde->k_num . "</b> - " . $kunde->name, "value" => $kunde->k_num);
+            $result[] = array("text" => "<b>" . $kunde->k_num . "</b> - " . $kunde->name, "value" => $kunde->k_num,
+                "data" => array("id" => $kunde->id, 'num' => $kunde->k_num));
         echo json_encode($result);
         exit();
     }

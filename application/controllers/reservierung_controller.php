@@ -226,6 +226,22 @@ Your Unique World Team";
         }
     }
 
+    public function change_agency($formular_id = 0, $agency_id = 0)
+    {
+        $formular = Formular::find_by_id($formular_id);
+        $agency = Kunde::find_by_id($agency_id);
+
+        if (!$formular || !$agency) {
+            show_404();
+            return false;
+        }
+
+        $formular->kunde_id = $agency_id;
+        $formular->save();
+
+        exit();
+    }
+
     public function create($kunde_id = '')
     {
         if (!$kunde_id) {
@@ -247,14 +263,13 @@ Your Unique World Team";
             if ($type != 'nurflug')
                 $provision = $this->input->post('provision-manuel') != '' ? str_replace(',', '.', $this->input->post('provision-manuel')) :
                     $kunde->provision;
-
             $formular = Formular::create(array(
 
                     'v_num' => strtoupper($type == 'nurflug' ? $this->input->post('nurflug_vnum') : $this->input->post('vnum')),
                     'kunde_id' => $this->input->post('kunde_id'),
                     'type' => $this->input->post('formular-type'),
                     'r_num' => 0,
-                    'provision' => $provision * 1.19,
+                    'provision' => $provision,
 
                     'service_charge' => $type == 'nurflug' ? $this->input->post('nurflug_servicecharge') : 0,
                     'flight_text' => strtoupper($type == 'nurflug' ? $this->input->post('nurflug_flight') : $this->input->post('flight')),
@@ -313,7 +328,7 @@ Your Unique World Team";
 
             $formular->brutto = $formular->brutto_price;
             $formular->arrival_date = $formular->count_arrival_date();
-            $formular->provision_amount = $formular->brutto * $formular->provision / 100;
+            $formular->provision_amount = round($formular->brutto * $formular->provision / 100, 2);
             $formular->save();
 
             redirect('reservierung/result/' . $formular->id);
@@ -339,8 +354,9 @@ Your Unique World Team";
                 $provision = $this->input->post('provision-manuel') != '' ? str_replace(',', '.', $this->input->post('provision-manuel')) :
                     $formular->kunde->provision;
 
+
             $formular->type = $this->input->post('formular-type');
-            $formular->provision = $provision * 1.19;
+            $formular->provision = $provision;
             $formular->service_charge = $type == 'nurflug' ? $this->input->post('nurflug_servicecharge') : 0;
             $formular->flight_text = strtoupper($type == 'nurflug' ? $this->input->post('nurflug_flight') : $this->input->post('flight'));
             $formular->flight_price = $type == 'nurflug' ? $this->input->post('nurflug_flightprice') : $this->input->post('flightprice');
@@ -454,7 +470,7 @@ Your Unique World Team";
                 $formular->arrival_date = $arrival_date;
 
             $formular->brutto = $formular->brutto_price;
-            $formular->provision_amount = $formular->brutto * $formular->provision / 100;
+            $formular->provision_amount = round($formular->brutto * $formular->provision * (!$formular->kunde->ausland ? 1.19 : 1) / 100, 2);
             if ($formular->status == "rechnung") {
                 $formular->prepayment_amount = $formular->brutto * $formular->prepayment / 100;
                 $formular->finalpayment_amount = $formular->brutto - $formular->prepayment_amount;
@@ -742,13 +758,17 @@ Your Unique World Team";
             $formular->status = 'storno';
             $formular->is_storno = true;
             $formular->storno_date = inputdate_to_mysqldate($this->input->post('date'));
-            $formular->storno_percent = $this->input->post('manuel-agb') ? $this->input->post('manuel-agb') : $this->input->post('agb-value');
+            $formular->storno_percent = $this->input->post('manuel-percent');
+            $formular->storno_amount = $this->input->post('manuel-value');
             $formular->storno_who = $this->input->post('who');
             $formular->storno_by = $this->user->id;
             $formular->storno_created_date = time_to_mysqldatetime(time());
             $formular->save();
 
-            $brutto = $formular->brutto / 100 * $formular->storno_percent;
+            if ($formular->storno_percent)
+                $brutto = $formular->brutto / 100 * $formular->storno_percent;
+            else
+                $brutto = $formular->brutto - $formular->storno_amount;
 
             $storno_rechnung = Formular::create(array(
                 'kunde_id' => $formular->kunde_id,
@@ -760,10 +780,12 @@ Your Unique World Team";
                 'flight_text' => $formular->flight_text,
                 'flight_price' => $formular->flight_price,
                 'provision' => $formular->provision,
-                'provision_amount' => $brutto / 100 * $formular->storno_percent,
-                'provision_date' => '',
+                'provision_amount' => round($brutto / 100 * $formular->provision, 2) * ($formular->kunde->ausland ? 1 : 1.19),
+                'provision_date' => $formular->kunde->type == "agenturen" ? time_to_mysqldate(time()) : null,
                 'service_charge' => $formular->service_charge,
                 'brutto' => $brutto,
+                'finalpayment_amount' => $brutto,
+                'finalpayment_date' => time_to_mysqldate(time()),
                 'departure_date' => $formular->departure_date,
                 'rechnung_date' => time_to_mysqldatetime(time()),
                 'person_count' => $formular->person_count,

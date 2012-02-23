@@ -21,7 +21,12 @@
 
         <div class="param">
             <span class="param-name">Kundennummer:</span>
-            <a href="kundenverwaltung/historie/<?=$kunde->id?>"><?=$kunde->k_num?></a>
+            <a id="kunde_link" for="<?=$kunde->id?>" href="#"><?=$kunde->k_num?></a>
+            <a href="#" id="change-ag">Change</a>
+            <input type="hidden" id="new_ag_id"/>
+            <input type="hidden" id="new_ag_num"/>
+            <a href="#" id="save-ag" style="display:none">Save</a>
+            <input id="new_agnum" type="text" maxlength="20" size="20" style="display:none"/>
         </div>
 
         <div class="param">
@@ -134,8 +139,9 @@
 
         <div class="service-charge">
             <label for="servicecharge-amount">Service charge:</label>
-            <input type="text" maxlength="7" class="servicecharge" name="nurflug_servicecharge" id="servicecharge-amount"/> &euro;
-            or <input type="text" maxlength="2" class="servicecharge-percent" id="servicecharge-percent"/> % <br/>
+            <input type="text" maxlength="7" class="servicecharge" name="nurflug_servicecharge"
+                   id="servicecharge-amount"/> &euro;
+            or <input type="text" maxlength="4" class="servicecharge-percent" id="servicecharge-percent"/> % <br/>
             <label for="total-amount">Total:</label>
             <input value="0" type="text" disabled id="total-amount"/> &euro;
         </div>

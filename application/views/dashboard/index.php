@@ -2,6 +2,13 @@
 
     <a href="dashboard" id="header-logo"></a>
 
+    <? if ($this->user->id == 9): ?>
+    <div class="nav">
+        <div class="row">
+            <a href="control" class="center">finance & controlling</a>
+        </div>
+    </div>
+    <? else: ?>
     <div class="nav">
 
         <div class="row">
@@ -21,5 +28,6 @@
         </div>
 
     </div>
+    <? endif; ?>
 
 </div>

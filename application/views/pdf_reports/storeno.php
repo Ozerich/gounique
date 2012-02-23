@@ -80,15 +80,16 @@
         <table>
             <tr>
                 <td class="paramname">Gesamtreisepreis:</td>
-                <td class="paramvalue"><?=$formular->price['brutto']?> &euro;</td>
+                <td class="paramvalue"><?=number_format($formular->original->brutto, 2, ',','.')?> &euro;</td>
             </tr>
             <tr>
-                <td class="paramname">Stornogebühr lt. AGB´s <?=$formular->storeno->percent?>%</td>
-                <td class="paramvalue"><?=$formular->price['storeno_sum']?> &euro;</td>
+                <td class="paramname">Stornogebühr <?=$formular->original->storno_percent ?
+                    ' lt. AGB´s '.$formular->original->storno_percent.'%' : ''?></td>
+                <td class="paramvalue"><?=number_format($formular->brutto, 2, ',','.')?> &euro;</td>
             </tr>
             <tr>
                 <td class="paramname"><?=$formular->kunde->provision?>% Provision auf Storno</td>
-                <td class="paramvalue"><?=$formular->price['storeno_provision']?> &euro;</td>
+                <td class="paramvalue"><?=$formular->price['provision']?> &euro;</td>
             </tr>
             <? if (!$formular->kunde->ausland): ?>
             <tr class="green">
@@ -98,7 +99,7 @@
             <? endif; ?>
             <tr>
                 <td class="paramname">Gesamtprovision</td>
-                <td class="paramvalue"><?=$formular->price['gesamtprovision']?> &euro;</td>
+                <td class="paramvalue"><?=number_format($formular->provision_amount, 2, ',','.')?> &euro;</td>
             </tr>
         </table>
     </div>
