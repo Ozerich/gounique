@@ -31,13 +31,11 @@
             <th>Abreise</th>
             <th>Total</th>
             <th>Diff</th>
-            <th>Flights</th>
-            <th>Hotels</th>
-            <th>Rundreise</th>
-            <th>Transfers</th>
-            <th>Other</th>
-            <th>Total Cost</th>
-            <th>Payment<br/>Faellig bis</th>
+            <th>Lowcost</th>
+            <th>Charter</th>
+            <th>Line</th>
+            <th>AGB</th>
+            <th>Faellig bis</th>
         </tr>
         </thead>
         <tbody>

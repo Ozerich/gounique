@@ -4,27 +4,6 @@ class HotelRoom extends ActiveRecord\Model
 {
     static $table_name = "hotel_room";
 
-  /*  public static function get_code($name)
-    {
-        $name = trim(str_replace('-','',$name));
-        $words = explode(' ', $name);
-
-    }
-*/
-    public function get_code()
-    {
-
-        $name = str_replace('-', '',$this->name);
-        $words = explode(' ', $name);
-        $result = '';
-
-        foreach ($words as $word)
-            if ($word && ($word[0] < '0' || $word[0] > '9'))
-                $result .= $word[0];
-
-        return $result;
-    }
-
     public function get_services()
     {
         $items = HotelRoomService::all(array('conditions' => array('room_id = ? AND active = 1', $this->id)));

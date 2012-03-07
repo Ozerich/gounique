@@ -45,6 +45,7 @@
                     <option value="restzahlung">Restzahlung</option>
                     <option value="rechnung">Rechnungsdatum</option>
                     <option value="versand">Versanddatum</option>
+                    <option value="abreise">Abreisedatum</option>
                 </select>
 
                 <div class="agenturen-wr">
@@ -61,7 +62,7 @@
         </fieldset>
 
 
-        <div class="hotel-buttons">
+        <div class="hotel-buttons" style="display:none">
             <button id="show-payments" style="display:none">Payments</button>
         </div>
         <br class="clear"/>
@@ -70,7 +71,7 @@
     <table class="product-list" id="controlpayments-list">
         <thead>
         <tr>
-            <th colspan="6">&nbsp;</th>
+            <th colspan="7">&nbsp;</th>
             <th colspan="3">Anzahlung</th>
             <th colspan="3">Restzahlung</th>
             <th>&nbsp;</th>
@@ -78,12 +79,13 @@
             <th colspan="4">Versand</th>
         </tr>
         <tr>
+            <th>№</th>
             <th class="rg-num">RG-NR</th>
             <th class="ag-num">AG-NR</th>
             <th>Vorg-NR</th>
             <th>RG-Datum</th>
             <th>Abreise</th>
-            <th>Total</th>
+            <th>Total-RG</th>
             <th>Betrag</th>
             <th>Faellig bis</th>
             <th>Status</th>

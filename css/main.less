@@ -1008,7 +1008,7 @@ ul.tabs li.active{
 .reservierung-page .formular-header .param .param-name{
     font-size: 12px;
     font-weight: bold;
-    width: 120px;
+    width: 140px;
     display: inline-block;
 }
 
@@ -1404,9 +1404,7 @@ ul.tabs li.active{
 ------------------------------------------------------------------------------------------------------------*/
 
 .product-create .param{
-    display: block;
     margin-bottom: 8px;
-    clear: both;
 }
 
 .product-create .param input[type=text], .product-create .param textarea, .product-create .param select{
@@ -1477,6 +1475,21 @@ ul.tabs li.active{
     border-bottom: 1px solid #FFFFFF;
     font-weight: bold;
 }
+
+#hotelcreate-page .hotelname-wr .param, #hotelcreate-page .place-wr .param{
+    margin-right: 25px;
+    float: left;
+}
+#hotelcreate-page .hotelcode.param{width: 68px;}
+#hotelcreate-page .hotelcat.param{width: 90px;}
+#hotelcreate-page .hotelcat.param select{margin-top: 3px;}
+#hotelcreate-page .hotelname.param{
+    width: 351px;
+    margin-right: 0;
+}
+#hotelcreate-page .place-wr{margin-bottom: 15px;}
+
+#hotelcreate-page .tlc.param{width: 70px}
 
 #hotelcreate-page .param.radios{
     margin-top: 15px;
@@ -1946,9 +1959,11 @@ ul.tabs li.active{
     padding: 5px 5px;
     font-size: 12px;
 }
+.product-list td.minus{color: red;}
+
 #controlpayments-list td,#controlpayments-list th{
     font-size: 11px;
-    padding: 5px 5px;
+    padding: 5px 3px;
 }
 
 .product-list td.checkbox,.product-list td.checkbox:hover{
@@ -2061,7 +2076,7 @@ ul.tabs li.active{
 
 #dark-overlay {
   position:absolute;
-  z-index:9000;
+  z-index:1000;
   background-color:#000;
   display:none;
   top: 0;
@@ -2070,11 +2085,10 @@ ul.tabs li.active{
 #overlay-window{
     background: #fff;
       position:absolute;
-      z-index:9000;
+      z-index:1001;
       display:none;
       top: 0;
 }
-
 
 /*
     Payments page
@@ -2284,9 +2298,10 @@ ul.tabs li.active{
 #controlpayments-list .anzahlung{background-color: #d3f3ff;}
 #controlpayments-list .total{background-color: #e8e8e8;}
 #controlpayments-list .restzahlung{background-color: #e8f5f7;}
-#controlpayments-list .versand{background-color: #dbffe7;text-align: center;}
-#controlpayments-list .versand.waiting{color: red}
+#controlpayments-list .versand{background-color: #dbffe7}
+#controlpayments-list .versand.waiting{color: red;text-align: center;}
 #controlpayments-list .storno{background-color: #ffdfe1;}
+#controlpayments-list .storno-status{text-align: center; color: red; letter-spacing: 3px;}
 #controlpayments-list .provisionstatus{background-color: #dbffe7;}
 
 #controlpayments-list tr:hover{
@@ -2315,6 +2330,8 @@ ul.tabs li.active{
 .product-list .status{
     min-width: 70px;
 }
+.product-list tr.comment {background: #e9ffa8;}
+.product-list tr.comment td{text-align: center !important;}
 
 #invoice-list .incoming-table{
     width: 80%;

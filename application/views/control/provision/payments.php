@@ -27,7 +27,7 @@
     </div>
 
 
-
+<? if($formular->status == "rechnung"): ?>
     <fieldset id="new-payment">
         <legend>New Payment</legend>
         <div class="new-payment-block">
@@ -46,5 +46,9 @@
             <button id="add-payment">Eingabe</button>
         </div>
     </fieldset>
+<? endif; ?>
+</div>
 
+<div id="payment-delete-confirm" style="display:none">
+    Are you sure?
 </div>

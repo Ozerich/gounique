@@ -97,6 +97,11 @@ $route['product'] = 'product_controller';
 $route['product/(:any)'] = 'product_controller/$1';
 
 $route['control'] = 'control_controller';
+$route['control/outgoing/land'] = 'control_controller/invoice';
+$route['control/outgoing/land/(:any)'] = 'control_controller/invoice/$1';
+$route['control/outgoing/flights'] = 'control_controller/flights';
+$route['control/outgoing/flights/(:any)'] = 'control_controller/flights/$1';
+
 $route['control/(:any)'] = 'control_controller/$1';
 
 /* End of file routes.php */

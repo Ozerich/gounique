@@ -10,6 +10,10 @@ function InputToTime(time) {
     return time.substr(0, 2) + '.' + time.substr(2, 2) + '.' + time.substr(4);
 }
 
+function str_replace(search, replace, subject) {
+return subject.split(search).join(replace);
+}
+
 function DateToInput(a) {
     return (a.getDate() < 10 ? "0" + a.getDate() : a.getDate()) + "" +
         (a.getMonth() < 9 ? "0" + (a.getMonth() + 1) : (a.getMonth() + 1)) + "" +
