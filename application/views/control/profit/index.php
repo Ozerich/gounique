@@ -22,7 +22,7 @@
         </div>
         <br class="clear"/>
     </div>
-    <table class="product-list" id="invoice-list">
+    <table class="product-list">
         <thead>
         <tr>
             <th>№</th>

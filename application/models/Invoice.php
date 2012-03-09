@@ -17,7 +17,7 @@ class Invoice extends ActiveRecord\Model
         foreach($this->payments as $payment)
             $total += $payment->payment_amount;
 
-        return $this->amount <= $total ? "OK" : '-'.($this->amount - $total).'&euro;';
+        return $this->amount <= $total ? "OK" : '-'.num($this->amount - $total).' &euro;';
     }
 
     public function get_paid_amount(){

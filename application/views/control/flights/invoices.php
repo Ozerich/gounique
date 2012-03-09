@@ -12,169 +12,54 @@
 <div id="formularincoming-page" class="content">
     <input type="hidden" id="invoice_formular_id" value="<?=$formular->id?>"/>
 
-    <p class="page-header">Invoices for <b><?=$formular->r_num?></b></p>
-
-    <table class="incoming-blocks">
-        <tr>
-
-            <td class="incoming-block">
-                <input type="hidden" class="block-type" value="hotel"/>
-
-                <div class="type-header">
-                    <h2>Hotels</h2>
-                    <select class="incoming-type">
-                        <? foreach ($formular->incomings as $incoming): ?>
-                        <option value="<?=$incoming->id?>"><?=$incoming->name?></option>
+    <div id="flightinvoice-list"><?=$invoice_list?></div>
+    <div class="new-flightinvoice">
+        <form>
+            <div class="top">
+                <div class="param inv-number">
+                    <label for="inv-number">Inv. Number</label>
+                    <input type="text" name="inv-number" id="inv-number" maxlength="10"/>
+                </div>
+                <div class="param inv-date">
+                    <label for="inv-date">Inv. Date</label>
+                    <input type="text" class="set_datepicker" name="inv-date" id="inv-date" maxlength="8"/>
+                </div>
+                <div class="param inv-type">
+                    <label for="inv-type">Inv. Type</label>
+                    <select id="inv-type" name="inv-type">
+                        <? foreach (FlightInvoice::$TYPES as $id => $name): ?>
+                        <option value="<?=$id?>"><?=$name?></option>
                         <? endforeach; ?>
                     </select>
-                    <a href="#" class="new-invoice">Rechnung</a>
-                    <br class="clear"/>
                 </div>
-                <div class="newinvoice-block" style="display:none">
-                    <div class="param">
-                        <label for="invoice-num">Inv. Number</label>
-                        <input maxlength="8" type="text" name="invoice-num" class="invoice-num"/>
-                    </div>
-                    <div class="param">
-                        <label for="invoice-date">Inv. Date</label>
-                        <input maxlength="8" type="text" name="invoice-date" class="invoice-date"/>
-                    </div>
-                    <div class="param">
-                        <label for="invoice-amount">Inv. Amount</label>
-                        <input maxlength="8" type="text" name="invoice-amount" id="invoice-amount"/ >
-                    </div>
-                    <div class="remark-param">
-                        <label for="invoice-remark">Inv. Remark</label>
-                        <textarea id="invoice-remark" name="invoice-remark"></textarea>
-                    </div>
-                    <button class="add-invoice">Add Rechnung</button>
+                <br class="clear"/>
+            </div>
+            <div class="left">
+                <div class="param inv-amount">
+                    <label for="inv-amount">Inv. Amount</label>
+                    <input type="text" name="inv-amount" maxlength="8" id="inv-amount"/>
                 </div>
-                <div class="invoices">
-                    <?=$invoices['hotel']?>
-                </div>
-            </td>
-
-            <td class="incoming-block">
-                <input type="hidden" class="block-type" value="transfer"/>
-
-                <div class="type-header">
-                    <h2>Transfers</h2>
-                    <select class="incoming-type">
-                        <? foreach ($formular->incomings as $incoming): ?>
-                        <option value="<?=$incoming->id?>"><?=$incoming->name?></option>
-                        <? endforeach; ?>
-                    </select>
-                    <a href="#" class="new-invoice">Rechnung</a>
-                    <br class="clear"/>
-                </div>
-                <div class="newinvoice-block" style="display:none">
-                    <div class="param">
-                        <label for="invoice-num">Inv. Number</label>
-                        <input maxlength="12" type="text" name="invoice-num" class="invoice-num"/>
-                    </div>
-                    <div class="param">
-                        <label for="invoice-date">Inv. Date</label>
-                        <input maxlength="8" type="text" name="invoice-date" class="invoice-date"/>
-                    </div>
-                    <div class="param">
-                        <label for="invoice-amount">Inv. Amount</label>
-                        <input maxlength="8" type="text" name="invoice-amount" id="invoice-amount"/ >
-                    </div>
-                    <div class="remark-param">
-                        <label for="invoice-remark">Inv. Remark</label>
-                        <textarea id="invoice-remark" name="invoice-remark"></textarea>
-                    </div>
-                    <button class="add-invoice">Add Rechnung</button>
-                </div>
-                <div class="invoices">
-                    <?=$invoices['transfer']?>
-                </div>
-            </td>
-        </tr>
-        <tr>
-
-            <td class="incoming-block" style="clear: both">
-                <input type="hidden" class="block-type" value="rundreise"/>
-
-                <div class="type-header">
-                    <h2>Rundreise</h2>
-                    <select class="incoming-type">
-                        <? foreach ($formular->incomings as $incoming): ?>
-                        <option value="<?=$incoming->id?>"><?=$incoming->name?></option>
-                        <? endforeach; ?>
-                    </select>
-                    <a href="#" class="new-invoice">Rechnung</a>
-                    <br class="clear"/>
-                </div>
-                <div class="newinvoice-block" style="display:none">
-                    <div class="param">
-                        <label for="invoice-num">Inv. Number</label>
-                        <input maxlength="8" type="text" name="invoice-num" class="invoice-num"/>
-                    </div>
-                    <div class="param">
-                        <label for="invoice-date">Inv. Date</label>
-                        <input maxlength="8" type="text" name="invoice-date" class="invoice-date"/>
-                    </div>
-                    <div class="param">
-                        <label for="invoice-amount">Inv. Amount</label>
-                        <input maxlength="8" type="text" name="invoice-amount" id="invoice-amount"/ >
-                    </div>
-                    <div class="remark-param">
-                        <label for="invoice-remark">Inv. Remark</label>
-                        <textarea id="invoice-remark" name="invoice-remark"></textarea>
-                    </div>
-                    <button class="add-invoice">Add Rechnung</button>
-                </div>
-                <div class="invoices">
-                    <?=$invoices['rundreise']?>
-                </div>
-            </td>
-            <td class="incoming-block">
-                <input type="hidden" class="block-type" value="other"/>
-
-                <div class="type-header">
-                    <h2>Other</h2>
-                    <a href="#" class="new-invoice">Rechnung</a>
-                    <br class="clear"/>
-                </div>
-                <div class="newinvoice-block" style="display:none">
-                    <div class="param">
-                        <label for="invoice-num">Inv. Number</label>
-                        <input maxlength="8" type="text" name="invoice-num" class="invoice-num"/>
-                    </div>
-                    <div class="param">
-                        <label for="invoice-date">Inv. Date</label>
-                        <input maxlength="8" type="text" name="invoice-date" class="invoice-date"/>
-                    </div>
-                    <div class="param">
-                        <label for="invoice-amount">Inv. Amount</label>
-                        <input maxlength="8" type="text" name="invoice-amount" id="invoice-amount"/ >
-                    </div>
-                    <div class="remark-param">
-                        <label for="invoice-remark">Inv. Remark</label>
-                        <textarea id="invoice-remark" name="invoice-remark"></textarea>
-                    </div>
-                    <button class="add-invoice">Add Rechnung</button>
-                </div>
-                <div class="invoices">
-                    <?=$invoices['other']?>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <table id="statistik" class="stats product-list">
-                    <?=$stats?>
-                </table>
-            </td>
-        </tr>
-    </table>
-
+                <div class="loading_32 loading"></div>
+                <button id="inv-newsubmit">New Invoice</button>
+            </div>
+            <div class="param inv-remark">
+                <label for="inv-remark">Remark</label>
+                <textarea name="inv-remark" class="inv-remark" id="inv-remark"></textarea>
+            </div>
+            <br class="clear"/>
+        </form>
+    </div>
 </div>
 
 
 <div id="invoice-delete-confirm" title="Delete invoice?" style="display:none">
     <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
-        These items will be permanently deleted and cannot be recovered. Are you sure?
+        Are you sure?
+    </p>
+</div>
+
+<div id="invoicepayment-delete-confirm" title="Delete Payment?" style="display:none">
+    <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+       Are you sure?
     </p>
 </div>

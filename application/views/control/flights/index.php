@@ -22,7 +22,7 @@
         </div>
         <br class="clear"/>
     </div>
-    <table class="product-list" id="invoice-list">
+    <table class="product-list" id="flight-list">
         <thead>
         <tr>
             <th>№</th>
@@ -30,11 +30,8 @@
             <th>Vorg-NR</th>
             <th>Abreise</th>
             <th>Total</th>
-            <th>Diff</th>
-            <th>Lowcost</th>
-            <th>Charter</th>
-            <th>Line</th>
-            <th>AGB</th>
+            <th>Paid</th>
+            <th>Status</th>
             <th>Faellig bis</th>
         </tr>
         </thead>

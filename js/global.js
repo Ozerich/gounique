@@ -11,7 +11,7 @@ function InputToTime(time) {
 }
 
 function str_replace(search, replace, subject) {
-return subject.split(search).join(replace);
+    return subject.split(search).join(replace);
 }
 
 function DateToInput(a) {
@@ -45,6 +45,26 @@ function isValidDate(d) {
         return false;
 }
 
+jQuery.fn.check_empty = function () {
+    var result = true;
+    $(this).each(function () {
+        if ($(this).val() == '') {
+            result = false;
+            $(this).addClass('error');
+        }
+        else
+            $(this).removeClass('error');
+    });
+    return result;
+}
+
+jQuery.fn.reset = function () {
+    $(this).find('form').each(function () {
+        this.reset();
+    });
+    return this;
+}
+
 jQuery.fn.center = function () {
     this.css("position", "absolute");
     var top = $(window).scrollTop();
@@ -62,9 +82,8 @@ jQuery.fn.setdatepicker = function () {
 }
 
 
-
 $(document).ready(function () {
     $('.buttonset').buttonset();
-
+    $('.set_datepicker').setdatepicker();
 });
 

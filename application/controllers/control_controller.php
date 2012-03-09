@@ -33,6 +33,24 @@ class Control_Controller extends MY_Controller
                 show_404();
                 exit();
             }
+
+            $invoices = $formular->flight_invoices;
+            $payments = array();
+
+            foreach ($invoices as $ind => $invoice)
+                $payments[$ind] = $this->load->view('control/flights/payments_list.php', array('invoice' => $invoice), true);
+
+            $this->view_data['invoice_list'] = $this->load->view('control/flights/invoice_list', array(
+                'formular' => $formular,
+                'invoices' => $invoices, 'payments' => $payments), true);
+            $this->view_data['formular'] = $formular;
+
+            $this->view_data[''] = array();
+
+
+            $data[] = array('invoices' => $invoices, 'payments' => $payments);
+
+            $this->content_view = 'control/flights/invoices';
         }
         else {
             $this->set_page_title("Flight payments");
@@ -224,6 +242,88 @@ class Control_Controller extends MY_Controller
             return $result;
     }
 
+    public function delete_flightinvoice($formular_id = 0)
+    {
+        $formular = Formular::find_by_id($formular_id);
+        $invoice = FlightInvoice::find_by_id($this->input->post('invoice_id'));
+
+        if (!$formular || !$invoice || $invoice->formular_id != $formular->id) {
+            show_404();
+            exit();
+        }
+
+        $invoice->delete();
+        FlightPayment::table()->delete(array("invoice_id" => $invoice->id));
+
+        $payments = array();
+        $invoices = $formular->flight_invoices;
+        foreach ($invoices as $ind => $invoice)
+            $payments[$ind] = $this->load->view('control/flights/payments_list.php', array('invoice' => $invoice), true);
+
+        echo $this->load->view('control/flights/invoice_list', array(
+            'formular' => $formular,
+            'invoices' => $invoices, 'payments' => $payments), true);
+
+        exit();
+    }
+
+    public function delete_flightpayment($formular_id = 0)
+    {
+        $formular = Formular::find_by_id($formular_id);
+        $payment = FlightPayment::find_by_id($this->input->post('payment_id'));
+
+        if (!$formular || !$payment || $payment->formular_id != $formular->id) {
+            show_404();
+            exit();
+        }
+
+        $payment->delete();
+
+        $payments = array();
+        $invoices = $formular->flight_invoices;
+        foreach ($invoices as $ind => $invoice)
+            $payments[$ind] = $this->load->view('control/flights/payments_list.php', array('invoice' => $invoice), true);
+
+        echo $this->load->view('control/flights/invoice_list', array(
+            'formular' => $formular,
+            'invoices' => $invoices, 'payments' => $payments), true);
+
+        exit();
+    }
+
+    public function add_flightpayment($formular_id = 0)
+    {
+        $formular = Formular::find_by_id($formular_id);
+        $invoice = FlightInvoice::find_by_id($this->input->post('invoice_id'));
+
+        if (!$invoice || !$formular || $invoice->formular_id != $formular_id) {
+            show_404();
+            exit();
+        }
+
+        FlightPayment::create(array(
+            'invoice_id' => $invoice->id,
+            'formular_id' => $formular_id,
+            'amount' => $this->input->post('amount'),
+            'date' => inputdate_to_mysqldate($this->input->post('date')),
+            'remark' => $this->input->post('remark'),
+            'type' => $this->input->post('type'),
+            'created_date' => time_to_mysqldatetime(time()),
+            'created_by' => $this->user->id,
+        ));
+
+        $payments = array();
+        $invoices = $formular->flight_invoices;
+        foreach ($invoices as $ind => $invoice)
+            $payments[$ind] = $this->load->view('control/flights/payments_list.php', array('invoice' => $invoice), true);
+
+        echo $this->load->view('control/flights/invoice_list', array(
+            'formular' => $formular,
+            'invoices' => $invoices, 'payments' => $payments), true);
+
+        exit();
+    }
+
     public function add_payment($type = 'incoming', $formular_id = 0, $invoice_id = 0)
     {
 
@@ -331,6 +431,36 @@ class Control_Controller extends MY_Controller
         $formular->is_versand = $val;
         $formular->save();
 
+        exit();
+    }
+
+    public function add_flightinvoice($formular_id = 0)
+    {
+        $formular = Formular::find_by_id($formular_id);
+        if (!$formular) {
+            show_404();
+            exit();
+        }
+
+        FlightInvoice::create(array(
+            'formular_id' => $formular_id,
+            'type' => $this->input->post('inv-type'),
+            'number' => $this->input->post('inv-number'),
+            'date' => inputdate_to_mysqldate($this->input->post('inv-date')),
+            'amount' => $this->input->post('inv-amount'),
+            'remark' => $this->input->post('inv-remark'),
+            'created_by' => $this->user->id,
+            'created_date' => time_to_mysqldatetime(time()),
+        ));
+
+        $payments = array();
+        $invoices = $formular->flight_invoices;
+        foreach ($invoices as $ind => $invoice)
+            $payments[$ind] = $this->load->view('control/flights/payments_list.php', array('invoice' => $invoice), true);
+
+        echo $this->load->view('control/flights/invoice_list', array(
+            'formular' => $formular,
+            'invoices' => $invoices, 'payments' => $payments), true);
         exit();
     }
 

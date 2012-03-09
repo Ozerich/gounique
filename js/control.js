@@ -30,9 +30,9 @@ function BindPaymentEvents(block) {
         return false;
     });
 
-    $('#payments-table tr').not('.total, .netto').click(function(){
+    $('#payments-table tr').not('.total, .netto').click(function () {
         $('#save-payment').show();
-        var date = str_replace('.',' ',$(this).find('.date').html());
+        var date = str_replace('.', ' ', $(this).find('.date').html());
         date = new Date(date);
         $('#savepayment-id').val($(this).find('.payment_id').val());
         $('#new-payment #payment-date').val(date);
@@ -200,6 +200,19 @@ function BindSelectLineEvent() {
     );
 
 
+    $('#flight-list tbody tr').not('.total').click(function () {
+            if ($(this).hasClass('current')) {
+                var formular_id = $(this).find('.formular_id').val();
+                document.location = 'control/flights/' + formular_id;
+            }
+            else {
+                $('#flight-list tr').removeClass('current');
+                $(this).addClass('current');
+            }
+        }
+    );
+
+
 }
 
 function OpenOverlay() {
@@ -209,6 +222,113 @@ function OpenOverlay() {
     $('#dark-overlay').fadeIn(1000);
     $('#dark-overlay').fadeTo("slow", 0.8, function () {
         $(this).addClass('finished')
+    });
+}
+
+function UpdateFlightInvoiceEvents() {
+    $('.set_datepicker').setdatepicker();
+    $('#flightinvoice-list > table > tbody > tr').not('.total, .flightpayments').click(function () {
+            $('#flightinvoice-list tr.flightpayments').hide();
+            if ($(this).hasClass('current')) {
+                $(this).removeClass('current');
+            }
+            else {
+                $('#flightinvoice-list tr').removeClass('current');
+                $(this).addClass('current');
+                $(this).next().show();
+            }
+        }
+    );
+
+    $('#flightinvoice-list .delete-flightpayment').click(function () {
+
+        var payment_id = $(this).parents('tr').find('.payment_id').val();
+        var block = $(this).parents('.new-flightpayment-wr');
+
+        $("#invoicepayment-delete-confirm").dialog({
+            resizable:false,
+            height:140,
+            modal:true,
+            buttons:{
+                "Delete":function () {
+                    $.ajax({
+                        data:"payment_id=" + payment_id,
+                        type:'post',
+                        url:'control/delete_flightpayment/' + $('#invoice_formular_id').val(),
+                        success:function (data) {
+                            $('#flightinvoice-list').empty().html(data);
+                            UpdateFlightInvoiceEvents();
+                        }
+                    });
+
+                    $(block).find('.newpayment-wr').hide();
+                    $(block).find('.open-flightpayment').show();
+                    $(this).dialog("close");
+                },
+                Cancel:function () {
+                    $(this).dialog("close");
+                    cancel = true;
+                }
+            }
+        });
+        return false;
+    });
+
+    $('#flightinvoice-list').find('.delete-flightinvoice').click(function () {
+        var invoice_id = $(this).parents('tr').find('.invoice_id').val();
+        var block = $(this).parents('.new-flightpayment-wr');
+
+        $("#invoice-delete-confirm").dialog({
+            resizable:false,
+            height:140,
+            modal:true,
+            buttons:{
+                "Delete":function () {
+                    $.ajax({
+                        data:"invoice_id=" + invoice_id,
+                        type:'post',
+                        url:'control/delete_flightinvoice/' + $('#invoice_formular_id').val(),
+                        success:function (data) {
+                            $('#flightinvoice-list').empty().html(data);
+                            UpdateFlightInvoiceEvents();
+                        }
+                    });
+                    $(this).dialog("close");
+                },
+                Cancel:function () {
+                    $(this).dialog("close");
+                    cancel = true;
+                }
+            }
+        });
+        return false;
+    });
+
+    $('.open-flightpayment').click(function () {
+        $(this).hide();
+        $(this).parents('.new-flightpayment-wr').find('.newpayment-wr').show();
+        return false;
+    });
+
+    $('.add_flightpayment-submit').click(function () {
+        var block = $(this).parents('.new-flightpayment-wr');
+        if ($(block).find('input').check_empty() == false)
+            return false;
+
+        $.ajax({
+            data:$(block).find('form').serialize(),
+            type:'post',
+            url:'control/add_flightpayment/' + $('#invoice_formular_id').val(),
+            success:function (data) {
+                $('#flightinvoice-list').empty().html(data);
+                UpdateFlightInvoiceEvents();
+            }
+        });
+
+        $(block).find('.newpayment-wr').hide();
+        $(block).find('.open-flightpayment').show();
+
+        return false;
     });
 }
 
@@ -426,4 +546,31 @@ $(document).ready(function () {
         });
         return false;
     });
+
+
+    $('#inv-newsubmit').click(function () {
+        if ($('.new-flightinvoice input').check_empty() == false)
+            return false;
+        $('.new-flightinvoice .loading').show();
+        $(this).hide();
+        $.ajax({
+            data:$('.new-flightinvoice form').serialize(),
+            type:'post',
+            url:'control/add_flightinvoice/' + $('#invoice_formular_id').val(),
+            success:function (data) {
+                $('#flightinvoice-list').empty().html(data);
+                UpdateFlightInvoiceEvents();
+                $('.new-flightinvoice').reset();
+            },
+            complete:function () {
+                $('.new-flightinvoice .loading').hide();
+                $('.new-flightinvoice #inv-newsubmit').show();
+            }
+        });
+        return false;
+    });
+
+    UpdateFlightInvoiceEvents();
+
+
 });

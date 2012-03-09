@@ -1,32 +1,28 @@
 <?
-$total = array('brutto' => 0, 'diff' => 0, 'provision' => 0, 'ergebnis' => 0, 'stats' => array(
-    'flight' => 0, 'hotel' => 0, 'rundreise' => 0, 'transfer' => 0, 'other' => 0, 'total' => 0,
-));
+$total = array('amount' => 0, 'status' => 0, 'paid' => 0);
+
 foreach ($formulars as $ind => $formular):
-    $total['brutto'] += $formular->brutto;
-    $total['diff'] += $formular->total_diff;
-    $total['provision'] += $formular->provision_amount;
-    $ergebnis = $formular->brutto - $formular->provision_amount -  $formular->invoice_stats['total']['amount'];
-    $total['ergebnis'] += $ergebnis;
-   ?>
+    $total['amount'] += $formular->flight_stats['amount'];
+    $total['paid'] += $formular->flight_stats['paid'];
+    $total['status'] += $formular->flight_stats['status'];
+    ?>
 <tr class="rechnung-line">
     <input type="hidden" class="formular_id" value="<?=$formular->id?>"/>
     <td><?=($ind + 1)?></td>
     <td class="rg-num"><a href="reservierung/final/<?=$formular->id?>"><?=$formular->r_num?></a></td>
     <td><?=$formular->v_num?></td>
     <td><?=$formular->departure_date->format('d.M.Y')?></td>
-    <td>0</td>
-    <td>0</td>
-    <td>0</td>
-    <td>0</td>
-    <td>0</td>
-    <td>0</td>
+    <td><?=num($formular->flight_stats['amount'])?></td>
+    <td><?=num($formular->flight_stats['paid'])?></td>
+    <td><?=$formular->flight_stats['status'] >= 0 ? "OK" : num($formular->flight_stats['status'])?></td>
     <td><?=$formular->departure_date->sub(new DateInterval('P14D'))->format('d.M.y')?></td>
 </tr>
 <? endforeach; ?>
 
 <tr class="total">
     <td colspan="4">&nbsp;</td>
-    <td><?=num($total['brutto'])?></td>
-    <td><?=num($total['diff'])?></td>
-    </tr>
+    <td><?=num($total['amount'])?></td>
+    <td><?=num($total['paid'])?></td>
+    <td><?=num($total['status'])?></td>
+    <td colspan="10">&nbsp;</td>
+</tr>

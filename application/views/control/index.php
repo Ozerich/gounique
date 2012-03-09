@@ -6,7 +6,7 @@
         <div id="main-menu">
             <div class="row">
                 <a href="control/incoming">Zahlungseingänge</a>
-                <a href="control/invoice" id="open-outgoing">Zahlungsausgänge</a>
+                <a href="#" id="open-outgoing">Zahlungsausgänge</a>
                 <a href="control/profit" class="last">Profit & Loss</a>
             </div>
         </div>

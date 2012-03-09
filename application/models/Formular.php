@@ -373,6 +373,24 @@ class Formular extends ActiveRecord\Model
 
     }
 
+    public function get_flight_invoices()
+    {
+        return FlightInvoice::find_all_by_formular_id($this->id);
+    }
+
+    public function get_flight_stats(){
+        $result = array('amount' => 0, 'paid' => 0, 'status' => 0);
+
+        foreach($this->flight_invoices as $invoice)
+        {
+            $result['amount'] = $invoice->amount;
+            $result['paid'] = $invoice->paid_amount;
+            $result['status'] = $invoice->status;
+        }
+
+        return $result;
+    }
+
 }
 
 ?>
