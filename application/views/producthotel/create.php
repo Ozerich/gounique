@@ -20,39 +20,64 @@
 </ul>
 
 <div class="page" id="crs-page">
-    <div class="param">
-        <label for="code">Hotelcode</label>
-        <input name="code" class="high-letters" type="text" id="code" maxlength="10"/>
+    <div class="hotelname-wr">
+
+        <div class="param hotelcode">
+            <label for="code">Hotelcode</label>
+            <input name="code" class="high-letters" type="text" id="code" maxlength="8"/>
+        </div>
+
+        <div class="param hotelcat">
+            <label for="category">Kategorie</label>
+            <select id="category" name="category">
+                <option value="0">Category:</option>
+                <? foreach (HotelCategory::all() as $category): ?>
+                <option value="<?=$category->id?>"><?=$category->stars?></option>
+                <? endforeach; ?>
+            </select>
+        </div>
+
+        <div class="param hotelname">
+            <label for="name">Hotelname</label>
+            <input name="name" type="text" id="name"/>
+        </div>
+
+        <br class="clear"/>
+
     </div>
 
-    <div class="param">
-        <label for="name">Hotelname</label>
-        <input name="name" type="text" id="name"/>
-    </div>
+    <div class="place-wr">
 
-    <div class="param">
-        <label for="category">Kategorie</label>
-        <input name="stars" type="text" id="category"/>
-    </div>
+        <div class="param tlc">
+            <label for="tlc">Hotel TLC</label>
+            <input name="tlc" type="text" maxlength="3" id="tlc"/>
+        </div>
 
-    <div class="param">
-        <label for="tlc">Hotel TLC</label>
-        <input name="tlc" type="text" id="tlc"/>
-    </div>
+        <div class="param land">
+            <label for="land">Hotel Land</label>
+            <select name="land" id="land">
+                <option value="0">No Land</option>
+                <? foreach (Country::all() as $country): ?>
+                <option value="<?=$country->id?>"><?=$country->name?></option>
+                <? endforeach; ?>
+            </select>
+        </div>
 
-    <div class="param">
-        <label for="zielgibiet">Zielgebiet</label>
-        <input name="zielgibiet" type="text" id="zielgibiet"/>
-    </div>
+        <div class="param zeilgebiet">
+            <label for="zeilgebiet">Hotel Zielgebiet</label>
+            <select id="zeilgebiet" name="zeilgebiet" disabled>
+                <option value="0">Select Land</option>
+            </select>
+        </div>
 
-    <div class="param">
-        <label for="ort">Hotel Ort</label>
-        <input name="ort" type="text" id="ort"/>
-    </div>
+        <div class="param ort">
+            <label for="ort">Hotel Ort</label>
+            <select id="ort" name="ort" disabled>
+                <option value="0">Select Zielgebiet</option>
+            </select>
+        </div>
 
-    <div class="param">
-        <label for="land">Hotel Land</label>
-        <input name="land" type="text" id="land"/>
+        <br class="clear"/>
     </div>
 
     <div class="param radios">
@@ -241,8 +266,10 @@
                 <label for="rq_buchung">RQ Buchung</label>
 
                 <div class="buttonset">
-                    <input type="radio" value="1" id="rq_buchung-on" name="rq_buchung"/><label for="rq_buchung-on">On</label>
-                    <input type="radio" value="0" id="rq_buchung-off" name="rq_buchung" checked/><label for="rq_buchung-off">Off</label>
+                    <input type="radio" value="1" id="rq_buchung-on" name="rq_buchung"/><label
+                    for="rq_buchung-on">On</label>
+                    <input type="radio" value="0" id="rq_buchung-off" name="rq_buchung" checked/><label
+                    for="rq_buchung-off">Off</label>
                 </div>
             </div>
             <br class="clear"/>
@@ -287,12 +314,16 @@
 
                     <div id="bonus_1_block" class="bonus-block active">
                         <div class="radio">
-                            <input type="radio" for-name="bonus_type" class="bonustype" value="night_bonus" checked/><label>Bonus</label>
+                            <input type="radio" for-name="bonus_type" class="bonustype" value="night_bonus"
+                                   checked/><label>Bonus</label>
                         </div>
 
                         <div class="param">
                             <label>Nachte</label>
-                            <input type="text" for-name="from_nights" maxlength="2" id="from"/> = <input type="text" for-name="to_nights" maxlength="2" id="to"/>
+                            <input type="text" for-name="from_nights" maxlength="2" id="from"/> = <input type="text"
+                                                                                                         for-name="to_nights"
+                                                                                                         maxlength="2"
+                                                                                                         id="to"/>
                         </div>
                     </div>
 

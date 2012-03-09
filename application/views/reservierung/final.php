@@ -47,9 +47,9 @@
             <span class="param-value"><?=$formular->plain_status?></span>
         </div>
 
-        <? if ($formular->status == "rechnung"): ?>
+        <? if ($formular->status == "rechnung" || $formular->status == "storno" || $formular->status == "gutschrift"): ?>
         <div class="param">
-            <span class="param-name">Rechnungsnummer:</span>
+            <span class="param-name"><?=$formular->is_storno ? "Original Rechnung:" : "Rechnungsnummer:"?></span>
             <span class="param-value"><?=$formular->r_num?></span>
         </div>
         <? endif; ?>
@@ -59,11 +59,39 @@
             <span class="param-value"><?=$formular->sachbearbeiter->fullname?></span>
         </div>
 
-        <? if ($formular->status == "rechnung" && $formular->is_storno): ?>
+        <? if ($formular->is_storno && $formular->status == "rechnung"): ?>
         <div class="param">
             <span class="param-name">Original Rechnung</span>
             <a class="param-value"
                href="reservierung/final/<?=$formular->storno_original?>"><?=$formular->original->r_num?></a>
+        </div>
+        <div class="param">
+            <span class="param-name">Gutschrift Rechnung</span>
+            <a class="param-value"
+               href="reservierung/final/<?=$formular->gutschrift->id?>"><?=$formular->gutschrift->r_num?></a>
+        </div>
+        <? elseif ($formular->is_storno && $formular->status == "gutschrift"): ?>
+        <div class="param">
+            <span class="param-name">Original Rechnung</span>
+            <a class="param-value"
+               href="reservierung/final/<?=$formular->storno_original?>"><?=$formular->original->r_num?></a>
+        </div>
+        <div class="param">
+            <span class="param-name">Stornorechnung</span>
+            <a class="param-value"
+               href="reservierung/final/<?=$formular->storno_rechnung->id?>"><?=$formular->storno_rechnung->r_num?></a>
+        </div>
+
+        <? elseif ($formular->is_storno && $formular->status == "storno"): ?>
+        <div class="param">
+            <span class="param-name">Stornorechnung</span>
+            <a class="param-value"
+               href="reservierung/final/<?=$formular->storno_rechnung->id?>"><?=$formular->storno_rechnung->r_num?></a>
+        </div>
+        <div class="param">
+            <span class="param-name">Gutschrift Rechnung</span>
+            <a class="param-value"
+               href="reservierung/final/<?=$formular->gutschrift->id?>"><?=$formular->gutschrift->r_num?></a>
         </div>
         <? endif; ?>
 
@@ -144,7 +172,20 @@
     </div>
     <div class="right-float">
         <table class="price-table">
-            <? if ($formular->is_storno && $formular->status == "rechnung"): ?>
+            <? if ($formular->status == "gutschrift"): ?>
+            <tr>
+                <td class="param">Gesamptreisepreis</td>
+                <td><?=$formular->original->price['brutto']?></td>
+            </tr>
+            <tr class="underline">
+                <td class="param">Gutschrift</td>
+                <td>-<?=$formular->original->price['brutto']?></td>
+            </tr>
+            <tr class="up underline">
+                <td class="param">Endpreise Netto</td>
+                <td>0.00</td>
+            </tr>
+            <? elseif ($formular->is_storno && $formular->status == "rechnung"): ?>
             <tr>
                 <td class="param">Gesamptreisepreis</td>
                 <td><?=$formular->original->price['brutto']?></td>
@@ -278,7 +319,7 @@
 
 
 <div id="stage">
-    <? if (!$formular->is_storno): ?>
+<? if (!$formular->is_storno): ?>
 
     <input type="radio" id="radio1" name="stage" value="1"
         <?if ($formular->status == "angebot" || $formular->status == "eingangsmitteilung") echo 'checked';?>/>
@@ -286,48 +327,50 @@
     <input type="radio" id="radio2" name="stage"
            value="2"/><label for="radio2">Angebot
         (Kundenkopie)</label>
-
-    <? if ($formular->status == "rechnung" || $formular->status == "freigabe"): ?>
+    <? endif; ?>
+    <? if (($formular->status == "rechnung" && !$formular->is_storno) || $formular->status == "storno"): ?>
         <input type="radio" id="radio3" name="stage" value="3" checked/><label for="radio3">Rechnung</label>
         <input type="radio" id="radio4" name="stage" value="4"/><label for="radio4">Rechnung
             (Kundenkopie)</label>
+    <? elseif ($formular->status == "rechnung") : ?>
+            <? if ($formular->kunde->type == "agenturen"): ?>
+            <input type="radio" id="radio1" name="stage" checked value="5"/><label for="radio1">Storno</label>
+            <? endif; ?>
+        <input type="radio" id="radio2" name="stage" value="6"/><label for="radio2">Storno(Kundenkopie)</label>
+        <? elseif ($formular->status == "gutschrift"): ?>
+        <input type="radio" id="radio1" name="stage" checked value="7"/><label for="radio1">Gutscrift</label>
         <? endif; ?>
 
-    <? else: ?>
-    <? if ($formular->kunde->type == "agenturen"): ?>
-        <input type="radio" id="radio1" name="stage" checked value="5"/><label for="radio1">Storeno</label>
-        <? endif; ?>
-    <input type="radio" id="radio2" name="stage" value="6"/><label for="radio2">Storeno(Kundenkopie)</label>
-    <? endif; ?>
 
 
 </div>
 <?=
-form_open("reservierung/sendmail/" . $formular->id, null, array("formular_id" => $formular->id));
-?>
-<? if ($this->user->id != 9): ?>
-<div class="mail-block">
-    <div class="mail" style="display:none">
-        <span class="left">Mail</span>
-        <input type="text" size="30" class="email"/>
-        <span class="status">noch nicht gesendet</span>
-        <input type="hidden" class="sended" value="0"/>
-    </div>
-    <div class="mail">
-        <span class="left">Administrator E-Mail</span>
-        <input type="text" disabled size="30" class="email" value="<?= $user->email ?>"/>
-        <span class="status">noch nicht gesendet</span>
-        <input type="hidden" class="sended" value="0"/>
-    </div>
+    form_open("reservierung/sendmail/" . $formular->id, null, array("formular_id" => $formular->id))
+    ;
+    ?>
+    <? if ($this->user->id != 9): ?>
+    <div class="mail-block">
+        <div class="mail" style="display:none">
+            <span class="left">Mail</span>
+            <input type="text" size="30" class="email"/>
+            <span class="status">noch nicht gesendet</span>
+            <input type="hidden" class="sended" value="0"/>
+        </div>
+        <div class="mail">
+            <span class="left">Administrator E-Mail</span>
+            <input type="text" disabled size="30" class="email" value="<?= $user->email ?>"/>
+            <span class="status">noch nicht gesendet</span>
+            <input type="hidden" class="sended" value="0"/>
+        </div>
 
-    <div class="mail">
-        <span class="left">Kunde E-Mail</span>
-        <input type="text" size="30" class="email" value="<?= $formular->kunde->email ?>"/>
-        <span class="status">noch nicht gesendet</span>
-        <input type="hidden" class="sended" value="0"/>
+        <div class="mail">
+            <span class="left">Kunde E-Mail</span>
+            <input type="text" size="30" class="email" value="<?= $formular->kunde->email ?>"/>
+            <span class="status">noch nicht gesendet</span>
+            <input type="hidden" class="sended" value="0"/>
+        </div>
     </div>
-</div>
-    <? endif; ?>
+        <? endif; ?>
 </form>
 
 <div id="final-buttons" class="formular-buttons">

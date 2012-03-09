@@ -40,7 +40,7 @@ class Hotel extends ActiveRecord\Model
 
         foreach ($this->rooms as $room)
             foreach (HotelRoomType::find_all_by_room_id($room->id) as $room_type)
-                if($room_type->active)
+                if ($room_type->active)
                     $result[] = $room_type;
 
         return $result;
@@ -78,6 +78,22 @@ class Hotel extends ActiveRecord\Model
     {
         $data = User::find_by_id($this->changed_by);
         return $data ? $data : null;
+    }
+
+    public function get_country()
+    {
+        $country = Country::find_by_id($this->country_id);
+        return $country ? $country->name : 'No Land';
+    }
+
+    public function get_city(){
+        $city = City::find_by_id($this->city_id);
+        return $city ? $city->name : 'No Zielgibiet';
+    }
+
+    public function get_region(){
+        $region = Region::find_by_id($this->region_id);
+        return $region ? $region->name : 'No Ort';
     }
 }
 

@@ -148,6 +148,8 @@ Your Unique World Team";
             $view = "storeno";
         elseif ($type == 6)
             $view = "storenoK";
+        elseif ($type == 7)
+            $view = "gutschrift";
 
         $html = $this->load->view("pdf_reports/" . $view, $this->view_data, TRUE);
 
@@ -765,6 +767,7 @@ Your Unique World Team";
             $formular->storno_created_date = time_to_mysqldatetime(time());
             $formular->save();
 
+
             if ($formular->storno_percent)
                 $brutto = $formular->brutto / 100 * $formular->storno_percent;
             else
@@ -784,6 +787,7 @@ Your Unique World Team";
                 'provision_date' => $formular->kunde->type == "agenturen" ? time_to_mysqldate(time()) : null,
                 'service_charge' => $formular->service_charge,
                 'brutto' => $brutto,
+                'payment_netto' => $formular->payment_netto,
                 'finalpayment_amount' => $brutto,
                 'finalpayment_date' => time_to_mysqldate(time()),
                 'departure_date' => $formular->departure_date,
@@ -795,11 +799,66 @@ Your Unique World Team";
                 'changed_date' => time_to_mysqldatetime(time()),
                 'changed_by' => $this->user->id,
                 'storno_original' => $formular->id,
+            ));
 
+            $gutschrift = Formular::create(array(
+                'kunde_id' => $formular->kunde_id,
+                'status' => 'gutschrift',
+                'is_storno' => true,
+                'r_num' => $formular->r_num . 'G',
+                'v_num' => $formular->v_num,
+                'type' => $formular->type,
+                'flight_text' => $formular->flight_text,
+                'flight_price' => $formular->flight_price,
+                'provision' => $formular->provision,
+                'provision_amount' => $formular->provision_amount,
+                'provision_date' => $formular->provision_date,
+                'service_charge' => $formular->service_charge,
+                'brutto' => -$formular->brutto,
+                'finalpayment_amount' => -$formular->brutto,
+                'finalpayment_date' => time_to_mysqldate(time()),
+                'departure_date' => $formular->departure_date,
+                'rechnung_date' => time_to_mysqldatetime(time()),
+                'person_count' => $formular->person_count,
+                'comment' => $formular->comment,
+                'created_date' => time_to_mysqldatetime(time()),
+                'created_by' => $this->user->id,
+                'changed_date' => time_to_mysqldatetime(time()),
+                'changed_by' => $this->user->id,
+                'storno_original' => $formular->id,
             ));
 
             $this->write_to_pdf($storno_rechnung->id, 5);
             $this->write_to_pdf($storno_rechnung->id, 6);
+            $this->write_to_pdf($gutschrift->id, 7);
+
+            $payments = IncomingPayment::find_all_by_formular_id($formular->id);
+            foreach ($payments as $payment) {
+
+                IncomingPayment::create(array(
+                    'formular_id' => $storno_rechnung->id,
+                    'amount' => $payment->added_by == 0 ? $storno_rechnung->provision_amount : $payment->amount,
+                    'type' => $payment->type,
+                    'payment_date' => $payment->payment_date,
+                    'remark' => $payment->remark,
+                    'added_time' => time_to_mysqldatetime(time()),
+                    'added_by' => $payment->added_by
+                ));
+            }
+
+            $payments = ProvisionPayment::find_all_by_formular_id($formular->id);
+            foreach ($payments as $payment)
+            {
+                ProvisionPayment::create(array(
+                    'formular_id' => $storno_rechnung->id,
+                    'amount' => $payment->added_by == 0 ? $storno_rechnung->provision_amount : $payment->amount,
+                    'type' => $payment->type,
+                    'payment_date' => $payment->payment_date,
+                    'remark' => $payment->remark,
+                    'added_time' => time_to_mysqldatetime(time()),
+                    'added_by' => $payment->added_by
+                ));
+            }
 
             redirect("reservierung/final/" . $storno_rechnung->id);
         }

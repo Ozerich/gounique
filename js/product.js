@@ -11,11 +11,17 @@ function GetBonusText(bonus_block) {
     else if (bonus_type == "earlybird_date")
         return period + "Booking till " + InputToTime($(bonus_block).find('.booking_till').val()) + " " + $(bonus_block).find('#discount2').val() + "%";
     else if (bonus_type == "turbo_bonus")
-            return period + "Booking till " + InputToTime($(bonus_block).find('.booking_till_2').val()) + " " + $(bonus_block).find('#discount4').val() + "&euro;";
+        return period + "Booking till " + InputToTime($(bonus_block).find('.booking_till_2').val()) + " " + $(bonus_block).find('#discount4').val() + "&euro;";
     else return "Unknown bonus";
 }
 
 $(document).ready(function () {
+
+    $('#hotelcreate-page input#tlc').liveSearch({
+        url:'product/hotel/tlc_search/',
+        width:400
+    });
+
     $('#hotelcreate-page #tabs span').click(function () {
         $('#tabs li').removeClass('active').each(function () {
             $('#' + $(this).find('span').attr('for')).hide();
@@ -170,7 +176,7 @@ $(document).ready(function () {
         var bonus_block = $('.bonus-item.example').clone().removeClass('example');
         $(bonus_block).appendTo('.bonus-list');
 
-        $(bonus_block).find('input').setValidator({only_digits: true});
+        $(bonus_block).find('input').setValidator({only_digits:true});
 
         $(bonus_block).show().find('.bonus-preview').hide();
         $(bonus_block).find('.bonus-content').show();
@@ -227,8 +233,7 @@ $(document).ready(function () {
             return false;
         });
 
-        $(bonus_block).find('.bonustype').click(function()
-        {
+        $(bonus_block).find('.bonustype').click(function () {
             $(this).parents('.bonus-item').find('.bonus-block').removeClass('active');
             $(this).parents('.bonus-block').addClass('active');
         });
@@ -237,7 +242,7 @@ $(document).ready(function () {
         return false;
     });
 
-    $('#hotelcreate-page .bonus-item').not('.example').find('.bonus-von, .bonus-bis, .booking_till, .booking_till_2').each(function(){
+    $('#hotelcreate-page .bonus-item').not('.example').find('.bonus-von, .bonus-bis, .booking_till, .booking_till_2').each(function () {
         var old_val = $(this).val();
         $(this).datepicker().datepicker("option", "showAnim", "blind").datepicker("option", "dateFormat", 'ddmmyy');
         $(this).val(old_val);
@@ -262,8 +267,7 @@ $(document).ready(function () {
         return false;
     });
 
-    $('#hotelcreate-page .bonustype').click(function()
-    {
+    $('#hotelcreate-page .bonustype').click(function () {
         $(this).parents('.bonus-item').find('.bonus-block').removeClass('active');
         $(this).parents('.bonus-block').addClass('active');
     });
@@ -408,8 +412,8 @@ $(document).ready(function () {
     });
 
     $('.datum-block #von, .datum-block #bis').datepicker({
-        changeMonth: true,
-        changeYear: true
+        changeMonth:true,
+        changeYear:true
     }).datepicker("option", "showAnim", "blind").datepicker("option", "dateFormat", 'ddmmyy');
 
 });

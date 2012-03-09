@@ -28,8 +28,9 @@ foreach ($formulars as $ind => $formular):
     <td><?=number_format($formular->invoice_stats['rundreise']['amount'], 2, ',', '.')?></td>
     <td><?=number_format($formular->invoice_stats['transfer']['amount'], 2, ',', '.')?></td>
     <td><?=number_format($formular->invoice_stats['other']['amount'], 2, ',', '.')?></td>
+    <td><?=number_format($formular->provision_amount, 2, ',', '.')?></td>
     <td><?=number_format($formular->invoice_stats['total']['amount'] + $formular->provision_amount, 2, ',', '.')?></td>
-    <td><?=$formular->departure_date->sub(new DateInterval('P14D'))->format('d.M.y')?></td>
+    <td><?=num($ergebnis)?></td>
 </tr>
 <? endforeach; ?>
 
@@ -42,6 +43,7 @@ foreach ($formulars as $ind => $formular):
     <td><?=num($total['stats']['rundreise'])?></td>
     <td><?=num($total['stats']['transfer'])?></td>
     <td><?=num($total['stats']['other'])?></td>
+    <td><?=num($total['provision'])?></td>
     <td><?=num($total['stats']['total'])?></td>
-    <td><?=num($total['ergebnis'])?></td>
+    <td>&nbsp;</td>
 </tr>

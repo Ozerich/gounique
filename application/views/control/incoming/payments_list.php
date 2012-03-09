@@ -31,6 +31,7 @@
             <span><?=$formular->restzahlung_status?></span>
         </div>
 
+        <? if(!$formular->is_storno): ?>
         <p class="versandfreigabe">Versandfreigabe</p>
         <div class="param">
             <span class="param-name">Versended</span>
@@ -46,9 +47,10 @@
                 <span><?=$formular->versanded_user->fullname?></span>
             </div>
             <? endif; ?>
+        <? endif; ?>
 
     </div>
-    <? if($formular->kunde->type == 'agenturen'):?>
+    <? if($formular->kunde->type == 'agenturen' && $formular->status != "storno"):?>
         <div class="netto-wr"><input type="checkbox" id="is-netto" <?=$formular->payment_netto ? 'checked' : ''?>/><span class="netto-label">Netto</span></div>
         <? endif; ?>
     <br class="clear"/>
@@ -93,22 +95,22 @@
                 $restzahlung_diff = '-' . ($restzahlung - $my_restzahlung);
         }
         ?>
-    <tr>
+    <tr class="<?$payment->added_by == 0 ? 'netto' : ''?>">
         <input type="hidden" class="payment_id" value="<?=$payment->id?>"/>
-        <td><?=$payment->payment_date->format('d.M.Y');?></td>
-        <td><?=@number_format($payment->amount,2,',','.')?></td>
+        <td class="date"><?=$payment->payment_date->format('d.M.Y');?></td>
+        <td class="amount"><?=@number_format($payment->amount,2,',','.')?></td>
         <td><?=@number_format($anzahlung_diff, 2, ',', '.')?></td>
         <td><?=@number_format($restzahlung_diff, 2, ',', '.')?></td>
-        <td><?=$payment->added_by ? $payment->plain_type : 'Provision'?></td>
-        <td><?=$payment->remark?></td>
+        <td class="type"><?=$payment->added_by ? $payment->plain_type : 'Provision'?></td>
+        <td class="remark"><?=$payment->remark?></td>
         <td>
-            <?if ($payment->added_by != 0): ?>
+            <?if ($payment->added_by != 0 && $formular->status != "storno"): ?>
             <a href="#" class="delete-icon delete-payment"></a>
             <? endif; ?>
         </td>
     </tr>
         <? endforeach; ?>
-    <tr>
+    <tr class="total">
         <td>&nbsp;</td>
         <td class="total-amount"><?=@number_format($total, 2, ',', '.')?> &euro;</td>
         <td>&nbsp;</td>

@@ -2,19 +2,43 @@ function BindPaymentEvents(block) {
     $('#payments-table').find('.delete-payment').click(function () {
         var block = $(this).parents('tr');
         var payment_id = $(block).find('.payment_id').val();
-
-        $(this).hide();
-
-        $.ajax({
-            url:'control/delete_payment/' + $('#payments_type').val() + '/' + $('#payments_formular_id').val() + '/' + payment_id,
-            type:'post',
-            success:function (data) {
-                $('#payments-page .payment-content').empty().html(data);
-                BindPaymentEvents();
+        var delete_button = $(this);
+        $("#payment-delete-confirm").dialog({
+            resizable:false,
+            height:140,
+            modal:true,
+            stack:true,
+            buttons:{
+                "Delete":function () {
+                    $(delete_button).hide();
+                    $.ajax({
+                        url:'control/delete_payment/' + $('#payments_type').val() + '/' + $('#payments_formular_id').val() + '/' + payment_id,
+                        type:'post',
+                        success:function (data) {
+                            $('#payments-page .payment-content').empty().html(data);
+                            BindPaymentEvents();
+                        }
+                    });
+                    $(this).dialog("close");
+                },
+                Cancel:function () {
+                    $(this).dialog("close");
+                    cancel = true;
+                }
             }
         });
-
         return false;
+    });
+
+    $('#payments-table tr').not('.total, .netto').click(function(){
+        $('#save-payment').show();
+        var date = str_replace('.',' ',$(this).find('.date').html());
+        date = new Date(date);
+        $('#savepayment-id').val($(this).find('.payment_id').val());
+        $('#new-payment #payment-date').val(date);
+        $('#new-payment #payment-amount').val($(this).find('.amount').html());
+        $('#new-payment #payment-remark').val($(this).find('.remark').html());
+        $('#new-payment #payment-type').val($(this).find('.type').html());
     });
 
     $('#check_versand').click(function () {
@@ -147,12 +171,18 @@ function UpdateInvoiceList(invoice_block) {
 }
 
 function BindSelectLineEvent() {
-    $('#controlpayments-list tbody tr').not('.total').click(function () {
-        if ($(this).hasClass('current'))
+    $('#controlpayments-list tbody tr').not('.total, .comment').click(function () {
+        if ($(this).hasClass('current')) {
+            if ($(this).hasClass('no-open'))
+                return false;
             $('#show-payments').click();
+        }
         else {
             $('#controlpayments-list tr').removeClass('current');
+            $('#controlpayments-list tr.comment').hide();
             $(this).addClass('current');
+            if ($(this).next().hasClass('comment'))
+                $(this).next().show();
             $('#show-payments').show();
         }
     });
@@ -299,7 +329,7 @@ $(document).ready(function () {
         var button = $(this);
         var search_field = $(this).attr('id');
         var search_str = 'search_field=' + $('#datesearch-type option:selected').val() + '&von=' + $('#search-von').val() + "&bis=" + $('#search-bis').val();
-        if($('#ag_num').val())
+        if ($('#ag_num').val())
             search_str += '&ag_num=' + $('#ag_num').val();
         $('#last_searchquery').val(search_str);
         $.ajax({
@@ -357,8 +387,8 @@ $(document).ready(function () {
             $(this).attr('disabled', 'disabled');
             var type = $(block).find('.block-type').val();
             $.ajax({
-                url:'control/add_invoice/' + $('#invoice_formular_id').val() + "/" +
-                    (type == "other" ? '' : $(block).find('.incoming-type option:selected').val()),
+                url:'control/add_invoice/' + $('#invoice_formular_id').val() +
+                    (type == "other" ? '' : "/" + $(block).find('.incoming-type option:selected').val()),
                 type:'post',
                 data:'date=' + $(block).find('.invoice-date').val() + '&amount=' + $(block).find('#invoice-amount').val() +
                     '&remark=' + $(block).find('#invoice-remark').val() + '&type=' + type + '&number=' + $(block).find('.invoice-num').val(),
@@ -379,7 +409,21 @@ $(document).ready(function () {
     UpdateInvoiceList($('.invoice-list'));
 
     $('#control-page #ag_num').liveSearch({
-            url:'kundenverwaltung/livesearch/',
-            width:400
+        url:'kundenverwaltung/livesearch/',
+        width:400
+    });
+
+    $('#open-outgoing').click(function () {
+        $('#close-outgoing').show();
+        $('#main-menu').hide();
+        $('#outgoing').fadeIn("slow");
+        return false;
+    });
+
+    $('#close-outgoing').click(function () {
+        $('#outgoing').fadeOut(function () {
+            $('#main-menu').show();
         });
+        return false;
+    });
 });

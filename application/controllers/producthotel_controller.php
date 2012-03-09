@@ -28,6 +28,18 @@ class ProductHotel_Controller extends MY_Controller
         exit();
     }
 
+    public function tlc_search($search_str = '')
+    {
+        $airports = Airport::find('all', array('conditions' => array('code like "%' . $search_str . '%"')));
+        $result = array();
+        foreach ($airports as $airport)
+            $result[] = array("text" => "<b>" . $airport->code . "</b> - " . $airport->name, "value" => $airport->code);
+        echo json_encode($result);
+        exit();
+
+
+    }
+
     public function edit($id = 0)
     {
         $hotel = Hotel::find_by_id($id);
@@ -179,7 +191,7 @@ class ProductHotel_Controller extends MY_Controller
                 'teenblock_active' => isset($_POST['teenblock_active']) ? 1 : 0,
                 'childblock_active' => isset($_POST['childblock_active']) ? 1 : 0,
                 'infantblock_active' => isset($_POST['infantblock_active']) ? 1 : 0,
-               ));
+            ));
 
             $hotel_id = $hotel->id;
 

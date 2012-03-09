@@ -229,7 +229,7 @@ class Formular extends ActiveRecord\Model
         foreach ($this->payments as $payment)
             $anzahlung -= $payment->amount;
 
-        return ($anzahlung <= 0) ? "OK" : "-" . number_format($anzahlung, 2, ',', '.');
+        return $anzahlung <= 0 ? $anzahlung : -$anzahlung;
     }
 
     public function get_restzahlung_status()
@@ -250,7 +250,7 @@ class Formular extends ActiveRecord\Model
             }
             $restzahlung -= $payment->amount;
         }
-        return ($restzahlung <= 0.20) ? "OK" : "-" . number_format($restzahlung, 2, ',', '.');
+        return $restzahlung < 0 ? $restzahlung : -$restzahlung;
     }
 
     public function get_last_payment()
@@ -276,31 +276,10 @@ class Formular extends ActiveRecord\Model
         return $last;
     }
 
-    public function get_versand_status1()
-    {
-        if ($this->is_freigabe)
-            return 'Freigabe';
-
-        $total = $this->get_paid_amount();
-
-        if ($total < $this->brutto)
-            return "-" . number_format($this->brutto - $total, 2, ',', '.');
-        else
-            return 'Freigabe';
-    }
-
-    public function get_versand_status2()
-    {
-        if (!$this->is_freigabe && !$this->is_versand)
-            return "-";
-        return $this->is_versand ? 'versendet' : 'waiting';
-    }
-
     public function get_provision_status()
     {
         $total = $this->get_provisionpaid_amount();
-
-        return $total >= $this->provision_amount ? 'OK' : '-' . number_format($this->provision_amount - $total, 2, ',', '.');
+        return $total - $this->provision_amount;
     }
 
     public function get_original()
@@ -341,6 +320,7 @@ class Formular extends ActiveRecord\Model
         foreach ($data as &$item)
             $item = array('paid' => 0, 'amount' => 0, 'status' => 0);
 
+
         foreach ($this->invoices as $invoice)
         {
             $type = substr($invoice->type, 0, strlen('flight')) == "flight" ? "flight" : $invoice->type;
@@ -364,12 +344,33 @@ class Formular extends ActiveRecord\Model
 
     public function get_total_diff()
     {
-        $total = $this->get_paid_amount();
+        if ($this->status == "gutschrift")
+            return 0;
 
-        if ($total < $this->brutto)
-            return "-" . round($this->brutto - $total,2);
-        else
-            return "+" . round($total - $this->brutto,2);
+        $total = $this->get_paid_amount();
+        return round($total - $this->brutto, 2);
+    }
+
+
+    public function get_gutschrift()
+    {
+        if ($this->status == "rechnung")
+            return Formular::find(array('conditions' => array('status = "gutschrift" AND storno_original = ?', $this->storno_original)));
+        if ($this->status == "gutschrift")
+            return $this;
+        if ($this->status == "storno")
+            return Formular::find(array('conditions' => array('status = "gutschrift" AND is_storno = 1 AND storno_original = ?', $this->id)));
+
+
+    }
+
+    public function get_storno_rechnung()
+    {
+        if ($this->status == "gutschrift")
+            return Formular::find(array('conditions' => array('status = "rechnung" AND is_storno = 1 AND storno_original = ?', $this->storno_original)));
+        if ($this->status == "storno")
+            return Formular::find(array('conditions' => array('status = "rechnung" AND is_storno = 1 AND storno_original = ?', $this->id)));
+
     }
 
 }

@@ -3,7 +3,7 @@
         <a href="dashboard" class="home-link"><img src="img/header-logo.jpg"/></a>
         <ul class="page-path">
             <li><a href="control">finance & controlling</a></li>
-            <li><span>Zahlungsausgang</span></li>
+            <li><span>Profit & Loss</span></li>
         </ul>
     </div>
 </div>
@@ -36,8 +36,9 @@
             <th>Rundreise</th>
             <th>Transfers</th>
             <th>Other</th>
+            <th>Provision</th>
             <th>Total Cost</th>
-            <th>Payment<br/>Faellig bis</th>
+            <th>Brutto Ergebnis</th>
         </tr>
         </thead>
         <tbody>

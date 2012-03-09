@@ -25,6 +25,29 @@ class Control_Controller extends MY_Controller
         $this->content_view = 'control/incoming/index';
     }
 
+    public function flights($formular_id = 0)
+    {
+        if ($formular_id != 0) {
+            $formular = Formular::find_by_id($formular_id);
+            if (!$formular) {
+                show_404();
+                exit();
+            }
+        }
+        else {
+            $this->set_page_title("Flight payments");
+            $formulars = Formular::find('all', array(
+                'conditions' => array('status = "rechnung"'),
+                'order' => 'r_num'
+            ));
+
+            $this->view_data['invoice_list'] = $this->load->view('control/flights/rechnung_list.php',
+                array('formulars' => $formulars), true);
+
+            $this->content_view = 'control/flights/index';
+        }
+    }
+
     public function invoice($formular_id = 0)
     {
         $formular = Formular::find_by_id($formular_id);
@@ -43,12 +66,29 @@ class Control_Controller extends MY_Controller
         }
         else {
             $this->view_data['page_title'] = 'Invoise Payments';
-
+            $formulars = Formular::find('all', array(
+                'conditions' => array('status = "rechnung" AND type != ?', 'nurflug'),
+                'order' => 'r_num'
+            ));
             $this->view_data['invoice_list'] = $this->load->view('control/invoice/rechnung_list.php',
-                array('formulars' => Formular::find_all_by_status('rechnung')), true);
+                array('formulars' => $formulars), true);
 
             $this->content_view = 'control/invoice/index';
         }
+    }
+
+    public function profit()
+    {
+        $this->view_data['page_title'] = 'Invoise Payments';
+        $formulars = Formular::find('all', array(
+            'conditions' => array('status = "rechnung"'),
+            'order' => 'r_num'
+        ));
+        $this->view_data['invoice_list'] = $this->load->view('control/profit/rechnung_list.php',
+            array('formulars' => $formulars), true);
+
+        $this->content_view = 'control/profit/index';
+
     }
 
     public function get_invoices($formular_id, $type)
@@ -138,12 +178,12 @@ class Control_Controller extends MY_Controller
         $bis = inputdate_to_mysqldate($this->input->post('bis'));
 
         $kunde = $this->input->post('ag_num') ? Kunde::find_by_k_num($this->input->post('ag_num')) : 0;
-        $kunde_query = $kunde ? ' AND kunde_id="'.$kunde->id.'"' : '';
+        $kunde_query = $kunde ? ' AND kunde_id="' . $kunde->id . '"' : '';
         $formulars = array();
 
         if ($search_string)
             $formulars = Formular::find('all', array('conditions' =>
-            array('status = "rechnung"'.$kunde_query.' AND ' . $search_field . ' like "%' . $search_string . '%"')));
+            array('(status = "rechnung" OR status = "storno" OR status="gutschrift") ' . $kunde_query . ' AND ' . $search_field . ' like "%' . $search_string . '%"')));
         else if ($von && $bis) {
             $search_map = array(
                 'buchung' => 'created_date',
@@ -158,12 +198,12 @@ class Control_Controller extends MY_Controller
             if (isset($search_map[$search_field])) {
                 $search_field = $search_map[$search_field];
                 $formulars = Formular::find('all', array('conditions' =>
-                array('status = "rechnung"'.$kunde_query.' AND ' . $search_field . ' >= ? AND ' . $search_field . ' <= ?', $von, $bis)));
+                array('(status = "rechnung" OR status = "storno" OR status="gutschrift")' . $kunde_query . ' AND ' . $search_field . ' >= ? AND ' . $search_field . ' <= ?', $von, $bis)));
             }
         }
         else
             $formulars = Formular::all(array(
-                    'conditions' => array('status = "rechnung"'.$kunde_query),
+                    'conditions' => array('(status = "rechnung" OR status = "storno" OR status="gutschrift")' . $kunde_query),
                     'order' => 'r_num')
             );
 
@@ -296,13 +336,13 @@ class Control_Controller extends MY_Controller
 
     public function add_invoice($formular_id = 0, $incoming_id = 0)
     {
+
         $formular = Formular::find_by_id($formular_id);
 
         if (!$formular) {
             show_404();
             exit();
         }
-
         Invoice::create(array(
             'formular_id' => $formular_id,
             'incoming_id' => $incoming_id,

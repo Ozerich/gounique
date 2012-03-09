@@ -26,10 +26,10 @@
         <?=$payments_list?>
     </div>
 
+    <? if($formular->status == "rechnung"): ?>
     <fieldset id="new-payment">
         <legend>New Payment</legend>
         <div class="new-payment-block">
-
             <div class="param">
                 <label for="payment-date">Payment date:</label>
                 <input type="text" id="payment-date" maxlength="8"/>
@@ -43,7 +43,7 @@
                 <select id="payment-type">
                     <option value="uberweisung">Uberweisung</option>
                     <option value="kreditkart">KK über UW</option>
-                    <option value="kreditkart_aer">KK über AER</option>
+                    <option value="kred itkart_aer">KK über AER</option>
                     <option value="lastschrift">Lastschrift</option>
                     <option value="bar">Bar</option>
                 </select>
@@ -52,8 +52,14 @@
                 <label for="payment-remark">Remark:</label>
                 <textarea id="payment-remark"></textarea>
             </div>
+            <input type="hidden" id="savepayment-id"/>
+            <button id="save-payment" style="display:none">Save</button>
             <button id="add-payment">Eingabe</button>
         </div>
     </fieldset>
+    <? endif; ?>
+</div>
 
+<div id="payment-delete-confirm" style="display:none">
+    Are you sure?
 </div>

@@ -1,5 +1,9 @@
 <?php
 
+function num($num){
+    return number_format($num, 2, ',','.');
+}
+
 function mysqldatetime_to_timestamp($datetime = "")
 {
     $l = strlen($datetime);

@@ -63,12 +63,13 @@
     <table class="product-list" id="controlpayments-list">
         <thead>
         <tr>
+            <th class="num">№</th>
             <th class="ag-num">RG-NR</th>
             <th class="r-num">AG-NR</th>
             <th>Vorg-NR</th>
-            <th>Total</th>
+            <th>Total-RG</th>
             <th>Provision %</th>
-            <th>Betrag</th>
+            <th>Prov. Betrag</th>
             <th>Faellig bis</th>
             <th>Storno</th>
             <th>Netto</th>
