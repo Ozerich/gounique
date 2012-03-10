@@ -119,7 +119,7 @@
                 <? endif; ?>
             <tr class="green">
                 <td class="paramname">Total Provision:</td>
-                <td class="paramvalue"><?=$formular->price['total_provision']?> &euro;</td>
+                <td class="paramvalue"><?=num($formular->provision_amount)?> &euro;</td>
             </tr>
             <tr class="empty">
                 <td colspan="2">&nbsp;</td>

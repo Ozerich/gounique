@@ -227,7 +227,8 @@ class Formular extends ActiveRecord\Model
         $anzahlung = $this->prepayment_amount;
 
         foreach ($this->payments as $payment)
-            $anzahlung -= $payment->amount;
+            if ($payment->added_by != 0)
+                $anzahlung -= $payment->amount;
 
         return $anzahlung <= 0 ? $anzahlung : -$anzahlung;
     }
@@ -239,7 +240,7 @@ class Formular extends ActiveRecord\Model
 
         foreach ($this->payments as $payment)
         {
-            if ($anzahlung > 0) {
+            if ($anzahlung > 0 && $payment->added_by != 0) {
                 $anzahlung -= $payment->amount;
 
                 if ($anzahlung < 0) {
@@ -378,10 +379,11 @@ class Formular extends ActiveRecord\Model
         return FlightInvoice::find_all_by_formular_id($this->id);
     }
 
-    public function get_flight_stats(){
+    public function get_flight_stats()
+    {
         $result = array('amount' => 0, 'paid' => 0, 'status' => 0);
 
-        foreach($this->flight_invoices as $invoice)
+        foreach ($this->flight_invoices as $invoice)
         {
             $result['amount'] = $invoice->amount;
             $result['paid'] = $invoice->paid_amount;

@@ -13,7 +13,7 @@
         </div>
         <div class="param">
             <span class="param-name">Anzahlung Status: </span>
-            <span><?=$formular->anzahlung_status?></span>
+            <span><?=num($formular->anzahlung_status)?></span>
         </div>
         <? endif; ?>
     </div>
@@ -28,7 +28,7 @@
         </div>
         <div class="param">
             <span class="param-name"><?=$formular->is_sofort ? 'Totalzahlung' : 'Restzahlung'?> Status: </span>
-            <span><?=$formular->restzahlung_status?></span>
+            <span><?=num($formular->restzahlung_status)?></span>
         </div>
 
         <? if(!$formular->is_storno): ?>
@@ -73,34 +73,38 @@
 
     <?
     $total = 0;
-    $anzahlung = $formular->prepayment_amount;
-    $restzahlung = $formular->finalpayment_amount;
+    $anzahlung = round($formular->prepayment_amount, 2);
+    $restzahlung = round($formular->finalpayment_amount, 2);
 
     $anzahlung_diff = $restzahlung_diff = 0;
+    $netto_payment = 0;
     foreach ($formular->payments as $payment):
+
+        if($payment->added_by == 0)
+            $netto_payment = $payment->amount;
+
         $total += $payment->amount;
 
-        if ($anzahlung - $total < 0)
+        if ($anzahlung - $total + $netto_payment < 0)
             $anzahlung_diff = 0;
         else
-            $anzahlung_diff = '-' . ($anzahlung - $total);
-
+            $anzahlung_diff = '-' . round($anzahlung - $total + $netto_payment, 2);
         if ($anzahlung - $total >= 0)
-            $restzahlung_diff = '-' . $restzahlung;
+            $restzahlung_diff = '-' . round($restzahlung - $netto_payment, 2);
         else {
-            $my_restzahlung = $total - $anzahlung;
+            $my_restzahlung = round($total - $anzahlung, 2);
             if ($restzahlung - $my_restzahlung < 0)
-                $restzahlung_diff = '+' . ($my_restzahlung - $restzahlung);
+                $restzahlung_diff = '+' . round($my_restzahlung - $restzahlung, 2);
             else
-                $restzahlung_diff = '-' . ($restzahlung - $my_restzahlung);
+                $restzahlung_diff = '-' . round($restzahlung - $my_restzahlung, 2);
         }
         ?>
     <tr class="<?$payment->added_by == 0 ? 'netto' : ''?>">
         <input type="hidden" class="payment_id" value="<?=$payment->id?>"/>
         <td class="date"><?=$payment->payment_date->format('d.M.Y');?></td>
-        <td class="amount"><?=@number_format($payment->amount,2,',','.')?></td>
-        <td><?=@number_format($anzahlung_diff, 2, ',', '.')?></td>
-        <td><?=@number_format($restzahlung_diff, 2, ',', '.')?></td>
+        <td class="amount"><?=num($payment->amount)?></td>
+        <td><?=num($anzahlung_diff)?></td>
+        <td><?=num($restzahlung_diff)?></td>
         <td class="type"><?=$payment->added_by ? $payment->plain_type : 'Provision'?></td>
         <td class="remark"><?=$payment->remark?></td>
         <td>

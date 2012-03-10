@@ -99,7 +99,7 @@
             <? endif; ?>
             <tr>
                 <td class="paramname">Gesamtprovision</td>
-                <td class="paramvalue"><?=number_format($formular->provision_amount, 2, ',','.')?> &euro;</td>
+                <td class="paramvalue"><?=num($formular->provision_amount)?> &euro;</td>
             </tr>
         </table>
     </div>

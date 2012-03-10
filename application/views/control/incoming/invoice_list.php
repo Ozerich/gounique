@@ -41,8 +41,8 @@ foreach ($formulars as $ind => $formular):
 
     <td class="storno <?=$formular->is_storno ? 'checkbox' : ''?>">&nbsp;</td>
     <td <?=$formular->payment_netto ? 'class="checkbox"' : ''?>>&nbsp;</td>
-    <td class="versand right <?=$formular->total_diff ? 'minus' : ''?>"><?=num($formular->total_diff)?></td>
     <? if ($formular->is_storno): ?>
+    <td class="versand right"><?=num(0)?></td>
     <td colspan="3" class="storno-status">
         <? if ($formular->status == "rechnung"): ?>
         StornoRechnung
@@ -51,6 +51,7 @@ foreach ($formulars as $ind => $formular):
         <? endif; ?>
     </td>
     <? else: ?>
+    <td class="versand right <?=$formular->total_diff ? 'minus' : ''?>"><?=num($formular->total_diff)?></td>
     <td class="versand <?=$formular->is_freigabe ? 'checkbox' : ''?>">&nbsp;</td>
     <? if (!$formular->is_freigabe && !$formular->is_versand): ?>
         <td class="versand">&nbsp;</td>

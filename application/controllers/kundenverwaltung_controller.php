@@ -200,7 +200,7 @@ class Kundenverwaltung_Controller extends MY_Controller
                         'zahlungsart' => $this->input->post('zahlungsart'),
                         'inkasso' => $this->input->post('inkasso'),
                         'place' => $this->input->post('place'),
-                        'status' => $this->input->post('status'),
+                        'active' => $this->input->post('status'),
                         'bank_name' => $this->input->post('bank_name'),
                         'bank_sitz' => $this->input->post('bank_sitz'),
                         'bank_blz' => $this->input->post('bank_blz'),
