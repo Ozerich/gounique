@@ -28,7 +28,7 @@ foreach ($formulars as $ind => $formular):
     <td class="anzahlung"><?=number_format($formular->prepayment_amount, 2, ',', '.')?></td>
     <td class="anzahlung"><?=$formular->prepayment_date ? $formular->prepayment_date->format('d.M.y') : ''?></td>
     <td class="anzahlung <?=$formular->anzahlung_status < 0 ? 'minus' : ''?>">
-        <?=$formular->anzahlung_status >= 0 || $formular->status == "gutschrift" ? "OK" : num($formular->anzahlung_status)?>
+        <?=$formular->anzahlung_status >= 0 || $formular->status == "gutschrift" || $formular->status == "storno" ? "OK" : num($formular->anzahlung_status)?>
     </td>
     <? endif; ?>
 
@@ -36,7 +36,7 @@ foreach ($formulars as $ind => $formular):
     <td class="restzahlung"><?=number_format($formular->finalpayment_amount, 2, ',', '.')?></td>
     <td class="restzahlung"><?=$formular->finalpayment_date ? $formular->finalpayment_date->format('d.M.y') : ''?></td>
     <td class="restzahlung <?=$formular->restzahlung_status < 0 && $formular->status != "gutschrift" ? 'minus' : ''?>">
-        <?=$formular->restzahlung_status >= 0 || $formular->status == "gutschrift" ? "OK" : num($formular->restzahlung_status)?>
+        <?=$formular->restzahlung_status >= 0 || $formular->status == "gutschrift" || $formular->status == "storno" ? "OK" : num($formular->restzahlung_status)?>
     </td>
 
     <td class="storno <?=$formular->is_storno ? 'checkbox' : ''?>">&nbsp;</td>

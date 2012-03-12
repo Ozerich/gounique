@@ -12,7 +12,7 @@
         </div>
         <div id="outgoing" style="display:none">
             <div class="row">
-                <a href="#" id="close-outgoing" class="center">Zahlungseingänge</a>
+                <a href="#" id="close-outgoing" class="center">Zahlungsausgänge</a>
             </div>
             <div class="row">
                 <a href="control/outgoing/land">Landleistungen</a>

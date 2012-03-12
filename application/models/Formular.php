@@ -224,19 +224,19 @@ class Formular extends ActiveRecord\Model
 
     public function get_anzahlung_status()
     {
-        $anzahlung = $this->prepayment_amount;
+        $anzahlung = round($this->prepayment_amount, 2);
 
         foreach ($this->payments as $payment)
             if ($payment->added_by != 0)
                 $anzahlung -= $payment->amount;
 
-        return $anzahlung <= 0 ? $anzahlung : -$anzahlung;
+        return $anzahlung <= 0 ? 0 : -$anzahlung;
     }
 
     public function get_restzahlung_status()
     {
-        $restzahlung = $this->finalpayment_amount;
-        $anzahlung = $this->prepayment_amount;
+        $restzahlung = round($this->finalpayment_amount, 2);
+        $anzahlung = round($this->prepayment_amount, 2);
 
         foreach ($this->payments as $payment)
         {

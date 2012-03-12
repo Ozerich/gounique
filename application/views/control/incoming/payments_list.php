@@ -9,7 +9,7 @@
         </div>
         <div class="param">
             <span class="param-name">Anzahlung Amount: </span>
-            <span><?=number_format($formular->prepayment_amount,2)?></span>
+            <span><?=num($formular->prepayment_amount)?></span>
         </div>
         <div class="param">
             <span class="param-name">Anzahlung Status: </span>
@@ -24,7 +24,7 @@
         </div>
         <div class="param">
             <span class="param-name"><?=$formular->is_sofort ? 'Totalzahlung' : 'Restzahlung'?> Amount: </span>
-            <span><?=number_format($formular->finalpayment_amount)?></span>
+            <span><?=num($formular->finalpayment_amount)?></span>
         </div>
         <div class="param">
             <span class="param-name"><?=$formular->is_sofort ? 'Totalzahlung' : 'Restzahlung'?> Status: </span>
