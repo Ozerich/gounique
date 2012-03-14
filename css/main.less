@@ -1977,7 +1977,7 @@ ul.tabs li.active{
 }
 
 .room-page #price-page #price-loader #loader{
-    background: url('img/price-loader.gif') no-repeat;
+    background: url('img/long-loader.gif') no-repeat;
     width: 128px;
     height: 15px;
     margin: 0 auto;
@@ -2487,8 +2487,16 @@ ul.tabs li.active{
 }
 .flightpayments .new-flightpayment-wr .newpayment-wr{margin-top: 10px !important;}
 
+#statistics-page{
+    width: 825px;
+    margin: 0 auto;
+}
 
-#statistics-list {width: auto;}
+#statistics-list {
+    width: auto;
+
+}
+
 #statistics-list td{
     padding: 8px 5px;
 }
@@ -2502,3 +2510,56 @@ ul.tabs li.active{
 #statistics-list td.ruckreise, #statistics-list th.ruckreise{width: 90px;}
 #statistics-list td.person, #statistics-list th.person{width: 40px;}
 #statistics-list td.total, #statistics-list th.total{width: 70px;}
+
+#statistics-page .search-block{
+    width: 400px;
+    float: left;
+}
+
+#statistics-page .search-block .param{
+    width: 80px;
+    float: left;
+    margin-right: 10px;
+}
+
+#statistics-page .search-block .param input{width: 100%;}
+#statistics-page .search-block .param select{margin-top: 23px;}
+
+#statistics-page .search-block .type-checkboxes{margin-top: 5px;}
+#statistics-page .search-block .type-checkboxes label{
+    display: inline-block;
+    margin: 5px 5px 0 0;
+}
+
+
+#statistics-page .table-columns{
+    margin-left: 40px;
+    width: 260px;
+}
+
+#statistics-page .table-fields .field-item{
+    width: 120px;
+    margin-right: 5px;
+    float: left;
+}
+
+#statistics-page .table-fields .field-item input{
+    vertical-align: top;
+    margin: 4px 4px 0 0;
+}
+
+#statistics-page .table-fields .field-item label{display: inline-block;}
+
+#statistics-page #search-button{
+    float: right;
+    margin-top: -15px;
+}
+
+#statistics-page #statistics-loader{
+    width: 128px;
+    height: 15px;
+    margin: 0 auto;
+    background: url('img/long-loader.gif') no-repeat;
+    display: none;
+}
+

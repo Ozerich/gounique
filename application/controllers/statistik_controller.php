@@ -18,4 +18,15 @@ class Statistik_Controller extends MY_Controller
         $this->view_data['page_title'] = 'Statistik';
     }
 
+
+    public function search(){
+        $fields = isset($_POST['field']) ? $_POST['field'] : array();
+
+        $formulars = Formular::find_all_by_status('rechnung');
+
+        echo $this->load->view('statistik/stats_list.php', array('formulars' => $formulars, 'fields' => $fields), true);
+
+        exit();
+    }
+
 }
