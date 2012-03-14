@@ -27,8 +27,8 @@
 
                 <div class="param">
                     <select id="datesearch-type" name="search-type">
-                        <option value="anzahlung">Abreise</option>
-                        <option value="restzahlung">Rückreise</option>
+                        <option value="departure">Abreise</option>
+                        <option value="arrival">Rückreise</option>
                     </select>
                 </div>
 
@@ -42,9 +42,9 @@
                 <div class="type-checkboxes">
 
                     <input type="checkbox" id="is_pauschalreise" name="is_pauschalreise" checked/>
-                    <label for="is_pauschalreise">Pauschalreise:</label>
+                    <label for="is_pauschalreise">Pausschalreise:</label>
 
-                    <input type="checkbox" id="is_bausteinreise" name="is_bausteinrese" checked/>
+                    <input type="checkbox" id="is_bausteinreise" name="is_bausteinreise" checked/>
                     <label for="is_bausteinreise">Bausteinreise:</label>
 
                     <input type="checkbox" id="is_nurflug" name="is_nurflug" checked/>
@@ -95,6 +95,7 @@
     </form>
     <br class="clear">
     <button id="search_button">Search</button>
+    <a href="#" id="clear_search">Clear</a>
     <br class="clear">
 
     <div id="statistics-loader"></div>

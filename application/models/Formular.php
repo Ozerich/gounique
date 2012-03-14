@@ -393,6 +393,13 @@ class Formular extends ActiveRecord\Model
         return $result;
     }
 
+    public function get_stats_type(){
+        if($this->type == "nurflug")return "Nur Flug";
+        elseif($this->type == "pausschalreise")return "Pausschalreise";
+        elseif($this->type == "bausteinreise")return "Bausteinreise";
+        else return "Unknown";
+    }
+
 }
 
 ?>
