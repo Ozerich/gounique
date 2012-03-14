@@ -377,9 +377,7 @@
     <? if ($this->user->id == 9): ?>
     <a id="druck-link" href="#" class="button-link" target="_blank">Druck</a>
     <? else: ?>
-    <? if (!$formular->is_storno): ?>
         <a href="reservierung/edit/<?= $formular->id ?>" class="button-link">Formular editieren</a>
-        <? endif; ?>
     <? if ($formular->status == "eingangsmitteilung" && !$formular->is_storno): ?>
         <a href="reservierung/status/<?= $formular->id ?>" class="button-link">Status editieren</a>
         <? endif; ?>

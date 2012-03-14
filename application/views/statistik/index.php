@@ -7,23 +7,31 @@
     </div>
 </div>
 
-<div id="statistik-page">
-    <table id="statistik-table">
-    </table>
-    <div id="statistik-pager"></div>
+<div id="statistics-page">
+    <fieldset class="date-search">
 
-    <div id="brutto-count">
-        <div class="input">
-            <label for="datestart">Date start</label>
-            <input type="text" id="datestart" name="datestart"/>
+        <legend>Search Date</legend>
+
+        <div class="search-wr">
+            <label for="search-von">von</label>
+            <input type="text" maxlength="8" id="search-von"/>
+            <label for="search-bis">bis</label>
+            <input type="text" maxlength="8" id="search-bis"/>
+
+            <select id="datesearch-type">
+                <option value="anzahlung">Abreise</option>
+                <option value="restzahlung">Rückreise</option>
+            </select>
+
+            <div class="agenturen-wr">
+                <label for="ag_num">AG-NR:</label>
+                <input type="text" id="ag_num" maxlength="5" size="5"/>
+            </div>
+
         </div>
+    </fieldset>
 
-        <div class="input">
-            <label for="dateend">Date end</label>
-            <input type="text" id="dateend" name="dateend"/>
-        </div>
-
-        <button id="brutto-submit">Count</button>
-        <span class="result">Result: <span class="value">0</span> &euro;</span>
+    <div id="statistik_table-wr">
+        <?=$stats_list?>
     </div>
 </div>
