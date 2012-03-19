@@ -215,16 +215,6 @@ function BindSelectLineEvent() {
 
 }
 
-function OpenOverlay() {
-    var maskHeight = $(document).height();
-    var maskWidth = $(window).width();
-    $('#dark-overlay').css({'width':maskWidth, 'height':maskHeight});
-    $('#dark-overlay').fadeIn(1000);
-    $('#dark-overlay').fadeTo("slow", 0.8, function () {
-        $(this).addClass('finished')
-    });
-}
-
 function UpdateFlightInvoiceEvents() {
     $('.set_datepicker').setdatepicker();
     $('#flightinvoice-list > table > tbody > tr').not('.total, .flightpayments').click(function () {

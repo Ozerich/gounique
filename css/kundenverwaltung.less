@@ -1,0 +1,291 @@
+@import "cross_browser.less";
+/*-----------------------------------------------------------------------------------------------------------
+    Kundenverwaltung
+-----------------------------------------------------------------------------------------------------------*/
+
+#kundenverwaltung-page .nav{
+    margin: 100px 0 100px 0;
+}
+
+#kundenverwaltung-page .nav .row{
+    margin-bottom: 100px
+}
+
+/*-----------------------------------------------------------------------------------------------------------
+    Kundenverwaltung rasdel
+-----------------------------------------------------------------------------------------------------------*/
+
+.kundenverwaltung-page .buttons button, .kundenverwaltung-page .buttons a, .kundenverwaltung-page .buttons input[type=submit]{
+    float: left;
+    margin-left: 15px;
+}
+
+.kundenverwaltung-new .block.person-block .param{
+    width: 193px;
+}
+
+.kundenverwaltung-new .block.person-block .param.sex-param{
+    width: 50px;
+}
+
+
+.kundenverwaltung-rasdel .left-block{
+    float: left;
+    width: 250px;
+}
+
+.kundenverwaltung-rasdel  .left-block .search-block{
+
+}
+
+.kundenverwaltung-rasdel  .left-block .search-block label{
+    .common-link;
+    margin-bottom: 5px;
+}
+
+.kundenverwaltung-rasdel  .left-block .search-block input[type=text]{
+    display: block;
+    width: 98%;
+    margin-bottom: 4px;
+}
+
+.kundenverwaltung-rasdel  .left-block .search-block .search-button{
+    float: right;
+}
+
+.kundenverwaltung-rasdel  .left-block .new-button{
+    .common-link;
+    margin-top: 40px;
+}
+
+.kundenverwaltung-rasdel  .list-block{
+    float: left;
+    margin-left: 150px;
+}
+
+.kundenverwaltung-rasdel  .list-block .list-header{
+    .common-link;
+    margin-bottom: 5px;
+}
+
+.kundenverwaltung-rasdel  .list-block .list .item{
+    border: 1px solid #ccc;
+    position: relative;
+    width: 300px;
+    margin-top: 5px;
+}
+
+.kundenverwaltung-rasdel .list-block .list .item .text{
+    color: #777777;
+    display: block;
+    padding: 5px 0 5px 5px;
+    text-transform: uppercase;
+    width: 275px;
+    font-size: 16px;
+    float: left;
+}
+
+.kundenverwaltung-rasdel  .list-block .list .item .arrow{
+    display: block;
+    float: right;
+    margin: 10px 0 0 0;
+    width: 5px;
+    font-size: 10px;
+}
+
+.kundenverwaltung-rasdel  .list-block .list .submenu{
+    position: absolute;
+    left: 300px;
+    top: -1px;
+    display: none;
+    padding-left: 10px;
+}
+
+.kundenverwaltung-rasdel .list-block .list .item:hover .submenu{display:block;}
+
+.kundenverwaltung-rasdel .list-block .list .submenu a{
+    display: block;
+    text-decoration: none;
+    color: #777;
+    background: #fff;
+    padding: 5px;
+    width: 100px;
+    margin-top:1px;
+    border: 1px solid #ccc;
+}
+
+.kundenverwaltung-rasdel .list-block .list a:hover, .list-block .list .item:hover .text{
+    background: none repeat scroll 0 0 #F9F9F9;
+    color: #E2144A;
+}
+
+
+/*--------------------------------------------------------------------------------------------------------
+    Kundenverwaltung new item
+--------------------------------------------------------------------------------------------------------*/
+
+.kundenverwaltung-new{
+    width: 523px !important;
+}
+
+#new-agenturen-page{
+    width: 1000px !important;
+}
+
+.kundenverwaltung-new .input-block{
+    margin: 0 auto;
+    background: #fafafa;
+    border: 1px solid #ddd;
+    padding: 20px 10px;
+}
+
+
+.kundenverwaltung-new .param input,.kundenverwaltung-new .param select{
+    width: 100%;
+    text-align: center;
+}
+
+.kundenverwaltung-new .contact-block{
+    margin-top: 15px;
+    border: 1px solid #ddd;
+    padding: 4px;
+}
+
+#new-agenturen-page.kundenverwaltung-new .contact-block{
+    float: left;
+    width: 470px;
+}
+#new-agenturen-page.kundenverwaltung-new .contact-block#kontaktdaten{
+    margin-right: 10px;
+}
+
+.kundenverwaltung-new .contact-block .contact-content{
+    display: none;
+}
+
+.kundenverwaltung-new .contact-block .block-header{
+    padding-bottom: 5px;
+    border-bottom: 2px dotted #aaa;
+    text-align: center;
+    display: block;
+    letter-spacing: 3px;
+    cursor: pointer;
+    background: url('img/arrow_up.png') no-repeat right 4px;
+}
+.kundenverwaltung-new .contact-block .block-header.closed{
+    background: url('img/arrow_down.png') no-repeat right 4px;
+}
+
+
+.kundenverwaltung-new .block{
+    margin-top: 15px;
+}
+
+.kundenverwaltung-new .block .param{
+    display: inline-block;
+    width: 230px;
+}
+
+#new-agenturen-page.kundenverwaltung-new .block .param{width:225px;}
+#new-agenturen-page.kundenverwaltung-new .top-blocks .block .param{width:232px;}
+
+.kundenverwaltung-new .block .param{
+    margin-right: 20px;
+}
+
+#new-agenturen-page.kundenverwaltung-new .block .param{
+    margin-right: 10px;
+}
+.kundenverwaltung-new .block .param:last-child{margin-right: 0 !important;}
+
+
+.kundenverwaltung-new .buttons{
+    width: 100%;
+    clear: both;
+    margin-top: 15px;
+}
+
+.kundenverwaltung-new .buttons #cancel-button{
+    float: left;
+}
+
+.kundenverwaltung-new .buttons #submit-button{
+    float: right;
+}
+
+#provisionierung-page #provisionlevels-list{
+    width: 300px;
+}
+
+#provisionierung-page #provisionlevels-list input{
+    width: 45px;
+    text-align: center;
+    display: none;
+}
+#provisionierung-page #provisionlevels-list a.save, #provisionierung-page #provisionlevels-list img,
+#provisionierung-page #provisionlevels-list a.add-new{display:none;}
+
+#provisionierung-page #provisionlevels-list td{
+    padding: 10px 5px;
+}
+
+
+/*-------------------------------------------------------------------------------------------------------
+   Kunde historie
+-------------------------------------------------------------------------------------------------------*/
+
+#kundenverwaltung-historie.content{
+    width: 700px;
+}
+
+#kundenverwaltung-historie .kunde-view .block{
+    border: 1px solid black;
+    padding: 5px;
+}
+
+#kundenverwaltung-historie .kunde-view .block .header{
+    display: block;
+    border-bottom: 1px dotted #888;
+    margin: 5px 0;
+    padding-bottom: 5px;
+    color: #666666;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+#kundenverwaltung-historie .kunde-view .address{
+    float: left;
+    width: 300px;
+}
+
+#kundenverwaltung-historie .kunde-view .kundeperson{
+    float: right;
+    width: 350px;
+}
+
+#kundenverwaltung-historie .kunde-view .provision{
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+#kundenverwaltung-historie .kunde-view .about{
+    margin: 15px 0;
+}
+
+#kundenverwaltung-historie .edit-button{
+    float: right;
+}
+
+#kundenverwaltung-historie .kunde-list{
+    width: 100%;
+    margin: 20px 0;
+}
+
+#kundenverwaltung-historie .kunde-list td{
+    border-bottom: 1px solid black;
+    padding: 5px 0;
+}
+
+#kundenverwaltung-historie .kunde-list .view-link{
+    color: #444444;
+}

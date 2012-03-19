@@ -1,0 +1,93 @@
+@import "cross_browser.less";
+
+#statistics-page{
+    width: 825px;
+    margin: 0 auto;
+}
+
+#statistics-list {
+    width: auto;
+
+}
+
+#statistics-list td{
+    padding: 8px 5px;
+    text-align: left;
+}
+#statistics-list td.num, #statistics-list th.num{width: 20px;}
+#statistics-list td.r_num, #statistics-list th.r_num{width: 70px;}
+#statistics-list td.a_num, #statistics-list th.a_num{width: 50px;}
+#statistics-list td.v_num, #statistics-list th.v_num{width: 50px;}
+#statistics-list td.rg_date, #statistics-list th.rg_date{width: 90px;}
+#statistics-list td.type, #statistics-list th.type{width: 100px;}
+#statistics-list td.abreise, #statistics-list th.abreise{width: 90px;}
+#statistics-list td.ruckreise, #statistics-list th.ruckreise{width: 90px;}
+#statistics-list td.person, #statistics-list th.person{width: 40px;}
+#statistics-list td.person{text-align: right;}
+#statistics-list td.total, #statistics-list th.total{width: 70px;}
+
+#statistics-page .search-block{
+    width: 400px;
+    float: left;
+}
+
+#statistics-page .search-block .param{
+    width: 80px;
+    float: left;
+    margin-right: 10px;
+}
+
+#statistics-page .search-block .param input,#statistics-page .search-block .param select{width: 100%;}
+#statistics-page .search-block .param select{margin-top: 23px;}
+
+#statistics-page .search-block .type-checkboxes{margin-top: 5px;}
+#statistics-page .search-block .type-checkboxes label{
+    display: inline-block;
+    margin: 5px 5px 0 0;
+}
+
+
+#statistics-page .table-columns{
+    margin-left: 40px;
+    width: 260px;
+}
+
+#statistics-page .table-fields .field-item{
+    width: 120px;
+    margin-right: 5px;
+    float: left;
+}
+
+#statistics-page .table-fields .field-item input{
+    vertical-align: top;
+    margin: 4px 4px 0 0;
+}
+
+#statistics-page .table-fields .field-item label{display: inline-block;}
+
+#statistics-page #search-button{
+    float: right;
+    margin-top: -15px;
+}
+
+#statistics-page #clear_filter{
+    float: right;
+    display: block;
+}
+
+#statistics-page #statistics-loader{
+    width: 128px;
+    height: 15px;
+    margin: 0 auto;
+    background: url('img/long-loader.gif') no-repeat;
+    display: none;
+}
+
+
+#statistics-page #previewstats-list{
+    width: 300px;
+    border: 1px solid black;
+}
+
+#statistics-page #previewstats-list td{text-align: right;}
+#statistics-page #previewstats-list td.type{text-align: left;}

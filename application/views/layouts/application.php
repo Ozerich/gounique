@@ -8,7 +8,13 @@
     <link rel="shortcut icon" href="img/favicon.png" />
 
     <link rel="stylesheet" href="css/reset.css" type="text/css" media="screen" title="no title"/>
+    <link rel="stylesheet/less" href="css/cross_browser.less" type="text/css"/>
     <link rel="stylesheet/less" href="css/main.less" type="text/css"/>
+    <link rel="stylesheet/less" href="css/reservierung.less" type="text/css"/>
+    <link rel="stylesheet/less" href="css/statistics.less" type="text/css"/>
+    <link rel="stylesheet/less" href="css/controlling.less" type="text/css"/>
+    <link rel="stylesheet/less" href="css/product.less" type="text/css"/>
+    <link rel="stylesheet/less" href="css/kundenverwaltung.less" type="text/css"/>
     <link rel="stylesheet/less" href="css/arrows.css" type="text/css"/>
     <link type="text/css" href="css/cupertino/jquery-ui-1.8.16.custom.css" rel="stylesheet"/>
     <link type="text/css" href="css/jquery-livesearch.css" rel="stylesheet"/>

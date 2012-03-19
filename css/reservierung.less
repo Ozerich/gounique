@@ -1,0 +1,603 @@
+@import "cross_browser.less";
+/*----------------------------------------------------------------------------------------------
+    Find kunde in create formular
+----------------------------------------------------------------------------------------------*/
+
+#createstart-page{
+    width: 400px;
+}
+
+#createstart-page #v_num, #createstart-page #kunde_name{
+    text-transform: uppercase;
+}
+
+#createstart-page label{
+    display: block;
+    font-weight: bold;
+    padding-bottom: 4px;
+}
+
+#createstart-page input[type=submit]{
+    margin-left: 10px;
+}
+
+#createstart-page .error{
+    color: red;
+    padding-bottom: 4px;
+}
+
+/*-------------------------------------------------------------------------------------------
+    Formulars
+-------------------------------------------------------------------------------------------*/
+
+.reservierung-page .formular-header{
+    .border-radius(4px, 4px, 4px, 4px);
+    background: #f5f5f5;
+    border: 1px solid #d3d3d3;
+    padding: 7px 15px;
+    margin: -15px auto 25px auto;
+}
+
+.reservierung-page .formular-header .left-block{
+    float: left;
+    width: 50%;
+}
+
+.reservierung-page .formular-header .left-block #change-ag,.reservierung-page .formular-header .left-block #save-ag{
+    color: #000;
+}
+
+.reservierung-page .formular-header .right-block{
+    float: right;
+}
+
+.reservierung-page .formular-header .param{
+    margin-bottom: 4px;
+}
+
+.reservierung-page .formular-header .param .param-name{
+    font-size: 12px;
+    font-weight: bold;
+    width: 140px;
+    display: inline-block;
+}
+
+.reservierung-page .formular-buttons{
+    margin-top: 15px;
+}
+
+.reservierung-page #hoteltype, .reservierung-page #manueltype{
+    .buttonset-height(22px);
+    margin-right: 10px;
+}
+
+/*--------------------------------------------------------------------------------------------
+    Formular create
+--------------------------------------------------------------------------------------------*/
+
+#createformular-page .vnum-input{
+    text-transform: uppercase;
+    width: 60px;
+}
+
+#createformular-page .flight-price, #createformular-page .service-charge input{
+    width: 70px;
+}
+
+
+#createformular-page .service-charge{
+    font-weight: bold;
+}
+
+
+#createformular-page .reservierung-item p{
+    float: left;
+    width: 90%;
+}
+
+#createformular-page{
+    width: 800px;
+}
+
+#createformular-page .changetype-block{
+    width: 390px;
+    margin: 0 auto;
+}
+
+#createformular-page .changetype-block .typeedit-block{
+    margin-top: 5px;
+}
+
+#createformular-page .changetype-block .typeedit-block label{
+    margin-top: 10px;
+    display: inline-block;
+}
+#createformular-page .changetype-block #nurflug-type label{
+    width: 150px;
+}
+
+#createformular-page .changetype-block .typeedit-block input[type=text]{
+    text-align: center;
+}
+
+#createformular-page .changetype-block .typeedit-block textarea{
+    width: 375px;
+    height: 150px;
+}
+
+#createformular-page .changetype-block .typeedit-block .bottom-block{
+    margin-top: 10px;
+}
+
+#createformular-page .changetype-block .person-count{
+    width: 34px;
+}
+
+#createformular-page p.error{
+    float: left;
+    width: 295px;
+}
+
+#createformular-page .changetype-block button,#createformular-page .changetype-block input[type=submit]{
+    float: right;
+    margin: 0 14px 0 0;
+}
+
+#createformular-page #flight-window{
+    background: none repeat scroll 0 0 #FFFEF0;
+    border: 1px solid #E6E6E6;
+    height: 200px;
+    left: 793px;
+    position: absolute;
+    top: 167px;
+    width: 400px;
+    display: none;
+    overflow: scroll;
+    padding: 5px 20px;
+}
+
+#createformular-page #flight-window .header{
+    font-size: 17px;
+    text-align:center;
+}
+
+#createformular-page #flight-window .text{
+    margin-top: 20px;
+}
+
+#createformular-page .formular-content #intro-page{
+    margin-bottom: 20px;
+}
+
+#createformular-page .formular-content #intro-page input{
+    text-align: center;
+}
+
+#createformular-page .formular-content #intro-page .input{
+    margin-right: 30px;
+    float: left;
+}
+
+#createformular-page #flugpage{
+    margin-top: 20px;
+}
+
+#createformular-page #flugpage #flightplan{
+     height: 170px;
+     width: 680px;
+}
+
+#createformular-page #flugpage label{
+    margin-top: 10px;
+}
+
+#createformular-page #item-list .reservierung-item{
+    border-bottom: 1px solid #ddd;
+    padding: 15px 0;
+}
+
+
+#createformular-page #item-list .reservierung-item a{
+    float: right;
+    margin-left: 5px;
+}
+
+.new-reservierung-item-block{
+    display: none;
+    width: 500px; 
+    margin: 0 auto;
+}
+
+.new-reservierung-item-block .param{
+    margin-bottom: 10px;
+}
+
+.new-reservierung-item-block .param label{
+    display: inline-block;
+    margin-right: 10px;
+    width: 140px;
+}
+
+.new-reservierung-item-block .param input,.new-reservierung-item-block .param select{width: 300px;}
+.new-reservierung-item-block .param textarea{width: 100%; height: 65px;}
+.new-reservierung-item-block select#count{width: 50px}
+.new-reservierung-item-block input{text-align: center;}
+.new-reservierung-item-block input.price{width: 100px !important;}
+.new-reservierung-item-block .params-block .param{display: inline-block;}
+.new-reservierung-item-block .params-block .param input,.new-reservierung-item-block .params-block .param select{
+    display: inline-block;
+    width: auto;
+}
+.new-reservierung-item-block .params-block .param label{display: block;}
+
+
+/*-------------------------------------------------------------------------------------------------------
+    Final page
+-------------------------------------------------------------------------------------------------------*/
+
+.reservierung-page #rechnung-alert{
+    margin-bottom: 20px;
+}
+
+#final-page .mail-block .mail{
+    margin-top: 10px;
+}
+
+.reservierung-page .anzahlung-block input{
+    text-align: center;
+    width: 82px;
+}
+
+.reservierung-page .anzahlung-block #anzahlung{
+    width: 46px;
+}
+
+.reservierung-page .anzahlung-block{
+    margin: 5px 0 10px 0;
+    padding: 0 2px;
+}
+
+
+#final-page .anzahlung-text{
+    margin-top: 10px;
+}
+
+#final-page .anzahlung-text p{
+    margin-bottom: 5px;
+}
+
+.reservierung-page .anzahlung-block label{
+    font-weight: bold;
+    width: 150px;
+    display: inline-block;
+    margin-top: 10px;
+}
+.reservierung-page .anzahlung-block label.anzahlung{
+    width: 102px;
+}
+
+
+
+
+
+/*----------------------------------------------------------------------------------------------------------
+    Vouchers page
+----------------------------------------------------------------------------------------------------------*/
+
+#vouchers-page{
+    width: 800px;
+}
+
+#vouchers-page .voucher{
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px dotted #777777;
+}
+
+#vouchers-page .voucher-preview p{
+    width: 700px;
+    display: block;
+    float: left;
+    padding-right: 10px;
+}
+
+#vouchers-page .voucher .voucher-content{
+    clear: both;
+    width: 400px;
+    margin: 0 auto;
+    display: none;
+}
+
+#vouchers-page .voucher .voucher-content .persons-block{
+    margin: 15px 0;
+}
+
+#vouchers-page .voucher .voucher-content .persons-block .header{
+    padding-bottom: 6px;
+}
+
+#vouchers-page .voucher .voucher-content .persons-block input{
+    margin: 0 10px 0 0;
+}
+
+#vouchers-page .voucher .bottom-block .status{
+    text-transform: lowercase;
+}
+
+
+/*------------------------------------------------------------------------------------------------------------
+    Storeno Page
+------------------------------------------------------------------------------------------------------------*/
+
+#storeno-page input{
+    text-align: center;
+}
+
+#storeno-page .storeno-content{
+    width: 350px;
+    margin: 0 auto;
+    position: relative;
+}
+
+#storeno-page #agb-window{
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+#storeno-page .date-wr label{
+    display: inline-block;
+    margin-right: 15px;
+}
+
+#storeno-page #date{
+    width: 67px;
+}
+
+#storeno-page .agb-param{
+    margin: 15px 0;
+}
+
+#storeno-page .agb-item{
+    float: left;
+    margin-right: 20px;
+    width: 70px;
+}
+
+#storeno-page .agb-item.manuel label{
+    text-align: center;
+}
+
+
+#storeno-page .agb-item input{
+    width: 100%;
+}
+
+#storeno-page .buttons{
+    margin-top: 15px;
+}
+
+
+/*----------------------------------------------------------------------------------------------------------------
+    Result page
+----------------------------------------------------------------------------------------------------------------*/
+
+.result-page h3.block-header {
+    margin-bottom: 8px;
+}
+
+.result-page .persons-block .sex {
+    text-transform: uppercase;
+    width: 40px;
+    display: inline-block;
+    padding-left: 5px;
+}
+
+.result-page .persons-block .person-item{
+    margin-bottom: 5px;
+}
+
+.result-page .item-list {
+    margin-top: 15px;
+}
+
+.result-page .item-list .incoming-sendblock, .result-page .item-list .incoming-sendok{
+    float: right;
+}
+
+.result-page .item-list .voucher-button{
+    float: right;
+}
+
+
+
+.result-page .item-list span.header {
+    color: #444444;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.result-page .item-list hr {
+    margin: 10px 0;
+}
+
+.result-page .flight-block {
+    margin-top: 15px;
+}
+
+.result-page .bottom-block {
+    margin-top: 25px;
+    border-top: 1px solid black;
+    padding-top: 15px;
+}
+
+.result-page .bottom-block .price-table {
+    border: 1px solid black;
+    margin-bottom: 10px;
+}
+
+.result-page .bottom-block .price-table tr{
+    height: 15px;
+}
+
+.result-page .bottom-block .price-table td {
+    width: 75px;
+    text-align: right;
+    padding: 1px 3px;
+    font-size: 13px;
+}
+
+.result-page .bottom-block .price-table td.param{
+    border-right: 1px solid black;
+    width: 220px;
+}
+
+.result-page .bottom-block .price-table tr.underline{
+    border-bottom: 1px solid black;
+}
+
+.result-page .bottom-block .price-table tr.up td{
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.result-page .bottom-block .price-table tr.empty td{
+    border-bottom: 1px solid black;
+}
+
+.result-page .person .num{
+    display: block;
+    float: left;
+}
+
+.result-page .person .input{
+    float: left;
+    margin-left: 10px;
+}
+
+.result-page .person .person-name{
+    width: 250px;
+}
+
+.result-page .comment-block{
+    margin-top: 10px;
+    width: 600px;
+}
+
+.result-page .comment-block textarea{
+    width: 100%;
+    height: 100px;
+}
+
+.result-page .bottom-block .address-block{
+    width: 600px;
+    margin-top: 15px;
+}
+
+.result-page #stage{
+    margin-top: 15px;
+}
+
+.result-page .mail-block{
+    margin-top: 15px;
+}
+
+.result-page .mail-block .left{
+    display: inline-block;
+    width: 120px;
+}
+
+.result-page .item-list .item{
+    margin-top: 5px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #ddd;
+}
+
+/*----------------------------------------------------------------------------------------------------------------
+    Status page
+----------------------------------------------------------------------------------------------------------------*/
+
+#status-page{
+    width: 525px;
+    margin: 0 auto;
+}
+
+#status-page .item{
+    margin-bottom: 20px;
+    border: 1px solid black;
+    padding: 4px;
+}
+
+#status-page .item-edit{
+    display: none;
+    margin-top: 10px;
+    border-top: 1px solid black;
+    padding-top: 5px;
+}
+
+#status-page .item-edit .comment{
+    margin-bottom: 10px;
+}
+
+#status-page .item-edit label.input-header{
+    font-weight: bold;
+    display: block;
+}
+
+#status-page .item-edit textarea{
+    width: 98%;
+    height: 50px;
+}
+
+#status-page .item-edit span.error{
+    color: #ff0000;
+    padding-left: 2px;
+    font-weight: bold;
+    display: none;
+}
+
+
+#status-page .status-log{
+    display: none;
+    margin-top: 10px;
+    border-top: 1px solid black;
+    padding-top: 10px;
+}
+
+#status-page .status-log .log{
+    border-bottom: 1px dotted #0d000a;
+    padding: 5px 0;
+}
+
+#status-page .status-log .log .date{
+    width: 210px;
+    display: inline-block;
+}
+
+#status-page .status-log .log .path{
+    font-weight: bold;
+    font-size: 14px;
+}
+
+#status-page .status-log .log .user{
+    text-align: right;
+    display: inline-block;
+    width: 190px;
+}
+
+#status-page .status-log button{
+    margin-top: 15px;
+}
+
+
+#status-page .item-info .num{
+    font-weight: bold;
+}
+
+#status-page .status .value{
+    font-weight: bold;
+}
+
+#status-page .status .buttons{
+    float: right;
+}

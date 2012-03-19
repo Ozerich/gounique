@@ -3,7 +3,7 @@
         <a href="dashboard" class="home-link"><img src="img/header-logo.jpg"/></a>
         <ul class="page-path">
             <li><a
-                href="kundenverwaltung/historie/<?=$formular->kunde->id?>"><?=$formular->kunde->plain_type;?> <?=$formular->kunde->k_num?></a>
+                    href="kundenverwaltung/historie/<?=$formular->kunde->id?>"><?=$formular->kunde->plain_type;?> <?=$formular->kunde->k_num?></a>
             </li>
             <li><span>formular <?=$formular->v_num;?></span></li>
         </ul>
@@ -12,13 +12,9 @@
 
 
 <div id="createformular-page" class="reservierung-page content">
+
 <input type="hidden" id="formular-mode" value="edit"/>
 <input type="hidden" id="formular_id" value="<?=$formular->id?>"/>
-<?if ($formular->status == 'rechnung'): ?>
-<div id="rechnung-alert" class="alert-block">
-    <p>Diese rehnung, 30 € wert Bearbeitung! Tun Sie das nicht!</p>
-</div>
-    <? endif;?>
 
 <? echo form_open("reservierung/edit/" . $formular->id); ?>
 <div class="formular-header" style="display:<?=$formular->type == 'nurflug' ? 'none' : 'block'?>">
@@ -72,11 +68,14 @@
     <label>Formulartyp auswahlen:</label>
 
     <div id="type-radio">
-        <input type="radio" name="formular-type" id="type_1" <?=$formular->type == 'pausschalreise' ? 'checked' : ''?> value="pausschalreise"><label
-        for="type_1">Pauschalreise</label>
-        <input type="radio" name="formular-type" id="type_2" <?=$formular->type == 'bausteinreise' ? 'checked' : ''?> value="bausteinreise"><label
-        for="type_2">Bausteinreise</label>
-        <input type="radio" name="formular-type" id="type_3" <?=$formular->type == 'nurflug' ? 'checked' : ''?> value="nurflug"><label for="type_3">Nur flug</label>
+        <input type="radio" name="formular-type" id="type_1" <?=$formular->type == 'pausschalreise' ? 'checked' : ''?>
+               value="pausschalreise"><label
+            for="type_1">Pauschalreise</label>
+        <input type="radio" name="formular-type" id="type_2" <?=$formular->type == 'bausteinreise' ? 'checked' : ''?>
+               value="bausteinreise"><label
+            for="type_2">Bausteinreise</label>
+        <input type="radio" name="formular-type" id="type_3" <?=$formular->type == 'nurflug' ? 'checked' : ''?>
+               value="nurflug"><label for="type_3">Nur flug</label>
 
     </div>
 
@@ -84,18 +83,21 @@
 
     </ul>
 
-    <div class="typeedit-block" id="pausscahlreise-type" <?=$formular->type == 'pausschalreise' ? '' : 'style="display:none"'?>>
+    <div class="typeedit-block"
+         id="pausscahlreise-type" <?=$formular->type == 'pausschalreise' ? '' : 'style="display:none"'?>>
 
         <div class="vorgansnummer-wr">
             <label for="vorgangsnummer">Vorgangsnummer:</label>
-            <input type="text" maxlength="6" value="<?=$formular->type == 'pausscahlreise' ? $formular->v_num: ''?>" class="vnum-input"/>
+            <input type="text" maxlength="6" value="<?=$formular->type == 'pausscahlreise' ? $formular->v_num : ''?>"
+                   class="vnum-input"/>
         </div>
 
         <label for="flight-text">Flugplan</label>
-        <textarea class="flight-text"><?=$formular->type == 'pausscahlreise' ? $formular->flight_text: ''?></textarea>
+        <textarea class="flight-text"><?=$formular->type == 'pausscahlreise' ? $formular->flight_text : ''?></textarea>
 
         <label for="flight-price">Flugpreis:</label>
-        <input type="text" maxlength="7" class="flight-price" value="<?=$formular->type == 'pausscahlreise' ? $formular->flight_price: ''?>"/> &euro;
+        <input type="text" maxlength="7" class="flight-price"
+               value="<?=$formular->type == 'pausscahlreise' ? $formular->flight_price : ''?>"/> &euro;
 
         <div class="bottom-block">
 
@@ -106,12 +108,14 @@
 
     </div>
 
-    <div class="typeedit-block" id="bausteinreise-type" <?=$formular->type == 'bausteinreise' ? '' : 'style="display:none"'?>>
+    <div class="typeedit-block"
+         id="bausteinreise-type" <?=$formular->type == 'bausteinreise' ? '' : 'style="display:none"'?>>
         <label for="flight-text">Flugplan</label>
-        <textarea class="flight-text"><?=$formular->type == 'bausteinreise' ? $formular->flight_text: ''?></textarea>
+        <textarea class="flight-text"><?=$formular->type == 'bausteinreise' ? $formular->flight_text : ''?></textarea>
 
         <label for="flight-price">Flugpreis:</label>
-        <input type="text" class="flight-price" maxlength="7" value="<?=$formular->type == 'bausteinreise' ? $formular->flight_price: ''?>"/> &euro;
+        <input type="text" class="flight-price" maxlength="7"
+               value="<?=$formular->type == 'bausteinreise' ? $formular->flight_price : ''?>"/> &euro;
 
         <div class="bottom-block">
 
@@ -132,26 +136,33 @@
 
         <div class="vorgansnummer-wr">
             <label for="vorgangsnummer">Vorgangsnummer:</label>
-            <input type="text" name="nurflug_vnum" maxlength="6" value="<?=$formular->type == 'nurflug' ? $formular->v_num: ''?>" class="vnum-input"/>
+            <input type="text" name="nurflug_vnum" maxlength="6"
+                   value="<?=$formular->type == 'nurflug' ? $formular->v_num : ''?>" class="vnum-input"/>
         </div>
 
         <div>
             <label for="person-count">Person Count:</label>
-            <input type="text" class="person-count" name="nurflug_personcount" value="<?=$formular->type == 'nurflug' ? $formular->person_count: ''?>" maxlength="2"/>
+            <input type="text" class="person-count" name="nurflug_personcount"
+                   value="<?=$formular->type == 'nurflug' ? $formular->person_count : ''?>" maxlength="2"/>
         </div>
 
         <label for="flight-text">Flugplan:</label>
-        <textarea id="flight-text" name="nurflug_flight"><?=$formular->type == 'nurflug' ? $formular->flight_text: ''?></textarea>
+        <textarea id="flight-text"
+                  name="nurflug_flight"><?=$formular->type == 'nurflug' ? $formular->flight_text : ''?></textarea>
 
         <label for="flight-price">Flugpreis:</label>
-        <input type="text" class="flight-price" name="nurflug_flightprice" maxlength="7" value="<?=$formular->type == 'nurflug' ? $formular->flight_price: ''?>"/> &euro;
+        <input type="text" class="flight-price" name="nurflug_flightprice" maxlength="7"
+               value="<?=$formular->type == 'nurflug' ? $formular->flight_price : ''?>"/> &euro;
 
         <div class="service-charge">
             <label for="servicecharge-amount">Service charge:</label>
-            <input type="text" maxlength="5" class="servicecharge" value="<?=$formular->type == 'nurflug' ? $formular->service_charge: ''?>" name="nurflug_servicecharge" id="servicecharge-amount"/> &euro;
+            <input type="text" maxlength="5" class="servicecharge"
+                   value="<?=$formular->type == 'nurflug' ? $formular->service_charge : ''?>"
+                   name="nurflug_servicecharge" id="servicecharge-amount"/> &euro;
             or <input type="text" maxlength="4" class="servicecharge-percent" id="servicecharge-percent"/> % <br/>
             <label for="total-amount">Total:</label>
-            <input value="<?=$formular->type == 'nurflug' ? ($formular->flight_price + $formular->service_charge) : ''?>" type="text" disabled id="total-amount"/> &euro;
+            <input value="<?=$formular->type == 'nurflug' ? ($formular->flight_price + $formular->service_charge) : ''?>"
+                   type="text" disabled id="total-amount"/> &euro;
         </div>
 
         <div class="bottom-block">
@@ -165,7 +176,7 @@
 
 </div>
 
-<div class="formular-content"  style="display:<?=$formular->type == 'nurflug' ? 'none' : 'block'?>">
+<div class="formular-content" style="display:<?=$formular->type == 'nurflug' ? 'none' : 'block'?>">
 
 <div id="intro-page">
 
@@ -179,7 +190,9 @@
 
     <div class="input" id="provision-wr">
         <label for="provision">Manuel Provision %:</label>
-        <input type="text" value="<?=$formular->kunde->provision != $formular->provision ? $formular->provision : ''?>" name="provision-manuel" maxlength="4" size="4"/>
+        <input type="text"
+               value="<?=$formular->kunde->provision != $formular->provision ? $formular->provision : ''?>"
+               name="provision-manuel" maxlength="4" size="4"/>
     </div>
 
     <? endif; ?>
@@ -192,459 +205,198 @@
     <br class="clear"/>
 </div>
 
-<div class="param-block hidden-param-block" id="hotels">
-    <div class="hotel hotel-wr" style="display:none">
-        <div class="hotel-preview block-preview" style="display:none">
-            <p class="text"></p>
-            <button class="edit">Edit</button>
-            <button class="delete">Delete</button>
-            <br class="clear"/>
-        </div>
+<div id="item-list" class="param-block"><?=$item_list?></div>
 
-        <div class="hotel-editcontent">
-            <div class="param hoteltype-wr">
-                <label class="param-name">Type</label>
+<div id="new-hotel" class="new-reservierung-item-block">
 
-                <div id="hoteltype">
-                    <input type="radio" name="hoteltype" checked value="database" class="hoteltype-db"
-                           id="hoteltype-db"/><label
-                    for="hoteltype-db">database</label>
-                    <input type="radio" name="hoteltype" value="manuel" class="hoteltype-manuel"
-                           id="hoteltype-manuel"/><label
-                    for="hoteltype-manuel">manuel</label>
-                </div>
+    <div class="dialog-header">
+        <a href="#" class="close">x</a>
 
-            </div>
-
-
-            <div class="manuel-hotel" style="display:none">
-
-                <div class="param">
-                    <label class="param-name" for="hotelname">Hotel Name</label>
-                    <input type="text" name="hotelname" size="8" id="hotelname"/>
-                </div>
-
-                <div class="param">
-                    <label class="param-name" for="roomtype">Room type</label>
-                    <input type="text" id="roomtype" name="roomtype"/>
-                </div>
-
-                <div class="param">
-                    <label class="param-name" for="roomcapacity">Capacity</label>
-                    <select name="roomcapacity" id="roomcapacity">
-                        <option value="EZ">EZ</option>
-                        <option value="DZ0">DZ0</option>
-                        <option value="DZ2">DZ2</option>
-                        <option value="DZ3">DZ3</option>
-                    </select>
-                </div>
-
-                <div class="param">
-                    <label class="param-name" for="service">Service</label>
-                    <select name="service" id="service">
-                        <? foreach (HotelService::all() as $type): ?>
-                        <option value=<?=$type->id?>><?=$type->value?></option>
-                        <? endforeach; ?>
-                    </select>
-                </div>
-
-                <div class="param">
-                    <label class="param-name" for="datestart">Von</label>
-                    <input type="text" name="datestart" class="datestart" value="" maxlength="8" size="10"/>
-                </div>
-
-                <div class="param">
-                    <label class="param-name" for="dateend">Bis&nbsp;</label>
-                    <input type="text" name="dateend" class="dateend" value="" maxlength="8" size="10"/>
-                </div>
-
-                <div class="param">
-                    <label class="param-name" for="dayscount">Days Count</label>
-                    <input type="text" name="dayscount" class="dayscount" value="0" maxlength="3" size="3"/>
-                </div>
-
-                <div class="param">
-                    <label class="param-name" for="price">Price &euro;</label>
-                    <input id="price" size="4" type="text" name="price"/>
-                </div>
-
-                <div class="param">
-                    <label class="param-name" for="transfer">Transfer</label>
-                    <select id="transfer" name="transfer">
-                        <option value="kein">KEIN TRANSFER</option>
-                        <option value="in">TRANSFER IN</option>
-                        <option value="out">TRANSFER OUT</option>
-                        <option value="rt">TRANSFER RT</option>
-                    </select>
-                </div>
-
-                <div class="param">
-                    <label class="param-name" for="transfer_price">Transfer Price &euro;</label>
-                    <input type="text" class="transfer-price" id="transfer_price" name="transfer_price"/>
-                </div>
-
-                <div class="param">
-                    <label class="param-name" for="remark">Remark</label>
-                    <textarea id="remark" name="remark"></textarea>
-                </div>
-
-                <div class="param">
-                    <label class="param-name" for="voucher_remark">Voucher remark</label>
-                    <textarea id="voucher_remark" class="voucher-text" name="voucher_remark"></textarea>
-                </div>
-                <div class="param">
-                    <label class="param-name">Incoming</label>
-                    <select name="incoming">
-                        <option value="0">No Incoming</option>
-                        <? foreach (Incoming::all() as $incoming): ?>
-                        <option value="<?=$incoming->id?>"><?=$incoming->name?></option>
-                        <? endforeach; ?>
-                    </select>
-                </div>
-            </div>
-
-            <div class="buttons">
-                <button class="cancel">Abbrechen</button>
-                <button class="add" disabled>Add</button>
-            </div>
-        </div>
+        <h3>New Hotel</h3>
     </div>
-</div>
-
-<div class="param-block hidden-param-block" id="manuels">
-    <div class="manuel-wr manuel" style="display:none">
-
-        <div class="manuel-preview block-preview" style="display:none">
-            <p class="text"></p>
-            <button class="edit">Edit</button>
-            <button class="delete">Delete</button>
-            <br class="clear"/>
+    <div class="alert-message success" style="display:none"></div>
+    <div class="alert-message error" style="display:none"></div>
+    <div class="dialog-content">
+        <div class="param">
+            <label class="param-name">Incoming</label>
+            <select name="incoming">
+                <option value="0">No Incoming</option>
+                <? foreach (Incoming::all() as $incoming): ?>
+                <option value="<?=$incoming->id?>"><?=$incoming->name?></option>
+                <? endforeach; ?>
+            </select>
         </div>
 
-        <div class="manuel-editcontent">
-            <div class="param manueltype-wr">
-                <label class="param-name">Type</label>
-
-                <div class="manueltype" id="manueltype">
-                    <input type="radio" name="manueltype" value="with-date" class="manueltype-date"
-                           id="manueltype-date"/><label
-                    for="manueltype-date">with date</label>
-                    <input type="radio" name="manueltype" value="no-date" class="manueltype-nodate"
-                           id="manueltype-nodate"/><label
-                    for="manueltype-nodate">no date</label>
-                </div>
-            </div>
-
-            <div class="manuel-date">
-
-                <div class="param">
-                    <label class="param-name" for="manuel_text">Text</label>
-                    <textarea name="manuel_text" class="date-manueltext" id="manuel_text"></textarea>
-                </div>
-
-                <div class="param">
-                    <label class="param-name" for="datestart">Von</label>
-                    <input type="text" name="manuel_datestart" class="datestart" value="" maxlength="8" size="10"/>
-                </div>
-
-                <div class="param">
-                    <label class="param-name" for="dateend">Bis&nbsp;</label>
-                    <input type="text" name="manuel_dateend" class="dateend" value="" maxlength="8" size="10"/>
-                </div>
-
-                <div class="param">
-                    <label class="param-name" for="dayscount">Days Count</label>
-                    <input type="text" name="manuel_dayscount" class="dayscount" value="0" maxlength="3" size="3"/>
-                </div>
-
-                <div class="param">
-                    <label class="param-name" for="price">Price &euro;</label>
-                    <input id="price" type="text" size="4" name="manuel_price"/>
-                </div>
-
-                <div class="param">
-                    <label class="param-name" for="voucher_remark">Voucher remark</label>
-                    <textarea id="voucher_remark" class="voucher-text" name="manuel_voucher_remark"></textarea>
-                </div>
-
-                <div class="param">
-                    <label class="param-name">Incoming</label>
-                    <select name="manuel_incoming">
-                        <option value="0">No Incoming</option>
-                        <? foreach (Incoming::all() as $incoming): ?>
-                        <option value="<?=$incoming->id?>"><?=$incoming->name?></option>
-                        <? endforeach; ?>
-                    </select>
-                </div>
-
-            </div>
-
-            <div class="manuel-nodate" style="display:none">
-
-                <div class="param">
-                    <label class="param-name" for="manuel_text">Text</label>
-                    <textarea name="manuel_text" class="nodate-manueltext" id="manuel_text"></textarea>
-                </div>
-
-                <div class="param">
-                    <label class="param-name" for="price">Price &euro;</label>
-                    <input id="price" type="text" size="4" name="manuel_price"/>
-                </div>
-
-                <div class="param">
-                    <label class="param-name" for="voucher_remark">Voucher remark</label>
-                    <textarea id="voucher_remark" class="voucher-text" name="manuel_voucher_remark"></textarea>
-                </div>
-
-                <div class="param">
-                    <label class="param-name">Incoming</label>
-                    <select name="manuel_incoming">
-                        <option value="0">No Incoming</option>
-                        <? foreach (Incoming::all() as $incoming): ?>
-                        <option value="<?=$incoming->id?>"><?=$incoming->name?></option>
-                        <? endforeach; ?>
-                    </select>
-                </div>
-            </div>
-
-            <div class="buttons">
-                <button class="cancel">Abbrechen</button>
-                <button class="add">Add</button>
-            </div>
-
+        <div class="param">
+            <label for="hotelname">Hotel Name</label>
+            <input type="text" name="hotelname" size="8" maxlength="150" id="hotelname"/>
         </div>
-    </div>
-</div>
 
 
-<div id="item-list" class="param-block">
-<? foreach ($formular->hotels as $ind => $hotel): ?>
-<input type="hidden" name="formular_hotel_id[<?=($ind + 1)?>]" value="<?=$hotel->id?>"/>
+        <div class="param">
+            <label class="param-name" for="roomtype">Room type</label>
+            <input type="text" id="roomtype" maxlength="100" name="roomtype"/>
+        </div>
 
-<div class="hotel hotel-wr">
-
-    <div class="hotel-preview block-preview">
-        <p class="text"><?=$hotel->plain_text?></p>
-        <button class="edit">Edit</button>
-        <button class="delete">Delete</button>
-        <br class="clear"/>
-    </div>
-
-    <div class="hotel-editcontent" style="display:none">
-
-        <div class="manuel-hotel">
-
-            <div class="param">
-                <label class="param-name" for="hotelname">Hotel Name</label>
-                <input type="text" name="hotelname[<?=($ind + 1)?>]" size="8" id="hotelname"
-                       value="<?=$hotel->hotel_name?>"/>
-            </div>
-
-            <div class="param">
-                <label class="param-name" for="roomtype">Room type</label>
-                <input type="text" id="roomtype" name="roomtype[<?=($ind + 1)?>]" value="<?=$hotel->roomtype?>"/>
-            </div>
+        <div class="params-block">
 
             <div class="param">
                 <label class="param-name" for="roomcapacity">Capacity</label>
-                <select name="roomcapacity[<?=($ind + 1)?>]" id="roomcapacity">
-                    <option value="EZ" <?if ($hotel->roomcapacity == 'EZ') echo 'selected';?> >EZ</option>
-                    <option value="DZ0" <?if ($hotel->roomcapacity == 'DZ0') echo 'selected';?>>DZ0</option>
-                    <option value="DZ2" <?if ($hotel->roomcapacity == 'DZ2') echo 'selected';?>>DZ2</option>
-                    <option value="DZ3" <?if ($hotel->roomcapacity == 'DZ3') echo 'selected';?>>DZ3</option>
+                <select name="roomcapacity" id="roomcapacity">
+                    <option value="EZ">EZ</option>
+                    <option value="DZ0">DZ0</option>
+                    <option value="DZ2">DZ2</option>
+                    <option value="DZ3">DZ3</option>
                 </select>
             </div>
 
             <div class="param">
                 <label class="param-name" for="service">Service</label>
-                <select name="service[<?=($ind + 1)?>]" id="service">
+                <select name="service" id="service">
                     <? foreach (HotelService::all() as $type): ?>
-                    <option <?if ($type->id == $hotel->hotelservice_id) echo 'selected'?>
-                        value=<?=$type->id?>><?=$type->value?></option>
+                    <option value=<?=$type->id?>><?=$type->value?></option>
                     <? endforeach; ?>
                 </select>
             </div>
+
+        </div>
+
+        <div class="params-block">
+
             <div class="param">
-                <label class="param-name" for="datestart">Von</label>
-                <input type="text" name="datestart[<?=($ind + 1)?>]" class="datestart" maxlength="8"
-                       value="<?=$hotel->date_start->format('dmY');?>" size="10"/>
+                <label class="param-name">Von</label>
+                <input type="text" name="date_start" class="date_start" maxlength="8" value="" size="10"/>
             </div>
 
             <div class="param">
-                <label class="param-name" for="dateend">Bis&nbsp;</label>
-                <input type="text" name="dateend[<?=($ind + 1)?>]" class="dateend" maxlength="8"
-                       value="<?=$hotel->date_end->format('dmY');?>" size="10"/>
+                <label class="param-name">Bis&nbsp;</label>
+                <input type="text" name="date_end" class="date_end" maxlength="8" value="" size="10"/>
             </div>
 
             <div class="param">
-                <label class="param-name" for="dayscount">Days Count</label>
-                <input type="text" name="dayscount[<?=($ind + 1)?>]" class="dayscount" maxlength="3"
-                       value="<?=$hotel->days_count?>"
-                       size="3"/>
+                <label class="param-name">Nights Count</label>
+                <input type="text" name="days_count" class="days_count" maxlength="3" value="0" size="3"/>
             </div>
 
-            <div class="param">
-                <label class="param-name" for="price">Price &euro;</label>
-                <input id="price" size="4" type="text" name="price[<?=($ind + 1)?>]" value="<?=$hotel->price?>"/>
-            </div>
+        </div>
+
+        <div class="params-block">
 
             <div class="param">
                 <label class="param-name" for="transfer">Transfer</label>
-                <select id="transfer" name="transfer[<?=($ind + 1)?>]">
-                    <option value="kein" <? if ($hotel->transfer == 'kein') echo 'selected'?>>KEIN TRANSFER</option>
-                    <option value="in" <? if ($hotel->transfer == 'in') echo 'selected'?>>TRANSFER IN</option>
-                    <option value="out" <? if ($hotel->transfer == 'out') echo 'selected'?>>TRANSFER OUT</option>
-                    <option value="rt" <? if ($hotel->transfer == 'rt') echo 'selected'?>>TRANSFER RT</option>
+                <select id="transfer" name="transfer">
+                    <option value="kein">KEIN TRANSFER</option>
+                    <option value="in">TRANSFER IN</option>
+                    <option value="out">TRANSFER OUT</option>
+                    <option value="rt">TRANSFER RT</option>
                 </select>
             </div>
 
             <div class="param">
                 <label class="param-name" for="transfer_price">Transfer Price &euro;</label>
-                <input id="transfer_price" size="4" type="text" name="transfer_price[<?=($ind + 1)?>]"
-                       value="<?=$hotel->transfer_price?>"/>
-            </div>
-
-            <div class="param">
-                <label class="param-name" for="remark">Remark</label>
-                <textarea id="remark" name="remark[<?=($ind + 1)?>]"><?=$hotel->remark?></textarea>
-            </div>
-
-            <div class="param">
-                <label class="param-name" for="voucher_remark">Voucher text</label>
-                <textarea id="voucher_remark" class="voucher-text"
-                          name="voucher_remark[<?=($ind + 1)?>]"><?=$hotel->voucher_remark?></textarea>
-            </div>
-
-            <div class="param">
-                <label class="param-name">Incoming</label>
-                <select name="incoming[<?=($ind + 1)?>]">
-                    <option value="0">No Incoming</option>
-                    <? foreach (Incoming::all() as $incoming): ?>
-                    <option  <?=$hotel->incoming_id == $incoming->id ? "selected" : ''?>
-                        value="<?=$incoming->id?>"><?=$incoming->name?></option>
-                    <? endforeach; ?>
-                </select>
+                <input type="text" class="transfer-price price" id="transfer_price" maxlength="10"
+                       name="transfer_price" disabled/>
             </div>
 
         </div>
 
-        <div class="buttons">
-            <button class="close-button">Close</button>
+        <div class="param">
+            <label class="param-name" for="price">Price &euro;</label>
+            <input id="price" size="4" maxlength="10" class="price" type="text" name="price"/>
+
+            <select id="count" name="count">
+                <? for ($i = 1; $i < 10; $i++): ?>
+                <option value="<?=$i?>">x<?=$i?></option>
+                <? endfor; ?>
+            </select>
+            <span class="total-price"><span class="value">0</span> &euro;</span>
         </div>
+
+
+        <div class="param text">
+            <label class="param-name" for="remark">Remark</label>
+            <textarea id="remark" name="remark"></textarea>
+        </div>
+
+        <div class="param text">
+            <label class="param-name" for="voucher_remark">Voucher text</label>
+            <textarea id="voucher_remark" class="voucher-text" name="voucher_remark"></textarea>
+        </div>
+        <input type="hidden" name="item-type" value="hotel"/>
+    </div>
+    <div class="dialog-footer">
+        <button class="cancel">Abbrechen</button>
+        <button class="add">Add</button>
     </div>
 </div>
-    <? endforeach; ?>
-<? foreach ($formular->manuels as $ind => $manuel): ?>
-<input type="hidden" name="formular_manuel_id[<?=($ind + 1)?>]" value="<?=$manuel->id?>"/>
+<div id="new-manuel" class="new-reservierung-item-block">
+    <div class="dialog-header">
+        <a href="#" class="close">x</a>
 
-<div class="manuel-wr manuel">
-
-    <div class="manuel-preview block-preview">
-        <p class="text"><?=($manuel->date_start && $manuel->date_end) ? $manuel->date_start->format('d-m-Y') . " - " . $manuel->date_end->format('d-m-Y') . " " . $manuel->text : $manuel->text?></p>
-        <button class="edit">Edit</button>
-        <button class="delete">Delete</button>
-        <br class="clear"/>
+        <h3>New Manuel</h3>
     </div>
+    <div class="alert-message success" style="display:none"></div>
+    <div class="alert-message error" style="display:none"></div>
+    <div class="dialog-content">
+        <div class="param">
+            <label class="param-name">Incoming</label>
+            <select name="incoming">
+                <option value="0">No Incoming</option>
+                <? foreach (Incoming::all() as $incoming): ?>
+                <option value="<?=$incoming->id?>"><?=$incoming->name?></option>
+                <? endforeach; ?>
+            </select>
+        </div>
 
-    <div class="manuel-editcontent" style="display:none">
+        <div class="param">
+            <label class="param-name" for="manuel_text">Text</label>
+            <textarea name="manuel_text" class="date-manueltext" id="manuel_text"></textarea>
+        </div>
 
-        <? if ($manuel->date_start && $manuel->date_end): ?>
-        <div class="manuel-date">
+        <div class="params-block">
 
             <div class="param">
-                <label class="param-name" for="manuel_text">Text</label>
-                <textarea name="manuel_text[<?=($ind + 1)?>]" class="date-manueltext"
-                          id="manuel_text"><?=$manuel->text;?></textarea>
+                <label class="param-name">Von</label>
+                <input type="text" name="date_start" class="date_start" maxlength="8" value="" size="10"/>
             </div>
 
             <div class="param">
-                <label class="param-name" for="datestart">Von</label>
-                <input type="text" name="manuel_datestart[<?=($ind + 1)?>]" class="datestart" maxlength="8"
-                       value="<?=$manuel->date_start->format('dmY');?>" size="10"/>
+                <label class="param-name">Bis&nbsp;</label>
+                <input type="text" name="date_end" class="date_end" maxlength="8" value="" size="10"/>
             </div>
 
             <div class="param">
-                <label class="param-name" for="dateend">Bis&nbsp;</label>
-                <input type="text" name="manuel_dateend[<?=($ind + 1)?>]" class="dateend" maxlength="8"
-                       value="<?=$manuel->date_end->format('dmY');?>" size="10"/>
-            </div>
-
-            <div class="param">
-                <label class="param-name" for="dayscount">Days Count</label>
-                <input type="text" name="manuel_dayscount[<?=($ind + 1)?>]" class="dayscount" maxlength="3"
-                       value="<?=$manuel->days_count?>" size="3"/>
-            </div>
-
-            <div class="param">
-                <label class="param-name" for="price">Price &euro;</label>
-                <input id="price" type="text" size="4" name="manuel_price[<?=($ind + 1)?>]"
-                       value="<?=$manuel->price;?>"/>
-            </div>
-
-            <div class="param">
-                <label class="param-name" for="voucher_remark">Voucher text</label>
-                <textarea id="voucher_remark" class="voucher-text"
-                          name="manuel_voucher_remark[<?=($ind + 1)?>]"><?=$manuel->voucher_remark?></textarea>
-            </div>
-
-
-            <div class="param">
-                <label class="param-name">Incoming</label>
-                <select name="manuel_incoming[<?=($ind + 1)?>]">
-                    <option value="0">No Incoming</option>
-                    <? foreach (Incoming::all() as $incoming): ?>
-                    <option  <?=$manuel->incoming_id == $incoming->id ? "selected" : ''?>
-                        value="<?=$incoming->id?>"><?=$incoming->name?></option>
-                    <? endforeach; ?>
-                </select>
+                <label class="param-name">Nights Count</label>
+                <input type="text" name="days_count" class="days_count" maxlength="3" value="0" size="3"/>
             </div>
 
         </div>
-        <? else: ?>
 
-        <div class="manuel-nodate">
-
-            <div class="param">
-                <label class="param-name" for="manuel_text">Text</label>
-                <textarea name="manuel_text[<?=($ind + 1)?>]" class="nodate-manueltext"
-                          id="manuel_text"><?=$manuel->text;?></textarea>
-            </div>
-
-            <div class="param">
-                <label class="param-name" for="price">Price &euro;</label>
-                <input id="price" type="text" size="4" name="manuel_price[<?=($ind + 1)?>]"
-                       value="<?=$manuel->price;?>"/>
-            </div>
-
-            <div class="param">
-                <label class="param-name" for="voucher_remark">Voucher text</label>
-                <textarea id="voucher_remark" class="voucher-text"
-                          name="manuel_voucher_remark[<?=($ind + 1)?>]"><?=$manuel->voucher_remark?></textarea>
-            </div>
-
-
-            <div class="param">
-                <label class="param-name">Incoming</label>
-                <select name="manuel_incoming[<?=($ind + 1)?>]">
-                    <option value="0">No Incoming</option>
-                    <? foreach (Incoming::all() as $incoming): ?>
-                    <option  <?=$manuel->incoming_id == $incoming->id ? "selected" : ''?>
-                        value="<?=$incoming->id?>"><?=$incoming->name?></option>
-                    <? endforeach; ?>
-                </select>
-            </div>
+        <div class="param">
+            <label class="param-name" for="price">Price &euro;</label>
+            <input id="price" type="text" size="4" class="price" name="manuel_price"/>
+            <select id="count" name="count">
+                <? for ($i = 1; $i < 10; $i++): ?>
+                <option value="<?=$i?>">x<?=$i?></option>
+                <? endfor; ?>
+            </select>
+            <span class="total-price"><span class="value">0</span> &euro;</span>
         </div>
 
-        <? endif; ?>
-
-        <div class="buttons">
-            <button class="close-button">Close</button>
+        <div class="param">
+            <label class="param-name" for="voucher_remark">Voucher remark</label>
+            <textarea id="voucher_remark" class="voucher-text" name="voucher_remark"></textarea>
         </div>
 
+        <input type="hidden" name="item-type" value="manuel"/>
+    </div>
+    <div class="dialog-footer">
+        <button class="cancel">Abbrechen</button>
+        <button class="add">Add</button>
     </div>
 </div>
-    <? endforeach; ?>
-</div>
+
+<div id="edit-item" class="new-reservierung-item-block"></div>
 
 <div class="page" id="flugpage" style="display:none">
 
@@ -678,4 +430,8 @@
 </form>
 
 </div>
+</div>
+
+<div id="item-delete-confirm" style="display:none">
+    Are you sure?
 </div>

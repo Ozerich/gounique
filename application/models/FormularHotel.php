@@ -51,7 +51,7 @@ class FormularHotel extends ActiveRecord\Model
 
     public function get_plain_text()
     {
-        $text = $this->date_start->format('d.m.Y') . " - " . $this->date_end->format('d.m.Y') . " ";
+        $text = ($this->date_start ? $this->date_start->format('d.m.Y') : 'no date') . " - " . ($this->date_end ? $this->date_end->format('d.m.Y') : 'no date') . " ";
         $text .= $this->days_count . "N HOTEL: " . $this->hotel_name . " / ";
         $text .= $this->roomcapacity . " / ";
         $text .= $this->roomtype . " / ";

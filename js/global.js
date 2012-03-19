@@ -59,17 +59,29 @@ jQuery.fn.check_empty = function () {
 }
 
 jQuery.fn.reset = function () {
-    $(this).find('form').each(function () {
-        this.reset();
+    $(this).find(':input').each(function () {
+        switch (this.type) {
+            case 'password':
+            case 'select-multiple':
+            case 'select-one':
+            case 'text':
+            case 'textarea':
+                $(this).val('');
+                break;
+            case 'checkbox':
+            case 'radio':
+                this.checked = false;
+        }
     });
     return this;
 }
 
 jQuery.fn.center = function () {
     this.css("position", "absolute");
-    var top = $(window).scrollTop();
-    this.css("top", (top < 0 ? 0 : top) + "px");
-    this.css("left", (($(window).width() - this.outerWidth()) / 2) + $(window).scrollLeft() + "px");
+    this.css("top", (($(window).height() - this.outerHeight()) / 2) +
+        $(window).scrollTop() + "px");
+    this.css("left", (($(window).width() - this.outerWidth()) / 2) +
+        $(window).scrollLeft() + "px");
     return this;
 }
 
@@ -81,6 +93,16 @@ jQuery.fn.setdatepicker = function () {
     return $(this);
 }
 
+function OpenOverlay() {
+    var maskHeight = $(document).height();
+    var maskWidth = $(window).width();
+    $('#dark-overlay').css({'width':maskWidth, 'height':maskHeight});
+    $('#dark-overlay').fadeIn(1000);
+    $('#dark-overlay').fadeTo("slow", 0.8, function () {
+        $(this).addClass('finished')
+    });
+    $('#overlay-window').draggable({containment:'window'});
+}
 
 $(document).ready(function () {
     $('.buttonset').buttonset();
