@@ -22,21 +22,40 @@
         <div class="param">
             <span class="param-name">Kundennummer:</span>
             <a id="kunde_link" for="<?=$formular->kunde->id?>" href="#"><?=$formular->kunde->k_num?></a>
-            <a href="#" id="change-ag">Change</a>
+            <a href="#" id="change-ag" class="edit_16"></a>
             <input type="hidden" id="new_ag_id"/>
             <input type="hidden" id="new_ag_num"/>
-            <a href="#" id="save-ag" style="display:none">Save</a>
+            <a href="#" id="save-ag" class="save_16" style="display:none"></a>
             <input id="new_agnum" type="text" maxlength="20" size="20" style="display:none"/>
         </div>
 
         <div class="param">
             <span class="param-name">Typ:</span>
-            <a href="#" class="param-value" id="formulartype-value"><?=$formular->type?></a>
+            <span class="param-value" id="formulartype-value"><?=$formular->type?></span>
         </div>
 
         <div class="param">
             <span class="param-name">Vorgangsnummer:</span>
-            <span class="param-value" id="vorgangsnummer-value"><?=$formular->v_num?></span>
+            <a href="#" id="vorgangsnummer-value" class="param-value change-value"><?=$formular->v_num?></a>
+
+            <div class="editparam" style="display: none">
+                <input type="text" id="new_vnum_value" maxlength="6" value="<?=$formular->v_num?>"/>
+                <a href="#" id="save-vnum" class="save_16"></a>
+            </div>
+        </div>
+
+        <div class="param">
+            <span class="param-name">Owner type:</span>
+            <a href="#" id="ownertype-value" class="param-value change-value"><?=$formular->plain_ownertype?></a>
+
+            <div class="editparam" style="display: none">
+                <select id="new_ownertype_value">
+                    <? foreach (Formular::$OWNER_TYPES as $ind => $type): ?>
+                        <option <?=$formular->owner_type == $ind ? 'selected' : ''?> value="<?=$ind?>"><?=$type?></option>
+                    <? endforeach; ?>
+                </select>
+                <a href="#" id="save-ownertype" class="save_16"></a>
+            </div>
         </div>
 
     </div>
@@ -63,68 +82,12 @@
         <pre class="text"><?=$formular->flight_text?></pre>
     </div>
 </div>
+
 <div class="changetype-block" style="display:<?=$formular->type == 'nurflug' ? 'block' : 'none'?>">
-
-    <label>Formulartyp auswahlen:</label>
-
-    <div id="type-radio">
-        <input type="radio" name="formular-type" id="type_1" <?=$formular->type == 'pausschalreise' ? 'checked' : ''?>
-               value="pausschalreise"><label
-            for="type_1">Pauschalreise</label>
-        <input type="radio" name="formular-type" id="type_2" <?=$formular->type == 'bausteinreise' ? 'checked' : ''?>
-               value="bausteinreise"><label
-            for="type_2">Bausteinreise</label>
-        <input type="radio" name="formular-type" id="type_3" <?=$formular->type == 'nurflug' ? 'checked' : ''?>
-               value="nurflug"><label for="type_3">Nur flug</label>
-
-    </div>
 
     <ul id="type-error" class="alert-block" style="display: none">
 
     </ul>
-
-    <div class="typeedit-block"
-         id="pausscahlreise-type" <?=$formular->type == 'pausschalreise' ? '' : 'style="display:none"'?>>
-
-        <div class="vorgansnummer-wr">
-            <label for="vorgangsnummer">Vorgangsnummer:</label>
-            <input type="text" maxlength="6" value="<?=$formular->type == 'pausscahlreise' ? $formular->v_num : ''?>"
-                   class="vnum-input"/>
-        </div>
-
-        <label for="flight-text">Flugplan</label>
-        <textarea class="flight-text"><?=$formular->type == 'pausscahlreise' ? $formular->flight_text : ''?></textarea>
-
-        <label for="flight-price">Flugpreis:</label>
-        <input type="text" maxlength="7" class="flight-price"
-               value="<?=$formular->type == 'pausscahlreise' ? $formular->flight_price : ''?>"/> &euro;
-
-        <div class="bottom-block">
-
-            <button class="type-submit">Weiter</button>
-            <br class="clear"/>
-
-        </div>
-
-    </div>
-
-    <div class="typeedit-block"
-         id="bausteinreise-type" <?=$formular->type == 'bausteinreise' ? '' : 'style="display:none"'?>>
-        <label for="flight-text">Flugplan</label>
-        <textarea class="flight-text"><?=$formular->type == 'bausteinreise' ? $formular->flight_text : ''?></textarea>
-
-        <label for="flight-price">Flugpreis:</label>
-        <input type="text" class="flight-price" maxlength="7"
-               value="<?=$formular->type == 'bausteinreise' ? $formular->flight_price : ''?>"/> &euro;
-
-        <div class="bottom-block">
-
-            <button class="type-submit">Weiter</button>
-            <br class="clear"/>
-        </div>
-
-
-    </div>
 
     <div class="typeedit-block" id="nurflug-type" <?=$formular->type == 'nurflug' ? '' : 'style="display:none"'?>>
 
@@ -132,12 +95,6 @@
             <h2>Ahtung!</h2>
 
             <p>Text</p>
-        </div>
-
-        <div class="vorgansnummer-wr">
-            <label for="vorgangsnummer">Vorgangsnummer:</label>
-            <input type="text" name="nurflug_vnum" maxlength="6"
-                   value="<?=$formular->type == 'nurflug' ? $formular->v_num : ''?>" class="vnum-input"/>
         </div>
 
         <div>
@@ -350,10 +307,11 @@
 
         <div class="param">
             <label class="param-name" for="manuel_text">Text</label>
-            <textarea name="manuel_text" class="date-manueltext" id="manuel_text"></textarea>
+            <textarea name="text" class="date-manueltext" id="manuel_text"></textarea>
         </div>
 
         <div class="params-block">
+            <input type="checkbox" checked name="date_enabled" id="date_enabled"/>
 
             <div class="param">
                 <label class="param-name">Von</label>
@@ -374,7 +332,7 @@
 
         <div class="param">
             <label class="param-name" for="price">Price &euro;</label>
-            <input id="price" type="text" size="4" class="price" name="manuel_price"/>
+            <input id="price" type="text" size="4" class="price" name="price"/>
             <select id="count" name="count">
                 <? for ($i = 1; $i < 10; $i++): ?>
                 <option value="<?=$i?>">x<?=$i?></option>

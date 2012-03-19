@@ -43,9 +43,11 @@
     width: 50%;
 }
 
-.reservierung-page .formular-header .left-block #change-ag,.reservierung-page .formular-header .left-block #save-ag{
-    color: #000;
+.reservierung-page .formular-header .left-block #change-ag, .reservierung-page .formular-header .left-block #save-ag{
+    display: inline-block;
 }
+.reservierung-page .formular-header .editparam,.reservierung-page .formular-header .editparam a{display: inline-block;}
+.reservierung-page #new_vnum_value{width: 60px;}
 
 .reservierung-page .formular-header .right-block{
     float: right;
@@ -97,6 +99,11 @@
 
 #createformular-page{
     width: 800px;
+}
+
+#createformular-page #changeowner_type{
+    margin: 5px auto;
+    width: 390px;
 }
 
 #createformular-page .changetype-block{
@@ -216,6 +223,15 @@
     display: inline-block;
     margin-right: 10px;
     width: 140px;
+}
+
+.new-reservierung-item-block .params-block .param label{
+    width: 125px;
+}
+
+.new-reservierung-item-block input[type=checkbox]{
+    vertical-align: middle;
+    margin-right: 10px;
 }
 
 .new-reservierung-item-block .param input,.new-reservierung-item-block .param select{width: 300px;}

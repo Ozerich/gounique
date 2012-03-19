@@ -172,3 +172,6 @@
 
 </div>
 
+<div id="invoice-delete-confirm" style="display:none">
+    Are you sure?
+</div>

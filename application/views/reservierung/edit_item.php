@@ -26,22 +26,22 @@
     </div>
 
     <div class="params-block">
-
+        <input type="checkbox" <?=$item->date_start ? 'checked' : ''?> name="date_enabled" id="date_enabled"/>
         <div class="param">
             <label class="param-name">Von</label>
             <input type="text" name="date_start" class="date_start" maxlength="8"
-                   value="<?=$item->date_start->format('dmY')?>" size="10"/>
+                   value="<?=$item->date_start ? $item->date_start->format('dmY') : ''?>" <?=$item->date_start ? '' : 'disabled'?> size="10"/>
         </div>
 
         <div class="param">
             <label class="param-name">Bis&nbsp;</label>
             <input type="text" name="date_end" class="date_end" maxlength="8"
-                   value="<?=$item->date_end->format('dmY')?>" size="10"/>
+                   value="<?=$item->date_end ? $item->date_end->format('dmY') : ''?>" <?=$item->date_start ? '' : 'disabled'?> size="10"/>
         </div>
 
         <div class="param">
             <label class="param-name">Nights Count</label>
-            <input type="text" name="days_count" class="days_count" maxlength="3" value="<?=$item->days_count?>"
+            <input type="text" name="days_count" class="days_count" maxlength="3" <?=$item->date_start ? '' : 'disabled'?> value="<?=$item->days_count?>"
                    size="3"/>
         </div>
 

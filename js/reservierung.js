@@ -100,6 +100,13 @@ function BindItemsBlockEvents(item_block) {
         $(item_block).find('.total-price .value').html((transfer_price + price) * count);
     });
 
+    $(item_block).find('#date_enabled').change(function () {
+        if ($(this).is(':checked'))
+            $(this).parents('.params-block').find('input[type=text]').removeAttr('disabled');
+        else
+            $(this).parents('.params-block').find('input[type=text]').attr('disabled', 'disabled');
+    });
+
     BindDateEvents(item_block);
 
     $(item_block).find('button.cancel').click(function () {
@@ -268,8 +275,41 @@ $(document).ready(function () {
         return false;
     });
 
+    $('.formular-header #save-vnum').click(function () {
+        var val = $('#new_vnum_value').val();
+        if (val.length < 5) {
+            $('#new_vnum_value').addClass('error');
+            return false;
+        }
+        else
+            $('#new_vnum_value').removeClass('error');
+
+        $.post('reservierung/change_vnum/' + $('input#formular_id').val(), 'value=' + val);
+        $('#vorgangsnummer-value').html(val).show();
+        $(this).parents('.editparam').hide();
+
+        return false;
+    });
+
+
+    $('.formular-header #save-ownertype').click(function () {
+        var val = $('#new_ownertype_value').val();
+        $.post('reservierung/change_ownertype/' + $('input#formular_id').val(), 'value=' + val);
+
+        $('#ownertype-value').html($('#new_ownertype_value option:selected').html()).show();
+        $(this).parents('.editparam').hide();
+
+        return false;
+    });
+
+
     $('#kunde_link').click(function () {
         document.location = "kunderverwaltung/historie/" + $(this).attr('for');
+        return false;
+    });
+
+    $('.formular-header a.change-value').click(function () {
+        $(this).hide().parents('.param').find('.editparam').show();
         return false;
     });
 
@@ -278,7 +318,7 @@ $(document).ready(function () {
      Change type block
      ------------------------------------------------------------------------------------------*/
 
-    $('.reservierung-page .changetype-block #type-radio').buttonset();
+    $('.reservierung-page .changetype-block #type-radio, .reservierung-page #changeowner_type').buttonset();
 
     $('.reservierung-page .changetype-block #type-radio input').click(function () {
         $('.reservierung-page .changetype-block .typeedit-block').hide();

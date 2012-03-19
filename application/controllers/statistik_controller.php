@@ -22,11 +22,11 @@ class Statistik_Controller extends MY_Controller
             'nurflug' => array('total' => 0, 'persons' => 0, 'count' => 0),
         );
 
-        foreach($formulars as $formular)
+        foreach ($formulars as $formular)
         {
             $type_stats[$formular->type]['total'] += $formular->brutto;
             $type_stats[$formular->type]['persons'] += $formular->person_count;
-            $type_stats[$formular->type]['count'] ++;
+            $type_stats[$formular->type]['count']++;
         }
 
         $this->view_data['stats_list'] = $this->load->view('statistik/stats_list.php', array('formulars' => $formulars, 'type_stats' => $type_stats), true);
@@ -66,6 +66,16 @@ class Statistik_Controller extends MY_Controller
                 $conditions .= ' AND kunde_id = ' . $agency->id;
         }
 
+        $owner_type = array();
+
+        if (isset($_POST['is_ownertype']))
+            foreach ($_POST['is_ownertype'] as $ind => $val)
+                $owner_type[] = 'owner_type = '.$ind;
+
+        $owner_type = implode(' OR ', $owner_type);
+
+        $conditions .= ' AND '.($owner_type ? '('.$owner_type.')' : '0');
+
         $formulars = Formular::all(array('conditions' => array($conditions), 'order' => 'r_num ASC'));
 
         $type_stats = array(
@@ -74,11 +84,11 @@ class Statistik_Controller extends MY_Controller
             'nurflug' => array('total' => 0, 'persons' => 0, 'count' => 0),
         );
 
-        foreach($formulars as $formular)
+        foreach ($formulars as $formular)
         {
             $type_stats[$formular->type]['total'] += $formular->brutto;
             $type_stats[$formular->type]['persons'] += $formular->person_count;
-            $type_stats[$formular->type]['count'] ++;
+            $type_stats[$formular->type]['count']++;
         }
 
         echo $this->load->view('statistik/stats_list.php', array('formulars' => $formulars, 'fields' => $fields, 'type_stats' => $type_stats), true);

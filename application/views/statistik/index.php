@@ -42,14 +42,21 @@
                 <div class="type-checkboxes">
 
                     <input type="checkbox" id="is_pauschalreise" name="is_pauschalreise" checked/>
-                    <label for="is_pauschalreise">Pausschalreise:</label>
+                    <label for="is_pauschalreise">Pausschalreise</label>
 
                     <input type="checkbox" id="is_bausteinreise" name="is_bausteinreise" checked/>
-                    <label for="is_bausteinreise">Bausteinreise:</label>
+                    <label for="is_bausteinreise">Bausteinreise</label>
 
                     <input type="checkbox" id="is_nurflug" name="is_nurflug" checked/>
-                    <label for="is_nurflug">Nurflug:</label>
+                    <label for="is_nurflug">Nurflug</label>
 
+                </div>
+
+                <div class="type-checkboxes">
+                    <? foreach (Formular::$OWNER_TYPES as $ind => $type): ?>
+                    <input type="checkbox" id="is_ownertype_<?=$ind?>" name="is_ownertype[<?=$ind?>]" checked/>
+                    <label for="is_ownertype_<?=$ind?>"><?=$type?></label>
+                    <? endforeach; ?>
                 </div>
 
             </div>
@@ -57,8 +64,10 @@
         <fieldset class="table-fields">
             <legend>Table columns</legend>
             <div class="field-item">
+                <input type="checkbox" checked id="field_0" name='field[owner_type]'><label for="field_0">UW/RB</label>
+            </div>
+            <div class="field-item">
                 <input type="checkbox" checked id="field_1" name='field[r_num]'><label for="field_1">RG-NR</label>
-
             </div>
             <div class="field-item">
                 <input type="checkbox" checked id="field_2" name="field[ag_num]"><label for="field_2">AG-NR</label>

@@ -244,6 +244,40 @@ Your Unique World Team";
         exit();
     }
 
+
+    public function change_vnum($formular_id = 0)
+    {
+        $formular = Formular::find_by_id($formular_id);
+
+        if (!$formular) {
+            show_404();
+            return false;
+        }
+
+        if(strlen($this->input->post('value')) < 5)
+            exit();
+
+        $formular->v_num = $this->input->post('value');
+        $formular->save();
+
+        exit();
+    }
+
+    public function change_ownertype($formular_id = 0)
+    {
+        $formular = Formular::find_by_id($formular_id);
+
+        if (!$formular) {
+            show_404();
+            return false;
+        }
+
+        $formular->owner_type = $this->input->post('value');
+        $formular->save();
+
+        exit();
+    }
+
     public function create($kunde_id = '')
     {
         $kunde = null;
@@ -309,6 +343,7 @@ Your Unique World Team";
                     'flight_text' => $flight,
                     'flight_price' => $flight_price,
                     'person_count' => $person_count,
+                    'owner_type' => $this->input->post('owner_type'),
                     'created_date' => time_to_mysqldatetime(time()),
                     'changed_date' => time_to_mysqldatetime(time()),
                     'created_by' => $this->user->id,
@@ -355,9 +390,16 @@ Your Unique World Team";
                 $manuel = $item ? $item : FormularManuel::create(array('text' => ''));
 
                 $manuel->text = $this->input->post('text');
-                $manuel->date_start = $this->input->post('date_start');
-                $manuel->date_end = $this->input->post('date_end');
-                $manuel->days_count = $this->input->post('days_count');
+                if ($this->input->post('date_enabled')) {
+                    $manuel->date_start = inputdate_to_mysqldate($this->input->post('date_start'));
+                    $manuel->date_end = inputdate_to_mysqldate($this->input->post('date_end'));
+                    $manuel->days_count = $this->input->post('days_count');
+                }
+                else
+                {
+                    $manuel->date_start = $manuel->date_end = null;
+                    $manuel->days_count = 0;
+                }
                 $manuel->price = $this->input->post('price');
                 $manuel->voucher_remark = $this->input->post('voucher_remark');
                 $manuel->incoming_id = $this->input->post('incoming');
@@ -426,15 +468,14 @@ Your Unique World Team";
             return false;
         }
         if ($_POST) {
-            $type = $this->input->post('formular-type');
+
+            $type = $formular->type;
 
             $provision = 0;
             if ($type != 'nurflug')
                 $provision = $this->input->post('provision-manuel') != '' ? str_replace(',', '.', $this->input->post('provision-manuel')) :
                         $formular->kunde->provision;
 
-
-            $formular->type = $this->input->post('formular-type');
             $formular->provision = $provision;
             $formular->service_charge = $type == 'nurflug' ? $this->input->post('nurflug_servicecharge') : 0;
             $formular->flight_text = strtoupper($type == 'nurflug' ? $this->input->post('nurflug_flight') : $this->input->post('flight'));
@@ -443,8 +484,6 @@ Your Unique World Team";
 
             $formular->changed_by = $this->user->id;
             $formular->changed_date = time_to_mysqldatetime(time());
-
-            $formular->save();
 
             $arrival_date = $formular->count_arrival_date();
 
@@ -457,6 +496,7 @@ Your Unique World Team";
                 $formular->prepayment_amount = $formular->brutto * $formular->prepayment / 100;
                 $formular->finalpayment_amount = $formular->brutto - $formular->prepayment_amount;
             }
+
             $formular->save();
 
             redirect('reservierung/result/' . $formular->id);

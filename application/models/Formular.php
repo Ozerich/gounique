@@ -4,6 +4,13 @@ class Formular extends ActiveRecord\Model
 {
     static $table_name = "formulars";
 
+    static $OWNER_TYPES = array(
+        '1' => 'UW',
+        '2' => 'RB',
+        '3' => 'POS',
+        '4' => 'UW/RB',
+    );
+
     public function get_date()
     {
         return substr($this->zahlungsdatum, 0, 2) . "." . substr($this->zahlungsdatum, 2, 2) . "." . substr($this->zahlungsdatum, 4);
@@ -393,11 +400,17 @@ class Formular extends ActiveRecord\Model
         return $result;
     }
 
-    public function get_stats_type(){
-        if($this->type == "nurflug")return "Nur Flug";
-        elseif($this->type == "pausschalreise")return "Pausschalreise";
-        elseif($this->type == "bausteinreise")return "Bausteinreise";
+    public function get_stats_type()
+    {
+        if ($this->type == "nurflug") return "Nur Flug";
+        elseif ($this->type == "pausschalreise") return "Pausschalreise";
+        elseif ($this->type == "bausteinreise") return "Bausteinreise";
         else return "Unknown";
+    }
+
+    public function get_plain_ownertype()
+    {
+        return isset(Formular::$OWNER_TYPES[$this->owner_type]) ? Formular::$OWNER_TYPES[$this->owner_type] : '?';
     }
 
 }

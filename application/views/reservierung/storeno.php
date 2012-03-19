@@ -21,7 +21,6 @@
                 <span class="param-name">Kundennummer:</span>
                 <a href="kundenverwaltung/historie/<?=$formular->kunde->id?>"><?=$formular->kunde->k_num?></a>
             </div>
-
             <div class="param">
                 <span class="param-name">Typ:</span>
                 <span class="param-value" id="formulartype-value"><?=$formular->type?></span>
@@ -29,9 +28,27 @@
 
             <div class="param">
                 <span class="param-name">Vorgangsnummer:</span>
-                <span class="param-value" id="vorgangsnummer-value"><?=$formular->v_num?></span>
+                <a href="#" id="vorgangsnummer-value" class="param-value change-value"><?=$formular->v_num?></a>
+
+                <div class="editparam" style="display: none">
+                    <input type="text" id="new_vnum_value" maxlength="6" value="<?=$formular->v_num?>"/>
+                    <a href="#" id="save-vnum" class="save_16"></a>
+                </div>
             </div>
 
+            <div class="param">
+                <span class="param-name">Owner type:</span>
+                <a href="#" id="ownertype-value" class="param-value change-value"><?=$formular->plain_ownertype?></a>
+
+                <div class="editparam" style="display: none">
+                    <select id="new_ownertype_value">
+                        <? foreach (Formular::$OWNER_TYPES as $ind => $type): ?>
+                            <option <?=$formular->owner_type == $ind ? 'selected' : ''?> value="<?=$ind?>"><?=$type?></option>
+                        <? endforeach; ?>
+                    </select>
+                    <a href="#" id="save-ownertype" class="save_16"></a>
+                </div>
+            </div>
         </div>
 
         <div class="right-block">

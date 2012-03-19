@@ -38,6 +38,8 @@
     <thead>
     <tr>
         <th class="num">№</th>
+        <?if (!isset($fields) || isset($fields['owner_type'])): ?>
+        <th class="owner_type">UW/RB</th><? endif;?>
         <?if (!isset($fields) || isset($fields['r_num'])): ?>
         <th class="r_num">RG-NR</th><? endif;?>
         <?if (!isset($fields) || isset($fields['ag_num'])): ?>
@@ -71,6 +73,8 @@
         ?>
     <tr>
         <td class="num"><?=($ind + 1)?></td>
+        <?if (!isset($fields) || isset($fields['owner_type'])): ?>
+        <td class="owner_type"><?=$formular->plain_ownertype?></td><? endif;?>
         <?if (!isset($fields) || isset($fields['r_num'])): ?>
         <td class="r_num"><?=$formular->r_num?></td><? endif;?>
         <?if (!isset($fields) || isset($fields['ag_num'])): ?>
