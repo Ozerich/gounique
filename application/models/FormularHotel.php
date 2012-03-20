@@ -53,7 +53,7 @@ class FormularHotel extends ActiveRecord\Model
     {
         $text = ($this->date_start ? $this->date_start->format('d.m.Y') : 'no date') . " - " . ($this->date_end ? $this->date_end->format('d.m.Y') : 'no date') . " ";
         $text .= $this->days_count . "N HOTEL: " . $this->hotel_name . " / ";
-        $text .= $this->roomcapacity . " / ";
+        $text .= ($this->count > 1 ? $this->count : '') . ' '.$this->roomcapacity . " / ";
         $text .= $this->roomtype . " / ";
         $text .= HotelService::find_by_id($this->hotelservice_id)->value . " / ";
         $text .= ($this->transfer == "kein") ? '' : " / TRANSFER " . strtoupper($this->transfer);
@@ -66,7 +66,7 @@ class FormularHotel extends ActiveRecord\Model
     {
         $text = $this->date_start->format('d.m.Y') . " - " . $this->date_end->format('d.m.Y') . " ";
         $text .= $this->days_count . "N HOTEL: " . $this->hotel_name . " / ";
-        $text .= $this->incoming_roomcapacity . " / ";
+        $text .= ($this->count > 1 ? $this->count : '') . ' '.$this->incoming_roomcapacity . " / ";
         $text .= $this->roomtype . " / ";
         $text .= HotelService::find_by_id($this->hotelservice_id)->english_value . " / ";
         $text .= ($this->transfer == "kein") ? '' : " / TRANSFER " . strtoupper($this->transfer);
@@ -94,7 +94,7 @@ class FormularHotel extends ActiveRecord\Model
     public function get_nodate_text()
     {
         $text = $this->days_count . "N HOTEL: " . $this->hotel_name . " / ";
-        $text .= $this->roomcapacity . " / ";
+        $text .= ($this->count > 1 ? $this->count : '') . ' '.$this->roomcapacity . " / ";
         $text .= $this->roomtype . " / ";
         $text .= HotelService::find_by_id($this->hotelservice_id)->value . " / ";
         $text .= ($this->transfer == "kein") ? '' : " / TRANSFER " . strtoupper($this->transfer);
@@ -113,7 +113,7 @@ class FormularHotel extends ActiveRecord\Model
 
     public function get_all_price()
     {
-        return ($this->price + $this->transfer_price) * $this->people_count;
+        return ($this->price + $this->transfer_price) * $this->people_count * $this->count;
     }
 
     public function get_status_logs()
@@ -230,7 +230,7 @@ class FormularHotel extends ActiveRecord\Model
     {
         $text = $this->date_start->format('d.m.Y') . " - " . $this->date_end->format('d.m.Y') . " ";
         $text .= $this->days_count . "N HOTEL: " . $this->hotel_name . " / ";
-        $text .= $this->file_roomcapacity . " / ";
+        $text .= ($this->count > 1 ? $this->count : '') . ' '.$this->file_roomcapacity . " / ";
         $text .= ($this->is_manuel ? $this->roomtype : RoomType::find_by_id($this->roomtype)->value) . " / ";
         $text .= HotelService::find_by_id($this->hotelservice_id)->value;
         $text .= ($this->transfer == "kein") ? '' : " / TRANSFER " . strtoupper($this->transfer);

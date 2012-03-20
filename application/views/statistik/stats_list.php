@@ -78,7 +78,7 @@
         <?if (!isset($fields) || isset($fields['r_num'])): ?>
         <td class="r_num"><?=$formular->r_num?></td><? endif;?>
         <?if (!isset($fields) || isset($fields['ag_num'])): ?>
-        <td class="a_num"><?=$formular->kunde->k_num?></td><? endif;?>
+        <td class="a_num"><?=$formular->kunde ? $formular->kunde->k_num : '-'?></td><? endif;?>
         <?if (!isset($fields) || isset($fields['v_num'])): ?>
         <td class="v_num"><?=$formular->v_num?></td><? endif;?>
         <?if (!isset($fields) || isset($fields['rg_date'])): ?>

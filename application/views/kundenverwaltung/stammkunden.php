@@ -19,6 +19,12 @@
         <li class="last"><a href="stammkunden/new">Neueu Stammkunden</a></li>
     </ul>
 
+    <div class="search-block">
+        <label for="search-input">Search:</label>
+        <input type="text" id="search-input"/>
+        <input type="hidden" id="search-type" value="stammkunden"/>
+    </div>
+
     <table class="product-list" id="stammkunden-list">
         <thead>
         <tr>

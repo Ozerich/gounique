@@ -19,6 +19,12 @@
         <li class="last"><a href="incoming/new">Neueu Incoming</a></li>
     </ul>
 
+    <div class="search-block">
+        <label for="search-input">Search:</label>
+        <input type="text" id="search-input"/>
+        <input type="hidden" id="search-type" value="incoming"/>
+    </div>
+
     <table class="product-list" id="incoming-list">
         <thead>
         <tr>

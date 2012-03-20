@@ -9,7 +9,7 @@ class Kundenverwaltung_Controller extends MY_Controller
         if (!$this->user)
             redirect('login');
 
-        $this->view_data['JS_files'] = array("js/agency.js");
+        $this->view_data['JS_files'] = array("js/kundenverwaltung.js");
     }
 
     public function index()
@@ -239,6 +239,7 @@ class Kundenverwaltung_Controller extends MY_Controller
                     return false;
 
                 $agency->name = $this->input->post('name');
+                $agency->k_num = 'A'.$this->input->post('ag_num');
                 $agency->land = $this->input->post('land');
                 $agency->plz = $this->input->post('plz');
                 $agency->website = $this->input->post('website');
@@ -465,6 +466,26 @@ class Kundenverwaltung_Controller extends MY_Controller
             $result[] = array("text" => "<b>" . $kunde->k_num . "</b> - " . $kunde->name, "value" => $kunde->k_num,
                 "data" => array("id" => $kunde->id, 'num' => $kunde->k_num));
         echo json_encode($result);
+        exit();
+    }
+
+
+    public function search($type = 'agenturen')
+    {
+        $search_str = $this->input->post('str');
+        if ($type == "agenturen" || $type == "stammkunden")
+            $result = Kunde::find('all', array('conditions' => array('(k_num like "%' . $search_str . '%" OR name like "%' . $search_str . '%")
+                    AND type = "' . $type . '"')));
+        else if ($type == 'incoming')
+            $result = Incoming::find('all', array('conditions' => array('name like "%' . $search_str . '%"')));
+
+        if ($type == 'agenturen')
+            echo $this->load->view('kundenverwaltung/agenturen_list.php', array('agencies' => $result), true);
+        else if ($type == 'stammkunden')
+            echo $this->load->view('kundenverwaltung/stammkunden_list.php', array('stammkunden' => $result), true);
+        else if ($type == 'incoming')
+            echo $this->load->view('kundenverwaltung/incoming_list.php', array('incomings' => $result), true);
+        else show_404();
         exit();
     }
 

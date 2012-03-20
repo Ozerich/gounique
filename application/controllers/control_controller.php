@@ -10,6 +10,7 @@ class Control_Controller extends MY_Controller
             redirect('login');
 
         $this->view_data['JS_files'] = array("js/control.js");
+
     }
 
     public function index()
@@ -56,7 +57,7 @@ class Control_Controller extends MY_Controller
             $this->set_page_title("Flight payments");
             $formulars = Formular::find('all', array(
                 'conditions' => array('status = "rechnung"'),
-                'order' => 'r_num'
+                'order' => 'r_num_int'
             ));
 
             $this->view_data['invoice_list'] = $this->load->view('control/flights/rechnung_list.php',
@@ -86,7 +87,7 @@ class Control_Controller extends MY_Controller
             $this->view_data['page_title'] = 'Invoise Payments';
             $formulars = Formular::find('all', array(
                 'conditions' => array('status = "rechnung" AND type != ?', 'nurflug'),
-                'order' => 'r_num'
+                'order' => 'r_num_int'
             ));
             $this->view_data['invoice_list'] = $this->load->view('control/invoice/rechnung_list.php',
                 array('formulars' => $formulars), true);
@@ -100,7 +101,7 @@ class Control_Controller extends MY_Controller
         $this->view_data['page_title'] = 'Invoise Payments';
         $formulars = Formular::find('all', array(
             'conditions' => array('status = "rechnung"'),
-            'order' => 'r_num'
+            'order' => 'r_num_int'
         ));
         $this->view_data['invoice_list'] = $this->load->view('control/profit/rechnung_list.php',
             array('formulars' => $formulars), true);
@@ -222,7 +223,7 @@ class Control_Controller extends MY_Controller
         else
             $formulars = Formular::all(array(
                     'conditions' => array('(status = "rechnung" OR status = "storno" OR status="gutschrift")' . $kunde_query),
-                    'order' => 'r_num')
+                    'order' => 'r_num_int ASC')
             );
 
         if ($type == 'provision') {

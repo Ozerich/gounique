@@ -413,6 +413,60 @@ class Formular extends ActiveRecord\Model
         return isset(Formular::$OWNER_TYPES[$this->owner_type]) ? Formular::$OWNER_TYPES[$this->owner_type] : '?';
     }
 
+    public function create_flight_segments()
+    {
+        FlightSegment::table()->delete(array("formular_id" => $this->id));
+        $flight = $this->flight_text;
+        $segments = explode("\n", $flight);
+        if (!$segments)
+            return;
+
+        $pos = 1;
+        foreach ($segments as $segment) {
+            $segment = trim($segment);
+
+            if (substr($segment, 0, 2) == 'EY')
+                $segment = 'EY ' . substr($segment, 2);
+
+            $segment = 'QR  58W 22JAN TXLDOH  1120  1910  ';
+
+            while (strpos($segment, '  ') !== false)
+                $segment = str_replace('  ', ' ', $segment);
+
+            $data = explode(' ', $segment);
+            if (count($data) < 6)
+                continue;
+
+            if ($data[0] == 'OPERATED') continue;
+            $sql = array('pos' => $pos, 'num' => $data[1], 'date' => $data[2]);
+
+            $ind = 3;
+            while (strlen($data[$ind]) < 6 && $ind < count($data)) $ind++;
+            $sql['from'] = substr($data[$ind], 0, 3);
+            $sql['to'] = substr($data[$ind], 3, 3);
+
+            if (strlen($data[$ind]) > 6) {
+                $sql['class'] = substr($data[$ind], 6);
+            }
+            else
+            {
+                if (strlen($data[$ind + 1]) != 4)
+                    $ind++;
+            }
+
+            $time1 = $data[$ind + 1];
+            $time2 = $data[$ind + 2];
+
+            $sql['departure_time'] = substr($time1, 0, 2) . ':' . substr($time1, 2, 2);
+            $sql['arrival_time'] = substr($time2, 0, 2) . ':' . substr($time2, 2, 2);
+            $sql['segment'] = $segment;
+            $sql['formular_id'] = $this->id;
+
+            FlightSegment::create($sql);
+            $pos++;
+        }
+    }
+
 }
 
 ?>

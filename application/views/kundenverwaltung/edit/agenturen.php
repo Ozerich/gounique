@@ -16,8 +16,8 @@
 <div class="new-block">
 <div class="input-block">
 
-<div class="param">
-    <label for="name">Agenturen Name</label>
+<div class="param editname">
+    A<input type="text" name="ag_num" id="ag_num" value="<?=substr($agency->k_num,1)?>"/>
     <input type="text" name="name" id="name" value="<?=$agency->name?>"/>
 </div>
 <div class="top-blocks">

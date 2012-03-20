@@ -174,8 +174,8 @@ $(document).ready(function () {
 
     $('#new-stammkunden-page #submit-button').click(function () {
 
-        $('#new-stammkunden-page').find('#name, #surname').each(function(){
-            if($(this).val() == '')
+        $('#new-stammkunden-page').find('#name, #surname').each(function () {
+            if ($(this).val() == '')
                 $(this).addClass('error');
             else
                 $(this).removeClass('error');
@@ -183,6 +183,13 @@ $(document).ready(function () {
 
         return $('#new-stammkunden-page input.error').size() == 0;
 
+    });
+
+
+    $('.kundenverwaltung-rasdel .search-block #search-input').keyup(function () {
+        $.post('kundenverwaltung/search/' + $('#search-type').val(), 'str=' + $('#search-input').val(), function (data) {
+            $('.product-list tbody').html(data);
+        });
     });
 
 });

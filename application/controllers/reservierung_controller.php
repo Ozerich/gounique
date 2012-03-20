@@ -254,10 +254,10 @@ Your Unique World Team";
             return false;
         }
 
-        if(strlen($this->input->post('value')) < 5)
+        if (strlen($this->input->post('value')) < 5)
             exit();
 
-        $formular->v_num = $this->input->post('value');
+        $formular->v_num = strtoupper($this->input->post('value'));
         $formular->save();
 
         exit();
@@ -335,7 +335,7 @@ Your Unique World Team";
             }
 
             $formular = Formular::create(array(
-                    'v_num' => $v_num,
+                    'v_num' => strtoupper($v_num),
                     'kunde_id' => $this->input->post('kunde_id'),
                     'type' => $type,
                     'provision' => $kunde ? $kunde->provision : 0,
@@ -347,8 +347,9 @@ Your Unique World Team";
                     'created_date' => time_to_mysqldatetime(time()),
                     'changed_date' => time_to_mysqldatetime(time()),
                     'created_by' => $this->user->id,
-                    'changed_by' => $this->user->id,)
-            );
+                    'changed_by' => $this->user->id));
+
+            $formular->create_flight_segments();
 
             redirect('reservierung/' . ($type == 'nurflug' ? 'final' : 'edit') . '/' . $formular->id);
         }
@@ -498,6 +499,7 @@ Your Unique World Team";
             }
 
             $formular->save();
+            $formular->create_flight_segments();
 
             redirect('reservierung/result/' . $formular->id);
         }
@@ -637,16 +639,16 @@ Your Unique World Team";
                     if (isset($_POST['person_id'][$ind])) {
                         $person = FormularPerson::find_by_id($_POST['person_id'][$ind]);
                         $person->sex = $_POST['person_sex'][$ind];
-                        $person->name = $_POST['person_name'][$ind];
-                        $person->surname = $_POST['person_surname'][$ind];
+                        $person->name = strtoupper($_POST['person_name'][$ind]);
+                        $person->surname = strtoupper($_POST['person_surname'][$ind]);
 
                         $person->save();
                     }
                     else
                         FormularPerson::create(array(
                             "formular_id" => $formular->id,
-                            "name" => $_POST['person_name'][$ind],
-                            "surname" => $_POST['person_surname'][$ind],
+                            "name" => strtoupper($_POST['person_name'][$ind]),
+                            "surname" => strtoupper($_POST['person_surname'][$ind]),
                             "sex" => $_POST['person_sex'][$ind]
                         ));
                 }
@@ -737,7 +739,9 @@ Your Unique World Team";
         $next_rnum = Config::find_by_param('next_rnum');
         $formular->status = "rechnung";
 
-        $formular->r_num = "201100/" . ($next_rnum->value < 10 ? "0" . $next_rnum->value : $next_rnum->value);
+        $formular->r_num_int = $next_rnum->value < 10 ? "0" . $next_rnum->value : $next_rnum->value;
+        $formular->r_num = "201100/" . $formular->r_num_int;
+
         $next_rnum->value = $next_rnum->value + 1;
         $next_rnum->save();
 

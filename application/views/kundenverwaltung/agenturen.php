@@ -19,6 +19,12 @@
         <li class="last"><a href="agenturen/new">Neueu Agenturen</a></li>
     </ul>
 
+    <div class="search-block">
+        <label for="search-input">Search:</label>
+        <input type="text" id="search-input"/>
+        <input type="hidden" id="search-type" value="agenturen"/>
+    </div>
+
     <table class="product-list" id="agenturen-list">
         <thead>
         <tr>
