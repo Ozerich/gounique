@@ -459,7 +459,6 @@ class Formular extends ActiveRecord\Model
 
             $sql['departure_time'] = substr($time1, 0, 2) . ':' . substr($time1, 2, 2);
             $sql['arrival_time'] = substr($time2, 0, 2) . ':' . substr($time2, 2, 2);
-            $sql['segment'] = $segment;
             $sql['formular_id'] = $this->id;
 
             FlightSegment::create($sql);

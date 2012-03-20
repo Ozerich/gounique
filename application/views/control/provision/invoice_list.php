@@ -14,6 +14,7 @@ foreach ($formulars as $ind => $formular):
         -
         <? endif; ?>
     </td>
+	<td><?=$formular->plain_ownertype?></td>
     <td><?=$formular->v_num?></td>
     <td class="<?=$formular->brutto < 0 ? 'minus' : ''?>"><?=number_format($formular->brutto, 2, ',', '.')?></td>
     <td><?=number_format($formular->provision, 2, ',', '.')?></td>

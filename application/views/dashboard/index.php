@@ -6,6 +6,8 @@
     <div class="nav">
         <div class="row">
             <a href="control" class="center">finance & controlling</a>
+            <a href="statistik">statistik</a>
+			
         </div>
     </div>
     <? else: ?>

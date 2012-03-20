@@ -33,7 +33,7 @@ class FormularManuel extends ActiveRecord\Model
 
     public function get_all_price()
     {
-        return $this->price;
+        return $this->price * $this->count;
     }
 
     public function get_nodate_text()

@@ -16,7 +16,8 @@ foreach ($formulars as $ind => $formular):
         -
         <? endif; ?>
     </td>
-    <td><?=$formular->v_num?></td>
+	<td><?=$formular->plain_ownertype?>
+    <td class="v-num"><?=$formular->v_num?></td>
     <td class="reisedatum"><?=$formular->rechnung_date->format('d.M.Y');?></td>
     <td class="reisedatum"><?=$formular->departure_date->format('d.M.Y')?></td>
     <td class="total <?=$formular->brutto < 0 ? 'minus' : ''?>"><?=number_format($formular->brutto, 2, ',', '.')?></td>

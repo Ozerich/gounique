@@ -66,6 +66,7 @@
             <th class="num">№</th>
             <th class="ag-num">RG-NR</th>
             <th class="r-num">AG-NR</th>
+			<th>UW/RB</th>
             <th>Vorg-NR</th>
             <th>Total-RG</th>
             <th>Provision %</th>

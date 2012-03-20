@@ -82,6 +82,7 @@
             <th>№</th>
             <th class="rg-num">RG-NR</th>
             <th class="ag-num">AG-NR</th>
+			<th>UW/RB</th>
             <th>Vorg-NR</th>
             <th>RG-Datum</th>
             <th>Abreise</th>
