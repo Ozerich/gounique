@@ -194,6 +194,25 @@ class Formular extends ActiveRecord\Model
         return $result;
     }
 
+    public function count_departure_date()
+    {
+        $hotels = Formular::get_hotels_and_manuels();
+        if (!$hotels)
+            return null;
+
+        $current = 0;
+        $result = null;
+
+        foreach ($hotels as $ind => $hotel){
+            if ($current == 0 || ($hotel->date_start && mysqldate_to_timestamp($hotel->date_start->format('Y-m-d')) < $current)) {
+                $current = mysqldate_to_timestamp($hotel->date_start->format('Y-m-d'));
+                $result = $hotel->date_start;
+            }
+        }
+
+        return $result;
+    }
+
     public function get_plain_persons()
     {
         $persons = FormularPerson::find_all_by_formular_id($this->id);
@@ -427,8 +446,6 @@ class Formular extends ActiveRecord\Model
 
             if (substr($segment, 0, 2) == 'EY')
                 $segment = 'EY ' . substr($segment, 2);
-
-            $segment = 'QR  58W 22JAN TXLDOH  1120  1910  ';
 
             while (strpos($segment, '  ') !== false)
                 $segment = str_replace('  ', ' ', $segment);

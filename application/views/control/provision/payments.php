@@ -43,6 +43,8 @@
                 <label for="payment-remark">Remark:</label>
                 <textarea id="payment-remark"></textarea>
             </div>
+            <input type="hidden" id="savepayment-id"/>
+            <button id="save-payment" style="display:none">Save</button>
             <button id="add-payment">Eingabe</button>
         </div>
     </fieldset>

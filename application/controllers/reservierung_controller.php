@@ -105,21 +105,7 @@ Your Unique World Team";
 
     }
 
-    private function write_pdf($formular_id)
-    {
-        $formular = Formular::find_by_id($formular_id);
-
-        $this->write_to_pdf($formular_id, 1);
-        $this->write_to_pdf($formular_id, 2);
-
-        if ($formular->status == "rechnung" || $formular->status == "freigabe") {
-            $this->write_to_pdf($formular_id, 3);
-            $this->write_to_pdf($formular_id, 4);
-        }
-
-    }
-
-    private function write_to_pdf($formular_id, $type)
+    public function print_file($formular_id, $type)
     {
         $formular = Formular::find_by_id($formular_id);
 
@@ -158,9 +144,13 @@ Your Unique World Team";
         $pdf->list_indent_first_level = 0;
         $pdf->WriteHTML($html, 2);
 
-        $pdf->Output('pdf/' . $formular->id . "_" . $type . ".pdf", 'F');
-
+        $path = 'pdf/' . $formular->id . "_" . $type . ".pdf";
+        $pdf->Output($path, 'F');
+        echo $path;
+        exit();
     }
+
+
 
     public function get_pdf_name($formular_id)
     {
@@ -239,6 +229,8 @@ Your Unique World Team";
         }
 
         $formular->kunde_id = $agency_id;
+        $formular->provision = $agency->provision;
+        $formular->provision_amount = round($formular->brutto * $formular->provision * (!$formular->kunde->ausland ? 1.19 : 1) / 100, 2);
         $formular->save();
 
         exit();
@@ -336,7 +328,7 @@ Your Unique World Team";
 
             $formular = Formular::create(array(
                     'v_num' => strtoupper($v_num),
-                    'kunde_id' => $this->input->post('kunde_id'),
+                    'kunde_id' => $kunde_id,
                     'type' => $type,
                     'provision' => $kunde ? $kunde->provision : 0,
                     'service_charge' => $service_charge,
@@ -347,7 +339,11 @@ Your Unique World Team";
                     'created_date' => time_to_mysqldatetime(time()),
                     'changed_date' => time_to_mysqldatetime(time()),
                     'created_by' => $this->user->id,
-                    'changed_by' => $this->user->id));
+                    'changed_by' => $this->user->id,
+            ));
+
+            $formular->brutto = $formular->brutto_price;
+            $formular->save();
 
             $formular->create_flight_segments();
 
@@ -487,9 +483,13 @@ Your Unique World Team";
             $formular->changed_date = time_to_mysqldatetime(time());
 
             $arrival_date = $formular->count_arrival_date();
+            $departure_date = $formular->count_departure_date();
 
             if ($arrival_date)
                 $formular->arrival_date = $arrival_date;
+
+            if($departure_date)
+                $formular->departure_date = $departure_date;
 
             $formular->brutto = $formular->brutto_price;
             $formular->provision_amount = round($formular->brutto * $formular->provision * (!$formular->kunde->ausland ? 1.19 : 1) / 100, 2);
@@ -658,8 +658,6 @@ Your Unique World Team";
             $formular->arrival_date = inputdate_to_mysqldate($this->input->post('arrival_date'));
             $formular->save();
 
-            $this->write_pdf($formular->id);
-
             redirect('reservierung/final/' . $formular->id);
         }
 
@@ -698,8 +696,7 @@ Your Unique World Team";
 
     }
 
-    public
-    function final_($id)
+    public function final_($id)
     {
         $formular = Formular::find_by_id($id);
 
@@ -746,8 +743,6 @@ Your Unique World Team";
         $next_rnum->save();
 
         $formular->save();
-        $this->write_to_pdf($formular->id, 3);
-        $this->write_to_pdf($formular->id, 4);
 
         redirect("reservierung/final/" . $formular->id);
     }
@@ -764,8 +759,6 @@ Your Unique World Team";
         $formular->status = "eingangsmitteilung";
         $formular->save();
 
-        $this->write_to_pdf($formular->id, 1);
-        $this->write_to_pdf($formular->id, 2);
 
 
         redirect("reservierung/final/" . $formular->id);
@@ -803,6 +796,7 @@ Your Unique World Team";
                 'status' => 'rechnung',
                 'is_storno' => true,
                 'r_num' => $formular->r_num . 'S',
+                'r_num_int' => $formular->r_num_int,
                 'v_num' => $formular->v_num,
                 'type' => $formular->type,
                 'flight_text' => $formular->flight_text,
@@ -831,6 +825,7 @@ Your Unique World Team";
                 'status' => 'gutschrift',
                 'is_storno' => true,
                 'r_num' => $formular->r_num . 'G',
+                'r_num_int' => $formular->r_num_int,
                 'v_num' => $formular->v_num,
                 'type' => $formular->type,
                 'flight_text' => $formular->flight_text,
@@ -853,9 +848,6 @@ Your Unique World Team";
                 'storno_original' => $formular->id,
             ));
 
-            $this->write_to_pdf($storno_rechnung->id, 5);
-            $this->write_to_pdf($storno_rechnung->id, 6);
-            $this->write_to_pdf($gutschrift->id, 7);
 
             $payments = IncomingPayment::find_all_by_formular_id($formular->id);
             foreach ($payments as $payment) {

@@ -786,7 +786,18 @@ $(document).ready(function () {
 
 
     $('#final-page #druck-link').click(function () {
-        $(this).attr('href', "pdf/" + $('input[name=formular_id]').val() + "_" + $("#stage input:checked").val() + ".pdf");
+        if ($(this).hasClass('in_progress'))
+            return false;
+        $(this).addClass('in_progress');
+        var formular_id = $('input[name=formular_id]').val();
+        var type = $("#stage input:checked").val();
+        $.ajax({
+            url:'reservierung/print_file/' + formular_id + '/' + type,
+            async:false,
+            success:function (data) {
+                $('#druck-link').attr('href', data).removeClass('in_progress');
+            }
+        });
         return true;
     });
 

@@ -35,11 +35,13 @@ function BindPaymentEvents(block) {
         var date = str_replace('.', ' ', $(this).find('.date').html());
         date = new Date(date);
         $('#savepayment-id').val($(this).find('.payment_id').val());
-        $('#new-payment #payment-date').val(date);
+        $('#new-payment #payment-date').val(DateToInput(date));
         $('#new-payment #payment-amount').val($(this).find('.amount').html());
         $('#new-payment #payment-remark').val($(this).find('.remark').html());
-        $('#new-payment #payment-type').val($(this).find('.type').html());
+        $('#new-payment #payment-type').val($(this).find('.payment_type').val());
+        $('#new-payment #payment_id').val($(this).find('payment_id').val());
     });
+
 
     $('#check_versand').click(function () {
         $(this).attr('disabled', 'disabled');
@@ -374,6 +376,30 @@ $(document).ready(function () {
                 });
 
                 BindPaymentEvents();
+
+                $('#new-payment #save-payment').click(function () {
+
+                    if ($('#new-payment #payment-date').val() == "" || $('#new-payment #payment-amount').val() == "")
+                        return false;
+
+                    $('#new-payment').find('input, textarea').attr('disabled', 'disabled');
+                    $.ajax({
+                        url:'control/update_payment/' + $('#payments_type').val() + '/' + $('#new-payment #savepayment-id').val(),
+                        type:'post',
+                        data:'date=' + $('#new-payment #payment-date').val() +
+                            '&amount=' + $('#new-payment #payment-amount').val() +
+                            '&remark=' + $('#new-payment #payment-remark').val() +
+                            '&type=' + $('#new-payment #payment-type option:selected').val(),
+                        success:function (data) {
+                            $('#payments-page .payment-content').html(data);
+                            BindPaymentEvents();
+                            $('#new-payment #save-payment').hide();
+                            $('#new-payment').find('input, textarea').val('').removeAttr('disabled');
+                        }
+                    });
+                    return false;
+                });
+
                 $('#new-payment #add-payment').click(function () {
 
                     if ($('#new-payment #payment-date').val() == "" || $('#new-payment #payment-amount').val() == "")

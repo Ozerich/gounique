@@ -3,7 +3,7 @@
         <a href="dashboard" class="home-link"><img src="img/header-logo.jpg"/></a>
         <ul class="page-path">
             <li><a
-                    href="kundenverwaltung/historie/<?=$formular->kunde->id?>"><?=$formular->kunde->plain_type;?> <?=$formular->kunde->k_num?></a>
+                href="kundenverwaltung/historie/<?=$formular->kunde->id?>"><?=$formular->kunde->plain_type;?> <?=$formular->kunde->k_num?></a>
             </li>
             <li><span>formular <?=$formular->v_num;?></span></li>
         </ul>
@@ -51,7 +51,7 @@
             <div class="editparam" style="display: none">
                 <select id="new_ownertype_value">
                     <? foreach (Formular::$OWNER_TYPES as $ind => $type): ?>
-                        <option <?=$formular->owner_type == $ind ? 'selected' : ''?> value="<?=$ind?>"><?=$type?></option>
+                    <option <?=$formular->owner_type == $ind ? 'selected' : ''?> value="<?=$ind?>"><?=$type?></option>
                     <? endforeach; ?>
                 </select>
                 <a href="#" id="save-ownertype" class="save_16"></a>
@@ -118,8 +118,9 @@
                    name="nurflug_servicecharge" id="servicecharge-amount"/> &euro;
             or <input type="text" maxlength="4" class="servicecharge-percent" id="servicecharge-percent"/> % <br/>
             <label for="total-amount">Total:</label>
-            <input value="<?=$formular->type == 'nurflug' ? ($formular->flight_price + $formular->service_charge) : ''?>"
-                   type="text" disabled id="total-amount"/> &euro;
+            <input
+                value="<?=$formular->type == 'nurflug' ? ($formular->flight_price + $formular->service_charge) : ''?>"
+                type="text" disabled id="total-amount"/> &euro;
         </div>
 
         <div class="bottom-block">
@@ -199,6 +200,11 @@
 
             <div class="param">
                 <label class="param-name" for="roomcapacity">Capacity</label>
+                <select id="count" name="count">
+                    <? for ($i = 1; $i < 10; $i++): ?>
+                    <option <?=$i == $item->count ? 'selected' : ''?> value="<?=$i?>">x<?=$i?></option>
+                    <? endfor; ?>
+                </select>
                 <select name="roomcapacity" id="roomcapacity">
                     <option value="EZ">EZ</option>
                     <option value="DZ0">DZ0</option>
@@ -261,11 +267,6 @@
             <label class="param-name" for="price">Price &euro;</label>
             <input id="price" size="4" maxlength="10" class="price" type="text" name="price"/>
 
-            <select id="count" name="count">
-                <? for ($i = 1; $i < 10; $i++): ?>
-                <option value="<?=$i?>">x<?=$i?></option>
-                <? endfor; ?>
-            </select>
             <span class="total-price"><span class="value">0</span> &euro;</span>
         </div>
 

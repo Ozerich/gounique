@@ -325,6 +325,57 @@ class Control_Controller extends MY_Controller
         exit();
     }
 
+    public function update_payment($type = 'incoming', $payment_id = 0)
+    {
+        if ($type == 'incoming') {
+
+            $payment = IncomingPayment::find_by_id($payment_id);
+            if (!$payment)
+                show_404();
+
+            $formular = Formular::find_by_id($payment->formular_id);
+            if (!$formular)
+                show_404();
+
+            $payment->payment_date = inputdate_to_mysqldate($this->input->post('date'));
+            $payment->remark = $this->input->post('remark');
+            $payment->amount = $this->input->post('amount');
+            $payment->type = $this->input->post('type');
+            $payment->save();
+
+            $formular->is_freigabe = $formular->paid_amount >= ($formular->brutto - 0.2) ? true : false;
+            $formular->save();
+
+            echo $this->load->view('control/' . $type . '/payments_list.php', array('formular' => $formular), true);
+        }
+        else if($type == 'provision'){
+            $payment = ProvisionPayment::find_by_id($payment_id);
+
+            if (!$payment)
+                show_404();
+
+            $formular = Formular::find_by_id($payment->formular_id);
+            if (!$formular)
+                show_404();
+
+            $payment->payment_date = inputdate_to_mysqldate($this->input->post('date'));
+            $payment->remark = $this->input->post('remark');
+            $payment->amount = $this->input->post('amount');
+            $payment->save();
+
+            echo $this->load->view('control/' . $type . '/payments_list.php', array('formular' => $formular), true);
+        }
+        else if($type == 'invoice'){
+            $payment = InvoicePayment::find_by_id($payment_id);
+            $payment->payment_date = inputdate_to_mysqldate($this->input->post('date'));
+            $payment->payment_remark = $this->input->post('remark');
+            $payment->payment_amount = str_replace(',', '.', $this->input->post('amount'));
+            $payment->save();
+        }
+
+        exit();
+    }
+
     public function add_payment($type = 'incoming', $formular_id = 0, $invoice_id = 0)
     {
 

@@ -83,11 +83,11 @@
             </tr>
             <tr>
                 <td class="paramname">Gesamtpreis:</td>
-                <td class="paramvalue"><?=number_format($formular->original->brutto, 2, ',','.')?> &euro;</td>
+                <td class="paramvalue"><?=num($formular->original->brutto)?> &euro;</td>
             </tr>
             <tr>
-                <td class="paramname">Stornogebühr lt. AGB´s <?=$formular->original->storno_percent?>%</td>
-                <td class="paramvalue"><?=number_format($formular->brutto, 2, ',','.')?> &euro;</td>
+                <td class="paramname">Stornogebühr lt. AGB´s <?=$formular->original->storno_percent > 0 ? $formular->original->storno_percent.'%' : ''?></td>
+                <td class="paramvalue"><?=num($formular->original->storno_precent ? $formular->original->storno_amount : $formular->brutto)?> &euro;</td>
             </tr>
         </table>
     </div>

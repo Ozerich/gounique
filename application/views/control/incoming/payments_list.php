@@ -101,6 +101,7 @@
         ?>
     <tr class="<?$payment->added_by == 0 ? 'netto' : ''?>">
         <input type="hidden" class="payment_id" value="<?=$payment->id?>"/>
+        <input type="hidden" class="payment_type" value="<?=$payment->type?>"/>
         <td class="date"><?=$payment->payment_date->format('d.M.Y');?></td>
         <td class="amount"><?=num($payment->amount)?></td>
         <td><?=num($anzahlung_diff)?></td>

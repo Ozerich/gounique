@@ -47,10 +47,10 @@
         ?>
     <tr>
         <input type="hidden" class="payment_id" value="<?=$payment->id?>"/>
-        <td><?=$payment->payment_date->format('d.M.Y');?></td>
-        <td><?=number_format($payment->amount, 2, ',', '.')?></td>
+        <td class="date"><?=$payment->payment_date->format('d.M.Y');?></td>
+        <td class="amount""><?=number_format($payment->amount, 2, ',', '.')?></td>
         <td><?=number_format($diff, 2, ',', '.')?></td>
-        <td><?=$payment->remark?></td>
+        <td class="remark"><?=$payment->remark?></td>
         <td>
             <? if ($payment->added_by != 0): ?>
             <a href="#" class="delete-icon delete-payment"></a>

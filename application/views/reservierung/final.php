@@ -355,7 +355,7 @@
             <? if ($formular->kunde->type == "agenturen"): ?>
             <input type="radio" id="radio1" name="stage" checked value="5"/><label for="radio1">Storno</label>
             <? endif; ?>
-        <input type="radio" id="radio2" name="stage" value="6"/><label for="radio2">Storno(Kundenkopie)</label>
+        <input type="radio" id="radio2" name="stage" checked value="6"/><label for="radio2">Storno(Kundenkopie)</label>
         <? elseif ($formular->status == "gutschrift"): ?>
         <input type="radio" id="radio1" name="stage" checked value="7"/><label for="radio1">Gutscrift</label>
         <? endif; ?>

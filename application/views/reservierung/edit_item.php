@@ -105,7 +105,11 @@
 
         <div class="param">
             <label class="param-name" for="roomcapacity">Capacity</label>
-            <select name="roomcapacity" id="roomcapacity">
+            <select id="count" name="count">
+                        <? for ($i = 1; $i < 10; $i++): ?>
+                        <option <?=$i == $item->count ? 'selected' : ''?> value="<?=$i?>">x<?=$i?></option>
+                        <? endfor; ?>
+                    </select><select name="roomcapacity" id="roomcapacity">
                 <option value="EZ" <?if ($item->roomcapacity == 'EZ') echo 'selected';?> >EZ</option>
                 <option value="DZ0" <?if ($item->roomcapacity == 'DZ0') echo 'selected';?>>DZ0</option>
                 <option value="DZ2" <?if ($item->roomcapacity == 'DZ2') echo 'selected';?>>DZ2</option>
@@ -171,12 +175,6 @@
     <div class="param">
         <label class="param-name" for="price">Price &euro;</label>
         <input id="price" size="4" maxlength="10" class="price" value="<?=$item->price?>" type="text" name="price"/>
-
-        <select id="count" name="count">
-            <? for ($i = 1; $i < 10; $i++): ?>
-            <option <?=$i == $item->count ? 'selected' : ''?> value="<?=$i?>">x<?=$i?></option>
-            <? endfor; ?>
-        </select>
         <span class="total-price"><span class="value">0</span> &euro;</span>
     </div>
 

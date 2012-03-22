@@ -43,7 +43,7 @@
                 <select id="payment-type">
                     <option value="uberweisung">Uberweisung</option>
                     <option value="kreditkart">KK über UW</option>
-                    <option value="kred itkart_aer">KK über AER</option>
+                    <option value="kreditkart_aer">KK über AER</option>
                     <option value="lastschrift">Lastschrift</option>
                     <option value="bar">Bar</option>
                 </select>
