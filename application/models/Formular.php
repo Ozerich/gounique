@@ -356,7 +356,6 @@ class Formular extends ActiveRecord\Model
             $data['total']['paid'] += $invoice->paid_amount;
             $data['total']['amount'] += $invoice->amount;
         }
-
         foreach ($data as &$type)
             $type['status'] = $type['amount'] > $type['paid'] ? '-' . ($type['amount'] - $type['paid']) : '+' . ($type['paid'] - $type['amount']);
 
@@ -366,7 +365,7 @@ class Formular extends ActiveRecord\Model
     public function get_person()
     {
         $persons = $this->persons;
-        return $persons ? $persons[0]->name : "NO";
+        return $persons ? strtoupper($persons[0]->name) : "";
     }
 
     public function get_total_diff()
@@ -411,9 +410,9 @@ class Formular extends ActiveRecord\Model
 
         foreach ($this->flight_invoices as $invoice)
         {
-            $result['amount'] = $invoice->amount;
-            $result['paid'] = $invoice->paid_amount;
-            $result['status'] = $invoice->status;
+            $result['amount'] += $invoice->amount;
+            $result['paid'] += $invoice->paid_amount;
+            $result['status'] += $invoice->status;
         }
 
         return $result;

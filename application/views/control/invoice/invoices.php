@@ -41,13 +41,17 @@
                     </div>
                     <div class="param">
                         <label for="invoice-amount">Inv. Amount</label>
-                        <input maxlength="8" type="text" name="invoice-amount" id="invoice-amount"/ >
+                        <input maxlength="8" type="text" name="invoice-amount" class="invoice-amount"/ >
                     </div>
                     <div class="remark-param">
                         <label for="invoice-remark">Inv. Remark</label>
-                        <textarea id="invoice-remark" name="invoice-remark"></textarea>
+                        <textarea class="invoice-remark" name="invoice-remark"></textarea>
                     </div>
-                    <button class="add-invoice">Add Rechnung</button>
+                    <div class="buttons">
+                        <button class="save-invoice" style="display:none">Save</button>
+                        <button class="add-invoice">Add</button>
+                        <input type="hidden" class="save-invoice-id"/>
+                    </div>
                 </div>
                 <div class="invoices">
                     <?=$invoices['hotel']?>
@@ -78,13 +82,17 @@
                     </div>
                     <div class="param">
                         <label for="invoice-amount">Inv. Amount</label>
-                        <input maxlength="8" type="text" name="invoice-amount" id="invoice-amount"/ >
+                        <input maxlength="8" type="text" name="invoice-amount" class="invoice-amount"/ >
                     </div>
                     <div class="remark-param">
                         <label for="invoice-remark">Inv. Remark</label>
-                        <textarea id="invoice-remark" name="invoice-remark"></textarea>
+                        <textarea class="invoice-remark" name="invoice-remark"></textarea>
                     </div>
-                    <button class="add-invoice">Add Rechnung</button>
+                    <div class="buttons">
+                        <button class="save-invoice" style="display:none">Save</button>
+                        <button class="add-invoice">Add</button>
+                        <input type="hidden" class="save-invoice-id"/>
+                    </div>
                 </div>
                 <div class="invoices">
                     <?=$invoices['transfer']?>
@@ -117,13 +125,17 @@
                     </div>
                     <div class="param">
                         <label for="invoice-amount">Inv. Amount</label>
-                        <input maxlength="8" type="text" name="invoice-amount" id="invoice-amount"/ >
+                        <input maxlength="8" type="text" name="invoice-amount" class="invoice-amount"/ >
                     </div>
                     <div class="remark-param">
                         <label for="invoice-remark">Inv. Remark</label>
-                        <textarea id="invoice-remark" name="invoice-remark"></textarea>
+                        <textarea class="invoice-remark" name="invoice-remark"></textarea>
                     </div>
-                    <button class="add-invoice">Add Rechnung</button>
+                    <div class="buttons">
+                        <button class="save-invoice" style="display:none">Save</button>
+                        <button class="add-invoice">Add</button>
+                        <input type="hidden" class="save-invoice-id"/>
+                    </div>
                 </div>
                 <div class="invoices">
                     <?=$invoices['rundreise']?>
@@ -148,13 +160,17 @@
                     </div>
                     <div class="param">
                         <label for="invoice-amount">Inv. Amount</label>
-                        <input maxlength="8" type="text" name="invoice-amount" id="invoice-amount"/ >
+                        <input maxlength="8" type="text" name="invoice-amount" class="invoice-amount"/ >
                     </div>
                     <div class="remark-param">
                         <label for="invoice-remark">Inv. Remark</label>
-                        <textarea id="invoice-remark" name="invoice-remark"></textarea>
+                        <textarea class="invoice-remark" name="invoice-remark"></textarea>
                     </div>
-                    <button class="add-invoice">Add Rechnung</button>
+                    <div class="buttons">
+                        <button class="save-invoice" style="display:none">Save</button>
+                        <button class="add-invoice">Add</button>
+                        <input type="hidden" class="save-invoice-id"/>
+                    </div>
                 </div>
                 <div class="invoices">
                     <?=$invoices['other']?>

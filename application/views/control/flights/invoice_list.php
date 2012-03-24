@@ -8,7 +8,7 @@
     <th>Paid</th>
     <th>Status</th>
     <th>Inv. Type</th>
-    <th>Added</th>
+    <th>Remark<th>
     <th>&nbsp;</th>
     </thead>
     <tbody>
@@ -25,15 +25,16 @@
             ?>
         <tr>
             <input type="hidden" class="invoice_id" value="<?=$invoice->id?>"/>
+            <input type="hidden" class="type" value="<?=$invoice->type?>"/>
             <td><?=($ind + 1)?></td>
-            <td><?=$invoice->number?></td>
-            <td><?=$invoice->date->format('d.M.Y')?></td>
-            <td><?=num($invoice->amount)?></td>
+            <td class="number"><?=$invoice->number?></td>
+            <td class="date"><?=$invoice->date->format('d.M.y')?></td>
+            <td class="amount"><?=num($invoice->amount)?></td>
             <td><?=num($invoice->paid_amount)?></td>
             <td><?=$invoice->status >= 0 ? "OK" : $invoice->status . ' &euro;'?></td>
             <td><?=$invoice->plain_type?></td>
-            <td><?=$invoice->created_user->fullname?> <?=$invoice->created_date->format('d.M.Y')?></td>
-            <td><a href="#" class="delete-flightinvoice delete-icon"></a></td>
+            <td class="remark"><?=$invoice->remark?></td>
+            <td class="actions"><a href="#" onclick="return edit_flight_invoice(event, '<?=$invoice->id?>')" class="edit_16"></a>&nbsp;<a href="#" class="delete-flightinvoice delete-icon"></a></td>
         </tr>
         <tr class="flightpayments" style="display:none"><td colspan="10">
             <?=$payments[$ind]?>

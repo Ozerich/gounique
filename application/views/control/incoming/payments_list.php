@@ -5,7 +5,7 @@
         <? else: ?>
         <div class="param">
             <span class="param-name">Anzahlungdatum: </span>
-            <span><?=$formular->prepayment_date ? $formular->prepayment_date->format('d.M.Y') : ''?></span>
+            <span><?=$formular->prepayment_date ? $formular->prepayment_date->format('d.M.y') : ''?></span>
         </div>
         <div class="param">
             <span class="param-name">Anzahlung Amount: </span>
@@ -20,7 +20,7 @@
     <div id="restzahlung-block" class="paymentsinfo-block">
         <div class="param">
             <span class="param-name"><?=$formular->is_sofort ? 'Totalzahlung' : 'Restzahlungdatum'?> </span>
-            <span><?=$formular->finalpayment_date ? $formular->finalpayment_date->format('d.M.Y') : ''?></span>
+            <span><?=$formular->finalpayment_date ? $formular->finalpayment_date->format('d.M.y') : ''?></span>
         </div>
         <div class="param">
             <span class="param-name"><?=$formular->is_sofort ? 'Totalzahlung' : 'Restzahlung'?> Amount: </span>
@@ -40,7 +40,7 @@
         <? if ($formular->is_versand): ?>
             <div class="param">
                 <span class="param-name">Versended date</span>
-                <span><?=$formular->versanded_date->format('d.M.Y')?></span>
+                <span><?=$formular->versanded_date->format('d.M.y')?></span>
             </div>
             <div class="param">
                 <span class="param-name">Versended By</span>
@@ -102,7 +102,7 @@
     <tr class="<?$payment->added_by == 0 ? 'netto' : ''?>">
         <input type="hidden" class="payment_id" value="<?=$payment->id?>"/>
         <input type="hidden" class="payment_type" value="<?=$payment->type?>"/>
-        <td class="date"><?=$payment->payment_date->format('d.M.Y');?></td>
+        <td class="date"><?=$payment->payment_date->format('d.M.y');?></td>
         <td class="amount"><?=num($payment->amount)?></td>
         <td><?=num($anzahlung_diff)?></td>
         <td><?=num($restzahlung_diff)?></td>

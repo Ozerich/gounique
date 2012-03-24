@@ -3,6 +3,7 @@
         <a href="dashboard" class="home-link"><img src="img/header-logo.jpg"/></a>
         <ul class="page-path">
             <li><a href="control">finance & controlling</a></li>
+            <li><a href="control/outgoing">Zahlungsausgänge</a></li>
             <li><span>Provisionszahlung</span></li>
         </ul>
     </div>
@@ -45,7 +46,12 @@
 
                 <div class="agenturen-wr">
                     <label for="ag_num">AG-NR:</label>
-                    <input type="text" id="ag_num" maxlength="30" size="30"/>
+                    <input type="text" id="ag_num" maxlength="5" size="5"/>
+                </div>
+
+                <div class="personen-wr">
+                    <label for="ag_num">Kd-Name:</label>
+                    <input type="text" id="person"/>
                 </div>
             </div>
 
@@ -60,22 +66,22 @@
         <br class="clear"/>
         <a id="clear_filter" href="#">Clear filter</a>
     </div>
-    <table class="product-list" id="controlpayments-list">
+    <table class="product-list finanzen-list" id="controlpayments-list">
         <thead>
         <tr>
             <th class="num">№</th>
             <th class="ag-num">RG-NR</th>
             <th class="r-num">AG-NR</th>
-			<th>UW/RB</th>
+			<th>BQ</th>
             <th>Vorg-NR</th>
-            <th>Total-RG</th>
-            <th>Provision %</th>
-            <th>Prov. Betrag</th>
-            <th>Faellig bis</th>
+            <th class="right">Total-RG</th>
+            <th class="right">Provision %</th>
+            <th class="right">Prov. Betrag</th>
+            <th class="right">Faellig bis</th>
             <th>Storno</th>
             <th>Netto</th>
-            <th>Status</th>
-            <th>Payment date</th>
+            <th class="right">Status</th>
+            <th class="right">Payment date</th>
         </tr>
         </thead>
         <tbody>

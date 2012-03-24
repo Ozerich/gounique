@@ -13,9 +13,13 @@ class Control_Controller extends MY_Controller
 
     }
 
-    public function index()
+    public function index($page = '')
     {
-        $this->view_data['page_title'] = 'Control & Finanzen';
+        if ($page == '')
+            $this->view_data['page_title'] = 'Control & Finanzen';
+        else if ($page == 'outgoing')
+            $this->view_data['page_title'] = 'Zahlungsausgänge';
+        $this->view_data['outgoing_open'] = $page == 'outgoing';
     }
 
     public function incoming()
@@ -196,8 +200,12 @@ class Control_Controller extends MY_Controller
         $von = inputdate_to_mysqldate($this->input->post('von'));
         $bis = inputdate_to_mysqldate($this->input->post('bis'));
 
+        $person_filter = strtoupper($this->input->post('person'));
+
         $kunde = $this->input->post('ag_num') ? Kunde::find_by_k_num($this->input->post('ag_num')) : 0;
         $kunde_query = $kunde ? ' AND kunde_id="' . $kunde->id . '"' : '';
+
+
         $formulars = array();
 
         if ($search_string)
@@ -226,14 +234,19 @@ class Control_Controller extends MY_Controller
                     'order' => 'r_num_int ASC')
             );
 
-        if ($type == 'provision') {
-            $result = array();
-            foreach ($formulars as $formular)
-                if ($formular->kunde && $formular->kunde->type == "agenturen")
-                    $result[] = $formular;
+        $result = array();
+
+
+        foreach ($formulars as $formular)
+        {
+            if ($type == "provision" && (!$formular->kunde || $formular->kunde->type != "agenturen"))
+                continue;
+
+            if ($person_filter && strpos($formular->person, $person_filter) === false)
+                continue;
+
+            $result[] = $formular;
         }
-        else
-            $result = $formulars;
 
         if ($output) {
             echo $this->load->view('control/' . $type . '/invoice_list.php', array('formulars' => $result), true);
@@ -292,10 +305,38 @@ class Control_Controller extends MY_Controller
         exit();
     }
 
+    public function update_flightpayment($formular_id = 0, $payment_id = 0)
+    {
+        $payment = FlightPayment::find_by_id($payment_id);
+        $formular = Formular::find_by_id($formular_id);
+
+        if (!$payment || !$formular || $payment->formular_id != $formular_id) {
+            show_404();
+            exit();
+        }
+
+        $payment->date = inputdate_to_mysqldate($this->input->post('date'));
+        $payment->amount = $this->input->post('amount');
+        $payment->remark = $this->input->post('remark');
+        $payment->type = $this->input->post('type');
+        $payment->save();
+
+        $payments = array();
+        $invoices = $formular->flight_invoices;
+        foreach ($invoices as $ind => $invoice)
+            $payments[$ind] = $this->load->view('control/flights/payments_list.php', array('invoice' => $invoice), true);
+
+        echo $this->load->view('control/flights/invoice_list', array(
+            'formular' => $formular,
+            'invoices' => $invoices, 'payments' => $payments), true);
+
+        exit();
+    }
+
     public function add_flightpayment($formular_id = 0)
     {
         $formular = Formular::find_by_id($formular_id);
-        $invoice = FlightInvoice::find_by_id($this->input->post('invoice_id'));
+        $invoice = FlightInvoice::find_by_id($this->input->post('payment_id'));
 
         if (!$invoice || !$formular || $invoice->formular_id != $formular_id) {
             show_404();
@@ -348,7 +389,7 @@ class Control_Controller extends MY_Controller
 
             echo $this->load->view('control/' . $type . '/payments_list.php', array('formular' => $formular), true);
         }
-        else if($type == 'provision'){
+        else if ($type == 'provision') {
             $payment = ProvisionPayment::find_by_id($payment_id);
 
             if (!$payment)
@@ -365,12 +406,22 @@ class Control_Controller extends MY_Controller
 
             echo $this->load->view('control/' . $type . '/payments_list.php', array('formular' => $formular), true);
         }
-        else if($type == 'invoice'){
+        else if ($type == 'invoice') {
             $payment = InvoicePayment::find_by_id($payment_id);
             $payment->payment_date = inputdate_to_mysqldate($this->input->post('date'));
             $payment->payment_remark = $this->input->post('remark');
             $payment->payment_amount = str_replace(',', '.', $this->input->post('amount'));
+            $payment->payment_type = $this->input->post('type');
             $payment->save();
+
+            $invoice = $payment->invoice;
+
+            $payments = $this->load->view('control/invoice/payments_list.php',
+                array('invoice' => $invoice, 'type' => $this->input->post('invoice_type')), true);
+
+            echo json_encode(array('payments' => $payments, 'invoice_status' => $invoice->status,
+                'stats' => $this->load->view('control/invoice/invoice_stats.php', array('stats' => $invoice->formular->invoice_stats), true)));
+
         }
 
         exit();
@@ -486,6 +537,38 @@ class Control_Controller extends MY_Controller
         exit();
     }
 
+    public function update_flightinvoice($formular_id = 0, $invoice_id = 0)
+    {
+        $formular = Formular::find_by_id($formular_id);
+        if (!$formular) {
+            show_404();
+            exit();
+        }
+
+        $invoice = FlightInvoice::find_by_id($invoice_id);
+        if (!$invoice || $invoice->formular_id != $formular_id) {
+            show_404();
+            exit();
+        }
+
+        $invoice->type = $this->input->post('inv-type');
+        $invoice->date = inputdate_to_mysqldate($this->input->post('inv-date'));
+        $invoice->number = $this->input->post('inv-number');
+        $invoice->remark = $this->input->post('inv-remark');
+        $invoice->amount = $this->input->post('inv-amount');
+        $invoice->save();
+
+        $payments = array();
+        $invoices = $formular->flight_invoices;
+        foreach ($invoices as $ind => $invoice)
+            $payments[$ind] = $this->load->view('control/flights/payments_list.php', array('invoice' => $invoice), true);
+
+        echo $this->load->view('control/flights/invoice_list', array(
+            'formular' => $formular,
+            'invoices' => $invoices, 'payments' => $payments), true);
+        exit();
+    }
+
     public function add_flightinvoice($formular_id = 0)
     {
         $formular = Formular::find_by_id($formular_id);
@@ -513,6 +596,28 @@ class Control_Controller extends MY_Controller
         echo $this->load->view('control/flights/invoice_list', array(
             'formular' => $formular,
             'invoices' => $invoices, 'payments' => $payments), true);
+        exit();
+    }
+
+    public function update_invoice($invoice_id = 0)
+    {
+        $invoice = Invoice::find_by_id($invoice_id);
+        if (!$invoice)
+            show_404();
+
+        $formular = Formular::find_by_id($invoice->formular_id);
+        if (!$formular)
+            show_404();
+
+        $invoice->number = $this->input->post('number');
+        $invoice->amount = $this->input->post('amount');
+        $invoice->date = inputdate_to_mysqldate($this->input->post('date'));
+        $invoice->remark = $this->input->post('remark');
+        $invoice->save();
+
+        echo json_encode(array('invoices' => $this->get_invoices($formular->id, $this->input->post('type')),
+            'stats' => $this->load->view('control/invoice/invoice_stats.php', array('stats' => $formular->invoice_stats), true)));
+
         exit();
     }
 

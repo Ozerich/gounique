@@ -3,7 +3,8 @@
         <a href="dashboard" class="home-link"><img src="img/header-logo.jpg"/></a>
         <ul class="page-path">
             <li><a href="control">finance & controlling</a></li>
-            <li><span>Zahlungsausgang</span></li>
+            <li><a href="control/outgoing">Zahlungsausgänge</a></li>
+            <li><span>Flüge</span></li>
         </ul>
     </div>
 </div>
@@ -22,17 +23,17 @@
         </div>
         <br class="clear"/>
     </div>
-    <table class="product-list" id="flight-list">
+    <table class="product-list finanzen-list" id="flight-list">
         <thead>
         <tr>
             <th>№</th>
             <th>RG-NR</th>
             <th>Vorg-NR</th>
-            <th>Abreise</th>
-            <th>Total</th>
-            <th>Paid</th>
-            <th>Status</th>
-            <th>Faellig bis</th>
+            <th class="right">Abreise</th>
+            <th class="right">Total</th>
+            <th class="right">Paid</th>
+            <th class="right">Status</th>
+            <th class="right">Faellig bis</th>
         </tr>
         </thead>
         <tbody>

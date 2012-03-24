@@ -6,6 +6,7 @@
     <th>Inv. Amount</th>
     <th>Inv. Date</th>
     <th>Inv. Number</th>
+    <th>Remark</th>
     <th>&nbsp;</th>
     </thead>
     <tbody>
@@ -19,9 +20,10 @@
         <tr class="invoice-line">
             <input type="hidden" class="invoice_id" value="<?=$invoice->id?>"/>
             <td><?=($ind + 1)?></td>
-            <td><?=$invoice->amount?></td>
-            <td><?=$invoice->date->format('d.M.Y')?></td>
-            <td><?=$invoice->number?></td>
+            <td class="amount"><?=num($invoice->amount)?></td>
+            <td class="date"><?=$invoice->date->format('d.M.y')?></td>
+            <td class="number"><?=$invoice->number?></td>
+            <td class="remark"><?=$invoice->remark?></td>
             <td><a href="#" class="delete-invoice delete-icon"></a></td>
         </tr>
         <tr class="payments-block">
@@ -33,6 +35,8 @@
                         <th>№</th>
                         <th>Amount</th>
                         <th>Date</th>
+                        <th>Type</th>
+                        <th>Remark</th>
                         <th>&nbsp;</th>
                     </tr>
                     </thead>
@@ -65,6 +69,8 @@
                         <label for="payment-remark">Remark:</label>
                         <textarea class="payment-remark"></textarea>
                     </div>
+                    <input type="hidden" class="save-payment-id"/>
+                    <button class="save-payment" style="display:none">Save</button>
                     <button class="addpayment-submit">Add Payment</button>
                 </div>
             </td>

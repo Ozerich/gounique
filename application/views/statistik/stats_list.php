@@ -39,7 +39,7 @@
     <tr>
         <th class="num">№</th>
         <?if (!isset($fields) || isset($fields['owner_type'])): ?>
-        <th class="owner_type">UW/RB</th><? endif;?>
+        <th class="owner_type">BQ</th><? endif;?>
         <?if (!isset($fields) || isset($fields['r_num'])): ?>
         <th class="r_num">RG-NR</th><? endif;?>
         <?if (!isset($fields) || isset($fields['ag_num'])): ?>

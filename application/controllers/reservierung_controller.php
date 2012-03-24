@@ -162,9 +162,13 @@ Your Unique World Team";
             case "angebot":
                 return "Angebot-" . ($formular->persons ? $formular->persons[0]->name : '') . "-UniqueWorld";
             case "rechnung":
-                return "Rechnung-" . str_replace('/', '', $formular->r_num) . "-UniqueWorld";
+                return ($formular->is_storno ? 'Stornorechnung-' : "Rechnung-") . str_replace('/', '', $formular->r_num) . "-UniqueWorld";
+            case 'eingangsmitteilung':
+                return "Eingangsmitteilung-" . ($formular->persons ? $formular->persons[0]->name : '') . "-UniqueWorld";
             case "storno":
-                return "Storno-" . str_replace('/', '', $formular->r_num) . "-UniqueWorld";
+                return "Rechnung-" . str_replace('/', '', $formular->r_num) . "-UniqueWorld";
+            case 'gutschrift':
+                return "Gutschrift-" . str_replace('/', '', $formular->r_num) . "-UniqueWorld";
         }
     }
 
@@ -810,6 +814,7 @@ Your Unique World Team";
                 'finalpayment_amount' => $brutto,
                 'finalpayment_date' => time_to_mysqldate(time()),
                 'departure_date' => $formular->departure_date,
+                'arrival_date' => $formular->arrival_date,
                 'rechnung_date' => time_to_mysqldatetime(time()),
                 'person_count' => $formular->person_count,
                 'comment' => $formular->comment,
@@ -838,6 +843,7 @@ Your Unique World Team";
                 'finalpayment_amount' => -$formular->brutto,
                 'finalpayment_date' => time_to_mysqldate(time()),
                 'departure_date' => $formular->departure_date,
+                'arrival_date' => $formular->arrival_date,
                 'rechnung_date' => time_to_mysqldatetime(time()),
                 'person_count' => $formular->person_count,
                 'comment' => $formular->comment,
@@ -917,11 +923,15 @@ Your Unique World Team";
 
         $subject = '';
         if ($formular->status == 'angebot')
-            $subject = 'Angebot: Ihre Reiseanfrage ' . $formular->v_num;
-        else if ($formular->status == 'rechnung' || $formular->status == 'freigabe')
-            $subject = 'Rechnung: Vielen Dank für Ihre Buchung ' . $formular->r_num;
+            $subject = 'Ihr Reiseangebot ' . $formular->v_num;
+        else if ($formular->status == 'rechnung')
+            $subject = 'Ihre '.($formular->is_storno ? 'Stornorechnung ' : 'Buchungsbestätigung/Rechnung '). $formular->r_num;
         else if ($formular->status == 'eingangsmitteilung')
-            $subject = 'Rechnung: Vielen Dank für Ihre Buchung ' . $formular->v_num;
+            $subject = 'Vielen Dank für Ihre Buchung ' . $formular->v_num;
+        else if($formular->status == 'gutschrift')
+            $subject = 'Ihre Gutschrift ' . $formular->r_num;
+        else if($formular->status == 'storno')
+            $subject = 'Ihre Buchungsbestätigung/Rechnung '.$formular->r_num;
 
         $this->email->subject($subject);
 
@@ -930,7 +940,7 @@ Your Unique World Team";
             $text = Config::find_by_param("emailtext_angebot")->value;
         else if ($formular->status == "eingangsmitteilung")
             $text = Config::find_by_param("emailtext_eingangsmitteilung")->value;
-        else if ($formular->status == "rechnung" || $formular->status == "freigabe")
+        else if ($formular->status == "rechnung")
             $text = Config::find_by_param("emailtext_rechnung")->value;
 
         $filename = 'pdf/' . $this->get_pdf_name($formular->id) . ".pdf";
@@ -942,7 +952,14 @@ Your Unique World Team";
         $this->email->message($text);
         $this->email->attach($filename);
 
-        if ($formular->status == "rechnung" || $formular->status == "freigabe") {
+        if ($formular->status == "rechnung") {
+
+            $this->email->attach('attachments/Reisebedingungen_UniqueWorld.pdf');
+            if(!$formular->is_storno)
+            $this->email->attach('attachments/Sicherungsschein_UniqueWorld.pdf');
+        }
+
+        if ($formular->status == "storno") {
 
             $this->email->attach('attachments/Reisebedingungen_UniqueWorld.pdf');
             $this->email->attach('attachments/Sicherungsschein_UniqueWorld.pdf');

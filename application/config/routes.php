@@ -97,6 +97,7 @@ $route['product'] = 'product_controller';
 $route['product/(:any)'] = 'product_controller/$1';
 
 $route['control'] = 'control_controller';
+$route['control/outgoing'] = 'control_controller/index/outgoing';
 $route['control/outgoing/land'] = 'control_controller/invoice';
 $route['control/outgoing/land/(:any)'] = 'control_controller/invoice/$1';
 $route['control/outgoing/flights'] = 'control_controller/flights';

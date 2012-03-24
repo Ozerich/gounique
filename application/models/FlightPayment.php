@@ -6,9 +6,11 @@ class FlightPayment extends ActiveRecord\Model
 
     static $TYPES = array(
         '1' => 'Uberweisung',
-        '2' => 'Kreditkart',
-        '3' => 'Lastschrift',
-        '4' => 'Bar');
+        '2' => 'KK über UW',
+        '3' => 'KK über AER',
+        '4' => 'Lastschrift',
+        '5' => 'Bar',
+    );
 
     public function get_plain_type()
     {

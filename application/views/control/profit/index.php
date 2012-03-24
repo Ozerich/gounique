@@ -22,23 +22,22 @@
         </div>
         <br class="clear"/>
     </div>
-    <table class="product-list">
+    <table class="product-list finanzen-list">
         <thead>
         <tr>
             <th>№</th>
             <th>RG-NR</th>
             <th>Vorg-NR</th>
-            <th>Abreise</th>
-            <th>Total</th>
-            <th>Diff</th>
-            <th>Flights</th>
-            <th>Hotels</th>
-            <th>Rundreise</th>
-            <th>Transfers</th>
-            <th>Other</th>
-            <th>Provision</th>
-            <th>Total Cost</th>
-            <th>Brutto Ergebnis</th>
+            <th class="right">Abreise</th>
+            <th class="right">Total</th>
+            <th class="right">Flights</th>
+            <th class="right">Hotels</th>
+            <th class="right">Rundreise</th>
+            <th class="right">Transfers</th>
+            <th class="right">Other</th>
+            <th class="right">Provision</th>
+            <th class="right">Total Cost</th>
+            <th class="right">Brutto Ergebnis</th>
         </tr>
         </thead>
         <tbody>

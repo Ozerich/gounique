@@ -16,8 +16,8 @@
             <td class="right-paramvalue"><?=$formular->created_date->format("d. M. Y")?></td>
         </tr>
         <tr>
-            <td class="left-paramname">Rechnungsnummer:</td>
-            <td class="left-paramvalue">-</td>
+            <td class="left-paramname">Gutschrifsnummer:</td>
+            <td class="left-paramvalue"><?=$formular->r_num?></td>
             <td class="right-paramname">Sachbearbeiter:</td>
             <td class="right-paramvalue"><?=$formular->sachbearbeiter->fullname?></td>
         </tr>

@@ -26,4 +26,8 @@ class Invoice extends ActiveRecord\Model
             $result += $payment->payment_amount;
         return $result;
     }
+
+    public function get_formular(){
+        return Formular::find_by_id($this->formular_id);
+    }
 }

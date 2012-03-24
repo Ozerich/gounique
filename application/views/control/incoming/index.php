@@ -53,6 +53,11 @@
                     <input type="text" id="ag_num" maxlength="5" size="5"/>
                 </div>
 
+                <div class="personen-wr">
+                    <label for="ag_num">Kd-Name:</label>
+                    <input type="text" id="person"/>
+                </div>
+
             </div>
 
 
@@ -68,7 +73,7 @@
         <br class="clear"/>
         <a id="clear_filter" href="#">Clear filter</a>
     </div>
-    <table class="product-list" id="controlpayments-list">
+    <table class="product-list finanzen-list" id="controlpayments-list">
         <thead>
         <tr>
             <th colspan="7">&nbsp;</th>
@@ -82,23 +87,23 @@
             <th>№</th>
             <th class="rg-num">RG-NR</th>
             <th class="ag-num">AG-NR</th>
-			<th>UW/RB</th>
+			<th>BQ</th>
             <th>Vorg-NR</th>
-            <th>RG-Datum</th>
-            <th>Abreise</th>
-            <th>Total-RG</th>
-            <th>Betrag</th>
-            <th>Faellig bis</th>
-            <th>Status</th>
-            <th>Betrag</th>
-            <th>Faellig bis</th>
+            <th class="right">RG-Datum</th>
+            <th class="right">Abreise</th>
+            <th class="right">Total-RG</th>
+            <th class="right">Betrag</th>
+            <th class="right">Faellig bis</th>
+            <th class="right">Status</th>
+            <th class="right">Betrag</th>
+            <th class="right">Faellig bis</th>
             <th>Status</th>
             <th>Storno</th>
             <th>Netto</th>
-            <th>Diff</th>
+            <th class="right">Diff</th>
             <th class="status">Freigabe</th>
             <th class="status">Versand</th>
-            <th>Date</th>
+            <th class="right">Date</th>
         </tr>
         </thead>
         <tbody>

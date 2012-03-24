@@ -1,3 +1,25 @@
+function edit_flight_invoice(evnt, invoice_id) {
+
+    //  $('#inv-newsubmit').hide();
+    $('#inv-editsubmit').show();
+
+    var row = $(evnt.target).parents('tr');
+
+    var date = str_replace('.', ' ', $(row).find('.date').html());
+    date = new Date(date);
+
+    $('.new-flightinvoice #inv-number').val($(row).find('.number').html());
+    $('.new-flightinvoice #inv-remark').val($(row).find('.remark').html());
+    $('.new-flightinvoice #inv-amount').val(PriceToInput($(row).find('.amount').html()));
+    $('.new-flightinvoice #inv-date').val(DateToInput(date));
+    $('.new-flightinvoice #inv-type option[value=' + $(row).find('.type').val() + ']').attr('selected', 'selected');
+    $('#editinvoice_id').val(invoice_id);
+
+    evnt.stopPropagation();
+    return false;
+}
+
+
 function BindPaymentEvents(block) {
     $('#payments-table').find('.delete-payment').click(function () {
         var block = $(this).parents('tr');
@@ -36,7 +58,7 @@ function BindPaymentEvents(block) {
         date = new Date(date);
         $('#savepayment-id').val($(this).find('.payment_id').val());
         $('#new-payment #payment-date').val(DateToInput(date));
-        $('#new-payment #payment-amount').val($(this).find('.amount').html());
+        $('#new-payment #payment-amount').val(PriceToInput($(this).find('.amount').html()));
         $('#new-payment #payment-remark').val($(this).find('.remark').html());
         $('#new-payment #payment-type').val($(this).find('.payment_type').val());
         $('#new-payment #payment_id').val($(this).find('payment_id').val());
@@ -89,6 +111,17 @@ function UpdateInvoicePaymentsList(block) {
         });
         return false;
     });
+
+    $(block).find('.payment-line').click(function () {
+        var new_block = $(this).parents('.incoming-block').find('.newpayment-wr');
+        $(new_block).parents('.incoming-block').find('.newpayment-open').html('Close Zahlung');
+        $(new_block).show().find('.save-payment').show();
+        $(new_block).find('.save-payment-id').val($(this).find('.payment_id').val());
+        $(new_block).find('.payment-date').val(DateToInput($(this).find('.date').html()));
+        $(new_block).find('.payment-amount').val(PriceToInput($(this).find('.amount').html()));
+        $(new_block).find('.payment-remark').val($(this).find('.remark').html());
+
+    });
 }
 
 function UpdateInvoiceList(invoice_block) {
@@ -97,6 +130,7 @@ function UpdateInvoiceList(invoice_block) {
 
     $(invoice_block).find('.delete-invoice').click(function () {
         var delete_button = $(this);
+
 
         $("#invoice-delete-confirm").dialog({
             resizable:false,
@@ -128,10 +162,57 @@ function UpdateInvoiceList(invoice_block) {
         return false;
     });
 
+    $(invoice_block).find('.invoice-line').click(function () {
+        var new_block = $(this).parents('.incoming-block').find('.newinvoice-block');
+        $(new_block).parents('.incoming-block').find('.new-invoice').html('Close');
+        $(new_block).show().find('.save-invoice').show();
+        $(new_block).find('.save-invoice-id').val($(this).find('.invoice_id').val());
+        $(new_block).find('.invoice-num').val($(this).find('.number').html());
+        $(new_block).find('.invoice-date').val(DateToInput($(this).find('.date').html()));
+        $(new_block).find('.invoice-amount').val(PriceToInput($(this).find('.amount').html()));
+        $(new_block).find('.invoice-remark').val($(this).find('.remark').html());
+    });
+
 
     $(invoice_block).find('.newpayment-open').click(function () {
-        var payment_block = $(this).parents('.payments-block').find('.newpayment-wr').toggle();
+        var payment_block = $(this).parents('.payments-block').find('.newpayment-wr').toggle().reset().find('.save-payment').hide();
         $(this).html($(payment_block).is(':visible') ? 'Close Zahlung' : 'Zahlung');
+        return false;
+    });
+
+    $(invoice_block).find('.save-payment').click(function () {
+        var block = $(this).parents('.newpayment-wr');
+        var error = false;
+        $(block).find('input[type=text]').each(function () {
+            if ($(this).val() == '') {
+                $(this).addClass('error');
+                error = true;
+            }
+            else
+                $(this).removeClass('error');
+        });
+        if (error)
+            return false;
+
+        var invoice_type = $(this).parents('.incoming-block').find('.block-type').val();
+        var payments_block = $(this).parents('.payments-block');
+        $.ajax({
+            url:'control/update_payment/invoice/' + $(block).find('.save-payment-id').val(),
+            type:'post',
+            data:'invoice_id=' + $(this).parents('.payments-block').find('.invoice_id').val() + '&amount=' + $(block).find('.payment-amount').val() + '&type=' + $(block).find('.payment-type option:selected').val() +
+                '&date=' + $(block).find('.payment-date').val() + '&remark=' + $(block).find('.payment-remark').val() +
+                '&invoice_type=' + invoice_type,
+            success:function (data) {
+                data = jQuery.parseJSON(data);
+                $(payments_block).find('.newpayment-open').click();
+                $(payments_block).find('.payments-list tbody').empty().html(data.payments);
+                $(payments_block).prev().find('.invoice-status').html(data.invoice_status);
+                $('#statistik').empty().html(data.stats);
+                $(payments_block).find('input[type=text], textarea, select').val('');
+                UpdateInvoicePaymentsList($(payments_block));
+            }
+        });
+
         return false;
     });
 
@@ -160,7 +241,7 @@ function UpdateInvoiceList(invoice_block) {
                 data = jQuery.parseJSON(data);
                 $(payments_block).find('.newpayment-open').click();
                 $(payments_block).find('.payments-list tbody').empty().html(data.payments);
-                $(payments_block).prev().click().find('.invoice-status').html(data.invoice_status);
+                $(payments_block).prev().find('.invoice-status').html(data.invoice_status);
                 $('#statistik').empty().html(data.stats);
                 $(payments_block).find('input[type=text], textarea, select').val('');
                 UpdateInvoicePaymentsList($(payments_block));
@@ -231,6 +312,41 @@ function UpdateFlightInvoiceEvents() {
             }
         }
     );
+
+    $('.flightpayments-list tr').not('.total').click(function () {
+        $('.newpayment-wr, #save-payment').show();
+        $('.newpayment-wr #amount').val(PriceToInput($(this).find('.amount').html()));
+        $('.newpayment-wr #remark').val($(this).find('.remark').html());
+        var date = str_replace('.', ' ', $(this).find('.date').html());
+        $('.newpayment-wr .payment-date').val(DateToInput(new Date(date)));
+        $('.newpayment-wr #type option[value=' + $(this).find('.payment_type').val() + ']').attr('selected', 'selected');
+
+        $('#save_payment_id').val($(this).find('.payment_id').val());
+        return false;
+    });
+
+    $('.newpayment-wr #save-payment').click(function () {
+        var block = $(this).parents('.new-flightpayment-wr');
+        if ($(block).find('input').check_empty() == false)
+            return false;
+
+        $.ajax({
+            data:$(block).find('form').serialize(),
+            type:'post',
+            url:'control/update_flightpayment/' + $('#invoice_formular_id').val() + '/' + $('#save_payment_id').val(),
+            success:function (data) {
+                $('#flightinvoice-list').empty().html(data);
+                UpdateFlightInvoiceEvents();
+                $('.newpayment-wr #save-payment').hide();
+            }
+        });
+
+        $(block).find('.newpayment-wr').hide().reset();
+        $(this).hide();
+        $(block).find('.open-flightpayment').show();
+
+        return false;
+    });
 
     $('#flightinvoice-list .delete-flightpayment').click(function () {
 
@@ -304,7 +420,7 @@ function UpdateFlightInvoiceEvents() {
 
     $('.add_flightpayment-submit').click(function () {
         var block = $(this).parents('.new-flightpayment-wr');
-        if ($(block).find('input').check_empty() == false)
+        if ($(block).find('input[type=text]').check_empty() == false)
             return false;
 
         $.ajax({
@@ -467,6 +583,9 @@ $(document).ready(function () {
         var search_str = 'search_field=' + $('#datesearch-type option:selected').val() + '&von=' + $('#search-von').val() + "&bis=" + $('#search-bis').val();
         if ($('#ag_num').val())
             search_str += '&ag_num=' + $('#ag_num').val();
+        if ($('#person').val())
+            search_str += '&person=' + $('#person').val();
+
         $('#last_searchquery').val(search_str);
         $.ajax({
             url:'control/search_formulars/' + $('#payments_type').val(),
@@ -484,12 +603,14 @@ $(document).ready(function () {
 
     $('.incoming-block .new-invoice').click(function () {
         var new_block = $(this).parents('.incoming-block').find('.newinvoice-block');
-        if ($(new_block).is(':visible'))
+        if ($(new_block).is(':visible')) {
             $(this).html('Rechnung');
+            $(new_block).find('.save-invoice').hide();
+        }
         else
             $(this).html('Close');
 
-        $(new_block).toggle();
+        $(new_block).reset().toggle();
 
         return false;
     });
@@ -503,6 +624,45 @@ $(document).ready(function () {
         }).change();
 
     $('.incoming-block .newinvoice-block .invoice-date').setdatepicker();
+
+    $('.incoming-block .save-invoice').click(function () {
+        var block = $(this).parents('.incoming-block');
+
+        var error = false;
+        $(block).find('.newinvoice-block input[type=text]').each(function () {
+            if ($(this).val() == '') {
+                $(this).addClass('error');
+                error = true;
+            }
+            else
+                $(this).removeClass('error');
+        });
+
+        var data = 'date=' + $(block).find('.invoice-date').val() + '&amount=' + $(block).find('.invoice-amount').val() +
+            '&remark=' + $(block).find('.invoice-remark').val() + '&type=' + $(block).find('.block-type').val() + '&number=' + $(block).find('.invoice-num').val();
+        var button = $(this);
+        if (!error) {
+            $(button).attr('disabled', 'disabled');
+            $.ajax({
+                url:'control/update_invoice/' + $(block).find('.save-invoice-id').val(),
+                type:'post',
+                data:data,
+                success:function (data) {
+                    $(block).find('input[type=text],textarea').val('');
+                    $(block).find('.new-invoice').click();
+                    data = jQuery.parseJSON(data);
+                    $(block).find('.invoices').empty().html(data.invoices);
+                    $('#statistik').empty().html(data.stats);
+                    $(block).find('.incoming-type').change();
+                    UpdateInvoiceList(block);
+                },
+                complete:function () {
+                    $(button).removeAttr('disabled');
+                }
+            });
+        }
+        return false;
+    });
 
     $('.incoming-block .add-invoice').click(function () {
 
@@ -526,8 +686,8 @@ $(document).ready(function () {
                 url:'control/add_invoice/' + $('#invoice_formular_id').val() +
                     (type == "other" ? '' : "/" + $(block).find('.incoming-type option:selected').val()),
                 type:'post',
-                data:'date=' + $(block).find('.invoice-date').val() + '&amount=' + $(block).find('#invoice-amount').val() +
-                    '&remark=' + $(block).find('#invoice-remark').val() + '&type=' + type + '&number=' + $(block).find('.invoice-num').val(),
+                data:'date=' + $(block).find('.invoice-date').val() + '&amount=' + $(block).find('.invoice-amount').val() +
+                    '&remark=' + $(block).find('.invoice-remark').val() + '&type=' + $(block).find('.block-type').val() + '&number=' + $(block).find('.invoice-num').val(),
                 success:function (data) {
                     $(block).find('input[type=text],textarea').val('');
                     $(button).removeAttr('disabled');
@@ -565,7 +725,7 @@ $(document).ready(function () {
 
 
     $('#inv-newsubmit').click(function () {
-        if ($('.new-flightinvoice input').check_empty() == false)
+        if ($('.new-flightinvoice input[type=text]').check_empty() == false)
             return false;
         $('.new-flightinvoice .loading').show();
         $(this).hide();
@@ -577,6 +737,28 @@ $(document).ready(function () {
                 $('#flightinvoice-list').empty().html(data);
                 UpdateFlightInvoiceEvents();
                 $('.new-flightinvoice').reset();
+            },
+            complete:function () {
+                $('.new-flightinvoice .loading').hide();
+                $('.new-flightinvoice #inv-newsubmit').show();
+            }
+        });
+        return false;
+    });
+
+    $('#inv-editsubmit').click(function () {
+        if ($('.new-flightinvoice input').check_empty() == false)
+            return false;
+        $('.new-flightinvoice #inv-newsubmit').hide();
+        $.ajax({
+            data:$('.new-flightinvoice form').serialize(),
+            type:'post',
+            url:'control/update_flightinvoice/' + $('#invoice_formular_id').val() + '/' + $('#editinvoice_id').val(),
+            success:function (data) {
+                $('#flightinvoice-list').empty().html(data);
+                UpdateFlightInvoiceEvents();
+                $('.new-flightinvoice').reset();
+                $('#inv-editsubmit').hide();
             },
             complete:function () {
                 $('.new-flightinvoice .loading').hide();

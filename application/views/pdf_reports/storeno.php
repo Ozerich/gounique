@@ -16,8 +16,8 @@
             <td class="right-paramvalue"><?=$formular->created_date->format("d. M. Y")?></td>
         </tr>
         <tr>
-            <td class="left-paramname">Rechnungsnummer:</td>
-            <td class="left-paramvalue">-</td>
+            <td class="left-paramname">Stornorechnungsnummer:</td>
+            <td class="left-paramvalue"><?=$formular->r_num?></td>
             <td class="right-paramname">Sachbearbeiter:</td>
             <td class="right-paramvalue"><?=$formular->sachbearbeiter->fullname?></td>
         </tr>
@@ -80,21 +80,20 @@
         <table>
             <tr>
                 <td class="paramname">Gesamtreisepreis:</td>
-                <td class="paramvalue"><?=number_format($formular->original->brutto, 2, ',','.')?> &euro;</td>
+                <td class="paramvalue"><?=num($formular->original->brutto)?> &euro;</td>
             </tr>
             <tr>
-                <td class="paramname">Stornogebühr <?=$formular->original->storno_percent ?
-                    ' lt. AGB´s '.$formular->original->storno_percent.'%' : ''?></td>
-                <td class="paramvalue"><?=number_format($formular->brutto, 2, ',','.')?> &euro;</td>
+                <td class="paramname">Stornogebühr <?=$formular->original->storno_percent ? $formular->original->storno_percent.'%' : ''?></td>
+                <td class="paramvalue"><?=num($formular->brutto);?> &euro;</td>
             </tr>
             <tr>
                 <td class="paramname"><?=$formular->kunde->provision?>% Provision auf Storno</td>
-                <td class="paramvalue"><?=$formular->price['provision']?> &euro;</td>
+                <td class="paramvalue"><?=num($formular->price['provision'])?> &euro;</td>
             </tr>
             <? if (!$formular->kunde->ausland): ?>
             <tr class="green">
                 <td class="paramname">MWST auf Prov 19%</td>
-                <td class="paramvalue"><?=$formular->price['mwst']?> &euro;</td>
+                <td class="paramvalue"><?=num($formular->price['mwst'])?> &euro;</td>
             </tr>
             <? endif; ?>
             <tr>

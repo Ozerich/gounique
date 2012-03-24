@@ -6,39 +6,38 @@ foreach ($formulars as $ind => $formular):
     $total['brutto'] += $formular->brutto;
     $total['diff'] += $formular->total_diff;
     $total['provision'] += $formular->provision_amount;
-    $ergebnis = $formular->brutto - $formular->provision_amount -  $formular->invoice_stats['total']['amount'];
-    $total['ergebnis'] += $ergebnis;
+    $total['ergebnis'] += $formular->brutto - $formular->provision_amount -  $formular->invoice_stats['total']['amount'];
     $total['stats']['flight'] += $formular->flight_stats['amount'];
     $total['stats']['hotel'] += $formular->invoice_stats['hotel']['amount'];
     $total['stats']['rundreise'] += $formular->invoice_stats['rundreise']['amount'];
     $total['stats']['transfer'] += $formular->invoice_stats['transfer']['amount'];
     $total['stats']['other'] += $formular->invoice_stats['other']['amount'];
     $total['stats']['total'] += $formular->invoice_stats['total']['amount'] + $formular->provision_amount + $formular->flight_stats['amount'];
-    $total['stats']['ergebnis'] += $ergebnis;
+    $total['stats']['ergebnis'] += $formular->brutto - $formular->provision_amount -  $formular->invoice_stats['total']['amount'];
+
+    $total_cost = $formular->invoice_stats['total']['amount'] + $formular->provision_amount + $formular->flight_stats['amount'];
 ?>
 <tr class="rechnung-line">
     <input type="hidden" class="formular_id" value="<?=$formular->id?>"/>
     <td><?=($ind + 1)?></td>
     <td class="rg-num"><a href="reservierung/final/<?=$formular->id?>"><?=$formular->r_num?></a></td>
     <td><?=$formular->v_num?></td>
-    <td><?=$formular->departure_date->format('d.M.Y')?></td>
-    <td><?=num($formular->brutto)?></td>
-    <td><?=num($formular->total_diff)?></td>
-    <td><?=num($formular->flight_stats['amount'])?></td>
-    <td><?=num($formular->invoice_stats['hotel']['amount'])?></td>
-    <td><?=num($formular->invoice_stats['rundreise']['amount'])?></td>
-    <td><?=num($formular->invoice_stats['transfer']['amount'])?></td>
-    <td><?=num($formular->invoice_stats['other']['amount'])?></td>
-    <td><?=num($formular->provision_amount)?></td>
-    <td><?=num($formular->invoice_stats['total']['amount'] + $formular->provision_amount + $formular->flight_stats['amount'])?></td>
-    <td><?=num($ergebnis)?></td>
+    <td class="right"><?=$formular->departure_date->format('d.M.y')?></td>
+    <td class="right"><?=num($formular->brutto)?></td>
+    <td class="right"><?=num($formular->flight_stats['amount'])?></td>
+    <td class="right"><?=num($formular->invoice_stats['hotel']['amount'])?></td>
+    <td class="right"><?=num($formular->invoice_stats['rundreise']['amount'])?></td>
+    <td class="right"><?=num($formular->invoice_stats['transfer']['amount'])?></td>
+    <td class="right"><?=num($formular->invoice_stats['other']['amount'])?></td>
+    <td class="right"><?=num($formular->provision_amount)?></td>
+    <td class="right"><?=num($total_cost)?></td>
+    <td class="right"><?=num($formular->brutto - $total_cost)?></td>
 </tr>
 <? endforeach; ?>
 
 <tr class="total">
     <td colspan="4">&nbsp;</td>
     <td><?=num($total['brutto'])?></td>
-    <td><?=num($total['diff'])?></td>
     <td><?=num($total['stats']['flight'])?></td>
     <td><?=num($total['stats']['hotel'])?></td>
     <td><?=num($total['stats']['rundreise'])?></td>

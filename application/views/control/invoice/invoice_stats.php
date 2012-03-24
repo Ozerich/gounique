@@ -26,12 +26,6 @@
             <td><?=$stats['transfer']['status']?> &euro;</td>
         </tr>
         <tr>
-            <td>Flights</td>
-            <td><?=$stats['flight']['amount']?> &euro;</td>
-            <td><?=$stats['flight']['paid']?> &euro;</td>
-            <td><?=$stats['flight']['status']?> &euro;</td>
-        </tr>
-        <tr>
             <td>Other</td>
             <td><?=$stats['other']['amount']?> &euro;</td>
             <td><?=$stats['other']['paid']?> &euro;</td>

@@ -3,7 +3,7 @@
         <a href="dashboard" class="home-link"><img src="img/header-logo.jpg"/></a>
         <ul class="page-path">
             <li><a href="control">finance & controlling</a></li>
-            <li><a href="control/invoice">Zahlungsausgang</a></li>
+            <li><a href="control/outgoing/flights">Flüge</a></li>
             <li><span>Invoices for <?=$formular->r_num?></span></li>
         </ul>
     </div>
@@ -40,7 +40,9 @@
                     <input type="text" name="inv-amount" maxlength="8" id="inv-amount"/>
                 </div>
                 <div class="loading_32 loading"></div>
-                <button id="inv-newsubmit">New Invoice</button>
+                <input type="hidden" id="editinvoice_id"/>
+                <button id="inv-editsubmit" style="display:none">Save</button>
+                <button id="inv-newsubmit">New</button>
             </div>
             <div class="param inv-remark">
                 <label for="inv-remark">Remark</label>

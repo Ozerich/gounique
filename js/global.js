@@ -15,9 +15,16 @@ function str_replace(search, replace, subject) {
 }
 
 function DateToInput(a) {
+    if (typeof a == 'string')
+        a = new Date(str_replace('.', ' ', a));
+
     return (a.getDate() < 10 ? "0" + a.getDate() : a.getDate()) + "" +
         (a.getMonth() < 9 ? "0" + (a.getMonth() + 1) : (a.getMonth() + 1)) + "" +
         a.getFullYear()
+}
+
+function PriceToInput(price) {
+    return str_replace('.', '', price);
 }
 
 function FixDate(input) {
@@ -48,7 +55,7 @@ function isValidDate(d) {
 jQuery.fn.check_empty = function () {
     var result = true;
     $(this).each(function () {
-        if ($(this).val() == '') {
+        if ($(this).attr('type') != 'hidden' && $(this).val() == '') {
             result = false;
             $(this).addClass('error');
         }

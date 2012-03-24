@@ -20,28 +20,26 @@ foreach ($formulars as $ind => $formular):
     <td><?=($ind + 1)?></td>
     <td class="rg-num"><a href="reservierung/final/<?=$formular->id?>"><?=$formular->r_num?></a></td>
     <td><?=$formular->v_num?></td>
-    <td><?=$formular->departure_date->format('d.M.Y')?></td>
-    <td><?=@number_format($formular->brutto, 2, ',', '.')?></td>
-    <td><?=@number_format($formular->total_diff, 2, ',', '.')?></td>
-    <td><?=number_format($formular->invoice_stats['flight']['amount'], 2, ',', '.')?></td>
-    <td><?=number_format($formular->invoice_stats['hotel']['amount'], 2, ',', '.')?></td>
-    <td><?=number_format($formular->invoice_stats['rundreise']['amount'], 2, ',', '.')?></td>
-    <td><?=number_format($formular->invoice_stats['transfer']['amount'], 2, ',', '.')?></td>
-    <td><?=number_format($formular->invoice_stats['other']['amount'], 2, ',', '.')?></td>
-    <td><?=number_format($formular->invoice_stats['total']['amount'] + $formular->provision_amount, 2, ',', '.')?></td>
-    <td><?=$formular->departure_date->sub(new DateInterval('P14D'))->format('d.M.y')?></td>
+    <td class="right"><?=$formular->departure_date->format('d.M.y')?></td>
+    <td class="right"><?=@number_format($formular->brutto, 2, ',', '.')?></td>
+    <td class="right"><?=number_format($formular->invoice_stats['flight']['amount'], 2, ',', '.')?></td>
+    <td class="right"><?=number_format($formular->invoice_stats['hotel']['amount'], 2, ',', '.')?></td>
+    <td class="right"><?=number_format($formular->invoice_stats['rundreise']['amount'], 2, ',', '.')?></td>
+    <td class="right"><?=number_format($formular->invoice_stats['transfer']['amount'], 2, ',', '.')?></td>
+    <td class="right"><?=number_format($formular->invoice_stats['other']['amount'], 2, ',', '.')?></td>
+    <td class="right"><?=number_format($formular->invoice_stats['total']['amount'] + $formular->provision_amount, 2, ',', '.')?></td>
+    <td class="right"><?=$formular->departure_date->sub(new DateInterval('P14D'))->format('d.M.y')?></td>
 </tr>
 <? endforeach; ?>
 
 <tr class="total">
     <td colspan="4">&nbsp;</td>
-    <td><?=num($total['brutto'])?></td>
-    <td><?=num($total['diff'])?></td>
-    <td><?=num($total['stats']['flight'])?></td>
-    <td><?=num($total['stats']['hotel'])?></td>
-    <td><?=num($total['stats']['rundreise'])?></td>
-    <td><?=num($total['stats']['transfer'])?></td>
-    <td><?=num($total['stats']['other'])?></td>
-    <td><?=num($total['stats']['total'])?></td>
-    <td><?=num($total['ergebnis'])?></td>
+    <td class="right"><?=num($total['brutto'])?></td>
+    <td class="right"><?=num($total['stats']['flight'])?></td>
+    <td class="right"><?=num($total['stats']['hotel'])?></td>
+    <td class="right"><?=num($total['stats']['rundreise'])?></td>
+    <td class="right"><?=num($total['stats']['transfer'])?></td>
+    <td class="right"><?=num($total['stats']['other'])?></td>
+    <td class="right"><?=num($total['stats']['total'])?></td>
+    <td class="right"><?=num($total['ergebnis'])?></td>
 </tr>

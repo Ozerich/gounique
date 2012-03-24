@@ -146,11 +146,11 @@
 
 .control-page .num-search .param{
     float: left;
-    width: 100px;
+    width: 85px;
 }
 
 .control-page .num-search .param input{
-    width: 90px;
+    width: 75px;
     text-align: center;
 }
 
@@ -162,11 +162,12 @@
     margin-top:16px;
 }
 
-.control-page .date-search .search-wr, .control-page .date-search .agenturen-wr{
+.control-page .date-search .search-wr, .control-page .date-search .agenturen-wr, .control-page .date-search .personen-wr{
     display: inline-block;
 }
 
-.control-page .date-search .agenturen-wr input{width:165px !important;}
+.control-page .date-search .agenturen-wr input{width:65px !important;}
+.control-page .date-search .personen-wr input{width:125px !important; text-transform: uppercase;}
 
 .control-page .search-header{
     display: block;
@@ -216,8 +217,6 @@
 #controlpayments-list tr:hover{
     cursor: pointer;
 }
-
-#controlpayments-list td{text-align: right;}
 
 #controlpayments-list td.anzahlung.sofort{text-align: center}
 
@@ -269,6 +268,10 @@
     padding: 5px 5px;
     border: 1px solid #444;
 }
+
+#formularincoming-page .incoming-block .buttons{text-align: center;}
+#formularincoming-page .incoming-block .buttons button{display: inline-block;}
+
 #formularincoming-page .incoming-block.center{
     margin: 0 auto;
     float: none;
@@ -332,8 +335,8 @@
 }
 
 #formularincoming-page .payments-list{
-    margin: 0;
-    width: 70%;
+    margin: 0 auto;
+    width: 90%;
 }
 
 #formularincoming-page .newpayment-wr {
@@ -413,3 +416,8 @@
 }
 .flightpayments .new-flightpayment-wr .newpayment-wr{margin-top: 10px !important;}
 
+.finanzen-list td, .finanzen-list th{text-align: left;}
+.finanzen-list td.right, .finanzen-list th.right{text-align: right;}
+
+.product-list .actions{text-align: right;}
+.product-list .actions a{display: inline-block;float:none;}
