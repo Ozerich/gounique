@@ -4,7 +4,7 @@
     </div>
 </div>
 <div class="content">
-    <h1>BUCHUNGSBESTÄTIGUNG / RECHNUNG</h1>
+    <h1>Buchungsbestätigung</h1>
 
     <table class="top-block">
         <tr>

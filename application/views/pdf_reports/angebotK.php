@@ -4,7 +4,7 @@
     </div>
 </div>
 <div class="content">
-    <h1><?=$formular->status == "angebot" ? 'ANGEBOT' : 'BUCHUNG'?></h1>
+    <h1><?=$formular->status == "angebot" ? 'ANGEBOT' : 'Buchungsauftrag'?></h1>
 
     <h2>Kundenkopie</h2>
     <table class="top-block">

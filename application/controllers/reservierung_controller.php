@@ -31,7 +31,7 @@ class Reservierung_Controller extends MY_Controller
         $item->save();
 
         $text =
-                "Dear all,
+            "Dear all,
 
 please book and confirm by return:
 
@@ -149,7 +149,6 @@ Your Unique World Team";
         echo $path;
         exit();
     }
-
 
 
     public function get_pdf_name($formular_id)
@@ -331,19 +330,19 @@ Your Unique World Team";
             }
 
             $formular = Formular::create(array(
-                    'v_num' => strtoupper($v_num),
-                    'kunde_id' => $kunde_id,
-                    'type' => $type,
-                    'provision' => $kunde ? $kunde->provision : 0,
-                    'service_charge' => $service_charge,
-                    'flight_text' => $flight,
-                    'flight_price' => $flight_price,
-                    'person_count' => $person_count,
-                    'owner_type' => $this->input->post('owner_type'),
-                    'created_date' => time_to_mysqldatetime(time()),
-                    'changed_date' => time_to_mysqldatetime(time()),
-                    'created_by' => $this->user->id,
-                    'changed_by' => $this->user->id,
+                'v_num' => strtoupper($v_num),
+                'kunde_id' => $kunde_id,
+                'type' => $type,
+                'provision' => $kunde ? $kunde->provision : 0,
+                'service_charge' => $service_charge,
+                'flight_text' => $flight,
+                'flight_price' => $flight_price,
+                'person_count' => $person_count,
+                'owner_type' => $this->input->post('owner_type'),
+                'created_date' => time_to_mysqldatetime(time()),
+                'changed_date' => time_to_mysqldatetime(time()),
+                'created_by' => $this->user->id,
+                'changed_by' => $this->user->id,
             ));
 
             $formular->brutto = $formular->brutto_price;
@@ -475,7 +474,7 @@ Your Unique World Team";
             $provision = 0;
             if ($type != 'nurflug')
                 $provision = $this->input->post('provision-manuel') != '' ? str_replace(',', '.', $this->input->post('provision-manuel')) :
-                        $formular->kunde->provision;
+                    $formular->kunde->provision;
 
             $formular->provision = $provision;
             $formular->service_charge = $type == 'nurflug' ? $this->input->post('nurflug_servicecharge') : 0;
@@ -492,7 +491,7 @@ Your Unique World Team";
             if ($arrival_date)
                 $formular->arrival_date = $arrival_date;
 
-            if($departure_date)
+            if ($departure_date)
                 $formular->departure_date = $departure_date;
 
             $formular->brutto = $formular->brutto_price;
@@ -678,7 +677,7 @@ Your Unique World Team";
 
         if ($_POST) {
             $item = ($this->input->post('item_type') == 'hotel') ? FormularHotel::find_by_id($this->input->post('item_id'))
-                    : FormularManuel::find_by_id($this->input->post('item_id'));
+                : FormularManuel::find_by_id($this->input->post('item_id'));
 
             FormularStatusLog::create(array(
                 'item_type' => $this->input->post('item_type'),
@@ -762,7 +761,6 @@ Your Unique World Team";
 
         $formular->status = "eingangsmitteilung";
         $formular->save();
-
 
 
         redirect("reservierung/final/" . $formular->id);
@@ -925,13 +923,13 @@ Your Unique World Team";
         if ($formular->status == 'angebot')
             $subject = 'Ihr Reiseangebot ' . $formular->v_num;
         else if ($formular->status == 'rechnung')
-            $subject = 'Ihre '.($formular->is_storno ? 'Stornorechnung ' : 'Buchungsbestätigung/Rechnung '). $formular->r_num;
+            $subject = 'Ihre ' . ($formular->is_storno ? 'Stornorechnung ' : 'Buchungsbestätigung/Rechnung ') . $formular->r_num;
         else if ($formular->status == 'eingangsmitteilung')
             $subject = 'Vielen Dank für Ihre Buchung ' . $formular->v_num;
-        else if($formular->status == 'gutschrift')
+        else if ($formular->status == 'gutschrift')
             $subject = 'Ihre Gutschrift ' . $formular->r_num;
-        else if($formular->status == 'storno')
-            $subject = 'Ihre Buchungsbestätigung/Rechnung '.$formular->r_num;
+        else if ($formular->status == 'storno')
+            $subject = 'Ihre Buchungsbestätigung/Rechnung ' . $formular->r_num;
 
         $this->email->subject($subject);
 
@@ -953,16 +951,9 @@ Your Unique World Team";
         $this->email->attach($filename);
 
         if ($formular->status == "rechnung") {
-
             $this->email->attach('attachments/Reisebedingungen_UniqueWorld.pdf');
-            if(!$formular->is_storno)
-            $this->email->attach('attachments/Sicherungsschein_UniqueWorld.pdf');
-        }
-
-        if ($formular->status == "storno") {
-
-            $this->email->attach('attachments/Reisebedingungen_UniqueWorld.pdf');
-            $this->email->attach('attachments/Sicherungsschein_UniqueWorld.pdf');
+            if (!$formular->is_storno)
+                $this->email->attach('attachments/Sicherungsschein_UniqueWorld.pdf');
         }
 
         if (!$this->email->send())
