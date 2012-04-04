@@ -14,7 +14,7 @@ class Statistik_Controller extends MY_Controller
 
     public function index()
     {
-        $formulars = Formular::all(array('conditions' => array('status = "rechnung"'), 'order' => 'r_num ASC'));
+        $formulars = Formular::all(array('conditions' => array('status = "rechnung"'), 'order' => 'r_num_int ASC'));
 
         $type_stats = array(
             'pausschalreise' => array('total' => 0, 'persons' => 0, 'count' => 0),
@@ -76,7 +76,7 @@ class Statistik_Controller extends MY_Controller
 
         $conditions .= ' AND '.($owner_type ? '('.$owner_type.')' : '0');
 
-        $formulars = Formular::all(array('conditions' => array($conditions), 'order' => 'r_num ASC'));
+        $formulars = Formular::all(array('conditions' => array($conditions), 'order' => 'r_num_int ASC'));
 
         $type_stats = array(
             'pausschalreise' => array('total' => 0, 'persons' => 0, 'count' => 0),

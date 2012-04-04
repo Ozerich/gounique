@@ -91,7 +91,7 @@
                 <td class="paramvalue"><?=num($formular->paid_amount);?> &euro;</td>
             </tr>
             <tr>
-                <td class="paramname">Noch zu zahlender Betrag</td>
+                <td class="paramname">Saldo</td>
                 <td class="paramvalue"><?=num($formular->paid_amount - $formular->brutto);?> &euro;</td>
             </tr>
         </table>

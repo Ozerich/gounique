@@ -44,6 +44,7 @@
                     <option value="uberweisung">Uberweisung</option>
                     <option value="kreditkart">KK über UW</option>
                     <option value="kreditkart_aer">KK über AER</option>
+                    <option value="kreditkart_dogan">KK über Dogan</option>
                     <option value="lastschrift">Lastschrift</option>
                     <option value="bar">Bar</option>
                 </select>

@@ -42,7 +42,7 @@
                 <div class="type-checkboxes">
 
                     <input type="checkbox" id="is_pauschalreise" name="is_pauschalreise" checked/>
-                    <label for="is_pauschalreise">Pausschalreise</label>
+                    <label for="is_pauschalreise">Pauschalreise</label>
 
                     <input type="checkbox" id="is_bausteinreise" name="is_bausteinreise" checked/>
                     <label for="is_bausteinreise">Bausteinreise</label>
@@ -76,6 +76,9 @@
             <div class="field-item">
                 <input type="checkbox" checked id="field_3" name="field[v_num]"><label for="field_3">Vorg-NR</label>
 
+            </div>
+            <div class="field-item">
+                <input type="checkbox" checked id="field_10" name="field[person_name]"><label for="field_3">KD-Name</label>
             </div>
             <div class="field-item">
                 <input type="checkbox" checked id="field_4" name="field[rg_date]"><label for="field_4">RG-Datum</label>

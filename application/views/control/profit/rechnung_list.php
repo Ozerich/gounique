@@ -20,7 +20,7 @@ foreach ($formulars as $ind => $formular):
 <tr class="rechnung-line">
     <input type="hidden" class="formular_id" value="<?=$formular->id?>"/>
     <td><?=($ind + 1)?></td>
-    <td class="rg-num"><a href="reservierung/final/<?=$formular->id?>"><?=$formular->r_num?></a></td>
+    <td class="rg-num right"><a href="reservierung/final/<?=$formular->id?>"><?=$formular->r_num?></a></td>
     <td><?=$formular->v_num?></td>
     <td class="right"><?=$formular->departure_date->format('d.M.y')?></td>
     <td class="right"><?=num($formular->brutto)?></td>
@@ -31,7 +31,7 @@ foreach ($formulars as $ind => $formular):
     <td class="right"><?=num($formular->invoice_stats['other']['amount'])?></td>
     <td class="right"><?=num($formular->provision_amount)?></td>
     <td class="right"><?=num($total_cost)?></td>
-    <td class="right"><?=num($formular->brutto - $total_cost)?></td>
+    <td class="right <?=($formular->brutto - $total_cost) >= 0 ? 'plus' : 'minus'?>" ><?=num($formular->brutto - $total_cost)?></td>
 </tr>
 <? endforeach; ?>
 

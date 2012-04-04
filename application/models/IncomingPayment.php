@@ -18,6 +18,8 @@ class IncomingPayment extends ActiveRecord\Model
                 return 'KK über UW';
             case 'kreditkart_aer':
                 return 'KK über AER';
+            case 'kreditkart_dogan':
+                return 'KK über AER';
             case 'lastschrift':
                 return 'Lastschrift';
             case 'bar':

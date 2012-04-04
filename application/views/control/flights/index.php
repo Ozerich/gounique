@@ -29,9 +29,10 @@
             <th>№</th>
             <th>RG-NR</th>
             <th>Vorg-NR</th>
+            <th>KD-Name</th>
             <th class="right">Abreise</th>
-            <th class="right">Total</th>
-            <th class="right">Paid</th>
+            <th class="right">Rechnung</th>
+            <th class="right">Zahlung</th>
             <th class="right">Status</th>
             <th class="right">Faellig bis</th>
         </tr>

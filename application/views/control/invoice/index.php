@@ -29,14 +29,14 @@
             <th>№</th>
             <th>RG-NR</th>
             <th>Vorg-NR</th>
+            <th>KD-Name</th>
             <th class="right">Abreise</th>
-            <th class="right">Total</th>
-            <th class="right">Flights</th>
+            <th class="right">Reisepreis</th>
             <th class="right">Hotels</th>
             <th class="right">Rundreise</th>
             <th class="right">Transfers</th>
             <th class="right">Other</th>
-            <th class="right">Total Cost</th>
+            <th class="right">Total</th>
             <th class="right">Payment<br/>Faellig bis</th>
         </tr>
         </thead>

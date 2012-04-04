@@ -74,11 +74,12 @@
             <th class="r-num">AG-NR</th>
 			<th>BQ</th>
             <th>Vorg-NR</th>
+            <th>Kd-Name</th>
+            <th>Abreise</th>
             <th class="right">Total-RG</th>
             <th class="right">Provision %</th>
             <th class="right">Prov. Betrag</th>
             <th class="right">Faellig bis</th>
-            <th>Storno</th>
             <th>Netto</th>
             <th class="right">Status</th>
             <th class="right">Payment date</th>

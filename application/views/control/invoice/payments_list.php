@@ -23,9 +23,9 @@
     </tr>
     <? endforeach; ?>
 <tr class="total">
-    <td>Total</td>
-    <td><?=$total?> &euro;</td>
-    <td><?=($total < $invoice->amount) ? "-" . ($invoice->amount - $total) : "+" . ($total - $invoice->amount)?> &euro;</td>
+    <td>Reisepreis</td>
+    <td><?=num($total)?> &euro;</td>
+    <td><?=($total < $invoice->amount) ? "-" . num($invoice->amount - $total) : "+" . num($total - $invoice->amount)?> &euro;</td>
     <td colspan="4">&nbsp;</td>
 </tr>
 <? endif; ?>

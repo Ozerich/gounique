@@ -1,4 +1,4 @@
-<table class="product-list" id="previewstats-list">
+<table class="product-list finanzen-list" id="previewstats-list">
     <thead>
     <tr>
         <th>BG-ART</th>
@@ -9,7 +9,7 @@
     </thead>
     <tbody>
     <tr>
-        <td class="type">Pausschalreise</td>
+        <td class="type">Pauschalreise</td>
         <td><?=$type_stats['pausschalreise']['count']?></td>
         <td><?=$type_stats['pausschalreise']['persons']?></td>
         <td><?=num($type_stats['pausschalreise']['total'])?></td>
@@ -34,7 +34,7 @@
     </tr>
     </tbody>
 </table>
-<table class="product-list" id="statistics-list">
+<table class="product-list finanzen-list" id="statistics-list">
     <thead>
     <tr>
         <th class="num">№</th>
@@ -46,6 +46,8 @@
         <th class="a_num">AG-NR</th><? endif;?>
         <?if (!isset($fields) || isset($fields['v_num'])): ?>
         <th class="v_num">Vorg-NR</th><? endif;?>
+        <?if (!isset($fields) || isset($fields['person_name'])): ?>
+        <th class="person_name">KD-Name</th><? endif;?>
         <?if (!isset($fields) || isset($fields['rg_date'])): ?>
         <th class="rg_date">RG-Datum</th><? endif;?>
         <?if (!isset($fields) || isset($fields['type'])): ?>
@@ -81,14 +83,16 @@
         <td class="a_num"><?=$formular->kunde ? $formular->kunde->k_num : '-'?></td><? endif;?>
         <?if (!isset($fields) || isset($fields['v_num'])): ?>
         <td class="v_num"><?=$formular->v_num?></td><? endif;?>
+        <?if (!isset($fields) || isset($fields['person_name'])): ?>
+        <td class="v_num"><?=$formular->person?></td><? endif;?>
         <?if (!isset($fields) || isset($fields['rg_date'])): ?>
-        <td class="rg_date"><?=$formular->rechnung_date ? $formular->rechnung_date->format('d.M.Y') : '';?></td><? endif;?>
+        <td class="rg_date right"><?=$formular->rechnung_date ? $formular->rechnung_date->format('d.M.y') : '';?></td><? endif;?>
         <?if (!isset($fields) || isset($fields['type'])): ?>
         <td class="type"><?=$formular->stats_type?></td><? endif;?>
         <?if (!isset($fields) || isset($fields['departure'])): ?>
-        <td class="abreise"><?=$formular->departure_date ? $formular->departure_date->format('d.M.Y') : '-'?></td><? endif;?>
+        <td class="abreise right"><?=$formular->departure_date ? $formular->departure_date->format('d.M.y') : '-'?></td><? endif;?>
         <?if (!isset($fields) || isset($fields['arrive'])): ?>
-        <td class="ruckreise"><?=$formular->arrival_date ? $formular->arrival_date->format('d.M.Y') : '-'?></td><? endif;?>
+        <td class="ruckreise right"><?=$formular->arrival_date ? $formular->arrival_date->format('d.M.y') : '-'?></td><? endif;?>
         <?if (!isset($fields) || isset($fields['person'])): ?>
         <td class="person"><?=$formular->person_count;?></td><? endif;?>
         <?if (!isset($fields) || isset($fields['total'])): ?>

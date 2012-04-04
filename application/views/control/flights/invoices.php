@@ -4,7 +4,7 @@
         <ul class="page-path">
             <li><a href="control">finance & controlling</a></li>
             <li><a href="control/outgoing/flights">Flüge</a></li>
-            <li><span>Invoices for <?=$formular->r_num?></span></li>
+            <li><span>Flug-Rechnung für <?=$formular->r_num?></span></li>
         </ul>
     </div>
 </div>
@@ -17,15 +17,15 @@
         <form>
             <div class="top">
                 <div class="param inv-number">
-                    <label for="inv-number">Inv. Number</label>
+                    <label for="inv-number">RG-Nr</label>
                     <input type="text" name="inv-number" id="inv-number" maxlength="10"/>
                 </div>
                 <div class="param inv-date">
-                    <label for="inv-date">Inv. Date</label>
+                    <label for="inv-date">RG-Datum</label>
                     <input type="text" class="set_datepicker" name="inv-date" id="inv-date" maxlength="8"/>
                 </div>
                 <div class="param inv-type">
-                    <label for="inv-type">Inv. Type</label>
+                    <label for="inv-type">RG-Vom</label>
                     <select id="inv-type" name="inv-type">
                         <? foreach (FlightInvoice::$TYPES as $id => $name): ?>
                         <option value="<?=$id?>"><?=$name?></option>
@@ -36,7 +36,7 @@
             </div>
             <div class="left">
                 <div class="param inv-amount">
-                    <label for="inv-amount">Inv. Amount</label>
+                    <label for="inv-amount">RG-Amount</label>
                     <input type="text" name="inv-amount" maxlength="8" id="inv-amount"/>
                 </div>
                 <div class="loading_32 loading"></div>

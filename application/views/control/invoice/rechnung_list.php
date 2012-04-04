@@ -5,7 +5,7 @@ $total = array('brutto' => 0, 'diff' => 0, 'provision' => 0, 'ergebnis' => 0, 's
 foreach ($formulars as $ind => $formular):
     $total['brutto'] += $formular->brutto;
     $total['diff'] += $formular->total_diff;
-    $total['provision'] += $formular->provision_amount;
+    $total['provision'] += 0;
     $ergebnis = $formular->brutto - $formular->provision_amount -  $formular->invoice_stats['total']['amount'];
     $total['ergebnis'] += $ergebnis;
     $total['stats']['flight'] += $formular->invoice_stats['flight']['amount'];
@@ -20,14 +20,14 @@ foreach ($formulars as $ind => $formular):
     <td><?=($ind + 1)?></td>
     <td class="rg-num"><a href="reservierung/final/<?=$formular->id?>"><?=$formular->r_num?></a></td>
     <td><?=$formular->v_num?></td>
+    <td class="person"><?=$formular->person?></td>
     <td class="right"><?=$formular->departure_date->format('d.M.y')?></td>
     <td class="right"><?=@number_format($formular->brutto, 2, ',', '.')?></td>
-    <td class="right"><?=number_format($formular->invoice_stats['flight']['amount'], 2, ',', '.')?></td>
     <td class="right"><?=number_format($formular->invoice_stats['hotel']['amount'], 2, ',', '.')?></td>
     <td class="right"><?=number_format($formular->invoice_stats['rundreise']['amount'], 2, ',', '.')?></td>
     <td class="right"><?=number_format($formular->invoice_stats['transfer']['amount'], 2, ',', '.')?></td>
     <td class="right"><?=number_format($formular->invoice_stats['other']['amount'], 2, ',', '.')?></td>
-    <td class="right"><?=number_format($formular->invoice_stats['total']['amount'] + $formular->provision_amount, 2, ',', '.')?></td>
+    <td class="right"><?=number_format($formular->invoice_stats['total']['amount'], 2, ',', '.')?></td>
     <td class="right"><?=$formular->departure_date->sub(new DateInterval('P14D'))->format('d.M.y')?></td>
 </tr>
 <? endforeach; ?>
@@ -35,7 +35,6 @@ foreach ($formulars as $ind => $formular):
 <tr class="total">
     <td colspan="4">&nbsp;</td>
     <td class="right"><?=num($total['brutto'])?></td>
-    <td class="right"><?=num($total['stats']['flight'])?></td>
     <td class="right"><?=num($total['stats']['hotel'])?></td>
     <td class="right"><?=num($total['stats']['rundreise'])?></td>
     <td class="right"><?=num($total['stats']['transfer'])?></td>

@@ -209,10 +209,15 @@
 #controlpayments-list .total{background-color: #e8e8e8;}
 #controlpayments-list .restzahlung{background-color: #e8f5f7;}
 #controlpayments-list .versand{background-color: #dbffe7}
+#controlpayments-list .versand.status{max-width: 25px}
+#controlpayments-list .totaldiff{background-color: #ffe88f}
+.product-list .person{font-size: 9px !important;max-width: 100px;}
 #controlpayments-list .versand.waiting{color: red;text-align: center;}
 #controlpayments-list .storno{background-color: #ffdfe1;}
 #controlpayments-list .storno-status{text-align: center; color: red; letter-spacing: 3px;}
-#controlpayments-list .provisionstatus{background-color: #dbffe7;}
+.product-list .provisionstatus.first, .product-list .flightstatus{background-color: #ffe88f;}
+
+
 
 #controlpayments-list tr:hover{
     cursor: pointer;
@@ -220,23 +225,20 @@
 
 #controlpayments-list td.anzahlung.sofort{text-align: center}
 
-#controlpayments-list tr:nth-child(even){background-color: #effcff;}
-#controlpayments-list tr:nth-child(even):hover td{background-color: #e8f5f7 !important;}
+#controlpayments-list tr.invoice-line:nth-child(4n+1){background-color: #effcff;}
+#controlpayments-list tr.invoice-line:nth-child(4n+1):hover td{background-color: #e8f5f7 !important;}
 
-#controlpayments-list tr:nth-child(odd){background-color: #fafafa}
-#controlpayments-list tr:nth-child(odd):hover td{background-color: #ebebeb !important;}
+#controlpayments-list tr.invoice-line:nth-child(4n+3){background-color: #fafafa}
+#controlpayments-list tr.invoice-line:nth-child(4n+3):hover td{background-color: #ebebeb !important;}
 
 #controlpayments-list tr.current td, #controlpayments-list tr.current:hover td{background-color: #4bffa9 !important;}
 
 .product-list .num{
-    max-width: 10px;}
+    max-width: 25px;}
 .product-list .ag-num{
     max-width: 30px;}
 .product-list .rg-num{
     max-width: 70px;
-}
-.product-list .status{
-    min-width: 70px;
 }
 
 .product-list .v-num{text-align:left !important;}

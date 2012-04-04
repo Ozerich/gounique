@@ -76,7 +76,7 @@
     <table class="product-list finanzen-list" id="controlpayments-list">
         <thead>
         <tr>
-            <th colspan="7">&nbsp;</th>
+            <th colspan="8">&nbsp;</th>
             <th colspan="3">Anzahlung</th>
             <th colspan="3">Restzahlung</th>
             <th>&nbsp;</th>
@@ -89,18 +89,18 @@
             <th class="ag-num">AG-NR</th>
 			<th>BQ</th>
             <th>Vorg-NR</th>
+            <th>KD-Name</th>
             <th class="right">RG-Datum</th>
             <th class="right">Abreise</th>
-            <th class="right">Total-RG</th>
+            <th class="right">Reisepreis</th>
             <th class="right">Betrag</th>
-            <th class="right">Faellig bis</th>
+            <th class="right">Faellig</th>
             <th class="right">Status</th>
             <th class="right">Betrag</th>
-            <th class="right">Faellig bis</th>
+            <th class="right">Faellig</th>
             <th>Status</th>
-            <th>Storno</th>
             <th>Netto</th>
-            <th class="right">Diff</th>
+            <th class="right">Zahl.Diff</th>
             <th class="status">Freigabe</th>
             <th class="status">Versand</th>
             <th class="right">Date</th>

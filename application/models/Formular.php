@@ -95,10 +95,8 @@ class Formular extends ActiveRecord\Model
     {
         $payments = $this->payments;
         $res = 0;
-
         foreach ($payments as $payment)
             $res += $payment->amount;
-
         return round($res, 2);
     }
 
@@ -263,7 +261,6 @@ class Formular extends ActiveRecord\Model
     {
         $restzahlung = round($this->finalpayment_amount, 2);
         $anzahlung = round($this->prepayment_amount, 2);
-
         foreach ($this->payments as $payment)
         {
             if ($anzahlung > 0 && $payment->added_by != 0) {
@@ -277,7 +274,7 @@ class Formular extends ActiveRecord\Model
             }
             $restzahlung -= $payment->amount;
         }
-        return $restzahlung < 0 ? $restzahlung : -$restzahlung;
+        return $restzahlung < 0 ? -$restzahlung : -$restzahlung;
     }
 
     public function get_last_payment()
@@ -370,11 +367,13 @@ class Formular extends ActiveRecord\Model
 
     public function get_total_diff()
     {
-        if ($this->status == "gutschrift")
+        if ($this->status == "gutschrift" || $this->status == "storno")
             return 0;
 
         $total = $this->get_paid_amount();
-        return round($total - $this->brutto, 2);
+        $result = $total-$this->brutto;
+
+        return round($result, 2);
     }
 
 
@@ -421,7 +420,7 @@ class Formular extends ActiveRecord\Model
     public function get_stats_type()
     {
         if ($this->type == "nurflug") return "Nur Flug";
-        elseif ($this->type == "pausschalreise") return "Pausschalreise";
+        elseif ($this->type == "pausschalreise") return "Pauschalreise";
         elseif ($this->type == "bausteinreise") return "Bausteinreise";
         else return "Unknown";
     }
@@ -480,6 +479,11 @@ class Formular extends ActiveRecord\Model
             FlightSegment::create($sql);
             $pos++;
         }
+    }
+
+    function update_freigabe()
+    {
+        $this->is_freigabe = $this->paid_amount >= ($this->brutto - 0.2) ? true : false;
     }
 
 }

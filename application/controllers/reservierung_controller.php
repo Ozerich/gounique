@@ -488,19 +488,21 @@ Your Unique World Team";
             $arrival_date = $formular->count_arrival_date();
             $departure_date = $formular->count_departure_date();
 
-            if ($arrival_date)
+            if ($arrival_date && !$formular->arrival_date)
                 $formular->arrival_date = $arrival_date;
 
-            if ($departure_date)
+            if ($departure_date && !$formular->departure_date)
                 $formular->departure_date = $departure_date;
 
             $formular->brutto = $formular->brutto_price;
+
             $formular->provision_amount = round($formular->brutto * $formular->provision * (!$formular->kunde->ausland ? 1.19 : 1) / 100, 2);
             if ($formular->status == "rechnung") {
                 $formular->prepayment_amount = $formular->brutto * $formular->prepayment / 100;
                 $formular->finalpayment_amount = $formular->brutto - $formular->prepayment_amount;
             }
 
+            $formular->update_freigabe();
             $formular->save();
             $formular->create_flight_segments();
 
@@ -776,7 +778,6 @@ Your Unique World Team";
         }
 
         if ($_POST) {
-
             $formular->status = 'storno';
             $formular->is_storno = true;
             $formular->storno_date = inputdate_to_mysqldate($this->input->post('date'));
@@ -873,7 +874,6 @@ Your Unique World Team";
                 ProvisionPayment::create(array(
                     'formular_id' => $storno_rechnung->id,
                     'amount' => $payment->added_by == 0 ? $storno_rechnung->provision_amount : $payment->amount,
-                    'type' => $payment->type,
                     'payment_date' => $payment->payment_date,
                     'remark' => $payment->remark,
                     'added_time' => time_to_mysqldatetime(time()),

@@ -316,7 +316,7 @@ class Control_Controller extends MY_Controller
         }
 
         $payment->date = inputdate_to_mysqldate($this->input->post('date'));
-        $payment->amount = $this->input->post('amount');
+        $payment->amount = str_replace(',', '.',$this->input->post('amount'));
         $payment->remark = $this->input->post('remark');
         $payment->type = $this->input->post('type');
         $payment->save();
@@ -380,7 +380,7 @@ class Control_Controller extends MY_Controller
 
             $payment->payment_date = inputdate_to_mysqldate($this->input->post('date'));
             $payment->remark = $this->input->post('remark');
-            $payment->amount = $this->input->post('amount');
+            $payment->amount = str_replace(',', '.',$this->input->post('amount'));
             $payment->type = $this->input->post('type');
             $payment->save();
 
@@ -401,7 +401,7 @@ class Control_Controller extends MY_Controller
 
             $payment->payment_date = inputdate_to_mysqldate($this->input->post('date'));
             $payment->remark = $this->input->post('remark');
-            $payment->amount = $this->input->post('amount');
+            $payment->amount = str_replace(',', '.',$this->input->post('amount'));
             $payment->save();
 
             echo $this->load->view('control/' . $type . '/payments_list.php', array('formular' => $formular), true);
@@ -445,7 +445,7 @@ class Control_Controller extends MY_Controller
                 'added_by' => $this->user->id,
             ));
 
-            $formular->is_freigabe = $formular->paid_amount >= ($formular->brutto - 0.2) ? true : false;
+            $formular->update_freigabe();
             $formular->save();
         }
         else if ($type == "provision")
@@ -511,7 +511,7 @@ class Control_Controller extends MY_Controller
         }
         $payment->delete();
 
-        $formular->is_freigabe = $formular->paid_amount >= $formular->brutto ? true : false;
+        $formular->update_freigabe();
         $formular->save();
 
         echo $this->load->view('control/' . $type . '/payments_list.php', array('formular' => Formular::find_by_id($formular_id)), true);
@@ -555,7 +555,7 @@ class Control_Controller extends MY_Controller
         $invoice->date = inputdate_to_mysqldate($this->input->post('inv-date'));
         $invoice->number = $this->input->post('inv-number');
         $invoice->remark = $this->input->post('inv-remark');
-        $invoice->amount = $this->input->post('inv-amount');
+        $invoice->amount = str_replace(',', '.',$this->input->post('inv-amount'));
         $invoice->save();
 
         $payments = array();
@@ -610,7 +610,7 @@ class Control_Controller extends MY_Controller
             show_404();
 
         $invoice->number = $this->input->post('number');
-        $invoice->amount = $this->input->post('amount');
+        $invoice->amount = str_replace(',', '.',$this->input->post('amount'));
         $invoice->date = inputdate_to_mysqldate($this->input->post('date'));
         $invoice->remark = $this->input->post('remark');
         $invoice->save();

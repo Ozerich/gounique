@@ -1,13 +1,13 @@
 <table class="product-list" id="flight-invoices">
-    <caption>Flight Invoices for <b><?=$formular->r_num?></b></caption>
+    <caption>Flug-Rechnung für  <b><?=$formular->r_num?></b></caption>
     <thead>
     <th>№</th>
-    <th>Inv. Number</th>
-    <th>Inv. Date</th>
-    <th>Inv. Amount</th>
-    <th>Paid</th>
+    <th>RG-Nr</th>
+    <th>RG-Datum</th>
+    <th>RG-Betrag</th>
+    <th>Zahlung</th>
     <th>Status</th>
-    <th>Inv. Type</th>
+    <th>RG-Vom</th>
     <th>Remark<th>
     <th>&nbsp;</th>
     </thead>
@@ -31,7 +31,7 @@
             <td class="date"><?=$invoice->date->format('d.M.y')?></td>
             <td class="amount"><?=num($invoice->amount)?></td>
             <td><?=num($invoice->paid_amount)?></td>
-            <td><?=$invoice->status >= 0 ? "OK" : $invoice->status . ' &euro;'?></td>
+            <td class="<?=$invoice->status < 0 ? 'minus' : 'plus'?>"><?=$invoice->status >= 0 ? "OK" : num($invoice->status) . ' &euro;'?></td>
             <td><?=$invoice->plain_type?></td>
             <td class="remark"><?=$invoice->remark?></td>
             <td class="actions"><a href="#" onclick="return edit_flight_invoice(event, '<?=$invoice->id?>')" class="edit_16"></a>&nbsp;<a href="#" class="delete-flightinvoice delete-icon"></a></td>
