@@ -33,7 +33,7 @@
                 <div class="newinvoice-block" style="display:none">
                     <div class="param">
                         <label for="invoice-num">Inv. Number</label>
-                        <input maxlength="8" type="text" name="invoice-num" class="invoice-num"/>
+                        <input maxlength="13" type="text" name="invoice-num" class="invoice-num"/>
                     </div>
                     <div class="param">
                         <label for="invoice-date">Inv. Date</label>

@@ -635,7 +635,7 @@ class Control_Controller extends MY_Controller
             'incoming_id' => $incoming_id,
             'number' => $this->input->post('number'),
             'type' => $this->input->post('type'),
-            'amount' => $this->input->post('amount'),
+            'amount' => str_replace(',', '.',$this->input->post('amount')),
             'date' => inputdate_to_mysqldate($this->input->post('date')),
             'remark' => $this->input->post('remark'),
             'created_by' => $this->user->id,

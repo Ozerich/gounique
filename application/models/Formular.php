@@ -122,10 +122,13 @@ class Formular extends ActiveRecord\Model
             $hotel_price += $hotel->all_price;
 
         foreach (FormularManuel::find_all_by_formular_id($this->id) as $manuel)
-            $manuel_price += $manuel->price;
+            $manuel_price += $manuel->all_price;
 
         $flight_price = $this->flight_price * $this->person_count;
-
+        //print_r('hotel: '.$hotel_price.'<br/>');
+        //print_r('manuel: '.$manuel_price.'<br/>');
+        //print_r('hotel: '.$flight_price.'<br/>');
+        //exit();
         return $hotel_price + $manuel_price + $flight_price;
     }
 
