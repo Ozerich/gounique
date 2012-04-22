@@ -92,11 +92,16 @@ jQuery.fn.center = function () {
     return this;
 }
 
+function isNumber(n) {
+    return !isNaN(parseFloat(n)) && isFinite(n);
+}
+
 jQuery.fn.setdatepicker = function () {
+    var old = $(this).val();
     $(this).datepicker({
         changeMonth:true,
         changeYear:true
-    }).datepicker("option", "showAnim", "blind").datepicker("option", "dateFormat", 'ddmmyy');
+    }).datepicker("option", "showAnim", "blind").datepicker("option", "dateFormat", 'ddmmyy').val(old);
     return $(this);
 }
 

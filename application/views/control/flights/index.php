@@ -35,6 +35,7 @@
             <th class="right">Zahlung</th>
             <th class="right">Status</th>
             <th class="right">Faellig bis</th>
+            <th>&nbsp;</th>
         </tr>
         </thead>
         <tbody>

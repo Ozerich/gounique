@@ -3,7 +3,7 @@
         <a href="dashboard" class="home-link"><img src="img/header-logo.jpg"/></a>
         <ul class="page-path">
             <li><a
-                href="kundenverwaltung/historie/<?=$formular->kunde->id?>"><?=$formular->kunde->plain_type;?> <?=$formular->kunde->k_num?></a>
+                    href="kundenverwaltung/historie/<?=$formular->kunde->id?>"><?=$formular->kunde->plain_type;?> <?=$formular->kunde->k_num?></a>
             </li>
             </li>
             <li><span>formular <?=$formular->v_num?></span></li>
@@ -50,7 +50,7 @@
             <div class="editparam" style="display: none">
                 <select id="new_ownertype_value">
                     <? foreach (Formular::$OWNER_TYPES as $ind => $type): ?>
-                        <option <?=$formular->owner_type == $ind ? 'selected' : ''?> value="<?=$ind?>"><?=$type?></option>
+                    <option <?=$formular->owner_type == $ind ? 'selected' : ''?> value="<?=$ind?>"><?=$type?></option>
                     <? endforeach; ?>
                 </select>
                 <a href="#" id="save-ownertype" class="save_16"></a>
@@ -144,7 +144,7 @@
         <div class="incoming-sendblock">
             <a href="#" class="incoming-send">Send report</a>
                     <span
-                        class="lastsend">Last send: <?=$item->incoming_sendtime ? $item->incoming_sendtime->format('d.m.Y H:i') : 'never'?></span>
+                            class="lastsend">Last send: <?=$item->incoming_sendtime ? $item->incoming_sendtime->format('d.m.Y H:i') : 'never'?></span>
         </div>
         <span class="incoming-sendok" style="display:none">OK</span>
         <? endif; ?>
@@ -269,6 +269,37 @@
             <? endif; ?>
         </table>
 
+        <? if ($formular->is_storno && $formular->status == 'storno'): ?>
+            <div id="storno_manual">
+                <div class="param">
+                    <label for="storno_manual_date">Storno datum:</label>
+                    <span><?=$formular->storno_date->format('d.m.Y');?></span>
+                    <input type="text" name="date" id="storno_manual_date" value="<?=$formular->storno_date->format('dmY');?>"/>
+                </div>
+
+                <div class="param">
+                    <label for="storno_manual_percent">Storno %:</label>
+                    <span><?=$formular->storno_percent?></span>
+                    <input type="text" name="percent" id="storno_manual_percent" value="<?=$formular->storno_percent;?>"/>
+                </div>
+
+                <div class="param">
+                    <label for="storno_betrag">Storno Betrag:</label>
+                    <span><?=$formular->storno_amount;?></span>
+                    <input type="text" name="betrag" id="storno_betrag" value="<?=$formular->storno_amount;?>"/>
+                </div>
+
+                <div class="param">
+                    <label>Storno by:</label>
+                    <span><?=$formular->storno_user->fullname.' '.$formular->storno_date->format('d.m.Y')?></span>
+                </div>
+
+                <button id="storno_edit_open">Edit</button>
+                <button id="storno_save" style="display:none">Save</button>
+                <button id="storno_close" style="display:none">Close</button>
+            </div>
+        <? endif; ?>
+
 
         <div class="price-buttons">
             <? if ($formular->status == "angebot"): ?>
@@ -338,7 +369,7 @@
 
 
 <div id="stage">
-<? if (!$formular->is_storno): ?>
+    <? if (!$formular->is_storno): ?>
 
     <input type="radio" id="radio1" name="stage" value="1"
         <?if ($formular->status == "angebot" || $formular->status == "eingangsmitteilung") echo 'checked';?>/>
@@ -348,55 +379,54 @@
         (Kundenkopie)</label>
     <? endif; ?>
     <? if (($formular->status == "rechnung" && !$formular->is_storno) || $formular->status == "storno"): ?>
-        <input type="radio" id="radio3" name="stage" value="3" checked/><label for="radio3">Rechnung</label>
-        <input type="radio" id="radio4" name="stage" value="4"/><label for="radio4">Rechnung
-            (Kundenkopie)</label>
+    <input type="radio" id="radio3" name="stage" value="3" checked/><label for="radio3">Rechnung</label>
+    <input type="radio" id="radio4" name="stage" value="4"/><label for="radio4">Rechnung
+        (Kundenkopie)</label>
     <? elseif ($formular->status == "rechnung") : ?>
-            <? if ($formular->kunde->type == "agenturen"): ?>
-            <input type="radio" id="radio1" name="stage" checked value="5"/><label for="radio1">Storno</label>
-            <? endif; ?>
-        <input type="radio" id="radio2" name="stage" checked value="6"/><label for="radio2">Storno(Kundenkopie)</label>
-        <? elseif ($formular->status == "gutschrift"): ?>
-        <input type="radio" id="radio1" name="stage" checked value="7"/><label for="radio1">Gutscrift</label>
+    <? if ($formular->kunde->type == "agenturen"): ?>
+        <input type="radio" id="radio1" name="stage" checked value="5"/><label for="radio1">Storno</label>
         <? endif; ?>
-
+    <input type="radio" id="radio2" name="stage" checked value="6"/><label for="radio2">Storno(Kundenkopie)</label>
+    <? elseif ($formular->status == "gutschrift"): ?>
+    <input type="radio" id="radio1" name="stage" checked value="7"/><label for="radio1">Gutscrift</label>
+    <? endif; ?>
 
 
 </div>
 <?=
-    form_open("reservierung/sendmail/" . $formular->id, null, array("formular_id" => $formular->id))
-    ;
-    ?>
-    <? if ($this->user->id != 9): ?>
-    <div class="mail-block">
-        <div class="mail" style="display:none">
-            <span class="left">Mail</span>
-            <input type="text" size="30" class="email"/>
-            <span class="status">noch nicht gesendet</span>
-            <input type="hidden" class="sended" value="0"/>
-        </div>
-        <div class="mail">
-            <span class="left">Administrator E-Mail</span>
-            <input type="text" disabled size="30" class="email" value="<?= $user->email ?>"/>
-            <span class="status">noch nicht gesendet</span>
-            <input type="hidden" class="sended" value="0"/>
-        </div>
-
-        <div class="mail">
-            <span class="left">Kunde E-Mail</span>
-            <input type="text" size="30" class="email" value="<?= $formular->kunde->email ?>"/>
-            <span class="status">noch nicht gesendet</span>
-            <input type="hidden" class="sended" value="0"/>
-        </div>
+form_open("reservierung/sendmail/" . $formular->id, null, array("formular_id" => $formular->id))
+;
+?>
+<? if ($this->user->id != 9): ?>
+<div class="mail-block">
+    <div class="mail" style="display:none">
+        <span class="left">Mail</span>
+        <input type="text" size="30" class="email"/>
+        <span class="status">noch nicht gesendet</span>
+        <input type="hidden" class="sended" value="0"/>
     </div>
-        <? endif; ?>
+    <div class="mail">
+        <span class="left">Administrator E-Mail</span>
+        <input type="text" disabled size="30" class="email" value="<?= $user->email ?>"/>
+        <span class="status">noch nicht gesendet</span>
+        <input type="hidden" class="sended" value="0"/>
+    </div>
+
+    <div class="mail">
+        <span class="left">Kunde E-Mail</span>
+        <input type="text" size="30" class="email" value="<?= $formular->kunde->email ?>"/>
+        <span class="status">noch nicht gesendet</span>
+        <input type="hidden" class="sended" value="0"/>
+    </div>
+</div>
+    <? endif; ?>
 </form>
 
 <div id="final-buttons" class="formular-buttons">
     <? if ($this->user->id == 9): ?>
     <a id="druck-link" href="#" class="button-link" target="_blank">Druck</a>
     <? else: ?>
-        <a href="reservierung/edit/<?= $formular->id ?>" class="button-link">Formular editieren</a>
+    <a href="reservierung/edit/<?= $formular->id ?>" class="button-link">Formular editieren</a>
     <? if ($formular->status == "eingangsmitteilung" && !$formular->is_storno): ?>
         <a href="reservierung/status/<?= $formular->id ?>" class="button-link">Status editieren</a>
         <? endif; ?>

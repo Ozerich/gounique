@@ -1,3 +1,36 @@
+function open_comment(evnt) {
+    evnt.preventDefault();
+
+    var line = $(evnt.target).parents('tr');
+
+    $('.finance-new-comment').hide();
+    $(line).find('.finance-new-comment').show();
+
+    return false;
+}
+
+function close_comment(evnt) {
+    $('.finance-new-comment').hide();
+}
+
+function save_comment(evnt, type) {
+    var line = $(evnt.target).parents('tr');
+    $(line).find('.comment-baloon pre').html($(line).find('.finance-new-comment-text').val());
+
+    $.post('control/update_comment/' + type + '/' + $(line).find('.formular_id').val(), 'text=' + $(line).find('.finance-new-comment-text').val());
+    $('.finance-new-comment').hide();
+}
+
+function show_comment_baloon(evnt){
+    var line = $(evnt.target).parents('tr');
+    $(line).find('.comment-baloon').show();
+}
+
+function hide_comment_baloon(evnt){
+    var line = $(evnt.target).parents('tr');
+    $(line).find('.comment-baloon').hide();
+}
+
 function edit_flight_invoice(evnt, invoice_id) {
 
     //  $('#inv-newsubmit').hide();
@@ -254,43 +287,46 @@ function UpdateInvoiceList(invoice_block) {
 }
 
 function BindSelectLineEvent() {
-    $('#controlpayments-list tbody tr').not('.total, .comment').click(function () {
-        if ($(this).hasClass('current')) {
-            if ($(this).hasClass('no-open'))
+    $('#controlpayments-list tbody tr').not('.total, .comment').find('td').not('.no-popup').click(function () {
+        var line = $(this).parents('tr');
+        if ($(line).hasClass('current')) {
+            if ($(line).hasClass('no-open'))
                 return false;
             $('#show-payments').click();
         }
         else {
             $('#controlpayments-list tr').removeClass('current');
             $('#controlpayments-list tr.comment').hide();
-            $(this).addClass('current');
-            if ($(this).next().hasClass('comment'))
-                $(this).next().show();
+            $(line).addClass('current');
+            if ($(line).next().hasClass('comment'))
+                $(line).next().show();
             $('#show-payments').show();
         }
     });
 
-    $('#invoice-list tbody tr').not('.total').click(function () {
-            if ($(this).hasClass('current')) {
-                var formular_id = $(this).find('.formular_id').val();
+    $('#invoice-list tbody tr').not('.total').find('td').not('.no-popup').click(function () {
+            var line = $(this).parents('tr');
+            if ($(line).hasClass('current')) {
+                var formular_id = $(line).find('.formular_id').val();
                 document.location = 'control/invoice/' + formular_id;
             }
             else {
                 $('#invoice-list tr').removeClass('current');
-                $(this).addClass('current');
+                $(line).addClass('current');
             }
         }
     );
 
 
-    $('#flight-list tbody tr').not('.total').click(function () {
-            if ($(this).hasClass('current')) {
-                var formular_id = $(this).find('.formular_id').val();
+    $('#flight-list tbody tr').not('.total').find('td').not('.no-popup').click(function () {
+            var line = $(this).parents('tr');
+            if ($(line).hasClass('current')) {
+                var formular_id = $(line).find('.formular_id').val();
                 document.location = 'control/flights/' + formular_id;
             }
             else {
                 $('#flight-list tr').removeClass('current');
-                $(this).addClass('current');
+                $(line).addClass('current');
             }
         }
     );

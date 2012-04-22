@@ -83,6 +83,7 @@
             <th>Netto</th>
             <th class="right">Status</th>
             <th class="right">Payment date</th>
+            <th>&nbsp;</th>
         </tr>
         </thead>
         <tbody>

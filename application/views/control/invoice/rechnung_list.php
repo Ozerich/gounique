@@ -29,6 +29,15 @@ foreach ($formulars as $ind => $formular):
     <td class="right"><?=number_format($formular->invoice_stats['other']['amount'], 2, ',', '.')?></td>
     <td class="right"><?=number_format($formular->invoice_stats['total']['amount'], 2, ',', '.')?></td>
     <td class="right"><?=$formular->departure_date->sub(new DateInterval('P14D'))->format('d.M.y')?></td>
+    <td class="finance-comment-block no-popup">
+        <a class="finance-comment" onmouseout="return hide_comment_baloon(event);" onmouseover="return show_comment_baloon(event);" onclick="return open_comment(event);"></a>
+        <div class="finance-new-comment">
+            <textarea class="finance-new-comment-text"><?=$formular->payment_land_comment?></textarea>
+            <button class="finance-comment-close" onclick="close_comment(event)">Close</button>
+            <button class="finance-comment-save" onclick="save_comment(event, 'land');">Save</button>
+        </div>
+        <div class="comment-baloon"><pre><?=$formular->payment_land_comment?></pre></div>
+    </td>
 </tr>
 <? endforeach; ?>
 
@@ -41,4 +50,5 @@ foreach ($formulars as $ind => $formular):
     <td class="right"><?=num($total['stats']['other'])?></td>
     <td class="right"><?=num($total['stats']['total'])?></td>
     <td class="right"><?=num($total['ergebnis'])?></td>
+    <td>&nbsp;</td>
 </tr>

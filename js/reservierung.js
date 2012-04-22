@@ -948,4 +948,49 @@ $(document).ready(function () {
 
         return false;
     });
+
+    $('#storno_manual_date').setdatepicker();
+
+    $('#storno_edit_open').click(function () {
+        $('#storno_manual span, #storno_edit_open').hide();
+        $('#storno_manual .param input,#storno_save, #storno_close').show();
+    });
+
+    $('#storno_close').click(function () {
+        $('#storno_manual span, #storno_edit_open').show();
+        $('#storno_manual .param input,#storno_save, #storno_close').hide();
+    });
+
+    $('#storno_save').click(function () {
+
+        $('#storno_manual .param input').removeClass('error');
+
+        if ($('#storno_manual_date').val().length < 6)
+            $('#storno_manual_date').addClass('error');
+
+        var amount = $('#storno_betrag').val();
+        var percent = $('#storno_manual_percent').val();
+
+        if (amount.length && !isNumber(amount))
+            $('#storno_betrag').addClass('error');
+        if (percent.length && !isNumber(percent))
+            $('#storno_manual_percent').addClass('error');
+
+        if(amount > 0 && percent > 0)
+            $('#storno_betrag, #storno_manual_percent').addClass('error');
+
+        if($('#storno_manual .param input.error').size())
+            return false;
+
+        $(this).attr('disabled', 'disabled');
+
+        $.ajax({
+            url: 'reservierung/update_storno/' + $('#formular_id').val(),
+            type: 'post',
+            data: $('#storno_manual').find('*').serialize(),
+            success: function(){
+                document.location = 'reservierung/final/' + $('#formular_id').val();
+            }
+        });
+    });
 });

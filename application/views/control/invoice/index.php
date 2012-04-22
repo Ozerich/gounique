@@ -38,6 +38,7 @@
             <th class="right">Other</th>
             <th class="right">Total</th>
             <th class="right">Payment<br/>Faellig bis</th>
+            <th>&nbsp;</th>
         </tr>
         </thead>
         <tbody>

@@ -388,8 +388,10 @@ class Formular extends ActiveRecord\Model
             return $this;
         if ($this->status == "storno")
             return Formular::find(array('conditions' => array('status = "gutschrift" AND is_storno = 1 AND storno_original = ?', $this->id)));
+    }
 
-
+    public function get_storno_user(){
+        return User::find_by_id($this->storno_by);
     }
 
     public function get_storno_rechnung()

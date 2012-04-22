@@ -81,7 +81,7 @@
             <th colspan="3">Restzahlung</th>
             <th>&nbsp;</th>
             <th>&nbsp;</th>
-            <th colspan="4">Versand</th>
+            <th colspan="5">Versand</th>
         </tr>
         <tr>
             <th>№</th>
@@ -104,6 +104,7 @@
             <th class="status">Freigabe</th>
             <th class="status">Versand</th>
             <th class="right">Date</th>
+            <th>&nbsp;</th>
         </tr>
         </thead>
         <tbody>
