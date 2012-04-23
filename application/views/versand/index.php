@@ -2,8 +2,7 @@
     <div id="page-header">
         <a href="dashboard" class="home-link"><img src="img/header-logo.jpg"/></a>
         <ul class="page-path">
-            <li><a href="control">finance & controlling</a></li>
-            <li><span>Zahlungseingang</span></li>
+            <li><span>Versand</span></li>
         </ul>
     </div>
 </div>
@@ -15,6 +14,7 @@
     <input type="hidden" id="lastpayment_amount" value=""/>
     <input type="hidden" id="lastpayment_remark" value=""/>
     <input type="hidden" id="lastpayment_type"/>
+    <input type="hidden" id="is_versand" value="1"/>
 
     <div class="hotellist-top">
 
@@ -22,11 +22,11 @@
             <legend>Search by:</legend>
             <div class="param">
                 <label for="v_num">Vorg-NR</label>
-                <input type="text" id="v_num" maxlength="6"/>
+                <input type="text" class="versand" id="v_num" maxlength="6"/>
             </div>
             <div class="param">
                 <label for="r_num">RG-NR</label>
-                <input type="text" id="r_num" maxlength="11"/>
+                <input type="text" class="versand" id="r_num" maxlength="11"/>
             </div>
         </fieldset>
 
@@ -61,7 +61,7 @@
             </div>
 
 
-            <input type="submit" class="search-button" id="datesearch-start"/>
+            <input type="submit" class="search-button versand" id="datesearch-start"/>
             <br class="clear"/>
 
         </fieldset>
@@ -76,16 +76,6 @@
     <table class="product-list finanzen-list" id="controlpayments-list">
         <thead>
         <tr>
-            <th colspan="10">&nbsp;</th>
-            <th colspan="3">Anzahlung</th>
-            <th colspan="3">Restzahlung</th>
-            <th>&nbsp;</th>
-            <th>&nbsp;</th>
-            <th>&nbsp;</th>
-            <th>&nbsp;</th>
-            <th>&nbsp;</th>
-        </tr>
-        <tr>
             <th>№</th>
             <th>BR</th>
             <th class="rg-num">RG-NR</th>
@@ -95,16 +85,11 @@
             <th>KD-Name</th>
             <th class="right">RG-Datum</th>
             <th class="right">Abreise</th>
+            <th class="right">Rückreise</th>
             <th class="right">Reisepreis</th>
-            <th class="right">Betrag</th>
-            <th class="right">Faellig</th>
-            <th class="right">Status</th>
-            <th class="right">Betrag</th>
-            <th class="right">Faellig</th>
-            <th>Status</th>
-            <th>Netto</th>
-            <th class="right">Zahl.Diff</th>
-            <th class="right">Payment date</th>
+            <th class="status">Freigabe</th>
+            <th class="status">Versand</th>
+            <th class="right">Versand Date</th>
             <th>&nbsp;</th>
         </tr>
         </thead>

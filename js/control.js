@@ -511,7 +511,7 @@ $(document).ready(function () {
         OpenOverlay();
 
         $.ajax({
-            url:'control/payments/' + $('#payments_type').val() + '/' + $('#controlpayments-list tr.current .formular_id').val(),
+            url: 'control/payments/' + $('#payments_type').val() + '/' + $('#controlpayments-list tr.current .formular_id').val(),
             success:function (data) {
                 $('#overlay-window').html(data).show().center();
                 $('#new-payment #payment-date').setdatepicker();
@@ -583,12 +583,13 @@ $(document).ready(function () {
     });
 
     $('.num-search #v_num, .num-search #r_num').keyup(function () {
+        var versand = $(this).hasClass('versand');
         var val = $(this).val();
         var search_field = $(this).attr('id');
         var search_str = 'search_field=' + search_field + '&search_string=' + val;
         $('#last_searchquery').val(search_str);
         $.ajax({
-            url:'control/search_formulars/' + $('#payments_type').val(),
+            url: versand ? 'versand/search/' : 'control/search_formulars/' + $('#payments_type').val(),
             type:'post',
             data:search_str,
             success:function (data) {
@@ -599,9 +600,10 @@ $(document).ready(function () {
     });
 
     $('#clear_filter').click(function () {
+        var versand = $('#is_versand').size() > 0;
         $('.hotellist-top input').val('');
         $.ajax({
-            url:'control/search_formulars/incoming',
+            url:versand ? 'versand/search' : 'control/search_formulars/incoming',
             success:function (data) {
                 $('#controlpayments-list tbody').empty().html(data);
                 BindSelectLineEvent();
@@ -614,6 +616,8 @@ $(document).ready(function () {
 
         if ($('.date-search input[type=text]:visible.error').size())return false;
 
+        var versand = $(this).hasClass('versand');
+
         $(this).addClass('loading');
         var button = $(this);
         var search_field = $(this).attr('id');
@@ -625,7 +629,7 @@ $(document).ready(function () {
 
         $('#last_searchquery').val(search_str);
         $.ajax({
-            url:'control/search_formulars/' + $('#payments_type').val(),
+            url:versand ? 'versand/search/' : 'control/search_formulars/' + $('#payments_type').val(),
             type:'post',
             data:search_str,
             success:function (data) {

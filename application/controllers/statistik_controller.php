@@ -46,6 +46,28 @@ class Statistik_Controller extends MY_Controller
         return $result;
     }
 
+    private function get_total($formulars = array())
+    {
+
+        $type_stats = array(
+            'pausschalreise' => array('total' => 0, 'persons' => 0, 'count' => 0),
+            'bausteinreise' => array('total' => 0, 'persons' => 0, 'count' => 0),
+            'nurflug' => array('total' => 0, 'persons' => 0, 'count' => 0),
+        );
+
+        foreach ($formulars as $formular)
+        {
+            if (!isset($type_stats[$formular->type])) continue;
+
+            $type_stats[$formular->type]['total'] += $formular->brutto;
+            $type_stats[$formular->type]['persons'] += $formular->person_count;
+            $type_stats[$formular->type]['count']++;
+        }
+
+
+        return $type_stats;
+    }
+
     public function daily()
     {
         $day_from = $day_to = null;
@@ -61,36 +83,72 @@ class Statistik_Controller extends MY_Controller
             $fields = isset($_POST['field']) ? $_POST['field'] : array();
         }
 
-        $angebot_q = '(status = "angebot" || status = "eingangsmitteilung")';
-        $rechnung_q = '(status = "rechnung")';
+        $angebot_q = '(status = "angebot")';
+        $rechnung_q = '(status = "eingangsmitteilung")';
 
         $date_q = '(';
-        $date_q .= $day_from ? '{date} >= "'.$day_from.'"' : '1';
-        $date_q .= ' AND '.($day_to ? '{date} <= "'.$day_to.'"' : '1');
+        $date_q .= $day_from ? '{date} >= "' . $day_from . '"' : '1';
+        $date_q .= ' AND ' . ($day_to ? '{date} <= "' . $day_to . '"' : '1');
         $date_q .= ')';
 
-        $angebot_q .= ' AND '.str_replace('{date}', 'created_date', $date_q);
-        $rechnung_q .= ' AND '.str_replace('{date}', 'rechnung_date', $date_q);
+        $conditions = '';
 
-        $angebots = Formular::all(array('conditions' => array($angebot_q), 'order' => 'created_date'));
-        $rechnungs = Formular::all(array('conditions' => array($rechnung_q), 'order' => 'rechnung_date'));
+        if ($_POST) {
+            $type_conditions = array();
+            if (isset($_POST['is_pauschalreise'])) $type_conditions[] = 'type="pausschalreise"';
+            if (isset($_POST['is_bausteinreise'])) $type_conditions[] = 'type="bausteinreise"';
+            if (isset($_POST['is_nurflug'])) $type_conditions[] = 'type="nurflug"';
+            $type_conditions = implode(' OR ', $type_conditions);
+
+            $conditions .= $type_conditions ? ' AND (' . $type_conditions . ')' : ' AND 0';
+
+            $owner_type = array();
+
+            if (isset($_POST['is_ownertype']))
+                foreach ($_POST['is_ownertype'] as $ind => $val)
+                    $owner_type[] = 'owner_type = ' . $ind;
+
+            $owner_type = implode(' OR ', $owner_type);
+
+            $conditions .= ' AND ' . ($owner_type ? '(' . $owner_type . ')' : '0');
+
+            if (isset($_POST['agency_num'])) {
+                $agency = Kunde::find_by_k_num($this->input->post('agency_num'));
+                if ($agency)
+                    $conditions .= ' AND kunde_id = ' . $agency->id;
+            }
+        }
+
+
+        $angebot_q .= ' AND ' . str_replace('{date}', 'created_date', $date_q) . $conditions;
+        $rechnung_q .= ' AND ' . str_replace('{date}', 'rechnung_date', $date_q) . $conditions;
+
+        $angebots = Formular::all(array('conditions' => array($angebot_q), 'order' => 'created_date DESC'));
+        $rechnungs = Formular::all(array('conditions' => array($rechnung_q), 'order' => 'rechnung_date DESC'));
 
         $angebot_days = $this->get_days($angebots, $angebot_total);
         $rechnung_days = $this->get_days($rechnungs, $rechnung_total);
 
         $template_data = $_POST ? array('fields' => $fields) : array();
 
+
         $template_data['days'] = $angebot_days;
         $template_data['total'] = $angebot_total;
         $this->view_data['angebot_html'] = $this->load->view('statistik/daily_angebot_list.php', $template_data, true);
+        $this->view_data['angebot_total_types'] = $this->load->view('statistik/total_formular_types.php', array('type_stats' => $this->get_total($angebots)), true);
 
         $template_data['days'] = $rechnung_days;
         $template_data['total'] = $rechnung_total;
         $this->view_data['rechnung_html'] = $this->load->view('statistik/daily_rechnung_list.php', $template_data, true);
+        $this->view_data['rechnung_total_types'] = $this->load->view('statistik/total_formular_types.php', array('type_stats' => $this->get_total($rechnungs)), true);
 
-        if($_POST)
-        {
-            echo json_encode(array('angebot' => $this->view_data['angebot_html'], 'rechnung' => $this->view_data['rechnung_html']));
+        if ($_POST) {
+            echo json_encode(array(
+                'angebot' => $this->view_data['angebot_html'],
+                'rechnung' => $this->view_data['rechnung_html'],
+                'angebot_types' => $this->view_data['angebot_total_types'],
+                'rechnung_types' => $this->view_data['rechnung_total_types'],
+            ));
             die;
         }
 
@@ -164,18 +222,6 @@ class Statistik_Controller extends MY_Controller
 
         $formulars = Formular::all(array('conditions' => array($conditions), 'order' => 'r_num_int ASC'));
 
-        $type_stats = array(
-            'pausschalreise' => array('total' => 0, 'persons' => 0, 'count' => 0),
-            'bausteinreise' => array('total' => 0, 'persons' => 0, 'count' => 0),
-            'nurflug' => array('total' => 0, 'persons' => 0, 'count' => 0),
-        );
-
-        foreach ($formulars as $formular)
-        {
-            $type_stats[$formular->type]['total'] += $formular->brutto;
-            $type_stats[$formular->type]['persons'] += $formular->person_count;
-            $type_stats[$formular->type]['count']++;
-        }
 
         echo $this->load->view('statistik/stats_list.php', array('formulars' => $formulars, 'fields' => $fields, 'type_stats' => $type_stats), true);
 

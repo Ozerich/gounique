@@ -496,6 +496,15 @@ class Formular extends ActiveRecord\Model
         return User::find_by_id($user_id);
     }
 
+    public function get_payment_date(){
+        $result = null;
+        foreach($this->payments as $payment){
+            if($result == null || $payment->payment_date > $result)
+                $result = $payment->payment_date;
+        }
+        return $result;
+    }
+
 }
 
 ?>

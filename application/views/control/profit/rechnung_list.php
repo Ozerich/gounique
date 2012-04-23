@@ -22,7 +22,7 @@ foreach ($formulars as $ind => $formular):
     <td><?=($ind + 1)?></td>
     <td class="rg-num right"><a href="reservierung/final/<?=$formular->id?>"><?=$formular->r_num?></a></td>
     <td><?=$formular->v_num?></td>
-    <td class="right"><?=$formular->departure_date->format('d.M.y')?></td>
+    <td class="right"><?=$formular->departure_date->format('d.M.Y')?></td>
     <td class="right"><?=num($formular->brutto)?></td>
     <td class="right"><?=num($formular->flight_stats['amount'])?></td>
     <td class="right"><?=num($formular->invoice_stats['hotel']['amount'])?></td>

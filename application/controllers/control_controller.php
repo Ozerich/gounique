@@ -230,7 +230,7 @@ class Control_Controller extends MY_Controller
         else
             $formulars = Formular::all(array(
                     'conditions' => array('(status = "rechnung" OR status = "storno" OR status="gutschrift")' . $kunde_query),
-                    'order' => 'r_num_int ASC')
+                    'order' => 'departure_date DESC')
             );
 
         $result = array();

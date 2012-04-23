@@ -21,7 +21,7 @@
             <input type="hidden" class="payment_id" value="<?=$payment->id?>"/>
             <input type="hidden" class="payment_type" value="<?=$payment->type?>"/>
             <td><?=($ind + 1)?></td>
-            <td class="date"><?=$payment->date->format('d.M.y')?></td>
+            <td class="date"><?=$payment->date->format('d.M.Y')?></td>
             <td class="amount"><?=num($payment->amount)?></td>
             <td><?=$payment->plain_type?></td>
             <td class="remark"><?=$payment->remark?></td>

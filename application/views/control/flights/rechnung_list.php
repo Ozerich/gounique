@@ -18,6 +18,7 @@ foreach ($formulars as $ind => $formular):
     <td class="right flightstatus"><?=$formular->flight_stats['status'] >= 0 ? "OK" : num($formular->flight_stats['status'])?></td>
     <td class="right"><?=$formular->departure_date->sub(new DateInterval('P14D'))->format('d.M.y')?></td>
     <td class="finance-comment-block no-popup">
+        <div style="position:relative">
         <a class="finance-comment" onmouseout="return hide_comment_baloon(event);" onmouseover="return show_comment_baloon(event);" onclick="return open_comment(event);"></a>
         <div class="finance-new-comment">
             <textarea class="finance-new-comment-text"><?=$formular->payment_flight_comment?></textarea>
@@ -25,6 +26,7 @@ foreach ($formulars as $ind => $formular):
             <button class="finance-comment-save" onclick="save_comment(event, 'flight');">Save</button>
         </div>
         <div class="comment-baloon"><pre><?=$formular->payment_flight_comment?></pre></div>
+            </div>
     </td>
 </tr>
 <? endforeach; ?>

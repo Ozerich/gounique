@@ -22,7 +22,7 @@
         <div class="row">
             <a href="control">finance & controlling</a>
             <a href="statistik">statistik</a>
-            <a class="last disabled">buchhaltung</a>
+            <a href="versand" class="last">versand</a>
         </div>
 
         <div class="row">

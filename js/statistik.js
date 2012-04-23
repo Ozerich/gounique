@@ -46,8 +46,8 @@ $(document).ready(function () {
     });
 
 
-    $('#daily_statistic .tabs a').click(function () {
-        $('#daily_statistic .tabs li').removeClass('active');
+    $('#statistic_page .tabs a').click(function () {
+        $('#statistic_page .tabs li').removeClass('active');
         $('.statistic-tabpage').hide();
         $('#' + $(this).attr('for')).show();
         $(this).parent().addClass("active");
@@ -55,20 +55,24 @@ $(document).ready(function () {
         return false;
     });
 
-    $('#daily_statistic .date-period input[type=text]').setdatepicker();
+    $('#statistic_page .date-period input.datepicker').setdatepicker();
 
-    $('#daily_statistic #search_button').click(function(){
+    $('#statistic_page #search_button').click(function(){
         $('#daily_statistic_loading').show();
         $(this).hide();
 
         $.post('statistik/daily', $('#daily_statistic_filter').find('*').serialize(), function(data){
             data = jQuery.parseJSON(data);
 
-            $('#statistic_angebot_page table').html(data.angebot);
-            $('#statistic_rechnung_page table').html(data.rechnung);
+            $('#statistic_angebot_page table.days-table').html(data.angebot);
+            $('#statistic_angebot_page .statistic-types-wr').html(data.angebot_types);
+            $('#statistic_rechnung_page table.days-table').html(data.rechnung);
+            $('#statistic_rechnung_page .statistic-types-wr').html(data.rechnung_types);
+
+
 
             $('#daily_statistic_loading').hide();
-            $('#daily_statistic #search_button').show();
+            $('#statistic_page #search_button').show();
 
             update_daily_statistic_events();
         });

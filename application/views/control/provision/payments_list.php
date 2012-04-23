@@ -47,7 +47,7 @@
         ?>
     <tr>
         <input type="hidden" class="payment_id" value="<?=$payment->id?>"/>
-        <td class="date"><?=$payment->payment_date->format('d.M.y');?></td>
+        <td class="date"><?=$payment->payment_date->format('d.M.Y');?></td>
         <td class="amount""><?=number_format($payment->amount, 2, ',', '.')?></td>
         <td><?=number_format($diff, 2, ',', '.')?></td>
         <td class="remark"><?=$payment->remark?></td>

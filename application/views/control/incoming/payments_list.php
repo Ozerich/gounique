@@ -31,23 +31,7 @@
             <span><?=num($formular->restzahlung_status)?></span>
         </div>
 
-        <? if(!$formular->is_storno): ?>
-        <p class="versandfreigabe">Versandfreigabe</p>
-        <div class="param">
-            <span class="param-name">Versended</span>
-            <input type="checkbox" id="check_versand" <?=$formular->is_versand ? 'checked' : ''?>/>
-        </div>
-        <? if ($formular->is_versand): ?>
-            <div class="param">
-                <span class="param-name">Versended date</span>
-                <span><?=$formular->versanded_date->format('d.M.y')?></span>
-            </div>
-            <div class="param">
-                <span class="param-name">Versended By</span>
-                <span><?=$formular->versanded_user->fullname?></span>
-            </div>
-            <? endif; ?>
-        <? endif; ?>
+
 
     </div>
     <? if($formular->kunde->type == 'agenturen' && $formular->status != "storno"):?>
@@ -102,7 +86,7 @@
     <tr class="<?$payment->added_by == 0 ? 'netto' : ''?>">
         <input type="hidden" class="payment_id" value="<?=$payment->id?>"/>
         <input type="hidden" class="payment_type" value="<?=$payment->type?>"/>
-        <td class="date"><?=$payment->payment_date->format('d.M.y');?></td>
+        <td class="date"><?=$payment->payment_date->format('d.M.Y');?></td>
         <td class="amount"><?=num($payment->amount)?></td>
         <td><?=num($anzahlung_diff)?></td>
         <td><?=num($restzahlung_diff)?></td>

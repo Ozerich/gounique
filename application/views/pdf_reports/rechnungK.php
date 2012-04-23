@@ -30,7 +30,7 @@
     <div class="main-block">
 
         <div class="block first">
-            <h3>Reiseteilnehmer:</h3>
+            <div class="block-header">Reiseteilnehmer:</h3>
             <table class="reiseteilnehmer-table">
                 <? foreach ($formular->persons as $ind => $person): ?>
                 <tr>
@@ -42,7 +42,7 @@
         </div>
 
         <div class="block">
-            <h3>Reisezeitraum:</h3>
+            <div class="block-header">Reisezeitraum:</div>
             <table class="reisezeitraum-table">
                 <tr>
                     <td><?=$formular->departure_date->format('d. F. Y')?></td>
@@ -53,7 +53,7 @@
         </div>
         <? if ($formular->type != 'nurflug'): ?>
         <div class="block">
-            <h3>Leistung:</h3>
+            <div class="block-header">Leistung:</div>
             <table class="liestung-table">
                 <? foreach ($formular->hotels_and_manuels as $ind => $item): ?>
                 <tr>
@@ -65,7 +65,7 @@
         <? endif; ?>
         <?if ($formular->flight_text != ""): ?>
         <div class="block">
-            <h3>Flugplan:</h3>
+            <div class="block-header">Flugplan:</div>
 
             <div class="flight-plan">
                 <pre><?=$formular->flight_text?></pre>

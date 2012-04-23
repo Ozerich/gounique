@@ -316,14 +316,14 @@
                 <div class="param-block">
                     <label for="departure_date">Abreisedatum</label>
                     <input type="text" name="departure_date" size="8" maxlength="8"
-                           value="<?=$formular->departure_date ? $formular->departure_date->format('m/d/Y') : ''?>"
+                           value="<?=$formular->departure_date ? $formular->departure_date->format('mdY') : ''?>"
                            id="departure_date"/>
                 </div>
 
                 <div class="param-block">
                     <label for="finalpayment_date">Restzahlung Datum:</label>
                     <input type="text" name="finalpayment_date" size="8" maxlength="8" id="finalpayment_date"
-                           value="<?=$formular->finalpayment_date ? $formular->finalpayment_date->format('m/d/Y') : ''?>"/>
+                           value="<?=$formular->finalpayment_date ? $formular->finalpayment_date->format('mdY') : ''?>"/>
                 </div>
 
                 <div class="param-block">
@@ -344,7 +344,7 @@
                     <div class="param-block">
                         <label for="prepayment_date">Anzahlung Datum:</label>
                         <input type="text" name="preprepayment_date" size="8" maxlength="8"
-                               value="<?=$formular->prepayment_date ? $formular->prepayment_date->format('m/d/Y') : ''?>"
+                               value="<?=$formular->prepayment_date ? $formular->prepayment_date->format('mdY') : ''?>"
                                id="prepayment_date"/>
                     </div>
 
@@ -426,7 +426,7 @@ form_open("reservierung/sendmail/" . $formular->id, null, array("formular_id" =>
     <? if ($this->user->id == 9): ?>
     <a id="druck-link" href="#" class="button-link" target="_blank">Druck</a>
     <? else: ?>
-    <a href="reservierung/edit/<?= $formular->id ?>" class="button-link">Formular editieren</a>
+    <? if($formular->is_storno == 0): ?><a href="reservierung/edit/<?= $formular->id ?>" class="button-link">Formular editieren</a><? endif;?>
     <? if ($formular->status == "eingangsmitteilung" && !$formular->is_storno): ?>
         <a href="reservierung/status/<?= $formular->id ?>" class="button-link">Status editieren</a>
         <? endif; ?>

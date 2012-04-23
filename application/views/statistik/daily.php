@@ -2,26 +2,53 @@
     <div id="page-header">
         <a href="dashboard" class="home-link"><img src="img/header-logo.jpg"/></a>
         <ul class="page-path">
-            <li><a href="statistik">statistik</a></li>
-            <li><span>Paymentstype / Invoicetype</span></li>
+            <li><span>statistik</span></li>
         </ul>
     </div>
 </div>
 
-<div id="daily_statistic" class="content">
+<div id="statistic_page" class="content">
 
     <div id="daily_statistic_filter">
 
-        <fieldset class="date-period">
-            <legend>Date Period:</legend>
+        <fieldset class="date-period search-block">
+            <legend>Search:</legend>
             <div class="param">
                 <label for="date_from">Von:</label>
-                <input id="date_from" name="date_from" type="text" maxlength="8"/>
+                <input id="date_from" class="datepicker" name="date_from" type="text" maxlength="8"/>
             </div>
             <div class="param">
                 <label for="date_to">Bis:</label>
-                <input id="date_to" name="date_to" type="text" maxlength="8"/>
+                <input id="date_to" class="datepicker" name="date_to" type="text" maxlength="8"/>
             </div>
+
+            <div class="param agenturen-wr">
+                <label for="ag_num">AG-NR:</label>
+                <input type="text" id="ag_num" name="agency_num" maxlength="5" size="5"/>
+            </div>
+
+            <br class="clear"/>
+
+            <div class="type-checkboxes">
+
+                <input type="checkbox" id="is_pauschalreise" name="is_pauschalreise" checked/>
+                <label for="is_pauschalreise">Pauschalreise</label>
+
+                <input type="checkbox" id="is_bausteinreise" name="is_bausteinreise" checked/>
+                <label for="is_bausteinreise">Bausteinreise</label>
+
+                <input type="checkbox" id="is_nurflug" name="is_nurflug" checked/>
+                <label for="is_nurflug">Nurflug</label>
+
+            </div>
+
+            <div class="type-checkboxes">
+                <? foreach (Formular::$OWNER_TYPES as $ind => $type): ?>
+                <input type="checkbox" id="is_ownertype_<?=$ind?>" name="is_ownertype[<?=$ind?>]" checked/>
+                <label for="is_ownertype_<?=$ind?>"><?=$type?></label>
+                <? endforeach; ?>
+            </div>
+
         </fieldset>
 
         <fieldset class="table-fields">
@@ -72,7 +99,7 @@
             </div>
         </fieldset>
 
-         <button id="search_button">Search</button>
+        <button id="search_button">Search</button>
         <div id="daily_statistic_loading" class="loading_32"></div>
         <br clear="all"/>
     </div>
@@ -86,12 +113,14 @@
 
     <div id="daily_statistic_content">
         <div class="statistic-tabpage" id="statistic_angebot_page" style="display:none">
-            <table class="statictic-table product-list" id="statistics-list">
+            <div class="statistic-types-wr"><?=$angebot_total_types?></div>
+            <table class="statictic-table days-table product-list" id="statistics-list">
                 <?=$angebot_html?>
             </table>
         </div>
         <div class="statistic-tabpage" id="statistic_rechnung_page">
-            <table class="statictic-table product-list" id="statistics-list">
+            <div class="statistic-types-wr"><?=$rechnung_total_types?></div>
+            <table class="statictic-table days-table product-list" id="statistics-list">
                 <?=$rechnung_html?>
             </table>
         </div>

@@ -78,7 +78,7 @@ $route['reservierung'] = 'reservierung_controller';
 $route['reservierung/final/(:num)'] = 'reservierung_controller/final_/$1';
 $route['reservierung/(:any)'] = 'reservierung_controller/$1';
 
-$route['statistik'] = 'statistik_controller';
+$route['statistik'] = 'statistik_controller/daily';
 $route['statistik/(:any)'] = 'statistik_controller/$1';
 
 $route['dashboard'] = 'dashboard_controller';
@@ -104,6 +104,9 @@ $route['control/outgoing/flights'] = 'control_controller/flights';
 $route['control/outgoing/flights/(:any)'] = 'control_controller/flights/$1';
 
 $route['control/(:any)'] = 'control_controller/$1';
+
+$route['versand'] = 'versand_controller';
+$route['versand/(:any)'] = 'versand_controller/$1';
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

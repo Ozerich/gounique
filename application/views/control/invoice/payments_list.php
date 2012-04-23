@@ -13,7 +13,7 @@
         <input type="hidden" class="type" value="<?=$payment->payment_type?>"/>
         <td><?=($ind + 1)?></td>
         <td class="amount"><?=num($payment->payment_amount)?></td>
-        <td class="date"><?=$payment->payment_date->format('d.M.y')?></td>
+        <td class="date"><?=$payment->payment_date->format('d.M.Y')?></td>
         <td><?=$payment->plain_type?></td>
         <td class="remark"><?=$payment->payment_remark?></td>
         <td>

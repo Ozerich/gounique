@@ -36,7 +36,7 @@
             <tbody>
                 <? foreach ($day['formulars'] as $ind => $formular): ?>
             <tr>
-                <td><?=($ind + 1)?></td>
+                <td><a target="_blank" href="reservierung/final/<?=$formular->id?>"><?=($ind + 1)?></a></td>
                 <?if (!isset($fields) || isset($fields['berater'])): ?>
                 <td><?=$formular->user->initials;?></td><? endif;?>
                 <?if (!isset($fields) || isset($fields['owner_type'])): ?>
@@ -44,7 +44,7 @@
                 <?if (!isset($fields) || isset($fields['person_name'])): ?>
                 <td class="v_num"><?=$formular->person?></td><? endif;?>
                 <?if (!isset($fields) || isset($fields['ag_num'])): ?>
-                <td><?=$formular->kunde->k_num?></td><? endif;?>
+                <td><?=$formular->kunde ? $formular->kunde->k_num : '-'?></td><? endif;?>
                 <?if (!isset($fields) || isset($fields['v_num'])): ?>
                 <td><?=$formular->v_num?></td><? endif;?>
                 <?if (!isset($fields) || isset($fields['type'])): ?>

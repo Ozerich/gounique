@@ -44,7 +44,7 @@
             <tbody>
                 <? foreach ($day['formulars'] as $ind => $formular): ?>
             <tr>
-                <td><?=($ind + 1)?></td>
+                <td><a target="_blank" href="reservierung/final/<?=$formular->id?>"><?=($ind + 1)?></a></td>
                 <?if (!isset($fields) || isset($fields['berater'])): ?>
                 <td><?=$formular->user->initials;?></td><? endif;?>
                 <?if (!isset($fields) || isset($fields['owner_type'])): ?>
@@ -54,11 +54,11 @@
                 <?if (!isset($fields) || isset($fields['r_num'])): ?>
                 <td><?=$formular->r_num?></td><? endif;?>
                 <?if (!isset($fields) || isset($fields['ag_num'])): ?>
-                <td><?=$formular->kunde->k_num?></td><? endif;?>
+                <td><?=$formular->kunde ? $formular->kunde->k_num : '-'?></td><? endif;?>
                 <?if (!isset($fields) || isset($fields['v_num'])): ?>
                 <td><?=$formular->v_num?></td><? endif;?>
                 <?if (!isset($fields) || isset($fields['rg_date'])): ?>
-                <td><?=$formular->rechnung_date->format('d/m/Y')?></td><? endif;?>
+                <td><?=$formular->created_date->format('d/m/Y')?></td><? endif;?>
                 <?if (!isset($fields) || isset($fields['departure'])): ?>
                 <td class="abreise right"><?=$formular->departure_date ? $formular->departure_date->format('d.M.y') : '-'?></td><? endif;?>
                 <?if (!isset($fields) || isset($fields['arrive'])): ?>
