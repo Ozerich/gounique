@@ -81,7 +81,7 @@ foreach ($formulars as $ind => $formular):
 
 <? endforeach; ?>
 <tr class="total">
-    <td colspan="7">&nbsp;</td>
+    <td colspan="8">&nbsp;</td>
     <td><?=number_format($total_brutto, 2, ',', '.')?></td>
     <td><?=number_format($total_anzahlung, 2, ',', '.')?></td>
     <td>&nbsp;</td>
@@ -89,7 +89,7 @@ foreach ($formulars as $ind => $formular):
     <td><?=number_format($total_restzahlung, 2)?></td>
     <td>&nbsp;</td>
     <td><?=number_format($restzahlung_status, 2)?></td>
-    <td colspan="2">&nbsp;</td>
+    <td colspan="1">&nbsp;</td>
     <td><?=number_format($total_diff, 2)?></td>
     <td colspan="6">&nbsp;</td>
 </tr>

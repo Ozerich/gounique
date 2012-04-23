@@ -746,6 +746,7 @@ Your Unique World Team";
         $formular->rechnung_date = time_to_mysqldate(time());
         $formular->changed_date = time_to_mysqldate(time());
         $formular->changed_by = $this->user->id;
+        $formular->rechnung_by = $this->user->id;
 
         $next_rnum = Config::find_by_param('next_rnum');
         $formular->status = "rechnung";
@@ -1079,6 +1080,7 @@ Your Unique World Team";
 
         $storno_rechnung->brutto = $storno_rechnung->finalpayment_amount = $brutto;
         $storno_rechnung->provision_amount = round($brutto / 100 * $storno->provision, 2) * ($storno->kunde->ausland ? 1 : 1.19);
+        $storno_rechnung->update_freigabe();
         $storno_rechnung->save();
 
         $gutschrift = $storno->gutschrift;

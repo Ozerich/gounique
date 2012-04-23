@@ -60,7 +60,7 @@
             <br class="clear"/>
         </div>
 
-        <span class="copyright">&copy; 2010 - 2012 Copyright <a href="#">goUnique</a> 1.4
+        <span class="copyright">&copy; 2010 - 2012 Copyright <a href="#">goUnique</a> 1.5
    Powered by <a class="author-link" href="mailto:ozicoder@gmail.com">Vital Ozierski</a></span>
 
     </div>

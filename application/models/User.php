@@ -65,7 +65,7 @@ class User extends ActiveRecord\Model
 
     public function get_initials()
     {
-        return $this->name[0] . $this->surname[0];
+        return mb_substr($this->name,0,1). mb_substr($this->surname,0,1);
     }
 }
 

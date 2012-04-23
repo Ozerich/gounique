@@ -47,11 +47,11 @@ foreach ($formulars as $ind => $formular):
 </tr>
 <? endforeach; ?>
 <tr class="total">
-    <td colspan="4">&nbsp;</td>
+    <td colspan="7">&nbsp;</td>
     <td class="right"><?=number_format($total_brutto, 2, ',','.')?></td>
     <td>&nbsp;</td>
     <td class="right"><?=number_format($total_provision, 2, ',','.')?></td>
-    <td colspan="3">&nbsp;</td>
+    <td colspan="2">&nbsp;</td>
     <td class="right"><?=number_format($provision_status, 2, ',','.')?></td>
     <td colspan="5">&nbsp;</td>
 </tr>

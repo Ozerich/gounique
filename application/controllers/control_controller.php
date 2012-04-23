@@ -207,7 +207,6 @@ class Control_Controller extends MY_Controller
 
 
         $formulars = array();
-
         if ($search_string)
             $formulars = Formular::find('all', array('conditions' =>
             array('(status = "rechnung" OR status = "storno" OR status="gutschrift") ' . $kunde_query . ' AND ' . $search_field . ' like "%' . $search_string . '%"')));
@@ -249,7 +248,10 @@ class Control_Controller extends MY_Controller
         }
 
         if ($output) {
-            echo $this->load->view('control/' . $type . '/invoice_list.php', array('formulars' => $result), true);
+            $template_file = 'invoice_list';
+            if($type == 'flights' || $type == 'invoice')
+                $template_file = 'rechnung_list';
+            echo $this->load->view('control/' . $type . '/'.$template_file.'.php', array('formulars' => $result), true);
             exit();
         }
         else

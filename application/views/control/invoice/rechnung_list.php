@@ -42,7 +42,7 @@ foreach ($formulars as $ind => $formular):
 <? endforeach; ?>
 
 <tr class="total">
-    <td colspan="4">&nbsp;</td>
+    <td colspan="5">&nbsp;</td>
     <td class="right"><?=num($total['brutto'])?></td>
     <td class="right"><?=num($total['stats']['hotel'])?></td>
     <td class="right"><?=num($total['stats']['rundreise'])?></td>
@@ -50,5 +50,5 @@ foreach ($formulars as $ind => $formular):
     <td class="right"><?=num($total['stats']['other'])?></td>
     <td class="right"><?=num($total['stats']['total'])?></td>
     <td class="right"><?=num($total['ergebnis'])?></td>
-    <td>&nbsp;</td>
+    <td colspan="4">&nbsp;</td>
 </tr>

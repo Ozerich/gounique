@@ -30,7 +30,7 @@ foreach ($formulars as $ind => $formular):
 <? endforeach; ?>
 
 <tr class="total">
-    <td colspan="4">&nbsp;</td>
+    <td colspan="5">&nbsp;</td>
     <td><?=num($total['amount'])?></td>
     <td><?=num($total['paid'])?></td>
     <td><?=num($total['status'])?></td>

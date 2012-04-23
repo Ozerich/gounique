@@ -14,6 +14,92 @@ class Statistik_Controller extends MY_Controller
 
     public function index()
     {
+
+    }
+
+    private function get_days($formulars = array(), &$total)
+    {
+        $days_added = array();
+        $result = array();
+
+        $total = array('amount' => 0, 'count' => 0, 'person_count' => 0);
+
+        foreach ($formulars as $formular) {
+            $date = $formular->status == 'rechnung' ? $formular->rechnung_date : $formular->created_date;
+            $date = $date->format('d/m/Y');
+
+            if (!in_array($date, $days_added)) {
+                $days_added[] = $date;
+                $result[$date] = array('total' => 0, 'count' => 0, 'person_count' => 0, 'formulars' => array());
+            }
+
+            $result[$date]['count']++;
+            $result[$date]['total'] += $formular->brutto;
+            $result[$date]['person_count'] += $formular->person_count;
+            $result[$date]['formulars'][] = $formular;
+
+            $total['count']++;
+            $total['person_count'] += $formular->person_count;
+            $total['amount'] += $formular->brutto;
+        }
+
+        return $result;
+    }
+
+    public function daily()
+    {
+        $day_from = $day_to = null;
+        $fields = 'all';
+
+        if ($_POST) {
+            $day_from = $this->input->post('date_from');
+            $day_to = $this->input->post('date_to');
+
+            $day_from = $day_from ? inputdate_to_mysqldate($day_from) : null;
+            $day_to = $day_to ? inputdate_to_mysqldate($day_to) : null;
+
+            $fields = isset($_POST['field']) ? $_POST['field'] : array();
+        }
+
+        $angebot_q = '(status = "angebot" || status = "eingangsmitteilung")';
+        $rechnung_q = '(status = "rechnung")';
+
+        $date_q = '(';
+        $date_q .= $day_from ? '{date} >= "'.$day_from.'"' : '1';
+        $date_q .= ' AND '.($day_to ? '{date} <= "'.$day_to.'"' : '1');
+        $date_q .= ')';
+
+        $angebot_q .= ' AND '.str_replace('{date}', 'created_date', $date_q);
+        $rechnung_q .= ' AND '.str_replace('{date}', 'rechnung_date', $date_q);
+
+        $angebots = Formular::all(array('conditions' => array($angebot_q), 'order' => 'created_date'));
+        $rechnungs = Formular::all(array('conditions' => array($rechnung_q), 'order' => 'rechnung_date'));
+
+        $angebot_days = $this->get_days($angebots, $angebot_total);
+        $rechnung_days = $this->get_days($rechnungs, $rechnung_total);
+
+        $template_data = $_POST ? array('fields' => $fields) : array();
+
+        $template_data['days'] = $angebot_days;
+        $template_data['total'] = $angebot_total;
+        $this->view_data['angebot_html'] = $this->load->view('statistik/daily_angebot_list.php', $template_data, true);
+
+        $template_data['days'] = $rechnung_days;
+        $template_data['total'] = $rechnung_total;
+        $this->view_data['rechnung_html'] = $this->load->view('statistik/daily_rechnung_list.php', $template_data, true);
+
+        if($_POST)
+        {
+            echo json_encode(array('angebot' => $this->view_data['angebot_html'], 'rechnung' => $this->view_data['rechnung_html']));
+            die;
+        }
+
+        $this->view_data['page_title'] = 'Daily Statistic';
+    }
+
+
+    public function payment_type()
+    {
         $formulars = Formular::all(array('conditions' => array('status = "rechnung"'), 'order' => 'r_num_int ASC'));
 
         $type_stats = array(
@@ -70,11 +156,11 @@ class Statistik_Controller extends MY_Controller
 
         if (isset($_POST['is_ownertype']))
             foreach ($_POST['is_ownertype'] as $ind => $val)
-                $owner_type[] = 'owner_type = '.$ind;
+                $owner_type[] = 'owner_type = ' . $ind;
 
         $owner_type = implode(' OR ', $owner_type);
 
-        $conditions .= ' AND '.($owner_type ? '('.$owner_type.')' : '0');
+        $conditions .= ' AND ' . ($owner_type ? '(' . $owner_type . ')' : '0');
 
         $formulars = Formular::all(array('conditions' => array($conditions), 'order' => 'r_num_int ASC'));
 

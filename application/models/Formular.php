@@ -306,7 +306,7 @@ class Formular extends ActiveRecord\Model
     public function get_provision_status()
     {
         $total = $this->get_provisionpaid_amount();
-        return $total - $this->provision_amount;
+        return round($total - $this->provision_amount, 2);
     }
 
     public function get_original()
@@ -489,6 +489,11 @@ class Formular extends ActiveRecord\Model
     function update_freigabe()
     {
         $this->is_freigabe = $this->paid_amount >= ($this->brutto - 0.2) ? true : false;
+    }
+
+    public function get_user(){
+        $user_id = $this->status == 'rechnung' ? $this->rechnung_by : $this->created_by;
+        return User::find_by_id($user_id);
     }
 
 }

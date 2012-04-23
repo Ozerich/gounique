@@ -21,12 +21,13 @@ function save_comment(evnt, type) {
     $('.finance-new-comment').hide();
 }
 
-function show_comment_baloon(evnt){
+function show_comment_baloon(evnt) {
     var line = $(evnt.target).parents('tr');
-    $(line).find('.comment-baloon').show();
+    if ($(line).find('.comment-baloon pre').html() != '')
+        $(line).find('.comment-baloon').show();
 }
 
-function hide_comment_baloon(evnt){
+function hide_comment_baloon(evnt) {
     var line = $(evnt.target).parents('tr');
     $(line).find('.comment-baloon').hide();
 }
@@ -628,7 +629,7 @@ $(document).ready(function () {
             type:'post',
             data:search_str,
             success:function (data) {
-                $('#controlpayments-list tbody').empty().html(data);
+                $('#controlpayments-list tbody, .finanzen-list tbody').empty().html(data);
                 BindSelectLineEvent();
                 $(button).removeClass('loading');
             }
