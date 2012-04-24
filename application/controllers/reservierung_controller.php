@@ -771,6 +771,8 @@ Your Unique World Team";
             return false;
         }
 
+        $formular->eingangs_date = time_to_mysqldate(time());
+        $formular->eingangs_by = $this->user->id;
         $formular->status = "eingangsmitteilung";
         $formular->save();
 

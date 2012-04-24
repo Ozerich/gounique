@@ -66,6 +66,8 @@ $(document).ready(function () {
 
             $('#statistic_angebot_page table.days-table').html(data.angebot);
             $('#statistic_angebot_page .statistic-types-wr').html(data.angebot_types);
+            $('#statistic_eingangs_page table.days-table').html(data.eingangs);
+            $('#statistic_eingangs_page .statistic-types-wr').html(data.eingangs_types);
             $('#statistic_rechnung_page table.days-table').html(data.rechnung);
             $('#statistic_rechnung_page .statistic-types-wr').html(data.rechnung_types);
 

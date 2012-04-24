@@ -106,8 +106,9 @@
 
     <div class="tabs-block">
         <ul class="tabs">
-            <li class="active"><a for="statistic_rechnung_page" href="#">Tagesumsatz</a></li>
+            <li class="active"><a for="statistic_eingangs_page" href="#">Tagesumsatz</a></li>
             <li><a href="#" for="statistic_angebot_page">Tagesangebot</a></li>
+            <li><a href="#" for="statistic_rechnung_page">Tagesrechnung</a></li>
         </ul>
     </div>
 
@@ -118,7 +119,13 @@
                 <?=$angebot_html?>
             </table>
         </div>
-        <div class="statistic-tabpage" id="statistic_rechnung_page">
+        <div class="statistic-tabpage" id="statistic_eingangs_page">
+            <div class="statistic-types-wr"><?=$eingangs_total_types?></div>
+            <table class="statictic-table days-table product-list" id="statistics-list">
+                <?=$eingangs_html?>
+            </table>
+        </div>
+        <div class="statistic-tabpage" id="statistic_rechnung_page" style="display:none">
             <div class="statistic-types-wr"><?=$rechnung_total_types?></div>
             <table class="statictic-table days-table product-list" id="statistics-list">
                 <?=$rechnung_html?>

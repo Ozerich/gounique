@@ -84,7 +84,8 @@ class Statistik_Controller extends MY_Controller
         }
 
         $angebot_q = '(status = "angebot")';
-        $rechnung_q = '(status = "eingangsmitteilung")';
+        $eingangs_q = '(status = "eingangsmitteilung")';
+        $rechnung_q = '(status = "rechnung")';
 
         $date_q = '(';
         $date_q .= $day_from ? '{date} >= "' . $day_from . '"' : '1';
@@ -121,12 +122,15 @@ class Statistik_Controller extends MY_Controller
 
 
         $angebot_q .= ' AND ' . str_replace('{date}', 'created_date', $date_q) . $conditions;
+        $eingangs_q .= ' AND ' . str_replace('{date}', 'eingangs_date', $date_q) . $conditions;
         $rechnung_q .= ' AND ' . str_replace('{date}', 'rechnung_date', $date_q) . $conditions;
 
         $angebots = Formular::all(array('conditions' => array($angebot_q), 'order' => 'created_date DESC'));
+        $eingangs = Formular::all(array('conditions' => array($eingangs_q), 'order' => 'eingangs_date DESC'));
         $rechnungs = Formular::all(array('conditions' => array($rechnung_q), 'order' => 'rechnung_date DESC'));
 
         $angebot_days = $this->get_days($angebots, $angebot_total);
+        $eingangs_days = $this->get_days($eingangs, $eingangs_total);
         $rechnung_days = $this->get_days($rechnungs, $rechnung_total);
 
         $template_data = $_POST ? array('fields' => $fields) : array();
@@ -137,6 +141,11 @@ class Statistik_Controller extends MY_Controller
         $this->view_data['angebot_html'] = $this->load->view('statistik/daily_angebot_list.php', $template_data, true);
         $this->view_data['angebot_total_types'] = $this->load->view('statistik/total_formular_types.php', array('type_stats' => $this->get_total($angebots)), true);
 
+        $template_data['days'] = $eingangs_days;
+        $template_data['total'] = $eingangs_total;
+        $this->view_data['eingangs_html'] = $this->load->view('statistik/daily_eingangs_list.php', $template_data, true);
+        $this->view_data['eingangs_total_types'] = $this->load->view('statistik/total_formular_types.php', array('type_stats' => $this->get_total($eingangs)), true);
+
         $template_data['days'] = $rechnung_days;
         $template_data['total'] = $rechnung_total;
         $this->view_data['rechnung_html'] = $this->load->view('statistik/daily_rechnung_list.php', $template_data, true);
@@ -146,8 +155,10 @@ class Statistik_Controller extends MY_Controller
             echo json_encode(array(
                 'angebot' => $this->view_data['angebot_html'],
                 'rechnung' => $this->view_data['rechnung_html'],
+                'eingangs' => $this->view_data['eingangs_html'],
                 'angebot_types' => $this->view_data['angebot_total_types'],
                 'rechnung_types' => $this->view_data['rechnung_total_types'],
+                'eingangs_types' => $this->view_data['eingangs_total_types'],
             ));
             die;
         }
