@@ -212,7 +212,7 @@
             <tr class="underline up">
                 <td class="param">Stornogebühr
                     <?=$formular->original->storno_percent ? 'lt. AGB´s ' . $formular->original->storno_percent . '%' : ''?></td>
-                <td><?=number_format($formular->original->brutto - $formular->brutto, 2, ',', '.')?></td>
+                <td><?=num($formular->brutto, 2, ',', '.')?></td>
             </tr>
             <? if ($formular->kunde->type == "agenturen"): ?>
                 <tr>

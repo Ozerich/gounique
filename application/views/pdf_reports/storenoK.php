@@ -84,7 +84,7 @@
             <tr>
                 <td class="paramname">
                     Stornogebühr <?=$formular->original->storno_percent ? $formular->original->storno_percent . '%' : ''?></td>
-                <td class="paramvalue"><?=num($formular->original->brutto - $formular->brutto);?> &euro;</td>
+                <td class="paramvalue"><?=num($formular->brutto);?> &euro;</td>
             </tr>
             <tr>
                 <td class="paramname">Ihre Zahlung</td>

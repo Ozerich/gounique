@@ -22,8 +22,6 @@
                 <?if (!isset($fields) || isset($fields['person_name'])): ?>
                 <th>KD-Name</th><? endif;?>
                 <?if (!isset($fields) || isset($fields['r_num'])): ?>
-                <th>RG-NR</th><? endif;?>
-                <?if (!isset($fields) || isset($fields['ag_num'])): ?>
                 <th>AG-NR</th><? endif;?>
                 <?if (!isset($fields) || isset($fields['v_num'])): ?>
                 <th>Vorg-NR</th><? endif;?>
@@ -51,14 +49,12 @@
                 <td><?=$formular->plain_ownertype?></td><? endif;?>
                 <?if (!isset($fields) || isset($fields['person_name'])): ?>
                 <td class="v_num"><?=$formular->person?></td><? endif;?>
-                <?if (!isset($fields) || isset($fields['r_num'])): ?>
-                <td><?=$formular->r_num?></td><? endif;?>
                 <?if (!isset($fields) || isset($fields['ag_num'])): ?>
                 <td><?=$formular->kunde ? $formular->kunde->k_num : '-'?></td><? endif;?>
                 <?if (!isset($fields) || isset($fields['v_num'])): ?>
                 <td><?=$formular->v_num?></td><? endif;?>
                 <?if (!isset($fields) || isset($fields['rg_date'])): ?>
-                <td><?=$formular->created_date->format('d/m/Y')?></td><? endif;?>
+                <td><?=$formular->eingangs_date->format('d/m/Y')?></td><? endif;?>
                 <?if (!isset($fields) || isset($fields['departure'])): ?>
                 <td class="abreise right"><?=$formular->departure_date ? $formular->departure_date->format('d.M.y') : '-'?></td><? endif;?>
                 <?if (!isset($fields) || isset($fields['arrive'])): ?>

@@ -98,19 +98,6 @@ function BindPaymentEvents(block) {
         $('#new-payment #payment_id').val($(this).find('payment_id').val());
     });
 
-
-    $('#check_versand').click(function () {
-        $(this).attr('disabled', 'disabled');
-        $.ajax({
-            url:'control/versand/' + $('#payments_formular_id').val(),
-            type:'post',
-            data:'value=' + ($(this).is(':checked') ? 1 : 0),
-            success:function () {
-                $('#check_versand').removeAttr('disabled');
-            }
-        });
-    });
-
     $('#is-netto').click(function () {
         $(this).attr('disabled', 'disabled');
         var check = $(this);
@@ -626,6 +613,8 @@ $(document).ready(function () {
             search_str += '&ag_num=' + $('#ag_num').val();
         if ($('#person').val())
             search_str += '&person=' + $('#person').val();
+        if ($('#only_open').is(':checked'))
+            search_str += '&only_open=1';
 
         $('#last_searchquery').val(search_str);
         $.ajax({

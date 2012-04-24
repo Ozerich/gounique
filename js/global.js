@@ -97,11 +97,13 @@ function isNumber(n) {
 }
 
 jQuery.fn.setdatepicker = function () {
-    var old = $(this).val();
-    $(this).datepicker({
-        changeMonth:true,
-        changeYear:true
-    }).datepicker("option", "showAnim", "blind").datepicker("option", "dateFormat", 'ddmmyy').val(old);
+    $(this).each(function () {
+        var old = $(this).val();
+        $(this).datepicker({
+            changeMonth:true,
+            changeYear:true
+        }).datepicker("option", "showAnim", "blind").datepicker("option", "dateFormat", 'ddmmyy').val(old);
+    });
     return $(this);
 }
 
@@ -109,7 +111,7 @@ function OpenOverlay() {
     var maskHeight = $(document).height();
     var maskWidth = $(window).width();
     $('#dark-overlay').css({'width':maskWidth, 'height':maskHeight});
-    $('#dark-overlay').fadeIn(1000);
+    $('#dark-overlay').fadeIn(500);
     $('#dark-overlay').fadeTo("slow", 0.8, function () {
         $(this).addClass('finished')
     });

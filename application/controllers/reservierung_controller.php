@@ -336,9 +336,6 @@ Your Unique World Team";
                     return false;
             }
 
-            if (strlen($v_num) != 6)
-                return false;
-
             $formular = Formular::create(array(
                 'v_num' => strtoupper($v_num),
                 'kunde_id' => $kunde_id,
@@ -804,7 +801,7 @@ Your Unique World Team";
             if ($formular->storno_percent)
                 $brutto = $formular->brutto / 100 * $formular->storno_percent;
             else
-                $brutto = $formular->brutto - $formular->storno_amount;
+                $brutto = $formular->storno_amount;
 
             $storno_rechnung = Formular::create(array(
                 'kunde_id' => $formular->kunde_id,
@@ -817,7 +814,7 @@ Your Unique World Team";
                 'flight_text' => $formular->flight_text,
                 'flight_price' => $formular->flight_price,
                 'provision' => $formular->provision,
-                'provision_amount' => round($brutto / 100 * $formular->provision, 2) * ($formular->kunde->ausland ? 1 : 1.19),
+                'provision_amount' => $formular->storno_percent ? round($brutto / 100 * $formular->provision, 2) * ($formular->kunde->ausland ? 1 : 1.19) : 0,
                 'provision_date' => $formular->kunde->type == "agenturen" ? time_to_mysqldate(time()) : null,
                 'service_charge' => $formular->service_charge,
                 'brutto' => $brutto,
@@ -1078,10 +1075,10 @@ Your Unique World Team";
         if ($storno->storno_percent)
             $brutto = $storno->brutto / 100 * $storno->storno_percent;
         else
-            $brutto = $storno->brutto - $storno->storno_amount;
+            $brutto = $storno->storno_amount;
 
         $storno_rechnung->brutto = $storno_rechnung->finalpayment_amount = $brutto;
-        $storno_rechnung->provision_amount = round($brutto / 100 * $storno->provision, 2) * ($storno->kunde->ausland ? 1 : 1.19);
+        $storno_rechnung->provision_amount = $storno->storno_percent ? round($brutto / 100 * $storno->provision, 2) * ($storno->kunde->ausland ? 1 : 1.19) : 0;
         $storno_rechnung->update_freigabe();
         $storno_rechnung->save();
 

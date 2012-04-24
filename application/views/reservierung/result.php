@@ -212,14 +212,14 @@
     <div class="param-block">
         <label for="departure_date">Abreisedatum</label>
         <input type="text" name="departure_date" size="8" maxlength="8"
-               value="<?=$formular->departure_date ? $formular->departure_date->format('m/d/Y') : ''?>"
+               value="<?=$formular->departure_date ? $formular->departure_date->format('dmY') : ''?>"
                id="departure_date"/>
     </div>
 
     <div class="param-block">
         <label for="arrival_date">Rückreisedatum</label>
         <input type="text" name="arrival_date" size="8" maxlength="8"
-               value="<?=$formular->arrival_date ? $formular->arrival_date->format('m/d/Y') : ''?>"
+               value="<?=$formular->arrival_date ? $formular->arrival_date->format('dmY') : ''?>"
                id="arrival_date"/>
     </div>
 

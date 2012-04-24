@@ -9,7 +9,7 @@ class Versand_Controller extends MY_Controller
         if (!$this->user)
             redirect('login');
 
-        $this->view_data['JS_files'] = array("js/control.js");
+        $this->view_data['JS_files'] = array("js/versand.js");
     }
 
     public function index()
@@ -19,6 +19,16 @@ class Versand_Controller extends MY_Controller
             array('formulars' => $formulars), true);
 
         $this->view_data['page_title'] = 'Versand';
+    }
+
+    public function info($formular_id = 0)
+    {
+        $formular = Formular::find_by_id($formular_id);
+        if (!$formular)
+            show_404();
+
+        echo $this->load->view('versand/info.php', array('formular' => $formular), true);
+        die;
     }
 
     public function search()

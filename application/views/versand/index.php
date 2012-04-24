@@ -41,8 +41,6 @@
                 <input type="text" maxlength="8" id="search-bis"/>
 
                 <select id="datesearch-type">
-                    <option value="anzahlung">Anzahlung</option>
-                    <option value="restzahlung">Restzahlung</option>
                     <option value="rechnung">Rechnungsdatum</option>
                     <option value="versand">Versanddatum</option>
                     <option value="abreise">Abreisedatum</option>
@@ -59,10 +57,6 @@
                 </div>
 
             </div>
-
-
-            <input type="submit" class="search-button versand" id="datesearch-start"/>
-            <br class="clear"/>
 
         </fieldset>
 

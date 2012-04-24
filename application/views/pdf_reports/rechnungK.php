@@ -30,7 +30,7 @@
     <div class="main-block">
 
         <div class="block first">
-            <div class="block-header">Reiseteilnehmer:</h3>
+            <div class="block-header">Reiseteilnehmer:</div>
             <table class="reiseteilnehmer-table">
                 <? foreach ($formular->persons as $ind => $person): ?>
                 <tr>

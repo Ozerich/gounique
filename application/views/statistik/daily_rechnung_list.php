@@ -58,7 +58,7 @@
                 <?if (!isset($fields) || isset($fields['v_num'])): ?>
                 <td><?=$formular->v_num?></td><? endif;?>
                 <?if (!isset($fields) || isset($fields['rg_date'])): ?>
-                <td><?=$formular->created_date->format('d/m/Y')?></td><? endif;?>
+                <td><?=$formular->rechnung_date->format('d/m/Y')?></td><? endif;?>
                 <?if (!isset($fields) || isset($fields['departure'])): ?>
                 <td class="abreise right"><?=$formular->departure_date ? $formular->departure_date->format('d.M.y') : '-'?></td><? endif;?>
                 <?if (!isset($fields) || isset($fields['arrive'])): ?>

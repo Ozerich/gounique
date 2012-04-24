@@ -60,9 +60,12 @@
 
             </div>
 
-
-            <input type="submit" class="search-button" id="datesearch-start"/>
-            <br class="clear"/>
+            <div class="filter-checkboxes-wr">
+                <div class="checkbox-param">
+                    <label for="ag_num"><input type="checkbox" id="only_open" name="only_open"/>Only open</label>
+                </div>
+                <input type="submit" class="search-button" id="datesearch-start"/>
+            </div>
 
         </fieldset>
 

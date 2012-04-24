@@ -244,6 +244,9 @@ class Control_Controller extends MY_Controller
             if ($person_filter && strpos($formular->person, $person_filter) === false)
                 continue;
 
+            if($type == 'incoming' && isset($_POST['only_open']) && $formular->total_diff >= 0.00)
+                continue;
+
             $result[] = $formular;
         }
 
