@@ -615,6 +615,8 @@ $(document).ready(function () {
             search_str += '&person=' + $('#person').val();
         if ($('#only_open').is(':checked'))
             search_str += '&only_open=1';
+        if ($('#berater').size())
+            search_str += '&berater=' + $('#berater').val();
 
         $('#last_searchquery').val(search_str);
         $.ajax({

@@ -18,6 +18,7 @@ foreach ($formulars as $ind => $formular):
     <td><?=$formular->v_num?></td>
     <td class="person"><?=$formular->person?></td>
     <td><?=$formular->departure_date->format('d.M.y')?></td>
+    <td class="right reisedatum"><?=$formular->arrival_date ? $formular->arrival_date->format('d.M.y') : '-'?></td>
     <td class="right <?=$formular->brutto < 0 ? 'minus' : ''?>"><?=number_format($formular->brutto, 2, ',', '.')?></td>
     <td class="right"><?=number_format($formular->provision, 2, ',', '.')?></td>
     <td class="right"><?=$formular->type == 'nurflug' ? 'nurflug' : number_format($formular->provision_amount, 2, ',', '.')?></td>
@@ -47,7 +48,7 @@ foreach ($formulars as $ind => $formular):
 </tr>
 <? endforeach; ?>
 <tr class="total">
-    <td colspan="7">&nbsp;</td>
+    <td colspan="8">&nbsp;</td>
     <td class="right"><?=number_format($total_brutto, 2, ',','.')?></td>
     <td>&nbsp;</td>
     <td class="right"><?=number_format($total_provision, 2, ',','.')?></td>

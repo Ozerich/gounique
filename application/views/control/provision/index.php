@@ -42,6 +42,8 @@
 
                 <select id="datesearch-type">
                     <option value="provision">Provision</option>
+                    <option value="abreise">Abreisedatum</option>
+                    <option value="arrival">Rückreisedatum</option>
                 </select>
 
                 <div class="agenturen-wr">
@@ -55,9 +57,12 @@
                 </div>
             </div>
 
-            <input type="submit" class="search-button" id="datesearch-start"/>
-            <br class="clear"/>
-
+            <div class="filter-checkboxes-wr">
+                <div class="checkbox-param">
+                    <label for="ag_num"><input type="checkbox" id="only_open" name="only_open"/>Only open</label>
+                </div>
+                <input type="submit" class="search-button" id="datesearch-start"/>
+            </div>
         </fieldset>
 
         <div class="hotel-buttons">
@@ -76,6 +81,7 @@
             <th>Vorg-NR</th>
             <th>Kd-Name</th>
             <th>Abreise</th>
+            <th>Rückreise</th>
             <th class="right">Total-RG</th>
             <th class="right">Provision %</th>
             <th class="right">Prov. Betrag</th>

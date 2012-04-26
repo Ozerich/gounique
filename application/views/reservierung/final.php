@@ -316,14 +316,14 @@
                 <div class="param-block">
                     <label for="departure_date">Abreisedatum</label>
                     <input type="text" name="departure_date" size="8" maxlength="8"
-                           value="<?=$formular->departure_date ? $formular->departure_date->format('mdY') : ''?>"
+                           value="<?=$formular->departure_date ? $formular->departure_date->format('dmY') : ''?>"
                            id="departure_date"/>
                 </div>
 
                 <div class="param-block">
                     <label for="finalpayment_date">Restzahlung Datum:</label>
                     <input type="text" name="finalpayment_date" size="8" maxlength="8" id="finalpayment_date"
-                           value="<?=$formular->finalpayment_date ? $formular->finalpayment_date->format('mdY') : ''?>"/>
+                           value="<?=$formular->finalpayment_date ? $formular->finalpayment_date->format('dmY') : ''?>"/>
                 </div>
 
                 <div class="param-block">
@@ -344,7 +344,7 @@
                     <div class="param-block">
                         <label for="prepayment_date">Anzahlung Datum:</label>
                         <input type="text" name="preprepayment_date" size="8" maxlength="8"
-                               value="<?=$formular->prepayment_date ? $formular->prepayment_date->format('mdY') : ''?>"
+                               value="<?=$formular->prepayment_date ? $formular->prepayment_date->format('dmY') : ''?>"
                                id="prepayment_date"/>
                     </div>
 

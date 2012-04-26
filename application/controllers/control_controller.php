@@ -209,7 +209,7 @@ class Control_Controller extends MY_Controller
         $formulars = array();
         if ($search_string)
             $formulars = Formular::find('all', array('conditions' =>
-            array('(status = "rechnung" OR status = "storno" OR status="gutschrift") ' . $kunde_query . ' AND ' . $search_field . ' like "%' . $search_string . '%"')));
+            array('(status = "rechnung" OR status = "storno" OR status="gutschrift") ' . $kunde_query . ' AND ' . $search_field . ' like "%' . $search_string . '%"'), 'order' => 'r_num_int DESC'));
         else if ($von && $bis) {
             $search_map = array(
                 'buchung' => 'created_date',
@@ -218,19 +218,21 @@ class Control_Controller extends MY_Controller
                 'anzahlung' => 'prepayment_date',
                 'restzahlung' => 'finalpayment_date',
                 'provision' => 'provision_date',
-                'versand' => 'versanded_date'
+                'versand' => 'versanded_date',
+                'arrival' => 'arrival_date',
             );
 
             if (isset($search_map[$search_field])) {
                 $search_field = $search_map[$search_field];
                 $formulars = Formular::find('all', array('conditions' =>
-                array('(status = "rechnung" OR status = "storno" OR status="gutschrift")' . $kunde_query . ' AND ' . $search_field . ' >= ? AND ' . $search_field . ' <= ?', $von, $bis)));
+                array('(status = "rechnung" OR status = "storno" OR status="gutschrift")' . $kunde_query . ' AND ' . $search_field . ' >= ? AND ' . $search_field . ' <= ?', $von, $bis),
+                    'order' => 'r_num_int DESC'));
             }
         }
         else
             $formulars = Formular::all(array(
                     'conditions' => array('(status = "rechnung" OR status = "storno" OR status="gutschrift")' . $kunde_query),
-                    'order' => 'departure_date DESC')
+                    'order' => 'r_num_int DESC')
             );
 
         $result = array();
@@ -245,6 +247,12 @@ class Control_Controller extends MY_Controller
                 continue;
 
             if($type == 'incoming' && isset($_POST['only_open']) && $formular->total_diff >= 0.00)
+                continue;
+
+            if($type == 'provision' && isset($_POST['only_open']) && $formular->provision_status >= 0.00)
+                continue;
+
+            if(isset($_POST['berater']) && $_POST['berater'] != 0 && $formular->user->id != $_POST['berater'])
                 continue;
 
             $result[] = $formular;

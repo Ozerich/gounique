@@ -46,7 +46,7 @@
                 <?if (!isset($fields) || isset($fields['ag_num'])): ?>
                 <td><?=$formular->kunde ? $formular->kunde->k_num : '-'?></td><? endif;?>
                 <?if (!isset($fields) || isset($fields['v_num'])): ?>
-                <td><?=$formular->v_num?></td><? endif;?>
+                <td><a target="_blank" href="reservierung/final/<?=$formular->id?>"><?=$formular->v_num?></a></td><? endif;?>
                 <?if (!isset($fields) || isset($fields['type'])): ?>
                 <td><?=$formular->stats_type?></td><? endif;?>
                 <?if (!isset($fields) || isset($fields['total'])): ?>

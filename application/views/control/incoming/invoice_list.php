@@ -22,6 +22,7 @@ foreach ($formulars as $ind => $formular):
     <td class="person"><?=$formular->person?></td>
     <td class="right reisedatum"><?=$formular->rechnung_date->format('d.M.y');?></td>
     <td class="right reisedatum"><?=$formular->departure_date->format('d.M.y')?></td>
+    <td class="right reisedatum"><?=$formular->arrival_date ? $formular->arrival_date->format('d.M.y') : '-'?></td>
     <td class="right total <?=$formular->brutto < 0 ? 'minus' : ''?>"><?=number_format($formular->brutto, 2, ',', '.')?></td>
     <? if ($formular->is_sofort): ?>
     <td class="anzahlung sofort" colspan="3">SOFORT</td>
@@ -73,7 +74,7 @@ foreach ($formulars as $ind => $formular):
 
 <? endforeach; ?>
 <tr class="total">
-    <td colspan="9">&nbsp;</td>
+    <td colspan="10">&nbsp;</td>
     <td><?=number_format($total_brutto, 2, ',', '.')?></td>
     <td><?=number_format($total_anzahlung, 2, ',', '.')?></td>
     <td>&nbsp;</td>

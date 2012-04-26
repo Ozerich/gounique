@@ -44,8 +44,8 @@
                     <option value="anzahlung">Anzahlung</option>
                     <option value="restzahlung">Restzahlung</option>
                     <option value="rechnung">Rechnungsdatum</option>
-                    <option value="versand">Versanddatum</option>
                     <option value="abreise">Abreisedatum</option>
+                    <option value="arrival">Rückreisedatum</option>
                 </select>
 
                 <div class="agenturen-wr">
@@ -64,6 +64,15 @@
                 <div class="checkbox-param">
                     <label for="ag_num"><input type="checkbox" id="only_open" name="only_open"/>Only open</label>
                 </div>
+                <div class="berater-param">
+                    <label for="berater">Berater:</label>
+                    <select id="berater">
+                        <option value="0">All</option>
+                        <? foreach(User::all() as $user): ?>
+                        <option value="<?=$user->id?>"><?=$user->fullname?></option>
+                        <? endforeach; ?>
+                    </select>
+                </div>
                 <input type="submit" class="search-button" id="datesearch-start"/>
             </div>
 
@@ -79,7 +88,7 @@
     <table class="product-list finanzen-list" id="controlpayments-list">
         <thead>
         <tr>
-            <th colspan="10">&nbsp;</th>
+            <th colspan="11">&nbsp;</th>
             <th colspan="3">Anzahlung</th>
             <th colspan="3">Restzahlung</th>
             <th>&nbsp;</th>
@@ -93,11 +102,12 @@
             <th>BR</th>
             <th class="rg-num">RG-NR</th>
             <th class="ag-num">AG-NR</th>
-			<th>BQ</th>
+            <th>BQ</th>
             <th>Vorg-NR</th>
             <th>KD-Name</th>
             <th class="right">RG-Datum</th>
             <th class="right">Abreise</th>
+            <th class="right">Rückreise</th>
             <th class="right">Reisepreis</th>
             <th class="right">Betrag</th>
             <th class="right">Faellig</th>
