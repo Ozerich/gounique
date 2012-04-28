@@ -81,8 +81,7 @@
     margin-right: 25px;
     float: left;
 }
-#hotelcreate-page .hotelcode.param{width: 68px;}
-#hotelcreate-page .hotelcat.param{width: 90px;}
+#hotelcreate-page .hotelcode.param,#hotelcreate-page .hotelcat.param{width: 68px;}
 #hotelcreate-page .hotelcat.param select{margin-top: 3px;}
 #hotelcreate-page .hotelname.param{
     width: 351px;
@@ -267,6 +266,7 @@
     display: inline-block;
     font-weight: normal;
     padding-left: 4px;
+    font-size: 13px;
 }
 
 #bonus-page .bonus-item{
@@ -280,7 +280,10 @@
 .room-mainoptions .roomname-param input[type=text]{
     width: 300px;
     text-transform: uppercase;
+    margin-bottom: 5px;
 }
+
+.room-mainoptions .roomname-param #code{width: 60px;}
 
 .room-mainoptions .room-checkboxes{
     margin-top: 15px;
@@ -306,7 +309,6 @@
 
 .room-mainoptions .checkbox-item input[type=checkbox]{
     text-align: center;
-    width: 100%;
 }
 
 .room-mainoptions .button-wr{
@@ -624,10 +626,6 @@
     padding-left: 18px;
 }
 
-.product-list tr:hover td.submenu ul{
-    display: block;
-}
-
 .product-list tr td.submenu ul a{
     display: block;
     text-decoration: none;
@@ -675,3 +673,7 @@
 #hotel-list th.kat{width: 15px}
 #hotel-list th.status{width: 30px}
 #hotel-list th.submenu{width: 1px}
+
+#zimmerlist-page #price-table td{
+    text-align: center;
+}

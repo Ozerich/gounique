@@ -29,7 +29,6 @@ class RoomPeriod extends ActiveRecord\Model
 
         foreach($data as $item)
             $result[$item->age_id][$item->service_id] = $item->price;
-
         return $result;
     }
 }

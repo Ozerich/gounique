@@ -90,11 +90,6 @@ $(document).ready(function () {
                     $(this).attr('name', $(this).attr('for-name') + '[' + ($(block).find('.child-content tr').size() - 2) + ']');
             });
 
-        $(row).find('input[type=text]').keyup(
-            function () {
-                $(this).next().val($(this).val());
-            });
-
         $(block).find('.child-content input[type=checkbox]').click(function () {
             if (!$(this).is(':checked'))
                 $(this).parents('tr').find('input[type=text]').attr('disabled', 'disabled');
@@ -104,6 +99,14 @@ $(document).ready(function () {
 
 
         return false;
+    });
+
+    $('#hotel_submit').click(function () {
+        $('.child-content input[type=text]').each(
+            function () {
+                $(this).next().val($(this).val());
+            });
+        return true;
     });
 
     $('#hotelcreate-page .child-cat .child-content input[type=text]').keyup(function () {
@@ -210,7 +213,7 @@ $(document).ready(function () {
             return false;
         });
 
-        $(bonus_block).find('.bonus-von, .bonus-bis, .booking_till, #booking_till_2').datepicker().datepicker("option", "showAnim", "blind").
+        $(bonus_block).find('.bonus-von, .bonus-bis, .booking_till, .booking_till_2').datepicker().datepicker("option", "showAnim", "blind").
             datepicker("option", "dateFormat", 'ddmmyy');
 
         $(bonus_block).find('.bonustype').attr('name', 'bonustype[' + ($('.bonus-item:visible').size()) + ']');
@@ -416,4 +419,11 @@ $(document).ready(function () {
         changeYear:true
     }).datepicker("option", "showAnim", "blind").datepicker("option", "dateFormat", 'ddmmyy');
 
+
+    $('#hotel-list tr').click(function () {
+        $('#hotel-list tr').removeClass('current');
+        $('.submenu ul').hide();
+        $(this).addClass('current');
+        $(this).find('.submenu ul').show();
+    });
 });

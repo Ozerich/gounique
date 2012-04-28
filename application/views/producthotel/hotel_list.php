@@ -2,9 +2,9 @@
 <tr>
     <td><?=$hotel->code?></td>
     <td><?=$hotel->name?></td>
-    <td><?=$hotel->country?></td>
-    <td><?=$hotel->region?></td>
-    <td><?=$hotel->city?></td>
+    <td><?=$hotel->land?></td>
+    <td><?=$hotel->ort?></td>
+    <td><?=$hotel->zielgebiet?></td>
     <td><?=$hotel->stars?></td>
     <td class="status <?=$hotel->active == 1 ? 'active' : 'inactive'?>"><?=$hotel->active == 1 ? 'Aktiv' : 'Inaktiv'?></td>
     <td class="submenu">

@@ -14,8 +14,12 @@
     <?=form_open("product/hotel/room/" . $hotel->id.($room ? '/'.$room->id : ''));?>
     <div class="room-mainoptions">
         <div class="roomname-param">
-            <label for="roomname">Zimmer Category</label>
-            <input type="text" name="roomname" value="<?=$room ? $room->name : ''?>"/>
+            <label for="code">Zimmercode</label>
+            <input type="text" maxlength="4" name="code" id="code" value="<?=$room ? $room->code : ''?>"/>
+        </div>
+        <div class="roomname-param">
+            <label for="roomname">Zimmername</label>
+            <input type="text" name="roomname" id="roomname" value="<?=$room ? $room->name : ''?>"/>
         </div>
         <div class="room-checkboxes">
             <div class="checkbox-block">

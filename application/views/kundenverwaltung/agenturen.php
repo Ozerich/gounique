@@ -16,6 +16,7 @@
         <li><a href="incoming">Incoming</a></li>
         <li><a href="ketten">Ketten</a></li>
         <li><a href="provisionierung">Provisionierung</a></li>
+        <li><a href="mitarbeiter">Mitarbeiter</a></li>
         <li class="last"><a href="agenturen/new">Neue Agenturen</a></li>
     </ul>
 

@@ -178,6 +178,7 @@
             <? endforeach; ?>
             <td class="price_marge"><?=$period->price_marge?></td>
             <td class="price_erm"><?=$period->price_erm?></td>
+
             <?foreach ($room->services as $service): ?>
             <td><?=$period->service_prices[0][$service->id]?></td>
             <? endforeach; ?>

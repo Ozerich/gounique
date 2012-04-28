@@ -22,39 +22,50 @@
 </ul>
 
 <div class="page" id="crs-page">
-    <div class="param">
-        <label for="code">Hotelcode</label>
-        <input name="code" class="high-letters" type="text" value="<?=$hotel->code?>" id="code" maxlength="10"/>
+    <div class="hotelname-wr">
+
+        <div class="param hotelcode">
+            <label for="code">Hotelcode</label>
+            <input name="code" class="high-letters" type="text" value="<?=$hotel->code?>" id="code" maxlength="8"/>
+        </div>
+
+        <div class="param hotelcat">
+            <label for="category">Kategorie</label>
+            <input id="category" type="text" name="stars" maxlength="3" value="<?=$hotel->stars?>"/>
+        </div>
+
+        <div class="param hotelname">
+            <label for="name">Hotelname</label>
+            <input name="name" type="text" maxlength="255" id="name" value="<?=$hotel->name?>"/>
+        </div>
+
+        <br class="clear"/>
+
     </div>
 
-    <div class="param">
-        <label for="name">Hotelname</label>
-        <input name="name" type="text" id="name" value="<?=$hotel->name?>"/>
-    </div>
+    <div class="place-wr">
 
-    <div class="param">
-        <label for="category">Kategorie</label>
-        <input name="stars" type="text" id="category" value="<?=$hotel->stars?>"/>
-    </div>
+        <div class="param tlc">
+            <label for="tlc">Hotel TLC</label>
+            <input name="tlc" type="text" maxlength="3" id="tlc" value="<?=$hotel->tlc?>"/>
+        </div>
 
-    <div class="param">
-        <label for="tlc">Hotel TLC</label>
-        <input name="tlc" type="text" id="tlc" value="<?=$hotel->tlc?>"/>
-    </div>
+        <div class="param land">
+            <label for="land">Hotel Land</label>
+            <input type="text" name="land" maxlength="255" value="<?=$hotel->land?>"/>
+        </div>
 
-    <div class="param">
-        <label for="zielgibiet">Zielgebiet</label>
-        <input name="zielgibiet" type="text" id="zielgibiet" value="<?=$hotel->zielgebiet?>"/>
-    </div>
+        <div class="param zeilgebiet">
+            <label for="zeilgebiet">Hotel Zielgebiet</label>
+            <input type="text" id="zeilgebiet" name="zielgebiet" maxlength="255" value="<?=$hotel->zielgebiet?>"/>
+        </div>
 
-    <div class="param">
-        <label for="ort">Hotel Ort</label>
-        <input name="ort" type="text" id="ort" value="<?=$hotel->ort?>"/>
-    </div>
+        <div class="param ort">
+            <label for="ort">Hotel Ort</label>
+            <input type="text" id="ort" name="ort" maxlength="255" value="<?=$hotel->ort?>"/>
+        </div>
 
-    <div class="param">
-        <label for="land">Hotel Land</label>
-        <input name="land" type="text" id="land" value="<?=$hotel->land?>"/>
+        <br class="clear"/>
     </div>
 
     <div class="param radios">
@@ -62,10 +73,8 @@
             <label for="flugbindung">Flugbindung</label>
 
             <div class="buttonset">
-                <input type="radio" value="1" id="flug-on"
-                       name="flugbindung" <?if ($hotel->flugbindung) echo 'checked';?>/><label for="flug-on">On</label>
-                <input type="radio" value="0" id="flug-off"
-                       name="flugbindung" <?if (!$hotel->flugbindung) echo 'checked';?>/><label
+                <input type="radio" value="1" id="flug-on" name="flugbindung" <?=$hotel->flugbindung ? 'checked' : ''?>><label for="flug-on">On</label>
+                <input type="radio" value="0" id="flug-off" name="flugbindung" <?=!$hotel->flugbindung ? 'checked' : ''?>/><label
                 for="flug-off">Off</label>
             </div>
         </div>
@@ -73,10 +82,8 @@
             <label for="crs">CRS Status</label>
 
             <div class="buttonset">
-                <input type="radio" value="1" id="crs-on" name="crs" <?if ($hotel->active) echo 'checked';?>/><label
-                for="crs-on">On</label>
-                <input type="radio" value="0" id="crs-off" name="crs" <?if (!$hotel->active) echo 'checked';?>/><label
-                for="crs-off">Off</label>
+                <input type="radio" value="1" id="crs-on" name="crs" <?=$hotel->active ? 'checked' : ''?>/><label for="crs-on">On</label>
+                <input type="radio" value="0" id="crs-off" name="crs" <?=!$hotel->active ? 'checked' : ''?>/><label for="crs-off">Off</label>
             </div>
         </div>
         <br class="clear"/>
@@ -256,7 +263,7 @@
             <div class="period-param param">
                 <label for="von">Period von</label>
                 <input type="text" class="minimum-von" name="minimum_von[<?=$ind?>]"
-                       value="<?=$minimum->von ? $minimum->von->format('dmY') : ''?>?>"
+                       value="<?=$minimum->von ? $minimum->von->format('dmY') : ''?>"
                        maxlength="8"/>
                 <label for="bis">bis</label>
                 <input type="text" class="minimum-bis" name="minimum_bis[<?=$ind?>]"
@@ -318,9 +325,9 @@
     <div class="param">
         <label for="incoming">Agentur Bin.</label>
         <select name="incoming" id="incoming">
-            <? foreach (Kunde::find('all', array('conditions' => array("type = 'incoming'"))) as $kunde): ?>
+            <? foreach (Incoming::all() as $kunde): ?>
             <option <?if ($hotel->incoming == $kunde->id) echo 'selected';?>
-                value="<?=$kunde->id?>"><?=$kunde->k_num . " " . $kunde->name?></option>
+                value="<?=$kunde->id?>"><?=$kunde->name?></option>
             <? endforeach; ?>
         </select>
     </div>

@@ -13,11 +13,11 @@
     <ul class="tabs" id="agenturen-tabs">
         <li><a href="agenturen">Agenturedaten</a></li>
         <li><a href="stammkunden">Stammkunden</a></li>
-        <li class="active"><span>Incoming</span></li>
+        <li><a href="incoming">Incoming</a></li>
         <li><a href="ketten">Ketten</a></li>
         <li><a href="provisionierung">Provisionierung</a></li>
-        <li><a href="mitarbeiter">Mitarbeiter</a></li>
-        <li class="last"><a href="incoming/new">Neueu Incoming</a></li>
+        <li class="active"><span>Mitarbeiter</span></li>
+        <li class="last"><a href="mitarbeiter/new">Neueu Mitarbeiter</a></li>
     </ul>
 
     <div class="search-block">
@@ -29,14 +29,12 @@
     <table class="product-list" id="incoming-list">
         <thead>
         <tr>
-            <th class="inc-num">Inc. Num</th>
-            <th class="inc-name">Inc. Name</th>
-            <th class="inc-changed">Changed</th>
+            <th class="inc-num">Name </th>
             <th>&nbsp;</th>
         </tr>
         </thead>
         <tbody>
-        <?=$incoming_list?>
+        <?=$user_list?>
         </tbody>
     </table>
 

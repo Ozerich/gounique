@@ -276,6 +276,17 @@ class Kundenverwaltung_Controller extends MY_Controller
         }
     }
 
+    public function mitarbeiter($user_id = 0){
+        $user = User::find_by_id($user_id);
+        if(!$user)
+        {
+            $this->view_data['user_list'] = $this->load->view('kundenverwaltung/mitarbeiter_list.php', array('users' => User::all()), true);
+        }
+        else{
+
+        }
+    }
+
     public function stammkunden($stammkunden_id = 0)
     {
         $stammkunden = Kunde::find(array('conditions' => array('id=? AND type="stammkunden"', $stammkunden_id)));

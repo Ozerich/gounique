@@ -53,20 +53,24 @@ $route['incoming'] = 'kundenverwaltung_controller/incoming';
 $route['stammkunden'] = 'kundenverwaltung_controller/stammkunden';
 $route['ketten'] = 'kundenverwaltung_controller/ketten';
 $route['provisionierung'] = 'kundenverwaltung_controller/provisionierung';
+$route['mitarbeiter'] = 'kundenverwaltung_controller/mitarbeiter';
 
 $route['agenturen/new'] = 'kundenverwaltung_controller/new_/agenturen';
 $route['incoming/new'] = 'kundenverwaltung_controller/new_/incoming';
 $route['stammkunden/new'] = 'kundenverwaltung_controller/new_/stammkunden';
 $route['ketten/new'] = 'kundenverwaltung_controller/new_/ketten';
 $route['provisionierung/new'] = 'kundenverwaltung_controller/new_/provisionierung';
+$route['mitarbeiter/new'] = 'kundenverwaltung_controller/new_/mitarbeiter';
 
 $route['agenturen/delete/(:num)'] = 'kundenverwaltung_controller/delete/agenturen/$1';
+$route['mitarbeiter/delete/(:num)'] = 'kundenverwaltung_controller/delete/mitarbeiter/$1';
 $route['incoming/delete/(:num)'] = 'kundenverwaltung_controller/delete/incoming/$1';
 $route['stammkunden/delete/(:num)'] = 'kundenverwaltung_controller/delete/stammkunden/$1';
 $route['ketten/delete/(:num)'] = 'kundenverwaltung_controller/delete/ketten/$1';
 $route['provisionierung/delete/(:num)'] = 'kundenverwaltung_controller/delete/provisionierung/$1';
 
 $route['agenturen/(:any)'] = 'kundenverwaltung_controller/agenturen/$1';
+$route['mitarbeiter/(:any)'] = 'kundenverwaltung_controller/agenturen/$1';
 $route['incoming/(:any)'] = 'kundenverwaltung_controller/incoming/$1';
 $route['stammkunden/(:any)'] = 'kundenverwaltung_controller/stammkunden/$1';
 $route['ketten/(:num)'] = 'kundenverwaltung_controller/ketten/$1';

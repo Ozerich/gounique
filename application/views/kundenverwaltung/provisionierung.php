@@ -15,6 +15,7 @@
         <li><a href="stammkunden">Stammkunden</a></li>
         <li><a href="incoming">Incoming</a></li>
         <li><a href="ketten">Ketten</a></li>
+        <li><a href="mitarbeiter">Mitarbeiter</a></li>
         <li class="active"><span>Provisionierung</span></li>
     </ul>
 

@@ -29,17 +29,12 @@
 
         <div class="param hotelcat">
             <label for="category">Kategorie</label>
-            <select id="category" name="category">
-                <option value="0">Category:</option>
-                <? foreach (HotelCategory::all() as $category): ?>
-                <option value="<?=$category->id?>"><?=$category->stars?></option>
-                <? endforeach; ?>
-            </select>
+            <input id="category" type="text" name="stars" maxlength="3"/>
         </div>
 
         <div class="param hotelname">
             <label for="name">Hotelname</label>
-            <input name="name" type="text" id="name"/>
+            <input name="name" type="text" maxlength="255" id="name"/>
         </div>
 
         <br class="clear"/>
@@ -55,26 +50,17 @@
 
         <div class="param land">
             <label for="land">Hotel Land</label>
-            <select name="land" id="land">
-                <option value="0">No Land</option>
-                <? foreach (Country::all() as $country): ?>
-                <option value="<?=$country->id?>"><?=$country->name?></option>
-                <? endforeach; ?>
-            </select>
+            <input type="text" name="land" maxlength="255"/>
         </div>
 
         <div class="param zeilgebiet">
             <label for="zeilgebiet">Hotel Zielgebiet</label>
-            <select id="zeilgebiet" name="zeilgebiet" disabled>
-                <option value="0">Select Land</option>
-            </select>
+            <input type="text" id="zeilgebiet" name="zielgebiet" maxlength="255"/>
         </div>
 
         <div class="param ort">
             <label for="ort">Hotel Ort</label>
-            <select id="ort" name="ort" disabled>
-                <option value="0">Select Zielgebiet</option>
-            </select>
+            <input type="text" id="ort" name="ort" maxlength="255"/>
         </div>
 
         <br class="clear"/>
@@ -122,11 +108,11 @@
                         <td class="active"><input type="checkbox" for-name="teen-active" checked></td>
                         <td class="age">
                             <input type="text" maxlength="2" value="12"/>
-                            <input type="hidden" for-name="teen-von"/>
+                            <input type="hidden" for-name="teen-von" value="12"/>
                         </td>
                         <td class="age">
                             <input type="text" maxlength="2" value="18"/>
-                            <input type="hidden" for-name="teen-bis"/>
+                            <input type="hidden" for-name="teen-bis" value="18"/>
                         </td>
                     </tr>
                     </tbody>
@@ -151,11 +137,11 @@
                         <td class="active"><input type="checkbox" for-name="child-active" checked></td>
                         <td class="age">
                             <input type="text" maxlength="2" value="2"/>
-                            <input type="hidden" for-name="child-von"/>
+                            <input type="hidden" for-name="child-von" value="2"/>
                         </td>
                         <td class="age">
                             <input type="text" maxlength="2" value="12"/>
-                            <input type="hidden" for-name="child-bis"/>
+                            <input type="hidden" for-name="child-bis" value="12"/>
                         </td>
                     </tr>
                     </tbody>
@@ -180,11 +166,11 @@
                         <td class="active"><input type="checkbox" for-name="infant-active" checked></td>
                         <td class="age">
                             <input type="text" maxlength="2" value="0"/>
-                            <input type="hidden" for-name="infant-von"/>
+                            <input type="hidden" for-name="infant-von" value="0"/>
                         </td>
                         <td class="age">
                             <input type="text" maxlength="2" value="2"/>
-                            <input type="hidden" for-name="infant-bis"/>
+                            <input type="hidden" for-name="infant-bis" value="2"/>
                         </td>
                     </tr>
                     </tbody>
@@ -246,8 +232,8 @@
         <div class="param">
             <label for="incoming">Agentur Bin.</label>
             <select name="incoming" id="incoming">
-                <? foreach (Kunde::find('all', array('conditions' => array("type = 'incoming'"))) as $kunde): ?>
-                <option value="<?=$kunde->id?>"><?=$kunde->k_num . " " . $kunde->name?></option>
+                <? foreach (Incoming::all() as $kunde): ?>
+                <option value="<?=$kunde->id?>"><?=$kunde->name?></option>
                 <? endforeach; ?>
             </select>
         </div>
@@ -451,7 +437,7 @@
 
 <div class="submit">
 
-    <input type="submit" name="zimmer_create" value="Apply">
+    <input type="submit" name="zimmer_create" id="hotel_submit" value="Apply">
 </div>
 <br class="clear"/>
 </form>
