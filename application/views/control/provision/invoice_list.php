@@ -1,8 +1,9 @@
 <?
-$total_brutto = $total_provision = $provision_status = 0;
+$total_brutto = $total_provision = $provision_status = $total_mwst = 0;
 foreach ($formulars as $ind => $formular):
     $total_brutto += $formular->brutto;
-    $total_provision += $formular->provision_amount;
+    $total_provision += $formular->provision_amount - $formular->mwst;
+    $total_mwst += $formular->mwst;
     ?>
 <tr <?=$formular->status == "gutschrift" ? 'class="no-open"' : ''?>>
     <td class="num"><?=($ind + 1)?></td>
@@ -14,14 +15,15 @@ foreach ($formulars as $ind => $formular):
         -
         <? endif; ?>
     </td>
+    <td class="right"><?=number_format($formular->provision, 2, ',', '.')?></td>
 	<td><?=$formular->plain_ownertype?></td>
     <td><?=$formular->v_num?></td>
     <td class="person"><?=$formular->person?></td>
     <td><?=$formular->departure_date->format('d.M.y')?></td>
     <td class="right reisedatum"><?=$formular->arrival_date ? $formular->arrival_date->format('d.M.y') : '-'?></td>
     <td class="right <?=$formular->brutto < 0 ? 'minus' : ''?>"><?=number_format($formular->brutto, 2, ',', '.')?></td>
-    <td class="right"><?=number_format($formular->provision, 2, ',', '.')?></td>
-    <td class="right"><?=$formular->type == 'nurflug' ? 'nurflug' : number_format($formular->provision_amount, 2, ',', '.')?></td>
+    <td class="right"><?=$formular->type == 'nurflug' ? 'nurflug' : number_format($formular->provision_amount - $formular->mwst, 2, ',', '.')?></td>
+    <td class="right"><?=$formular->type == 'nurflug' ? '-' : number_format($formular->mwst, 2, ',', '.')?></td>
     <td class="right"><?=$formular->provision_date ? $formular->provision_date->format('d.M.y') : ''?></td>
     <td <?=$formular->payment_netto ? 'class="checkbox"' : ''?>>&nbsp;</td>
     <? if ($formular->is_storno && $formular->status != "rechnung"): ?>
@@ -52,7 +54,8 @@ foreach ($formulars as $ind => $formular):
     <td class="right"><?=number_format($total_brutto, 2, ',','.')?></td>
     <td>&nbsp;</td>
     <td class="right"><?=number_format($total_provision, 2, ',','.')?></td>
-    <td colspan="2">&nbsp;</td>
+    <td class="right"><?=number_format($total_mwst, 2, ',','.')?></td>
+    <td colspan="1">&nbsp;</td>
     <td class="right"><?=number_format($provision_status, 2, ',','.')?></td>
     <td colspan="5">&nbsp;</td>
 </tr>

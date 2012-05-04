@@ -2,7 +2,7 @@
     <div id="page-header">
         <a href="dashboard" class="home-link"><img src="img/header-logo.jpg"/></a>
         <ul class="page-path">
-            <li><span>neu formular</span></li>
+            <li><span>Reservierung</span></li>
         </ul>
     </div>
 </div>

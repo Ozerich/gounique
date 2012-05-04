@@ -16,7 +16,7 @@
             <input class="search-tour" type="text" id="search"/>
             <div class="search-loading"></div>
         </div>
-        <a href="product/rundreise/create" class="new-hotel button-link">neueu tour</a>
+        <a href="product/rundreise/create" class="new-hotel button-link">neue tour</a>
         <br class="clear"/>
     </div>
     <table class="product-list" id="hotel-list">

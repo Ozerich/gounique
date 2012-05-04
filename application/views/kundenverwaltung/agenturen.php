@@ -11,7 +11,7 @@
 <div id="agenturen-page" class="content kundenverwaltung-rasdel">
 
     <ul class="tabs" id="agenturen-tabs">
-        <li class="active"><span>Agenturedaten</span></li>
+        <li class="active"><span>Agenturdaten</span></li>
         <li><a href="stammkunden">Stammkunden</a></li>
         <li><a href="incoming">Incoming</a></li>
         <li><a href="ketten">Ketten</a></li>

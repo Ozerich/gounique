@@ -77,14 +77,15 @@
             <th class="num">№</th>
             <th class="ag-num">RG-NR</th>
             <th class="r-num">AG-NR</th>
+            <th class="right">Prov. %</th>
 			<th>BQ</th>
             <th>Vorg-NR</th>
             <th>Kd-Name</th>
             <th>Abreise</th>
             <th>Rückreise</th>
             <th class="right">Total-RG</th>
-            <th class="right">Provision %</th>
             <th class="right">Prov. Betrag</th>
+            <th class="right">MwSt</th>
             <th class="right">Faellig bis</th>
             <th>Netto</th>
             <th class="right">Status</th>

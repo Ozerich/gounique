@@ -86,9 +86,11 @@
         <tr>
             <th>№</th>
             <th>RG-NR</th>
+            <th>BQ</th>
             <th>Vorg-NR</th>
             <th>KD-Name</th>
             <th class="right">Abreise</th>
+            <th class="right">Rückreise</th>
             <th class="right">Rechnung</th>
             <th class="right">Zahlung</th>
             <th class="right">Status</th>

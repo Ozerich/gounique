@@ -4,6 +4,15 @@ function num($num){
     return number_format((float)$num, 2, ',','.');
 }
 
+function day_of_week($date, $translate = TRUE)
+{
+    $words = array('Mo.','Di.','Mi.','Do.','Fr.','Sa.','So.');
+    $date = new DateTime($date);
+    $date = getdate($date->getTimestamp());
+    $wday = $date['wday'] == 0 ? 6 : $date['wday'] - 1;
+    return $translate ? $words[$wday] : ($wday + 1);
+}
+
 function mysqldatetime_to_timestamp($datetime = "")
 {
     $l = strlen($datetime);

@@ -4,7 +4,7 @@
         <ul class="page-path">
             <li><a href="product">produkt</a></li>
             <li><a href="product/rundreise">rundreise</a></li>
-            <li><span>neueu tour</span></li>
+            <li><span>neue tour</span></li>
         </ul>
     </div>
 </div>

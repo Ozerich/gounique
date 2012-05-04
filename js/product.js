@@ -426,4 +426,270 @@ $(document).ready(function () {
         $(this).addClass('current');
         $(this).find('.submenu ul').show();
     });
+
+    $('.hotellist-top .search-flight').keyup(function () {
+        $.ajax({
+            url:'product/flights/search_flight',
+            data:'search=' + $(this).val(),
+            type:'post',
+            success:function (data) {
+                $('#flight_list_wr').html(data);
+            }
+        });
+    });
+
+    $('#flight_page #period_start, #flight_page #period_finish').setdatepicker();
+
+    $('#flight_page .time-input').keypress(function (event) {
+        if (event.ctrlKey)return true;
+        if (event.charCode < 48 && event.charCode > 57)return false;
+
+        if ($(this).val().length == 2)
+            $(this).val($(this).val().substr(0, 2) + ':');
+
+        return true;
+    });
+
+    $('#price_add').click(function () {
+        $('#price_dauer').removeClass('error');
+        if (!isInt($('#price_dauer').val()) && $('#price_dauer').val() != 'R' && $('#price_dauer').val() != 'r') {
+            $('#price_dauer').addClass('error');
+        }
+
+        $('#price_value').removeClass('error');
+        if (!isInt($('#price_value').val())) {
+            $('#price_value').addClass('error');
+        }
+
+        if ($('.price-params .error').size())
+            return false;
+
+        $('#price_list').append('<option value="' + $('#price_dauer').val() + '_' + $('#price_value').val() + '">' + $('#price_dauer').val() + ' Tg. ' + $('#price_value').val() + ' EUR</option>');
+        $('#price_dauer, #price_value').val('');
+
+        return false;
+
+    });
+
+    $('#price_delete').click(function () {
+        if ($('#price_list option:selected').size())
+            $('#price_list option:selected').remove();
+        return false;
+    });
+
+
+    $('#save-flight-period').click(function () {
+        $('.new-flight-day *').removeClass('error');
+        var error = false;
+
+        var data = $('.new-flight-day').find('*').serialize();
+        var price_list_str = '';
+        $('#price_list option').each(function () {
+            price_list_str += $(this).val() + '|';
+        });
+        data += '&price=' + price_list_str;
+
+        $.ajax({
+            url:'product/flights/period',
+            data:data,
+            type:'post',
+            success:function (data) {
+                alert('Good');
+                $('.new-flight-day').reset();
+                $('#flight_days_wr').html(data);
+            }
+        });
+        return false;
+    });
+
+    $('#delete-flight-period').click(function () {
+        $('.new-flight-day *').removeClass('error');
+        var error = false;
+
+        $('#period_start, #period_finish').each(function () {
+            if ($(this).val() == '') {
+                $(this).addClass('error');
+                error = true;
+            }
+        });
+        if (error)
+            return false;
+
+        $.ajax({
+            url:'product/flights/delete_period/' + $('#flight_id').val(),
+            data: $('.new-flight-day').find('*').serialize(),
+            type:'post',
+            success:function (data) {
+                alert('Deleted');
+                $('.new-flight-day').reset();
+                $('#flight_days_wr').html(data);
+            }
+        });
+
+        return false;
+    });
+
+    $('#weekday_all').change(function () {
+        if ($(this).is(':checked'))
+            $('.weekdays input').attr('checked', 'checked');
+        else
+            $('.weekdays input').removeAttr('checked');
+    });
+
 });
+
+function select_flight_day(elem) {
+    $('.new-flight_day').reset();
+    $('.new-flight-day #period_start,.new-flight-day #period_finish').val($(elem).find('.hid_date').val());
+    $('.new-flight-day #departure_time').val($(elem).find('.hid_time_departure').val());
+    $('.new-flight-day #arrival_time').val($(elem).find('.hid_time_arrival').val());
+    $('.new-flight-day #konti').val($(elem).find('.hid_konti').val());
+    $('.new-flight-day #release').val($(elem).find('.hid_release').val());
+    $('.new-flight-day #max_dauer').val($(elem).find('.hid_max_dauer').val());
+
+    $('.new-flight-day .weekday input').removeAttr('checked');
+    $($('.new-flight-day .weekday').get($(elem).find('.hid_dayofweek').val() - 1)).find('input').attr('checked', 'checked');
+
+    var ind = 0;
+    $(elem).find('.hid_class_discounts').each(function () {
+        $($('.new-flight-day .price-discounts .param').get(ind++)).find('input').val($(this).val());
+    });
+
+    $('.new-flight-day #price_list').html($(elem).find('.hid_prices').html());
+
+
+    return false;
+}
+
+function new_flight_open() {
+    OpenOverlay();
+    $('#overlay-window').empty();
+    $('#new_flight_block').clone().appendTo('#overlay-window').show();
+    $('#overlay-window').center().show();
+}
+
+function close_flight_popup() {
+    $('#overlay-window').hide();
+    $('#dark-overlay').fadeOut();
+    return false;
+}
+
+function new_class() {
+    var block = $('.flight-form:visible').find('.class.example').clone().appendTo('.flight-form:visible .classes');
+    $(block).removeClass('example').show();
+    var ind = $('.flight-form:visible').find('.class').size() - 1;
+    $(block).find('.class-name').html('Klasse ' + String.fromCharCode('A'.charCodeAt(0) + ind - 1) + ': ');
+    $(block).find('input').each(function () {
+        $(this).attr('name', $(this).attr('for-name') + '[' + ind + ']');
+        $(this).removeAttr('for-name');
+    });
+
+    return false;
+}
+
+function delete_class(elem) {
+    var block = $(elem).parents('.class').remove();
+    var ind = 0;
+    $('.classes:visible').find('.class-name:visible').each(function () {
+        $(this).html('Klasse ' + String.fromCharCode('A'.charCodeAt(0) + ind++) + ': ');
+    });
+}
+
+function addflight_submit() {
+    var block = $('.new_flight_block:visible');
+    $(block).find('.error').hide();
+    $(block).find('.success').hide();
+    var error = false;
+    $(block).find('#carrier,#flug_num,#tlc_from,#tlc_to').each(function () {
+        if ($(this).val() == '') {
+            error = true;
+            return false;
+        }
+    });
+
+    $(block).find('.classes input[type=text]:visible').each(function () {
+        if (!isInt($(this).val())) {
+            error = true;
+            return false;
+        }
+    });
+
+    if (error) {
+        $(block).find('.error').html('Error').show();
+        return false;
+    }
+
+    $('.dialog-loading-overlay').show();
+    $.ajax({
+        url:'product/flights/new_flight',
+        type:'post',
+        data:(block).find('*').serialize(),
+        success:function (data) {
+            $('#flight_list_wr').html(data);
+            close_flight_popup();
+        },
+        complete:function (data) {
+            $('.dialog-loading-overlay').hide();
+        },
+        error:function (data) {
+            $('.error').html('Error: ' + data.status).show();
+        }
+    });
+
+    return false;
+}
+
+function open_edit_flight(flight_id) {
+    OpenOverlay();
+    $('#overlay-window').empty();
+    $.get('product/flights/edit_flight/' + flight_id, function (data) {
+        $('#overlay-window').html(data).center().show();
+    });
+    return false;
+}
+
+
+function saveflight_submit(flight_id) {
+    var block = $('.new_flight_block:visible');
+    $(block).find('.error').hide();
+    $(block).find('.success').hide();
+    var error = false;
+    $(block).find('#carrier,#flug_num,#tlc_from,#tlc_to').each(function () {
+        if ($(this).val() == '') {
+            error = true;
+            return false;
+        }
+    });
+
+    $(block).find('.classes input[type=text]:visible').each(function () {
+        if (!isInt($(this).val())) {
+            error = true;
+            return false;
+        }
+    });
+
+    if (error) {
+        $(block).find('.error').html('Error').show();
+        return false;
+    }
+
+    $('.dialog-loading-overlay').show();
+    $.ajax({
+        url:'product/flights/edit_flight/' + flight_id,
+        type:'post',
+        data:(block).find('*').serialize(),
+        success:function (data) {
+            $('#flight_list_wr').html(data);
+            close_flight_popup();
+        },
+        complete:function (data) {
+            $('.dialog-loading-overlay').hide();
+        },
+        error:function (data) {
+            $('.error').html('Error: ' + data.status).show();
+        }
+    });
+
+
+    return false;
+}

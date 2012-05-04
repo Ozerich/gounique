@@ -73,8 +73,7 @@ class Formular extends ActiveRecord\Model
 
         for (; $manuel_ind < count($manuels) && !$manuels[$manuel_ind]->date_start; $manuel_ind++) ;
 
-        while ($hotel_ind < count($hotels) || $manuel_ind < count($manuels))
-        {
+        while ($hotel_ind < count($hotels) || $manuel_ind < count($manuels)) {
             if ($hotel_ind >= count($hotels))
                 $list[] = $manuels[$manuel_ind++];
             else if ($manuel_ind >= count($manuels))
@@ -130,6 +129,11 @@ class Formular extends ActiveRecord\Model
         //print_r('hotel: '.$flight_price.'<br/>');
         //exit();
         return $hotel_price + $manuel_price + $flight_price;
+    }
+
+    public function get_mwst()
+    {
+        return $this->kunde && $this->kunde->ausland == 1 ? 0 : (round($this->provision_amount * 0.19, 2));
     }
 
     public function get_price()
@@ -204,7 +208,7 @@ class Formular extends ActiveRecord\Model
         $current = 0;
         $result = null;
 
-        foreach ($hotels as $ind => $hotel){
+        foreach ($hotels as $ind => $hotel) {
             if ($current == 0 || ($hotel->date_start && mysqldate_to_timestamp($hotel->date_start->format('Y-m-d')) < $current)) {
                 $current = mysqldate_to_timestamp($hotel->date_start->format('Y-m-d'));
                 $result = $hotel->date_start;
@@ -264,8 +268,7 @@ class Formular extends ActiveRecord\Model
     {
         $restzahlung = round($this->finalpayment_amount, 2);
         $anzahlung = round($this->prepayment_amount, 2);
-        foreach ($this->payments as $payment)
-        {
+        foreach ($this->payments as $payment) {
             if ($anzahlung > 0 && $payment->added_by != 0) {
                 $anzahlung -= $payment->amount;
 
@@ -348,8 +351,7 @@ class Formular extends ActiveRecord\Model
             $item = array('paid' => 0, 'amount' => 0, 'status' => 0);
 
 
-        foreach ($this->invoices as $invoice)
-        {
+        foreach ($this->invoices as $invoice) {
             $type = substr($invoice->type, 0, strlen('flight')) == "flight" ? "flight" : $invoice->type;
             $data[$type]['paid'] += $invoice->paid_amount;
             $data[$type]['amount'] += $invoice->amount;
@@ -374,7 +376,7 @@ class Formular extends ActiveRecord\Model
             return 0;
 
         $total = $this->get_paid_amount();
-        $result = $total-$this->brutto;
+        $result = $total - $this->brutto;
 
         return round($result, 2);
     }
@@ -390,7 +392,8 @@ class Formular extends ActiveRecord\Model
             return Formular::find(array('conditions' => array('status = "gutschrift" AND is_storno = 1 AND storno_original = ?', $this->id)));
     }
 
-    public function get_storno_user(){
+    public function get_storno_user()
+    {
         return User::find_by_id($this->storno_by);
     }
 
@@ -412,8 +415,7 @@ class Formular extends ActiveRecord\Model
     {
         $result = array('amount' => 0, 'paid' => 0, 'status' => 0);
 
-        foreach ($this->flight_invoices as $invoice)
-        {
+        foreach ($this->flight_invoices as $invoice) {
             $result['amount'] += $invoice->amount;
             $result['paid'] += $invoice->paid_amount;
             $result['status'] += $invoice->status;
@@ -468,8 +470,7 @@ class Formular extends ActiveRecord\Model
             if (strlen($data[$ind]) > 6) {
                 $sql['class'] = substr($data[$ind], 6);
             }
-            else
-            {
+            else {
                 if (strlen($data[$ind + 1]) != 4)
                     $ind++;
             }
@@ -491,15 +492,17 @@ class Formular extends ActiveRecord\Model
         $this->is_freigabe = $this->paid_amount >= ($this->brutto - 0.2) ? true : false;
     }
 
-    public function get_user(){
+    public function get_user()
+    {
         $user_id = $this->status == 'rechnung' ? $this->rechnung_by : $this->created_by;
         return User::find_by_id($user_id);
     }
 
-    public function get_payment_date(){
+    public function get_payment_date()
+    {
         $result = null;
-        foreach($this->payments as $payment){
-            if($result == null || $payment->payment_date > $result)
+        foreach ($this->payments as $payment) {
+            if ($result == null || $payment->payment_date > $result)
                 $result = $payment->payment_date;
         }
         return $result;

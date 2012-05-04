@@ -92,7 +92,7 @@
             <div class="param"><b>Commerzbank AG</b></div>
             <div class="param"><b>Kto.: 420 131 500</b></div>
             <div class="param"><b>BLZ: 200 400 00</b></div>
-            <div class="param"><b>Verwendungszweck: <?=$formular->r_num?></b> (Bitte ubedingt angeben!)</div>
+            <div class="param"><b>Verwendungszweck: <?=$formular->r_num?></b> (Bitte unbedingt angeben!)</div>
         </div>
     </div>
 

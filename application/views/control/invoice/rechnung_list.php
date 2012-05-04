@@ -19,9 +19,11 @@ foreach ($formulars as $ind => $formular):
     <input type="hidden" class="formular_id" value="<?=$formular->id?>"/>
     <td><?=($ind + 1)?></td>
     <td class="rg-num"><a href="reservierung/final/<?=$formular->id?>"><?=$formular->r_num?></a></td>
+    <td><?=$formular->plain_ownertype?></td>
     <td><?=$formular->v_num?></td>
     <td class="person"><?=$formular->person?></td>
     <td class="right"><?=$formular->departure_date->format('d.M.y')?></td>
+    <td class="right reisedatum"><?=$formular->arrival_date ? $formular->arrival_date->format('d.M.y') : '-'?></td>
     <td class="right"><?=@number_format($formular->brutto, 2, ',', '.')?></td>
     <td class="right"><?=number_format($formular->invoice_stats['hotel']['amount'], 2, ',', '.')?></td>
     <td class="right"><?=number_format($formular->invoice_stats['rundreise']['amount'], 2, ',', '.')?></td>

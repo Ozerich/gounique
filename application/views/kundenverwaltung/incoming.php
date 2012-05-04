@@ -11,13 +11,13 @@
 <div id="agenturen-page" class="content kundenverwaltung-rasdel">
 
     <ul class="tabs" id="agenturen-tabs">
-        <li><a href="agenturen">Agenturedaten</a></li>
+        <li><a href="agenturen">Agenturdaten</a></li>
         <li><a href="stammkunden">Stammkunden</a></li>
         <li class="active"><span>Incoming</span></li>
         <li><a href="ketten">Ketten</a></li>
         <li><a href="provisionierung">Provisionierung</a></li>
         <li><a href="mitarbeiter">Mitarbeiter</a></li>
-        <li class="last"><a href="incoming/new">Neueu Incoming</a></li>
+        <li class="last"><a href="incoming/new">Neue Incoming</a></li>
     </ul>
 
     <div class="search-block">

@@ -4,7 +4,7 @@
         <ul class="page-path">
             <li><a href="product">produkt</a></li>
             <li><a href="product/hotel">hotelverwaltung</a></li>
-            <li><span>neueu hotel</span></li>
+            <li><span>neues Hotel</span></li>
         </ul>
     </div>
 </div>
@@ -204,7 +204,7 @@
 
             </div>
         </div>
-        <button id="new-minimum">Neueu minimum</button>
+        <button id="new-minimum">neue minimum</button>
         <br class="clear"/>
     </div>
     <div class="holiday-block">
@@ -271,7 +271,7 @@
         <div class="bonus-list">
         </div>
 
-        <button id="bonusnew-open">Neueu bonus</button>
+        <button id="bonusnew-open">neue bonus</button>
         <br class="clear"/>
 
         <div class="bonus-item example" style="display:none">

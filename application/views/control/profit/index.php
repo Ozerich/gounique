@@ -27,8 +27,11 @@
         <tr>
             <th>№</th>
             <th>RG-NR</th>
+            <th>BQ</th>
+            <th>Berater</th>
             <th>Vorg-NR</th>
             <th class="right">Abreise</th>
+            <th class="right">Rückreise</th>
             <th class="right">Total</th>
             <th class="right">Flights</th>
             <th class="right">Hotels</th>
@@ -38,6 +41,7 @@
             <th class="right">Provision</th>
             <th class="right">Total Cost</th>
             <th class="right">Brutto Ergebnis</th>
+            <th class="right">in %</th>
         </tr>
         </thead>
         <tbody>

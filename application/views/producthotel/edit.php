@@ -297,7 +297,7 @@
 
         </div>
     </div>
-    <button id="new-minimum">Neueu minimum</button>
+    <button id="new-minimum">neue minimum</button>
     <br class="clear"/>
 </div>
 <div class="holiday-block">
@@ -369,7 +369,7 @@
 <div class="bonus-list">
 </div>
 
-<button id="bonusnew-open">Neueu bonus</button>
+<button id="bonusnew-open">neue bonus</button>
 <br class="clear"/>
 
 <? foreach ($hotel->bonuses as $ind => $bonus): ?>

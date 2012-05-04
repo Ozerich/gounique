@@ -16,27 +16,10 @@ foreach ($formulars as $ind => $formular):
     $total['stats']['ergebnis'] += $formular->brutto - $formular->provision_amount -  $formular->invoice_stats['total']['amount'];
 
     $total_cost = $formular->invoice_stats['total']['amount'] + $formular->provision_amount + $formular->flight_stats['amount'];
-?>
-<tr class="rechnung-line">
-    <input type="hidden" class="formular_id" value="<?=$formular->id?>"/>
-    <td><?=($ind + 1)?></td>
-    <td class="rg-num right"><a href="reservierung/final/<?=$formular->id?>"><?=$formular->r_num?></a></td>
-    <td><?=$formular->v_num?></td>
-    <td class="right"><?=$formular->departure_date->format('d.M.Y')?></td>
-    <td class="right"><?=num($formular->brutto)?></td>
-    <td class="right"><?=num($formular->flight_stats['amount'])?></td>
-    <td class="right"><?=num($formular->invoice_stats['hotel']['amount'])?></td>
-    <td class="right"><?=num($formular->invoice_stats['rundreise']['amount'])?></td>
-    <td class="right"><?=num($formular->invoice_stats['transfer']['amount'])?></td>
-    <td class="right"><?=num($formular->invoice_stats['other']['amount'])?></td>
-    <td class="right"><?=num($formular->provision_amount)?></td>
-    <td class="right"><?=num($total_cost)?></td>
-    <td class="right <?=($formular->brutto - $total_cost) >= 0 ? 'plus' : 'minus'?>" ><?=num($formular->brutto - $total_cost)?></td>
-</tr>
-<? endforeach; ?>
+endforeach?>
 
 <tr class="total">
-    <td colspan="4">&nbsp;</td>
+    <td colspan="7">&nbsp;</td>
     <td><?=num($total['brutto'])?></td>
     <td><?=num($total['stats']['flight'])?></td>
     <td><?=num($total['stats']['hotel'])?></td>
@@ -46,4 +29,28 @@ foreach ($formulars as $ind => $formular):
     <td><?=num($total['provision'])?></td>
     <td><?=num($total['stats']['total'])?></td>
     <td><?=num($total['ergebnis'])?></td>
+    <td>-</td>
 </tr>
+
+    <?foreach ($formulars as $ind => $formular): $total_cost = $formular->invoice_stats['total']['amount'] + $formular->provision_amount + $formular->flight_stats['amount'];?>
+<tr class="rechnung-line">
+    <input type="hidden" class="formular_id" value="<?=$formular->id?>"/>
+    <td><?=($ind + 1)?></td>
+    <td class="rg-num right"><a href="reservierung/final/<?=$formular->id?>"><?=$formular->r_num?></a></td>
+    <td><?=$formular->plain_ownertype?></td>
+    <td><?=$formular->user->initials?></td>
+    <td><?=$formular->v_num?></td>
+    <td class="right"><?=$formular->departure_date->format('d.M.y')?></td>
+    <td class="right"><?=$formular->arrival_date ? $formular->arrival_date->format('d.M.y') : '-'?></td>
+    <td class="right"><?=num($formular->brutto)?></td>
+    <td class="right"><?=num($formular->flight_stats['amount'])?></td>
+    <td class="right"><?=num($formular->invoice_stats['hotel']['amount'])?></td>
+    <td class="right"><?=num($formular->invoice_stats['rundreise']['amount'])?></td>
+    <td class="right"><?=num($formular->invoice_stats['transfer']['amount'])?></td>
+    <td class="right"><?=num($formular->invoice_stats['other']['amount'])?></td>
+    <td class="right"><?=num($formular->provision_amount)?></td>
+    <td class="right"><?=num($total_cost)?></td>
+    <td class="right <?=($formular->brutto - $total_cost) >= 0 ? 'plus' : 'minus'?>" ><?=num($formular->brutto - $total_cost)?></td>
+    <td class="right <?=($formular->brutto - $total_cost) >= 0 ? 'plus' : 'minus'?>" ><?=num(($total_cost > 0 ? ($formular->brutto - $total_cost) / $total_cost : 1) * 100)?></td>
+</tr>
+<? endforeach; ?>

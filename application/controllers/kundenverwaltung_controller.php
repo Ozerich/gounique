@@ -283,7 +283,8 @@ class Kundenverwaltung_Controller extends MY_Controller
             $this->view_data['user_list'] = $this->load->view('kundenverwaltung/mitarbeiter_list.php', array('users' => User::all()), true);
         }
         else{
-
+            $this->view_data['user'] = $user;
+            $this->content_view = 'kundenverwaltung/edit/mitarbeiter';
         }
     }
 

@@ -165,7 +165,7 @@
 
 <div id="item-list" class="param-block"><?=$item_list?></div>
 
-<div id="new-hotel" class="new-reservierung-item-block">
+<div id="new-hotel" class="modal-dialog new-reservierung-item-block">
 
     <div class="dialog-header">
         <a href="#" class="close">x</a>
@@ -287,7 +287,7 @@
         <button class="add">Add</button>
     </div>
 </div>
-<div id="new-manuel" class="new-reservierung-item-block">
+<div id="new-manuel" class="modal-dialog new-reservierung-item-block">
     <div class="dialog-header">
         <a href="#" class="close">x</a>
 
@@ -355,7 +355,7 @@
     </div>
 </div>
 
-<div id="edit-item" class="new-reservierung-item-block"></div>
+<div id="edit-item" class="modal-dialog new-reservierung-item-block"></div>
 
 <div class="page" id="flugpage" style="display:none">
 

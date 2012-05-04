@@ -4,7 +4,7 @@
         <ul class="page-path">
             <li><a href="kundenverwaltung/historie/<?=$kunde->id?>"><?=$kunde->plain_type;?> <?=$kunde->k_num?></a></li>
             </li>
-            <li><span>neu formular</span></li>
+            <li><span>Reservierung</span></li>
         </ul>
     </div>
 </div>

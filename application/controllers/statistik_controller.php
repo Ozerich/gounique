@@ -25,7 +25,7 @@ class Statistik_Controller extends MY_Controller
         $total = array('amount' => 0, 'count' => 0, 'person_count' => 0);
 
         foreach ($formulars as $formular) {
-            $date = $formular->status == 'rechnung' ? $formular->rechnung_date : $formular->created_date;
+            $date = $formular->status == 'rechnung' ? $formular->rechnung_date : ($formular->status == 'angebot' ? $formular->created_date : $formular->eingangs_date);
             $date = $date->format('d/m/Y');
 
             if (!in_array($date, $days_added)) {

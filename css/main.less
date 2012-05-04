@@ -407,12 +407,12 @@ ul.tabs li.active{
     border-radius: 7px;
 }
 
-#overlay-window .dialog-header{
+.modal-dialog .dialog-header{
     border-bottom: 1px solid #EEE;
     padding: 5px 15px;
 }
 
-#overlay-window .dialog-header .close{
+.modal-dialog .dialog-header .close{
     float:right;
     color:#000000;
     font-size:20px;
@@ -431,19 +431,19 @@ ul.tabs li.active{
     }
 }
 
-#overlay-window .dialog-header h3{
+.modal-dialog .dialog-header h3{
     line-height: 25px;
     font-size: 18px;
     font-weight: normal;
     color: #666;
 }
 
-#overlay-window .dialog-content{
+.modal-dialog .dialog-content{
     padding: 15px;
     overflow: hidden;
 }
 
-#overlay-window .dialog-footer{
+.modal-dialog .dialog-footer{
     background-color: whiteSmoke;
     padding: 14px 15px 15px;
     border-top: 1px solid #DDD;
@@ -453,7 +453,7 @@ ul.tabs li.active{
     margin-bottom: 0;
 }
 
-#overlay-window .alert-message{
+.modal-dialog .alert-message{
     position:relative;
     padding:7px 15px;
     background-color:#eedc94;
@@ -484,4 +484,26 @@ ul.tabs li.active{
     }
 }
 
-.alert-message .close{*margin-top:3px;}
+.modal-dialog .alert-message .close{*margin-top:3px;}
+
+
+.modal-dialog .dialog-loading-overlay{
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background: #aaa;
+    opacity: 0.8;
+    display: none;
+}
+
+.modal-dialog .dialog-loading-overlay span{
+    font-size: 70px;
+    margin-top: 132px;
+    text-align: center;
+    display: block;
+}

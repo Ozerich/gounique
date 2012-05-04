@@ -5,9 +5,28 @@ foreach ($formulars as $ind => $formular):
     $total_anzahlung += $formular->prepayment_amount;
     $total_restzahlung += $formular->finalpayment_amount;
     $total_diff += $formular->total_diff;
-    ?>
+
+    if (!$formular->is_sofort)
+        $anzahlung_status += $formular->anzahlung_status;
+    $restzahlung_status += ($formular->restzahlung_status == "OK" ? 0 : $formular->restzahlung_status);
+endforeach;    ?>
+
+<tr class="total">
+    <td colspan="10">&nbsp;</td>
+    <td><?=number_format($total_brutto, 2, ',', '.')?></td>
+    <td><?=number_format($total_anzahlung, 2, ',', '.')?></td>
+    <td>&nbsp;</td>
+    <td><?=number_format($anzahlung_status, 2, ',', '.')?></td>
+    <td><?=number_format($total_restzahlung, 2)?></td>
+    <td>&nbsp;</td>
+    <td><?=number_format($restzahlung_status, 2)?></td>
+    <td colspan="1">&nbsp;</td>
+    <td><?=number_format($total_diff, 2)?></td>
+    <td colspan="6">&nbsp;</td>
+</tr>
+    <?foreach ($formulars as $ind => $formular):?>
 <tr class="invoice-line <?=$formular->status == "gutschrift" ? 'no-open' : ''?>">
-    <td class="num right"><?=($ind + 1)?></td>
+    <td class="num right"><?=(count($formulars) - $ind)?></td>
     <td><?=$formular->user->initials?></td>
     <td class="rg-num"><a href="reservierung/final/<?=$formular->id?>"><?=$formular->r_num?></a></td>
     <td class="ag-num">
@@ -17,7 +36,7 @@ foreach ($formulars as $ind => $formular):
         -
         <? endif; ?>
     </td>
-    <td><?=$formular->plain_ownertype?>
+    <td><?=$formular->plain_ownertype?></td>
     <td class="v-num"><?=$formular->v_num?></td>
     <td class="person"><?=$formular->person?></td>
     <td class="right reisedatum"><?=$formular->rechnung_date->format('d.M.y');?></td>
@@ -26,9 +45,7 @@ foreach ($formulars as $ind => $formular):
     <td class="right total <?=$formular->brutto < 0 ? 'minus' : ''?>"><?=number_format($formular->brutto, 2, ',', '.')?></td>
     <? if ($formular->is_sofort): ?>
     <td class="anzahlung sofort" colspan="3">SOFORT</td>
-    <? else:
-    $anzahlung_status += $formular->anzahlung_status;
-    ?>
+    <? else: ?>
     <td class="right anzahlung"><?=number_format($formular->prepayment_amount, 2, ',', '.')?></td>
     <td class="right anzahlung"><?=$formular->prepayment_date ? $formular->prepayment_date->format('d.M.y') : ''?></td>
     <td class="right anzahlung <?=$formular->anzahlung_status < 0 ? 'minus' : ($formular->anzahlung_status > 0 ? 'plus' : '')?>">
@@ -36,7 +53,7 @@ foreach ($formulars as $ind => $formular):
     </td>
     <? endif; ?>
 
-    <? $restzahlung_status += ($formular->restzahlung_status == "OK" ? 0 : $formular->restzahlung_status);?>
+
     <td class="right restzahlung"><?=number_format($formular->finalpayment_amount, 2, ',', '.')?></td>
     <td class="right restzahlung"><?=$formular->finalpayment_date ? $formular->finalpayment_date->format('d.M.y') : ''?></td>
     <td class="right restzahlung <?=$formular->restzahlung_status < 0 && $formular->status != "gutschrift" ? 'minus' : ($formular->restzahlung_status && $formular->status != "gutschrift" && $formular->status != "storno" > 0 ? 'plus' : '')?>">

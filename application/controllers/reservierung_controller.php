@@ -498,6 +498,13 @@ Your Unique World Team";
                 $formular->arrival_date = $arrival_date;
 
             $formular->brutto = $formular->brutto_price;
+            if($formular->is_storno)
+            {
+                $gutschrift = $formular->gutschrift;
+                $gutschrift->brutto = -$formular->brutto;
+                $gutschrift->save();
+            }
+
 
             $formular->provision_amount = round($formular->brutto * $formular->provision * (!$formular->kunde->ausland ? 1.19 : 1) / 100, 2);
             if ($formular->status == "rechnung") {

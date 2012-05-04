@@ -106,7 +106,7 @@
 
     <div class="tabs-block">
         <ul class="tabs">
-            <li class="active"><a for="statistic_eingangs_page" href="#">Tagesumsatz</a></li>
+            <li class="active"><a for="statistic_eingangs_page" href="#">Eingangsmitteilung</a></li>
             <li><a href="#" for="statistic_angebot_page">Tagesangebot</a></li>
             <li><a href="#" for="statistic_rechnung_page">Tagesrechnung</a></li>
         </ul>

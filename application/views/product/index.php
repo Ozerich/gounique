@@ -6,7 +6,7 @@
         <div class="row">
             <a href="product/hotel">hotelverwaltung</a>
             <a href="product/rundreise">rundreise</a>
-            <a class="disabled last">flugverwaltung</a>
+            <a class="last" href="product/flights">flugverwaltung</a>
         </div>
     </div>
 </div>

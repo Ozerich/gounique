@@ -3,8 +3,7 @@
         <a href="dashboard" class="home-link"><img src="img/header-logo.jpg"/></a>
         <ul class="page-path">
             <li><a href="kundenverwaltung">kundenverwaltung</a></li>
-            <li><a href="<?=$kunde->type?>"><?=$kunde->type?></a></li>
-            <li><span><?=$kunde->type?> <?=$kunde->k_num?></span></li>
+            <li><span><?=$user->fullname?></span></li>
         </ul>
     </div>
 </div>
@@ -12,66 +11,46 @@
 
 <div id="edit-agenturen-page" class="kundenverwaltung-new content">
 
-    <? echo form_open("kundenverwaltung/verwalten/" . $kunde->id) ?>
+    <? echo form_open("kundenverwaltung/verwalten/" . $user->id) ?>
 
     <div class="new-block">
 
         <div class="param">
-            <label for="k_num">Kundennummer:</label>
-            <input type="text" name="k_num" id="k_num" value="<?=$kunde->k_num?>" />
+            <label for="name">Name</label>
+            <input type="text" name="name" value="<?=$user->name?>"/>
         </div>
 
         <div class="param">
-            <label for="name">Firmenname</label>
-            <input type="text" name="name" value="<?=$kunde->name?>"/>
+            <label for="name">Surname</label>
+            <input type="text" name="name" value="<?=$user->surname?>"/>
         </div>
+
 
         <div class="param">
             <label for="address">Adresse</label>
-            <input type="text" name="address" value="<?=$kunde->address?>"/>
+            <input type="text" name="address" value="<?=$user->address?>"/>
         </div>
 
         <div class="param">
             <label for="plz">PLZ / Ort</label>
-            <input type="text" class="plz" name="plz" maxlength="5" value="<?=$kunde->plz?>"/> /
-            <input type="text" class="ort" name="ort" value="<?=$kunde->ort?>"/>
+            <input type="text" class="plz" name="plz" maxlength="5" value="<?=$user->plz?>"/> /
+            <input type="text" class="ort" name="ort" value="<?=$user->ort?>"/>
         </div>
 
-        <div class="param">
-            <label for="website">Web-Seite</label>
-            <input type="text" name="website" value="<?=$kunde->website?>"/>
-        </div>
-
-        <div class="param">
-            <label>Ansprechpartner</label>
-            <input type="radio" name="sex" value="herr" <? if ($kunde->sex == "herr") echo 'checked' ?>/>Herr&nbsp;
-            <input type="radio" name="sex" value="frau" <? if ($kunde->sex == "frau") echo 'checked' ?>/>Frau
-        </div>
-
-
-        <div class="param">
-            <label for="kurzel">Kürzel</label>
-            <input type="text" name="kurzel" maxlength="2" value="<?=$kunde->kurzel?>"/>
-        </div>
 
         <div class="param">
             <label for="email">E-Mail Adresse</label>
-            <input type="text" name="email" value="<?=$kunde->email?>"/>
+            <input type="text" name="email" value="<?=$user->email?>"/>
         </div>
 
         <div class="param">
             <label for="phone">Telefon</label>
-            <input type="text" name="phone" value="<?=$kunde->phone?>"/>
-        </div>
-
-        <div class="param">
-            <label for="fax">Fax</label>
-            <input type="text" name="fax" value="<?=$kunde->fax?>"/>
+            <input type="text" name="phone" value="<?=$user->phone?>"/>
         </div>
 
         <div class="param">
             <label for="about">Kommentar</label>
-            <textarea name="about"><?=$kunde->about?></textarea>
+            <textarea name="about"><?=$user->about?></textarea>
         </div>
 
     </div>

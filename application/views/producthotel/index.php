@@ -16,7 +16,7 @@
             <input class="search-hotel" type="text" id="search"/>
             <div class="search-loading"></div>
         </div>
-        <a href="product/hotel/create" class="new-hotel button-link">neueu hotel</a>
+        <a href="product/hotel/create" class="new-hotel button-link">NEU</a>
         <br class="clear"/>
     </div>
     <table class="product-list" id="hotel-list">

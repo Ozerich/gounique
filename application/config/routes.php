@@ -70,7 +70,7 @@ $route['ketten/delete/(:num)'] = 'kundenverwaltung_controller/delete/ketten/$1';
 $route['provisionierung/delete/(:num)'] = 'kundenverwaltung_controller/delete/provisionierung/$1';
 
 $route['agenturen/(:any)'] = 'kundenverwaltung_controller/agenturen/$1';
-$route['mitarbeiter/(:any)'] = 'kundenverwaltung_controller/agenturen/$1';
+$route['mitarbeiter/(:any)'] = 'kundenverwaltung_controller/mitarbeiter/$1';
 $route['incoming/(:any)'] = 'kundenverwaltung_controller/incoming/$1';
 $route['stammkunden/(:any)'] = 'kundenverwaltung_controller/stammkunden/$1';
 $route['ketten/(:num)'] = 'kundenverwaltung_controller/ketten/$1';
@@ -96,6 +96,10 @@ $route['product/hotel/(:any)'] = 'producthotel_controller/$1';
 
 $route['product/rundreise'] = 'productrundreise_controller';
 $route['product/rundreise/(:any)'] = 'productrundreise_controller/$1';
+
+$route['product/flights'] = 'flight_controller';
+$route['product/flights/(:any)'] = 'flight_controller/$1';
+$route['product/flight/(:num)'] = 'flight_controller/flight/$1';
 
 $route['product'] = 'product_controller';
 $route['product/(:any)'] = 'product_controller/$1';
