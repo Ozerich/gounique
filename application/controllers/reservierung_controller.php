@@ -734,7 +734,8 @@ Your Unique World Team";
         $sofort = $this->input->post('sofort') != '';
 
         $formular->departure_date = inputdate_to_mysqldate($this->input->post("departure_date"));
-        $formular->provision_date = $formular->departure_date->add(new DateInterval('P5D'));
+        $departure_date = clone $formular->departure_date;
+        $formular->provision_date = $departure_date->add(new DateInterval('P5D'));
         $formular->finalpayment_date = inputdate_to_mysqldate($this->input->post("finalpayment_date"));
         $formular->prepayment = $sofort ? 0 : $this->input->post("prepayment");
         $formular->prepayment_date = $sofort ? null : inputdate_to_mysqldate($this->input->post("preprepayment_date"));

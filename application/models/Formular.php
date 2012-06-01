@@ -146,7 +146,7 @@ class Formular extends ActiveRecord\Model
                 break;
             }
 
-        $price_data['provision'] = round($this->provision_amount / 1.19, 2);
+        $price_data['provision'] = round($this->provision_amount / ($this->kunde->ausland ? 1 : 1.19), 2);
         $price_data['mwst'] = $this->kunde && $this->kunde->ausland == 1 ? 0 : (round($price_data['provision'] * 0.19, 2));
 
         $price_data['netto'] = round($brutto - $this->provision_amount, 2);
